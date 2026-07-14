@@ -1,0 +1,16 @@
+{
+  "condition": "C3",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 4,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": true,
+  "recovery": true,
+  "oracle": false,
+  "transient_ms": 0,
+  "what_changes": "After two fabric-A baseline rounds, rank 2's worker-side A egress qdisc changes to 20 Mbit/s while remaining UP; the detector reads the distinct switch-facing peer, then the deterministic host gate and all-rank versioned handover to healthy fabric B run.",
+  "expected": "One degraded fabric-A round exposes the fault, Layer 1 and Layer 2 confirm it, all four ranks commit version 1 for the next safe round, and subsequent fabric-B throughput retains at least 90% of baseline with zero mixed-version or checksum errors."
+}

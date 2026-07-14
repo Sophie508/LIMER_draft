@@ -1,0 +1,506 @@
+"""Aggregate immutable LIMER CPU v0 runs into auditable tables and SVGs."""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import html
+import json
+import re
+import statistics
+import xml.etree.ElementTree as ET
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
+
+
+FORMAL_RUN = re.compile(r"^c([0-5])_rep([0-9]{2})$")
+REQUIRED_ARTIFACTS = {
+    "manifest.json",
+    "events.jsonl",
+    "switch_timeseries.csv",
+    "worker_rounds.csv",
+    "version_commits.csv",
+    "correctness.json",
+    "summary.json",
+}
+CONDITION_LABELS = {
+    "C0": "Fault-free",
+    "C1": "Fault / no detector",
+    "C2": "Detect only",
+    "C3": "Full proxy closed loop",
+    "C4": "Oracle recovery",
+    "C5": "100 ms transient",
+}
+SUMMARY_FIELDS = [
+    "run_id",
+    "condition",
+    "topology",
+    "status",
+    "correctness_status",
+    "link_operstate",
+    "detector_operstate",
+    "fault_interface",
+    "detector_interface",
+    "injector_detector_isolated",
+    "selected_retention",
+    "fault_period_retention",
+    "post_recovery_retention",
+    "baseline_median_mbit_s",
+    "selected_median_mbit_s",
+    "switch_triggered",
+    "l_switch_ms",
+    "host_action",
+    "l_host_ms",
+    "recovery_committed",
+    "l_coordination_ms",
+    "l_fault_to_commit_ms",
+    "checksum_errors",
+    "version_errors",
+    "gate_pass",
+    "gate_failures",
+    "run_directory",
+]
+
+
+def _iqr(values: Sequence[float]) -> float:
+    if len(values) < 2:
+        return 0.0
+    quartiles = statistics.quantiles(sorted(values), n=4, method="inclusive")
+    return quartiles[2] - quartiles[0]
+
+
+def select_retention(summary: Mapping[str, Any]) -> float:
+    condition = str(summary["condition"])
+    field = (
+        "post_recovery_retention" if condition in {"C3", "C4"}
+        else "fault_period_retention"
+    )
+    value = summary.get(field)
+    if value is None:
+        raise ValueError(f"{condition} is missing {field}")
+    return float(value)
+
+
+def evaluate_run(summary: Mapping[str, Any]) -> List[str]:
+    failures: List[str] = []
+    condition = str(summary.get("condition"))
+    if summary.get("status") != "complete":
+        failures.append("run status must be complete")
+    if summary.get("correctness_status") != "pass":
+        failures.append("correctness must pass")
+    if summary.get("fault_interface_operstate_after") != "up":
+        failures.append("fault interface must remain up")
+    if summary.get("detector_interface_operstate_after") != "up":
+        failures.append("detector interface must remain up")
+    isolation = summary.get("fault_observation_isolation", {})
+    if isolation.get("same_interface") is not False:
+        failures.append("fault injector and detector interfaces must be distinct")
+    if isolation.get("detector_reads_injector_qdisc") is not False:
+        failures.append("detector must not read the injector qdisc")
+    try:
+        selected = select_retention(summary)
+    except (KeyError, TypeError, ValueError) as exc:
+        failures.append(str(exc))
+        return failures
+
+    detection = summary.get("switch_detection", {})
+    host = summary.get("host_refinement", {})
+    recovery = summary.get("recovery", {})
+    if condition == "C0":
+        if not 0.8 <= selected <= 1.2:
+            failures.append("C0 retention must stay within [0.8, 1.2]")
+    elif condition == "C1":
+        if selected >= 0.6:
+            failures.append("C1 retention must be below 0.6")
+    elif condition == "C2":
+        if not detection.get("triggered"):
+            failures.append("C2 switch detector must trigger")
+        if selected >= 0.6:
+            failures.append("C2 must remain degraded below 0.6")
+    elif condition == "C3":
+        if not detection.get("triggered"):
+            failures.append("C3 switch detector must trigger")
+        if host.get("action") != "confirm":
+            failures.append("C3 host gate must confirm")
+        if not recovery.get("committed"):
+            failures.append("C3 recovery must commit")
+        if selected < 0.9:
+            failures.append("C3 post-recovery retention must be at least 0.9")
+    elif condition == "C4":
+        if not recovery.get("committed"):
+            failures.append("C4 oracle recovery must commit")
+        if selected < 0.9:
+            failures.append("C4 post-recovery retention must be at least 0.9")
+    elif condition == "C5":
+        if host.get("action") != "suppress":
+            failures.append("C5 host gate must suppress")
+        if recovery.get("committed"):
+            failures.append("C5 must not commit recovery")
+    else:
+        failures.append(f"unsupported condition: {condition}")
+    return failures
+
+
+def _json(path: Path) -> Dict[str, Any]:
+    with path.open("r", encoding="utf-8") as handle:
+        value = json.load(handle)
+    if not isinstance(value, dict):
+        raise ValueError(f"expected JSON object: {path}")
+    return value
+
+
+def _events(path: Path) -> List[Dict[str, Any]]:
+    records: List[Dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            try:
+                value = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"invalid event JSON at {path}:{line_number}") from exc
+            if not isinstance(value, dict):
+                raise ValueError(f"non-object event at {path}:{line_number}")
+            records.append(value)
+    return records
+
+
+def _selected_throughput(summary: Mapping[str, Any]) -> Optional[float]:
+    section = "post_recovery" if summary["condition"] in {"C3", "C4"} else "post_fault"
+    value = summary.get(section)
+    if not isinstance(value, dict):
+        return None
+    throughput = value.get("median_throughput_bps")
+    return None if throughput is None else float(throughput) / 1_000_000.0
+
+
+def _row(run_dir: Path) -> Dict[str, Any]:
+    missing = sorted(REQUIRED_ARTIFACTS - {path.name for path in run_dir.iterdir()})
+    if missing:
+        raise ValueError(f"{run_dir.name} missing artifacts: {', '.join(missing)}")
+    summary = _json(run_dir / "summary.json")
+    correctness = _json(run_dir / "correctness.json")
+    if summary.get("run_id") != run_dir.name:
+        raise ValueError(f"run_id mismatch in {run_dir}")
+    failures = evaluate_run(summary)
+    baseline = summary.get("baseline") or {}
+    detection = summary.get("switch_detection") or {}
+    host = summary.get("host_refinement") or {}
+    recovery = summary.get("recovery") or {}
+    isolation = summary.get("fault_observation_isolation") or {}
+    return {
+        "run_id": run_dir.name,
+        "condition": summary.get("condition"),
+        "topology": summary.get("topology"),
+        "status": summary.get("status"),
+        "correctness_status": summary.get("correctness_status"),
+        "link_operstate": summary.get("fault_interface_operstate_after"),
+        "detector_operstate": summary.get("detector_interface_operstate_after"),
+        "fault_interface": summary.get("fault_interface"),
+        "detector_interface": summary.get("detector_interface"),
+        "injector_detector_isolated": (
+            isolation.get("same_interface") is False
+            and isolation.get("detector_reads_injector_qdisc") is False
+        ),
+        "selected_retention": select_retention(summary),
+        "fault_period_retention": summary.get("fault_period_retention"),
+        "post_recovery_retention": summary.get("post_recovery_retention"),
+        "baseline_median_mbit_s": (
+            float(baseline["median_throughput_bps"]) / 1_000_000.0
+            if baseline.get("median_throughput_bps") is not None
+            else None
+        ),
+        "selected_median_mbit_s": _selected_throughput(summary),
+        "switch_triggered": bool(detection.get("triggered")),
+        "l_switch_ms": detection.get("l_switch_ms"),
+        "host_action": host.get("action"),
+        "l_host_ms": host.get("l_host_ms"),
+        "recovery_committed": bool(recovery.get("committed")),
+        "l_coordination_ms": recovery.get("l_coordination_ms"),
+        "l_fault_to_commit_ms": recovery.get("l_fault_to_commit_ms"),
+        "checksum_errors": int(correctness.get("checksum_errors", -1)),
+        "version_errors": int(correctness.get("version_errors", -1)),
+        "gate_pass": not failures,
+        "gate_failures": " | ".join(failures),
+        "run_directory": str(run_dir),
+    }
+
+
+def render_throughput_svg(groups: Mapping[str, Sequence[float]]) -> str:
+    width, height = 940, 520
+    left, top, chart_w, chart_h = 82, 70, 800, 330
+    ymax = 1.2
+    conditions = [condition for condition in CONDITION_LABELS if condition in groups]
+    slot = chart_w / max(1, len(conditions))
+    colors = {
+        "C0": "#5b8ff9",
+        "C1": "#e8684a",
+        "C2": "#f6bd16",
+        "C3": "#5ad8a6",
+        "C4": "#5d7092",
+        "C5": "#6dc8ec",
+    }
+    lines = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
+        '<rect width="100%" height="100%" fill="white"/>',
+        '<text x="470" y="30" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">LIMER CPU v0: selected performance retention</text>',
+        '<text x="470" y="51" text-anchor="middle" font-family="sans-serif" font-size="12">CPU/Mininet framed AllReduce-like; C3/C4 use post-recovery, others use post-marker/fault</text>',
+    ]
+    for tick in (0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2):
+        y = top + chart_h - (tick / ymax) * chart_h
+        lines.append(
+            f'<line x1="{left}" y1="{y:.1f}" x2="{left + chart_w}" y2="{y:.1f}" stroke="#dddddd"/>'
+        )
+        lines.append(
+            f'<text x="{left - 10}" y="{y + 4:.1f}" text-anchor="end" font-family="sans-serif" font-size="11">{tick:.1f}</text>'
+        )
+    lines.append(
+        f'<line x1="{left}" y1="{top}" x2="{left}" y2="{top + chart_h}" stroke="#333"/>'
+    )
+    lines.append(
+        f'<line x1="{left}" y1="{top + chart_h}" x2="{left + chart_w}" y2="{top + chart_h}" stroke="#333"/>'
+    )
+    for index, condition in enumerate(conditions):
+        values = [float(value) for value in groups[condition]]
+        median = statistics.median(values)
+        bar_h = min(median, ymax) / ymax * chart_h
+        x = left + index * slot + slot * 0.22
+        y = top + chart_h - bar_h
+        bar_w = slot * 0.56
+        lines.append(
+            f'<rect x="{x:.1f}" y="{y:.1f}" width="{bar_w:.1f}" height="{bar_h:.1f}" fill="{colors[condition]}" rx="3"/>'
+        )
+        for point_index, value in enumerate(values):
+            px = x + bar_w * (0.25 + 0.25 * point_index)
+            py = top + chart_h - min(value, ymax) / ymax * chart_h
+            lines.append(
+                f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3.5" fill="#222"/>'
+            )
+        lines.append(
+            f'<text x="{x + bar_w / 2:.1f}" y="{y - 8:.1f}" text-anchor="middle" font-family="sans-serif" font-size="12">{median:.3f}</text>'
+        )
+        lines.append(
+            f'<text x="{x + bar_w / 2:.1f}" y="{top + chart_h + 20}" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">{condition}</text>'
+        )
+        lines.append(
+            f'<text x="{x + bar_w / 2:.1f}" y="{top + chart_h + 37}" text-anchor="middle" font-family="sans-serif" font-size="10">{html.escape(CONDITION_LABELS[condition])}</text>'
+        )
+    lines.extend(
+        [
+            '<text x="20" y="235" transform="rotate(-90 20 235)" text-anchor="middle" font-family="sans-serif" font-size="12">Retention vs matched pre-fault baseline</text>',
+            '<text x="470" y="485" text-anchor="middle" font-family="sans-serif" font-size="11">Dots are three independent formal runs; bars are medians. Dual-fabric recovery assumption applies to C3/C4.</text>',
+            "</svg>",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def render_timeline_svg(summary: Mapping[str, Any], events: Sequence[Mapping[str, Any]]) -> str:
+    fault_event = next(event for event in events if event.get("event") == "FAULT_APPLIED")
+    fault_t = int(fault_event["record"]["t_after_ns"])
+    names = [
+        ("SWITCH_SUSPECT", "L1 switch suspect"),
+        ("HOST_CONFIRM", "L2 host confirm"),
+        ("RECOVERY_COMMIT", "All-rank commit"),
+    ]
+    points = [("Fault applied", 0.0)]
+    for event_name, label in names:
+        event = next(event for event in events if event.get("event") == event_name)
+        points.append((label, (int(event["t_monotonic_ns"]) - fault_t) / 1_000_000.0))
+    recovered_ms = float(
+        summary["recovery"]["l_fault_to_recovered_round_complete_ms"]
+    )
+    points.append(("First B round complete", recovered_ms))
+    width, height = 960, 360
+    left, right, axis_y = 100, 900, 180
+    xmax = max(value for _label, value in points) * 1.08
+    lines = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
+        '<rect width="100%" height="100%" fill="white"/>',
+        f'<text x="480" y="32" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">C3 event timeline: {html.escape(str(summary["run_id"]))}</text>',
+        '<text x="480" y="54" text-anchor="middle" font-family="sans-serif" font-size="12">CPU/Mininet AllReduce-like; fabric A gray degradation, coordinated whole-ring switch to fabric B</text>',
+        f'<line x1="{left}" y1="{axis_y}" x2="{right}" y2="{axis_y}" stroke="#333" stroke-width="2"/>',
+    ]
+    colors = ["#e8684a", "#f6bd16", "#5b8ff9", "#5ad8a6", "#5d7092"]
+    for index, (label, value) in enumerate(points):
+        x = left + (value / xmax) * (right - left) if xmax else left
+        y_text = 110 if index % 2 == 0 else 245
+        y_line_end = 128 if index % 2 == 0 else 224
+        lines.append(
+            f'<line x1="{x:.1f}" y1="{axis_y}" x2="{x:.1f}" y2="{y_line_end}" stroke="{colors[index]}" stroke-width="2"/>'
+        )
+        lines.append(
+            f'<circle cx="{x:.1f}" cy="{axis_y}" r="7" fill="{colors[index]}"/>'
+        )
+        lines.append(
+            f'<text x="{x:.1f}" y="{y_text}" text-anchor="middle" font-family="sans-serif" font-size="11">{html.escape(label)}</text>'
+        )
+        lines.append(
+            f'<text x="{x:.1f}" y="{y_text + 16}" text-anchor="middle" font-family="sans-serif" font-size="10">{value:.1f} ms</text>'
+        )
+    lines.extend(
+        [
+            '<text x="480" y="318" text-anchor="middle" font-family="sans-serif" font-size="11">Measured limitation: host confirmation waits for the degraded round to finish; this dominates end-to-end recovery latency.</text>',
+            "</svg>",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def _write_csv(path: Path, rows: Iterable[Mapping[str, Any]]) -> None:
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=SUMMARY_FIELDS)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(dict(row))
+
+
+def generate_report(results_dir: Path) -> Dict[str, Any]:
+    formal_dirs = sorted(
+        path
+        for path in results_dir.iterdir()
+        if path.is_dir() and FORMAL_RUN.fullmatch(path.name)
+    )
+    rows = [_row(path) for path in formal_dirs]
+    groups: Dict[str, List[float]] = {condition: [] for condition in CONDITION_LABELS}
+    condition_rows: Dict[str, List[Dict[str, Any]]] = {
+        condition: [] for condition in CONDITION_LABELS
+    }
+    for row in rows:
+        condition = str(row["condition"])
+        groups[condition].append(float(row["selected_retention"]))
+        condition_rows[condition].append(row)
+    aggregate_conditions: Dict[str, Any] = {}
+    for condition, values in groups.items():
+        relevant = condition_rows[condition]
+        aggregate_conditions[condition] = {
+            "label": CONDITION_LABELS[condition],
+            "run_count": len(values),
+            "gate_pass_count": sum(bool(row["gate_pass"]) for row in relevant),
+            "retention_values": values,
+            "median_retention": statistics.median(values) if values else None,
+            "iqr_retention": _iqr(values),
+            "l_switch_ms_values": [
+                float(row["l_switch_ms"])
+                for row in relevant
+                if row["l_switch_ms"] is not None
+            ],
+            "checksum_errors": sum(int(row["checksum_errors"]) for row in relevant),
+            "version_errors": sum(int(row["version_errors"]) for row in relevant),
+        }
+    count_gate = all(len(groups[condition]) == 3 for condition in CONDITION_LABELS)
+    run_gates = all(bool(row["gate_pass"]) for row in rows)
+    aggregate = {
+        "schema_version": "limer-cpu-v0-report.2",
+        "formal_run_pattern": FORMAL_RUN.pattern,
+        "formal_run_count": len(rows),
+        "expected_formal_run_count": 18,
+        "three_runs_per_condition": count_gate,
+        "all_run_gates_pass": run_gates,
+        "overall_acceptance": count_gate and run_gates and len(rows) == 18,
+        "gate_scope": (
+            "Implemented C0-C5 run-level gates only. This does not cover switch "
+            "residency/resource budgets, C6/C7 ablations, numerical reduction, "
+            "NCCL/RDMA semantics, or paper-level statistical sufficiency."
+        ),
+        "conditions": aggregate_conditions,
+        "metric_definition": (
+            "Selected retention uses post-recovery throughput for C3/C4 and "
+            "post-marker/fault throughput for C0/C1/C2/C5, each divided by the "
+            "matched run's pre-fault baseline median. Throughput counts aggregate "
+            "application payload bytes from fully completed ranks and is a wire-volume "
+            "proxy, not unique tensor bytes."
+        ),
+        "interpretation_boundary": (
+            "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, real GPUs, "
+            "or Huawei switch hardware. The Python detector is an off-switch "
+            "management-plane proxy reading switch-facing counters, and C3/C4 assume "
+            "a healthy second fabric."
+        ),
+    }
+    _write_csv(results_dir / "summary.csv", rows)
+    with (results_dir / "aggregate_summary.json").open("w", encoding="utf-8") as handle:
+        json.dump(aggregate, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+    throughput_svg = render_throughput_svg(groups)
+    (results_dir / "throughput.svg").write_text(throughput_svg, encoding="utf-8")
+    representative = results_dir / "c3_rep01"
+    representative_summary = _json(representative / "summary.json")
+    timeline_svg = render_timeline_svg(
+        representative_summary, _events(representative / "events.jsonl")
+    )
+    (results_dir / "timeline.svg").write_text(timeline_svg, encoding="utf-8")
+    ET.fromstring(throughput_svg)
+    ET.fromstring(timeline_svg)
+    readme_lines = [
+        "# LIMER CPU v0 results",
+        "",
+        "These results were generated from 18 immutable formal run directories (three per condition).",
+        (
+            "C0-C5 run-level acceptance: **PASS**."
+            if aggregate["overall_acceptance"]
+            else "C0-C5 run-level acceptance: **NO-GO**; at least one predeclared run gate failed."
+        ),
+        f"Gate scope: {aggregate['gate_scope']}",
+        "The workload is CPU/Mininet framed **AllReduce-like** traffic, not NCCL or RDMA.",
+        "The detector is an off-switch management-plane proxy reading switch-facing counters; it is not switch-resident logic.",
+        "The fault injector and detector are on opposite interfaces of the access link; the detector cannot read the injector qdisc.",
+        "C3 and C4 recovery results assume a healthy second fabric B.",
+        "",
+        "| Condition | Runs | Median selected retention | IQR | Gate pass |",
+        "|---|---:|---:|---:|---:|",
+    ]
+    for condition in CONDITION_LABELS:
+        entry = aggregate_conditions[condition]
+        readme_lines.append(
+            f"| {condition} {CONDITION_LABELS[condition]} | {entry['run_count']} | "
+            f"{entry['median_retention']:.3f} | {entry['iqr_retention']:.3f} | "
+            f"{entry['gate_pass_count']}/{entry['run_count']} |"
+        )
+    failed_rows = [row for row in rows if not bool(row["gate_pass"])]
+    if failed_rows:
+        readme_lines.extend(
+            [
+                "",
+                "Failed formal gates:",
+                "",
+            ]
+        )
+        for row in failed_rows:
+            readme_lines.append(
+                f"- `{row['run_id']}`: {row['gate_failures']} "
+                f"(selected retention {float(row['selected_retention']):.3f})."
+            )
+    readme_lines.extend(
+        [
+            "",
+            "Files:",
+            "",
+            "- `summary.csv`: one row per formal run; no failed formal run is discarded.",
+            "- `aggregate_summary.json`: denominators, raw retention arrays, and acceptance gates.",
+            "- `throughput.svg`: median and raw selected retention by condition.",
+            "- `timeline.svg`: representative C3 event timeline.",
+            "",
+            "No failed formal repeat is discarded or silently converted into a pass.",
+            "The measured C3 host-confirmation delay is dominated by waiting for a whole degraded round to finish. Streaming step-level host evidence is the next latency improvement.",
+        ]
+    )
+    (results_dir / "README.md").write_text(
+        "\n".join(readme_lines) + "\n", encoding="utf-8"
+    )
+    return aggregate
+
+
+def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--results-dir", required=True, type=Path)
+    return parser.parse_args(argv)
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    args = parse_args(argv)
+    aggregate = generate_report(args.results_dir)
+    print(json.dumps(aggregate, indent=2, sort_keys=True))
+    return 0 if aggregate["overall_acceptance"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

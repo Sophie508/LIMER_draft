@@ -1,0 +1,16 @@
+{
+  "condition": "C0",
+  "topology": "single",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": false,
+  "recovery": false,
+  "oracle": false,
+  "transient_ms": 0,
+  "what_changes": "No fault is injected; all access links remain healthy. The worker-side injector interface and its switch-facing peer are recorded as distinct observation points.",
+  "expected": "The post-marker throughput distribution remains close to the pre-marker baseline, all ports stay UP, and no checksum or version error occurs."
+}

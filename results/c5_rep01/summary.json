@@ -1,0 +1,141 @@
+{
+  "baseline": {
+    "baseline_median_bps": 359134397.52343684,
+    "bytes_completed": [
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.136679623,
+      1.106091323
+    ],
+    "fault_period_retention": 1.0,
+    "iqr_throughput_bps": 4898097.46793735,
+    "median_throughput_bps": 359134397.52343684,
+    "post_recovery_retention": 1.0,
+    "round_count": 2,
+    "throughput_bps": [
+      354236300.05549943,
+      364032494.99137425
+    ]
+  },
+  "condition": "C5",
+  "correctness_status": "pass",
+  "detector_interface": "sA-eth3",
+  "detector_interface_operstate_after": "up",
+  "fault_applied": true,
+  "fault_interface": "w2-eth0",
+  "fault_interface_operstate_after": "up",
+  "fault_observation_isolation": {
+    "detector_location": "switch-facing peer interface counters",
+    "detector_reads_injector_qdisc": false,
+    "injector_location": "worker-side egress qdisc",
+    "observed_counter": "rx_bytes",
+    "same_interface": false
+  },
+  "fault_period_retention": 0.939143474263921,
+  "fault_window": {
+    "baseline_median_bps": 359134397.52343684,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.285814229,
+      1.145553123,
+      1.193829178
+    ],
+    "fault_period_retention": 0.939143474263921,
+    "iqr_throughput_bps": 19171007.6306597,
+    "median_throughput_bps": 337278725.8178406,
+    "post_recovery_retention": 0.939143474263921,
+    "round_count": 3,
+    "throughput_bps": [
+      313150356.34125024,
+      351492371.6025695,
+      337278725.8178406
+    ]
+  },
+  "host_refinement": {
+    "action": "suppress",
+    "baseline_p95_s": 1.1351502080000002,
+    "confidence": null,
+    "decision_t_monotonic_ns": 310669167490425,
+    "enabled": true,
+    "l_host_ms": 1262.008119,
+    "reasons": [
+      "Collective impact is not persistent: round duration 1.285814s did not exceed 1.5x the fault-free p95 (1.702725s)."
+    ]
+  },
+  "interpretation_boundary": "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, a real GPU cluster, or Huawei switch hardware.",
+  "post_fault": {
+    "baseline_median_bps": 359134397.52343684,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.285814229,
+      1.145553123,
+      1.193829178
+    ],
+    "fault_period_retention": 0.939143474263921,
+    "iqr_throughput_bps": 19171007.6306597,
+    "median_throughput_bps": 337278725.8178406,
+    "post_recovery_retention": 0.939143474263921,
+    "round_count": 3,
+    "throughput_bps": [
+      313150356.34125024,
+      351492371.6025695,
+      337278725.8178406
+    ]
+  },
+  "post_recovery": null,
+  "post_recovery_retention": null,
+  "recovery": {
+    "commit_t_monotonic_ns": null,
+    "committed": false,
+    "decision": null,
+    "enabled": true,
+    "first_recovered_round_id": null,
+    "l_coordination_ms": null,
+    "l_fault_to_commit_ms": null,
+    "l_fault_to_recovered_round_complete_ms": null,
+    "oracle": false
+  },
+  "run_id": "c5_rep01",
+  "status": "complete",
+  "switch_detection": {
+    "baseline_median_bps": 94249546.40691504,
+    "enabled": true,
+    "execution_boundary": {
+      "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+      "data_source": "switch-facing Linux interface counters",
+      "process_placement": "orchestrator/root namespace management-plane proxy",
+      "resource_budget_enforced": false,
+      "switch_resident": false
+    },
+    "fault_t_monotonic_ns": 310667853140344,
+    "first_suspect_t_monotonic_ns": 310667905482306,
+    "interface": "sA-eth3",
+    "l_switch_ms": 52.341962,
+    "rule_version": "l1-v0.2-isolated-rx-rate",
+    "state_proxy": {
+      "calibration_rate_samples": 175,
+      "max_consecutive_evidence_samples": 3,
+      "monitored_ports": 1,
+      "rss_isolated_or_budgeted": false
+    },
+    "suspect_count": 1,
+    "triggered": true
+  },
+  "switch_sampling": {
+    "max_actual_interval_ms": 26.622855,
+    "median_actual_interval_ms": 19.999932,
+    "sample_count": 365,
+    "target_interval_ms": 20.0
+  },
+  "topology": "dual"
+}

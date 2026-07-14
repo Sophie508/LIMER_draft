@@ -1,0 +1,45 @@
+LIMER CPU v0 environment probe
+Captured: 2026-07-14 Asia/Shanghai
+Host role: remote emulation host
+
+Hostname: experiment
+User: root
+OS: Debian GNU/Linux 13 (trixie), 13.6
+Kernel: Linux 6.12.94+deb13-amd64 x86_64
+Virtualization: microsoft
+CPU: 2 logical processors
+Memory: 7.8 GiB total, 7.2 GiB available at initial probe
+Swap: 4.8 GiB
+Root filesystem: 47 GiB total, 30 GiB available at initial probe
+
+Python: /usr/bin/python3
+Mininet: 2.3.0
+Open vSwitch: 3.5.0
+iperf3: 3.18
+Linux tc: /usr/sbin/tc
+Linux ip: /usr/sbin/ip
+/dev/net/tun: present
+Open vSwitch service: active
+
+Mininet smoke:
+- Command: mn --switch ovsbr --test pingall
+- Result: 0% dropped (2/2 received)
+
+Qdisc smoke:
+- Temporary interface: limer-probe
+- Applied profile: netem delay 1 ms, rate 20 Mbit/s, random loss 0.1%
+- tc JSON reported kind=netem, rate=2500000 bytes/s, delay=0.001 s,
+  loss=0.001, drops=0, overlimits=0.
+- Interface flags remained UP,LOWER_UP.
+- The temporary qdisc and interface were removed after the probe.
+
+Authentication note:
+- A local dedicated key was generated but was not installed on the server because
+  persistent modification of root authorized_keys was not separately approved by
+  the security reviewer.
+- Execution uses a temporary SSH ControlMaster session that will be closed after
+  the task. No remote authentication configuration was changed.
+
+Scope boundary:
+- This probe establishes Mininet/OVS/netem capability only.
+- It is not an AllReduce-like workload result and not a LIMER detection result.

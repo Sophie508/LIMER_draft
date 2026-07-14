@@ -1,0 +1,174 @@
+{
+  "baseline": {
+    "baseline_median_bps": 354181721.4151341,
+    "bytes_completed": [
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.136909346,
+      1.136800225
+    ],
+    "fault_period_retention": 1.0,
+    "iqr_throughput_bps": 16998.06523901224,
+    "median_throughput_bps": 354181721.4151341,
+    "post_recovery_retention": 1.0,
+    "round_count": 2,
+    "throughput_bps": [
+      354164723.349895,
+      354198719.4803731
+    ]
+  },
+  "condition": "C3",
+  "correctness_status": "pass",
+  "detector_interface": "sA-eth3",
+  "detector_interface_operstate_after": "up",
+  "fault_applied": true,
+  "fault_interface": "w2-eth0",
+  "fault_interface_operstate_after": "up",
+  "fault_observation_isolation": {
+    "detector_location": "switch-facing peer interface counters",
+    "detector_reads_injector_qdisc": false,
+    "injector_location": "worker-side egress qdisc",
+    "observed_counter": "rx_bytes",
+    "same_interface": false
+  },
+  "fault_period_retention": 0.8510863580051257,
+  "fault_window": {
+    "baseline_median_bps": 354181721.4151341,
+    "bytes_completed": [
+      50331648
+    ],
+    "duration_s": [
+      5.295207916
+    ],
+    "fault_period_retention": 0.21469502254035858,
+    "iqr_throughput_bps": 0.0,
+    "median_throughput_bps": 76041052.66260521,
+    "post_recovery_retention": 0.21469502254035858,
+    "round_count": 1,
+    "throughput_bps": [
+      76041052.66260521
+    ]
+  },
+  "host_refinement": {
+    "action": "confirm",
+    "baseline_p95_s": 1.1369038899499997,
+    "confidence": null,
+    "decision_t_monotonic_ns": 310612016511735,
+    "enabled": true,
+    "l_host_ms": 5271.539157,
+    "reasons": [
+      "Switch-side direct symptoms persisted for the configured rule.",
+      "Round duration 5.295208s exceeded 1.5x the fault-free p95 (1.705356s).",
+      "The standby fabric health probe passed."
+    ]
+  },
+  "interpretation_boundary": "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, a real GPU cluster, or Huawei switch hardware.",
+  "post_fault": {
+    "baseline_median_bps": 354181721.4151341,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      5.295207916,
+      1.332382719,
+      1.33917256,
+      1.138580541
+    ],
+    "fault_period_retention": 0.8510863580051257,
+    "iqr_throughput_bps": 70550133.77896401,
+    "median_throughput_bps": 301439231.3511925,
+    "post_recovery_retention": 0.8510863580051257,
+    "round_count": 4,
+    "throughput_bps": [
+      76041052.66260521,
+      302205348.5519576,
+      300673114.15042734,
+      353644884.5738705
+    ]
+  },
+  "post_recovery": {
+    "baseline_median_bps": 354181721.4151341,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.332382719,
+      1.33917256,
+      1.138580541
+    ],
+    "fault_period_retention": 0.8532494205079113,
+    "iqr_throughput_bps": 26485885.21172154,
+    "median_throughput_bps": 302205348.5519576,
+    "post_recovery_retention": 0.8532494205079113,
+    "round_count": 3,
+    "throughput_bps": [
+      302205348.5519576,
+      300673114.15042734,
+      353644884.5738705
+    ]
+  },
+  "post_recovery_retention": 0.8532494205079113,
+  "recovery": {
+    "commit_t_monotonic_ns": 310612017396813,
+    "committed": true,
+    "decision": {
+      "action": "commit",
+      "effective_round": 4,
+      "missing_ranks": [],
+      "ready_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "route": "B",
+      "version": 1
+    },
+    "enabled": true,
+    "first_recovered_round_id": 4,
+    "l_coordination_ms": 0.885078,
+    "l_fault_to_commit_ms": 5327.873735,
+    "l_fault_to_recovered_round_complete_ms": 6663.277951,
+    "oracle": false
+  },
+  "run_id": "c3_rep02",
+  "status": "complete",
+  "switch_detection": {
+    "baseline_median_bps": 96030368.59067689,
+    "enabled": true,
+    "execution_boundary": {
+      "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+      "data_source": "switch-facing Linux interface counters",
+      "process_placement": "orchestrator/root namespace management-plane proxy",
+      "resource_budget_enforced": false,
+      "switch_resident": false
+    },
+    "fault_t_monotonic_ns": 310606689523078,
+    "first_suspect_t_monotonic_ns": 310606744972578,
+    "interface": "sA-eth3",
+    "l_switch_ms": 55.4495,
+    "rule_version": "l1-v0.2-isolated-rx-rate",
+    "state_proxy": {
+      "calibration_rate_samples": 176,
+      "max_consecutive_evidence_samples": 3,
+      "monitored_ports": 1,
+      "rss_isolated_or_budgeted": false
+    },
+    "suspect_count": 1,
+    "triggered": true
+  },
+  "switch_sampling": {
+    "max_actual_interval_ms": 25.01957,
+    "median_actual_interval_ms": 19.999945,
+    "sample_count": 638,
+    "target_interval_ms": 20.0
+  },
+  "topology": "dual"
+}

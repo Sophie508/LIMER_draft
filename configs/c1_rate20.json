@@ -1,0 +1,16 @@
+{
+  "condition": "C1",
+  "topology": "single",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": false,
+  "recovery": false,
+  "oracle": false,
+  "transient_ms": 0,
+  "what_changes": "After two baseline rounds, only rank 2's worker-side egress qdisc changes to 20 Mbit/s at 1 ms and 0% configured random loss; both ends of the access link remain UP.",
+  "expected": "The post-fault collective throughput median falls below 60% of the matched pre-fault median and stays low, while all framed rounds retain zero checksum and version errors."
+}
