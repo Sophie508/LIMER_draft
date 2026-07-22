@@ -12,8 +12,9 @@ class SiteStructureTests(unittest.TestCase):
         section_ids = (
             "overview",
             "demo",
-            "architecture",
+            "implementation",
             "evidence",
+            "mapping",
             "boundaries",
             "roadmap",
             "feedback",
@@ -47,8 +48,62 @@ class SiteStructureTests(unittest.TestCase):
         text = "\n".join(
             path.read_text(encoding="utf-8") for path in site_files
         )
-        for forbidden in ("Huawei", "华为"):
+        for forbidden in (
+            "Huawei",
+            "华为",
+            "Notion",
+            "notion",
+            "Xilu",
+            "8.31",
+        ):
             self.assertNotIn(forbidden, text)
+
+    def test_navigation_exposes_implementation_and_mapping(self):
+        html = (ROOT / "docs/index.html").read_text(encoding="utf-8")
+        self.assertIn('href="#implementation"', html)
+        self.assertIn('href="#mapping"', html)
+
+    def test_replay_has_visible_interaction_guidance(self):
+        app = (ROOT / "docs/assets/js/app.js").read_text(encoding="utf-8")
+        for token in ("replay-guide", "drag-hint", "ArrowLeft", "ArrowRight"):
+            self.assertIn(token, app)
+
+    def test_implementation_trace_links_source_and_evidence(self):
+        app = (ROOT / "docs/assets/js/app.js").read_text(encoding="utf-8")
+        for token in (
+            "implementation-stack",
+            "limer_v0/sentinel.py",
+            "limer_v0/refiner.py",
+            "limer_v0/coordinator.py",
+            "results/c3_rep01/events.jsonl",
+        ):
+            self.assertIn(token, app)
+
+    def test_dual_mapping_preserves_formal_status_boundary(self):
+        app = (ROOT / "docs/assets/js/app.js").read_text(encoding="utf-8")
+        for token in (
+            "Initial Milestone Requirements",
+            "Formal Research Objectives",
+            'objective: "O1"',
+            'objective: "O4"',
+            'status: "not-started"',
+        ):
+            self.assertIn(token, app)
+
+    def test_repository_link_targets_exist(self):
+        app = (ROOT / "docs/assets/js/app.js").read_text(encoding="utf-8")
+        paths = set(re.findall(r'repoLink\("([^"]+)"\)', app))
+        self.assertGreater(len(paths), 10)
+        for relative_path in paths:
+            self.assertTrue((ROOT / relative_path).exists(), relative_path)
+        referenced_paths = set(
+            re.findall(
+                r'"((?:README\.md|environment_probe\.txt|'
+                r'(?:docs|limer_v0|configs|results|tests)/[^"`]+))"',
+                app,
+            )
+        )
+        self.assertEqual(set(), referenced_paths - paths)
 
     def test_visual_companion_output_is_ignored(self):
         lines = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
