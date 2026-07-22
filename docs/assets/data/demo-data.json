@@ -1,0 +1,190 @@
+{
+  "boundaries": [
+    "CPU/Mininet emulation",
+    "AllReduce-like framed traffic",
+    "Management-plane switch-counter proxy",
+    "Healthy Fabric B assumed",
+    "No GPU, NCCL, RDMA, or numerical reduction"
+  ],
+  "c3_runs": [
+    {
+      "checksum_errors": 0,
+      "coordination_ms": 0.625035,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 310591294227304
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 310591323210519
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 310596606904784
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 310596607529819
+        }
+      ],
+      "fault_retention": 0.21297836608124676,
+      "fault_to_recovered_round_ms": 6488.061545,
+      "gate": "PASS",
+      "host_confirmation_ms": 5283.694265,
+      "id": "c3_rep01",
+      "post_recovery_retention": 0.9707320539794281,
+      "source_correctness": "results/c3_rep01/correctness.json",
+      "source_events": "results/c3_rep01/events.jsonl",
+      "source_summary": "results/c3_rep01/summary.json",
+      "switch_detection_ms": 39.905322,
+      "version_errors": 0
+    },
+    {
+      "checksum_errors": 0,
+      "coordination_ms": 0.885078,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 310606700525556
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 310606744972578
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 310612016511735
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 310612017396813
+        }
+      ],
+      "fault_retention": 0.21469502254035858,
+      "fault_to_recovered_round_ms": 6663.277951,
+      "gate": "FAIL",
+      "host_confirmation_ms": 5271.539157,
+      "id": "c3_rep02",
+      "post_recovery_retention": 0.8532494205079113,
+      "source_correctness": "results/c3_rep02/correctness.json",
+      "source_events": "results/c3_rep02/events.jsonl",
+      "source_summary": "results/c3_rep02/summary.json",
+      "switch_detection_ms": 55.4495,
+      "version_errors": 0
+    },
+    {
+      "checksum_errors": 0,
+      "coordination_ms": 0.582045,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 310622359803169
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 310622400826590
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 310627664585489
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 310627665167534
+        }
+      ],
+      "fault_retention": 0.2156616500079958,
+      "fault_to_recovered_round_ms": 6640.108466,
+      "gate": "FAIL",
+      "host_confirmation_ms": 5263.758899,
+      "id": "c3_rep03",
+      "post_recovery_retention": 0.8648221540428249,
+      "source_correctness": "results/c3_rep03/correctness.json",
+      "source_events": "results/c3_rep03/events.jsonl",
+      "source_summary": "results/c3_rep03/summary.json",
+      "switch_detection_ms": 51.939638,
+      "version_errors": 0
+    }
+  ],
+  "conditions": {
+    "C0": {
+      "gate_pass_count": 3,
+      "label": "Fault-free",
+      "median_retention": 1.0008355187094158,
+      "retention_values": [
+        1.0008355187094158,
+        0.9811711920241056,
+        1.019008892971078
+      ],
+      "run_count": 3
+    },
+    "C1": {
+      "gate_pass_count": 3,
+      "label": "Fault / no detector",
+      "median_retention": 0.21337589140631885,
+      "retention_values": [
+        0.21546078401532678,
+        0.21337589140631885,
+        0.21264555074411087
+      ],
+      "run_count": 3
+    },
+    "C2": {
+      "gate_pass_count": 3,
+      "label": "Detect only",
+      "median_retention": 0.2116188654990644,
+      "retention_values": [
+        0.21018404539215887,
+        0.21767051270719118,
+        0.2116188654990644
+      ],
+      "run_count": 3
+    },
+    "C3": {
+      "gate_pass_count": 1,
+      "label": "Full proxy closed loop",
+      "median_retention": 0.8648221540428249,
+      "retention_values": [
+        0.9707320539794281,
+        0.8532494205079113,
+        0.8648221540428249
+      ],
+      "run_count": 3
+    },
+    "C4": {
+      "gate_pass_count": 3,
+      "label": "Oracle recovery",
+      "median_retention": 0.9795437986677666,
+      "retention_values": [
+        0.9946123619064914,
+        0.975261081107083,
+        0.9795437986677666
+      ],
+      "run_count": 3
+    },
+    "C5": {
+      "gate_pass_count": 3,
+      "label": "100 ms transient",
+      "median_retention": 0.9877619059898904,
+      "retention_values": [
+        0.939143474263921,
+        0.9877619059898904,
+        0.9991464273998133
+      ],
+      "run_count": 3
+    }
+  },
+  "meta": {
+    "formal_run_count": 18,
+    "gate_pass_count": 16,
+    "overall_acceptance": false,
+    "source": "results/aggregate_summary.json",
+    "title": "LIMER CPU-Only Emulation Prototype"
+  },
+  "roadmap": [
+    "standby_path",
+    "step_level_confirmation",
+    "orthogonal_loss_matrix"
+  ]
+}

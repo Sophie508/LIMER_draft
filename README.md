@@ -1,5 +1,10 @@
 # LIMER CPU-Only Emulation Prototype
 
+> **Interactive project demo:** [https://sophie508.github.io/LIMER_draft/](https://sophie508.github.io/LIMER_draft/)
+>
+> The site is a bilingual, evidence-driven stage review of the archived
+> CPU/Mininet prototype. It is not a live hardware experiment.
+
 LIMER stands for **Lightweight In-Network Monitoring with Efficient End-Host
 Recovery**. The research target is to detect network gray failures near the
 switch, confirm their impact at the end host, and adapt collective
