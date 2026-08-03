@@ -1,0 +1,26 @@
+{
+    "condition": "C1",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 3,
+    "fault_rate_mbit": 100.0,
+    "fault_loss_pct": 0.0,
+    "fault_delay_ms": 10.0,
+    "detector": false,
+    "recovery": false,
+    "oracle": false,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA1_FAULT",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "none",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "Fault-profile FP-D10: worker 2's Fabric A egress keeps the full 100 Mbit link rate and zero loss but its one-way delay rises from the 1 ms base to 10 ms, to measure a pure latency-type gray fault.",
+    "expected": "Retention degrades through added round-trip latency on the affected ring hop; both interfaces stay up and no recovery claim is made."
+}

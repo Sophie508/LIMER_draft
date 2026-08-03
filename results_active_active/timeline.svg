@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360">
+<rect width="100%" height="100%" fill="white"/>
+<text x="480" y="32" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">AA3_LOCAL event timeline: aa3_local_rep01</text>
+<text x="480" y="54" text-anchor="middle" font-family="sans-serif" font-size="12">CPU/Mininet AllReduce-like; active-active baseline and coordinated localized route plan</text>
+<line x1="100" y1="180" x2="900" y2="180" stroke="#333" stroke-width="2"/>
+<line x1="100.0" y1="180" x2="100.0" y2="128" stroke="#e8684a" stroke-width="2"/>
+<circle cx="100.0" cy="180" r="7" fill="#e8684a"/>
+<text x="100.0" y="110" text-anchor="middle" font-family="sans-serif" font-size="11">Fault applied</text>
+<text x="100.0" y="126" text-anchor="middle" font-family="sans-serif" font-size="10">0.0 ms</text>
+<line x1="619.7" y1="180" x2="619.7" y2="224" stroke="#f6bd16" stroke-width="2"/>
+<circle cx="619.7" cy="180" r="7" fill="#f6bd16"/>
+<text x="619.7" y="245" text-anchor="middle" font-family="sans-serif" font-size="11">L1 switch suspect</text>
+<text x="619.7" y="261" text-anchor="middle" font-family="sans-serif" font-size="10">2777.2 ms</text>
+<line x1="636.7" y1="180" x2="636.7" y2="128" stroke="#5b8ff9" stroke-width="2"/>
+<circle cx="636.7" cy="180" r="7" fill="#5b8ff9"/>
+<text x="636.7" y="110" text-anchor="middle" font-family="sans-serif" font-size="11">L2 host confirm</text>
+<text x="636.7" y="126" text-anchor="middle" font-family="sans-serif" font-size="10">2868.1 ms</text>
+<line x1="636.8" y1="180" x2="636.8" y2="224" stroke="#5ad8a6" stroke-width="2"/>
+<circle cx="636.8" cy="180" r="7" fill="#5ad8a6"/>
+<text x="636.8" y="245" text-anchor="middle" font-family="sans-serif" font-size="11">All-rank commit</text>
+<text x="636.8" y="261" text-anchor="middle" font-family="sans-serif" font-size="10">2868.7 ms</text>
+<line x1="840.7" y1="180" x2="840.7" y2="128" stroke="#5d7092" stroke-width="2"/>
+<circle cx="840.7" cy="180" r="7" fill="#5d7092"/>
+<text x="840.7" y="110" text-anchor="middle" font-family="sans-serif" font-size="11">First localized-plan round complete</text>
+<text x="840.7" y="126" text-anchor="middle" font-family="sans-serif" font-size="10">3958.7 ms</text>
+<text x="480" y="318" text-anchor="middle" font-family="sans-serif" font-size="11">Measured limitation: host confirmation waits for the degraded round to finish; this dominates end-to-end recovery latency.</text>
+</svg>

@@ -127,3 +127,58 @@ The repository-level hierarchy is:
 
 When a narrative and a field label appear to disagree, recompute from levels
 1-2 rather than treating prose as evidence.
+
+## Active-active v1 extension
+
+The v1 matrix is stored separately under `configs/active_active_v1/` and writes
+to `results_active_active/`. It retains the same four-worker framed workload,
+100 Mbit/s baseline, rank-2 Fabric A injection point, and switch-facing
+observation point, while changing the healthy routing and recovery semantics.
+
+The initial route plan uses both fabrics in every step. `AA3_LOCAL` changes only
+the three rank-2 send slots whose baseline fabric is A. `AA3_GLOBAL` explicitly
+changes every eligible baseline-A slot and exists only as a comparison; it is
+never an implicit fallback.
+
+| Scenario | Fault | Detection | Recovery semantics |
+|---|---|---|---|
+| AA0_HEALTHY | none | off | none; prove A/B use |
+| AA1_FAULT | persistent | off | none |
+| AA2_DETECT | persistent | switch only | none |
+| AA3_LOCAL | persistent | switch + host | localized route plan |
+| AA3_GLOBAL | persistent | switch + host | explicit global baseline |
+| AA4_ORACLE | persistent | oracle | localized route plan |
+| AA5_TRANSIENT | 100 ms | switch + host | expected suppression |
+
+The v1 selected-retention denominator is the same run's balanced active-active
+pre-fault median. Recovery scenarios select post-recovery retention; other
+scenarios select post-marker/fault retention. Latency fields report raw stages
+in milliseconds. Because no formal numeric millisecond threshold has been
+provided, report generation must leave the numeric target unspecified.
+
+V1 correctness additionally requires one plan fingerprint per round, non-zero
+healthy bytes on both fabrics, and policy-specific locality. A complete formal
+matrix contains three independent repeats for each of the seven scenarios.
+
+## Active-active v1 observed matrix
+
+The measured matrix contains all 21 formal run directories and preserves the
+single gate failure. Every run completed with correctness `pass`, zero checksum
+errors, and zero version errors. The generated aggregate reports 20/21
+predeclared run gates passing.
+
+| Scenario | Median selected retention | Gate pass |
+|---|---:|---:|
+| AA0_HEALTHY | 1.000 | 3/3 |
+| AA1_FAULT | 0.371 | 3/3 |
+| AA2_DETECT | 0.371 | 3/3 |
+| AA3_LOCAL | 0.936 | 3/3 |
+| AA3_GLOBAL | 0.961 | 2/3 |
+| AA4_ORACLE | 0.947 | 3/3 |
+| AA5_TRANSIENT | 0.993 | 3/3 |
+
+`AA3_GLOBAL` has the higher scenario median but also the only failed repeat:
+`aa3_global_rep02` measured 0.882 post-recovery retention against the fixed 0.9
+gate. No replacement run was substituted. The localized policy is more stable
+in this three-repeat sample, but the sample is too small to make a general
+statistical claim.

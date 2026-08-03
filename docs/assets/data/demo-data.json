@@ -1,9 +1,148 @@
 {
+  "active_active_runs": [
+    {
+      "baseline_fabric_bytes": {
+        "A": 50331648,
+        "B": 50331648
+      },
+      "changed_sender_ranks": [
+        2
+      ],
+      "changed_slot_count": 3,
+      "checksum_errors": 0,
+      "coordination_ms": 0.579533,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 3008735708871083
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 3008738482759913
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 3008738573724495
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 3008738574304028
+        }
+      ],
+      "family_label": "Active-active v1",
+      "fault_retention": 0.37319406220069357,
+      "fault_to_recovered_round_ms": 3958.667856,
+      "gate": "PASS",
+      "host_confirmation_ms": 90.964582,
+      "id": "aa3_local_rep01",
+      "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+      "mode": "active_active_local",
+      "post_recovery_retention": 0.9358429698833192,
+      "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "source_correctness": "results_active_active/aa3_local_rep01/correctness.json",
+      "source_events": "results_active_active/aa3_local_rep01/events.jsonl",
+      "source_summary": "results_active_active/aa3_local_rep01/summary.json",
+      "switch_detection_ms": 2777.168719,
+      "version_errors": 0
+    },
+    {
+      "baseline_fabric_bytes": {
+        "A": 50331648,
+        "B": 50331648
+      },
+      "changed_sender_ranks": [
+        2
+      ],
+      "changed_slot_count": 3,
+      "checksum_errors": 0,
+      "coordination_ms": 0.545333,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 3008748714154228
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 3008751485845986
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 3008751579138261
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 3008751579683594
+        }
+      ],
+      "family_label": "Active-active v1",
+      "fault_retention": 0.37366608778616106,
+      "fault_to_recovered_round_ms": 3957.510949,
+      "gate": "PASS",
+      "host_confirmation_ms": 93.292275,
+      "id": "aa3_local_rep02",
+      "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+      "mode": "active_active_local",
+      "post_recovery_retention": 0.9365648667210935,
+      "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "source_correctness": "results_active_active/aa3_local_rep02/correctness.json",
+      "source_events": "results_active_active/aa3_local_rep02/events.jsonl",
+      "source_summary": "results_active_active/aa3_local_rep02/summary.json",
+      "switch_detection_ms": 2775.010637,
+      "version_errors": 0
+    },
+    {
+      "baseline_fabric_bytes": {
+        "A": 50331648,
+        "B": 50331648
+      },
+      "changed_sender_ranks": [
+        2
+      ],
+      "changed_slot_count": 3,
+      "checksum_errors": 0,
+      "coordination_ms": 0.532873,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 3008761714115752
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 3008764488067863
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 3008764579074775
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 3008764579607648
+        }
+      ],
+      "family_label": "Active-active v1",
+      "fault_retention": 0.3732663085623179,
+      "fault_to_recovered_round_ms": 3957.844712,
+      "gate": "PASS",
+      "host_confirmation_ms": 91.006912,
+      "id": "aa3_local_rep03",
+      "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+      "mode": "active_active_local",
+      "post_recovery_retention": 0.9356774450914014,
+      "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "source_correctness": "results_active_active/aa3_local_rep03/correctness.json",
+      "source_events": "results_active_active/aa3_local_rep03/events.jsonl",
+      "source_summary": "results_active_active/aa3_local_rep03/summary.json",
+      "switch_detection_ms": 2777.131699,
+      "version_errors": 0
+    }
+  ],
+  "active_active_status": "measured",
   "boundaries": [
     "CPU/Mininet emulation",
     "AllReduce-like framed traffic",
     "Management-plane switch-counter proxy",
-    "Healthy Fabric B assumed",
+    "Legacy v0 uses whole-ring failover",
+    "Active-active v1 models a directed worker-2 egress fault",
     "No GPU, NCCL, RDMA, or numerical reduction"
   ],
   "c3_runs": [
@@ -28,11 +167,13 @@
           "t_monotonic_ns": 310596607529819
         }
       ],
+      "family_label": "Legacy CPU v0",
       "fault_retention": 0.21297836608124676,
       "fault_to_recovered_round_ms": 6488.061545,
       "gate": "PASS",
       "host_confirmation_ms": 5283.694265,
       "id": "c3_rep01",
+      "mode": "legacy_global",
       "post_recovery_retention": 0.9707320539794281,
       "source_correctness": "results/c3_rep01/correctness.json",
       "source_events": "results/c3_rep01/events.jsonl",
@@ -61,11 +202,13 @@
           "t_monotonic_ns": 310612017396813
         }
       ],
+      "family_label": "Legacy CPU v0",
       "fault_retention": 0.21469502254035858,
       "fault_to_recovered_round_ms": 6663.277951,
       "gate": "FAIL",
       "host_confirmation_ms": 5271.539157,
       "id": "c3_rep02",
+      "mode": "legacy_global",
       "post_recovery_retention": 0.8532494205079113,
       "source_correctness": "results/c3_rep02/correctness.json",
       "source_events": "results/c3_rep02/events.jsonl",
@@ -94,11 +237,13 @@
           "t_monotonic_ns": 310627665167534
         }
       ],
+      "family_label": "Legacy CPU v0",
       "fault_retention": 0.2156616500079958,
       "fault_to_recovered_round_ms": 6640.108466,
       "gate": "FAIL",
       "host_confirmation_ms": 5263.758899,
       "id": "c3_rep03",
+      "mode": "legacy_global",
       "post_recovery_retention": 0.8648221540428249,
       "source_correctness": "results/c3_rep03/correctness.json",
       "source_events": "results/c3_rep03/events.jsonl",
@@ -176,15 +321,259 @@
     }
   },
   "meta": {
+    "active_active_source": "results_active_active/aggregate_summary.json",
+    "active_active_status": "measured",
     "formal_run_count": 18,
     "gate_pass_count": 16,
     "overall_acceptance": false,
     "source": "results/aggregate_summary.json",
     "title": "LIMER CPU-Only Emulation Prototype"
   },
+  "replay_runs": [
+    {
+      "checksum_errors": 0,
+      "coordination_ms": 0.625035,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 310591294227304
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 310591323210519
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 310596606904784
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 310596607529819
+        }
+      ],
+      "family_label": "Legacy CPU v0",
+      "fault_retention": 0.21297836608124676,
+      "fault_to_recovered_round_ms": 6488.061545,
+      "gate": "PASS",
+      "host_confirmation_ms": 5283.694265,
+      "id": "c3_rep01",
+      "mode": "legacy_global",
+      "post_recovery_retention": 0.9707320539794281,
+      "source_correctness": "results/c3_rep01/correctness.json",
+      "source_events": "results/c3_rep01/events.jsonl",
+      "source_summary": "results/c3_rep01/summary.json",
+      "switch_detection_ms": 39.905322,
+      "version_errors": 0
+    },
+    {
+      "checksum_errors": 0,
+      "coordination_ms": 0.885078,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 310606700525556
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 310606744972578
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 310612016511735
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 310612017396813
+        }
+      ],
+      "family_label": "Legacy CPU v0",
+      "fault_retention": 0.21469502254035858,
+      "fault_to_recovered_round_ms": 6663.277951,
+      "gate": "FAIL",
+      "host_confirmation_ms": 5271.539157,
+      "id": "c3_rep02",
+      "mode": "legacy_global",
+      "post_recovery_retention": 0.8532494205079113,
+      "source_correctness": "results/c3_rep02/correctness.json",
+      "source_events": "results/c3_rep02/events.jsonl",
+      "source_summary": "results/c3_rep02/summary.json",
+      "switch_detection_ms": 55.4495,
+      "version_errors": 0
+    },
+    {
+      "checksum_errors": 0,
+      "coordination_ms": 0.582045,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 310622359803169
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 310622400826590
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 310627664585489
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 310627665167534
+        }
+      ],
+      "family_label": "Legacy CPU v0",
+      "fault_retention": 0.2156616500079958,
+      "fault_to_recovered_round_ms": 6640.108466,
+      "gate": "FAIL",
+      "host_confirmation_ms": 5263.758899,
+      "id": "c3_rep03",
+      "mode": "legacy_global",
+      "post_recovery_retention": 0.8648221540428249,
+      "source_correctness": "results/c3_rep03/correctness.json",
+      "source_events": "results/c3_rep03/events.jsonl",
+      "source_summary": "results/c3_rep03/summary.json",
+      "switch_detection_ms": 51.939638,
+      "version_errors": 0
+    },
+    {
+      "baseline_fabric_bytes": {
+        "A": 50331648,
+        "B": 50331648
+      },
+      "changed_sender_ranks": [
+        2
+      ],
+      "changed_slot_count": 3,
+      "checksum_errors": 0,
+      "coordination_ms": 0.579533,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 3008735708871083
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 3008738482759913
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 3008738573724495
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 3008738574304028
+        }
+      ],
+      "family_label": "Active-active v1",
+      "fault_retention": 0.37319406220069357,
+      "fault_to_recovered_round_ms": 3958.667856,
+      "gate": "PASS",
+      "host_confirmation_ms": 90.964582,
+      "id": "aa3_local_rep01",
+      "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+      "mode": "active_active_local",
+      "post_recovery_retention": 0.9358429698833192,
+      "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "source_correctness": "results_active_active/aa3_local_rep01/correctness.json",
+      "source_events": "results_active_active/aa3_local_rep01/events.jsonl",
+      "source_summary": "results_active_active/aa3_local_rep01/summary.json",
+      "switch_detection_ms": 2777.168719,
+      "version_errors": 0
+    },
+    {
+      "baseline_fabric_bytes": {
+        "A": 50331648,
+        "B": 50331648
+      },
+      "changed_sender_ranks": [
+        2
+      ],
+      "changed_slot_count": 3,
+      "checksum_errors": 0,
+      "coordination_ms": 0.545333,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 3008748714154228
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 3008751485845986
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 3008751579138261
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 3008751579683594
+        }
+      ],
+      "family_label": "Active-active v1",
+      "fault_retention": 0.37366608778616106,
+      "fault_to_recovered_round_ms": 3957.510949,
+      "gate": "PASS",
+      "host_confirmation_ms": 93.292275,
+      "id": "aa3_local_rep02",
+      "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+      "mode": "active_active_local",
+      "post_recovery_retention": 0.9365648667210935,
+      "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "source_correctness": "results_active_active/aa3_local_rep02/correctness.json",
+      "source_events": "results_active_active/aa3_local_rep02/events.jsonl",
+      "source_summary": "results_active_active/aa3_local_rep02/summary.json",
+      "switch_detection_ms": 2775.010637,
+      "version_errors": 0
+    },
+    {
+      "baseline_fabric_bytes": {
+        "A": 50331648,
+        "B": 50331648
+      },
+      "changed_sender_ranks": [
+        2
+      ],
+      "changed_slot_count": 3,
+      "checksum_errors": 0,
+      "coordination_ms": 0.532873,
+      "events": [
+        {
+          "name": "FAULT_APPLIED",
+          "t_monotonic_ns": 3008761714115752
+        },
+        {
+          "name": "SWITCH_SUSPECT",
+          "t_monotonic_ns": 3008764488067863
+        },
+        {
+          "name": "HOST_CONFIRM",
+          "t_monotonic_ns": 3008764579074775
+        },
+        {
+          "name": "RECOVERY_COMMIT",
+          "t_monotonic_ns": 3008764579607648
+        }
+      ],
+      "family_label": "Active-active v1",
+      "fault_retention": 0.3732663085623179,
+      "fault_to_recovered_round_ms": 3957.844712,
+      "gate": "PASS",
+      "host_confirmation_ms": 91.006912,
+      "id": "aa3_local_rep03",
+      "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+      "mode": "active_active_local",
+      "post_recovery_retention": 0.9356774450914014,
+      "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "source_correctness": "results_active_active/aa3_local_rep03/correctness.json",
+      "source_events": "results_active_active/aa3_local_rep03/events.jsonl",
+      "source_summary": "results_active_active/aa3_local_rep03/summary.json",
+      "switch_detection_ms": 2777.131699,
+      "version_errors": 0
+    }
+  ],
   "roadmap": [
-    "standby_path",
     "step_level_confirmation",
-    "orthogonal_loss_matrix"
+    "bidirectional_fault_profiles",
+    "simai_up_to_128"
   ]
 }

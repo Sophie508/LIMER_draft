@@ -22,6 +22,11 @@
   </header>
 
   <main id="main">
+    <div class="meeting-switch" role="tablist" aria-label="Review selector">
+      <button id="meeting-1-tab" class="meeting-tab" type="button" role="tab" data-meeting="1" data-i18n="meetings.previous">Previous review · CPU v0 &amp; active-active v1</button>
+      <button id="meeting-2-tab" class="meeting-tab" type="button" role="tab" data-meeting="2" data-i18n="meetings.next">This review · Feedback revisions &amp; new results</button>
+    </div>
+
     <section id="overview" class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="eyebrow" data-i18n="hero.eyebrow">Stage review · CPU/Mininet emulation</p>
@@ -32,7 +37,23 @@
       <div id="hero-visual" aria-hidden="true"></div>
     </section>
 
-    <section id="demo" aria-labelledby="demo-title">
+    <section id="revisions" class="meeting-2-only" aria-labelledby="revisions-title">
+      <div class="section-heading">
+        <p class="section-number">00</p>
+        <h2 id="revisions-title" data-i18n="revisions.title">Advisor feedback → what changed</h2>
+      </div>
+      <div id="revisions-root"></div>
+    </section>
+
+    <section id="decisions" class="meeting-2-only" aria-labelledby="decisions-title">
+      <div class="section-heading">
+        <p class="section-number">0X</p>
+        <h2 id="decisions-title" data-i18n="decisions.title">Decisions needed before the next step</h2>
+      </div>
+      <div id="decisions-root"></div>
+    </section>
+
+    <section id="demo" class="meeting-1-only" aria-labelledby="demo-title">
       <div class="section-heading">
         <p class="section-number">01</p>
         <h2 id="demo-title" data-i18n="demo.title">Archived C3 incident replay</h2>
@@ -40,32 +61,32 @@
       <div id="replay-root"></div>
     </section>
 
-    <section id="implementation" aria-labelledby="implementation-title">
+    <section id="implementation" class="meeting-1-only" aria-labelledby="implementation-title">
       <div class="section-heading"><p class="section-number">02</p><h2 id="implementation-title" data-i18n="implementation.title">What we built and where it lives</h2></div>
       <div id="implementation-root"></div>
     </section>
 
-    <section id="evidence" aria-labelledby="evidence-title">
+    <section id="evidence" class="meeting-1-only" aria-labelledby="evidence-title">
       <div class="section-heading"><p class="section-number">03</p><h2 id="evidence-title" data-i18n="evidence.title">Evidence explorer</h2></div>
       <div id="evidence-root"></div>
     </section>
 
-    <section id="mapping" aria-labelledby="mapping-title">
+    <section id="mapping" class="meeting-1-only" aria-labelledby="mapping-title">
       <div class="section-heading"><p class="section-number">04</p><h2 id="mapping-title" data-i18n="mapping.title">From requirements to evidence</h2></div>
       <div id="mapping-root"></div>
     </section>
 
-    <section id="boundaries" aria-labelledby="boundaries-title">
+    <section id="boundaries" class="meeting-1-only" aria-labelledby="boundaries-title">
       <div class="section-heading"><p class="section-number">05</p><h2 id="boundaries-title" data-i18n="boundaries.title">Interpretation boundary</h2></div>
       <div id="boundary-grid"></div>
     </section>
 
-    <section id="roadmap" aria-labelledby="roadmap-title">
+    <section id="roadmap" class="meeting-1-only" aria-labelledby="roadmap-title">
       <div class="section-heading"><p class="section-number">06</p><h2 id="roadmap-title" data-i18n="roadmap.title">Prioritized next steps</h2></div>
       <div id="roadmap-grid"></div>
     </section>
 
-    <section id="feedback" aria-labelledby="feedback-title">
+    <section id="feedback" class="meeting-1-only" aria-labelledby="feedback-title">
       <div class="section-heading"><p class="section-number">07</p><h2 id="feedback-title" data-i18n="feedback.title">Feedback requested</h2></div>
       <div id="feedback-grid"></div>
     </section>

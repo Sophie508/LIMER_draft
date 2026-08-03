@@ -1,0 +1,25 @@
+{
+  "condition": "C3",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 4,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": true,
+  "recovery": true,
+  "oracle": false,
+  "transient_ms": 0,
+  "experiment_family": "active_active_v1",
+  "scenario_id": "AA3_LOCAL",
+  "routing_policy": "balanced_active_active",
+  "recovery_policy": "localized",
+  "fault_scope": {
+    "rank": 2,
+    "fabric": "A",
+    "direction": "egress"
+  },
+  "what_changes": "The persistent worker-2 Fabric A egress rate cap activates switch suspicion, completed-round host confirmation, and a versioned localized route plan at the next completed-round boundary.",
+  "expected": "All ranks commit one fingerprint, only worker 2's three baseline-A send slots move to B, workers 0, 1, and 3 retain their schedules, and recovered throughput is measured against the matched active-active baseline."
+}

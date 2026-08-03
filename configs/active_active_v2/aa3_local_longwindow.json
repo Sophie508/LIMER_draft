@@ -1,0 +1,25 @@
+{
+    "condition": "C3",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 21,
+    "fault_rate_mbit": 20.0,
+    "fault_loss_pct": 0.0,
+    "detector": true,
+    "recovery": true,
+    "oracle": false,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA3_LOCAL",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "localized",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "Identical to the formal AA3_LOCAL closed loop but with twenty post-recovery rounds instead of three, to answer whether the localized-plan retention stabilizes or keeps drifting after recovery (the formal runs showed 0.978 to 0.921 across only three recovered rounds).",
+    "expected": "Detection, confirmation, and the localized commit behave exactly as in the formal AA3_LOCAL runs, and the twenty-round retention series shows whether the post-recovery steady state holds at or above 0.9."
+}

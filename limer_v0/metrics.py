@@ -47,3 +47,35 @@ def summarize_rounds(
         "bytes_completed": byte_counts,
         "duration_s": durations,
     }
+
+
+def summarize_interval(
+    rows: Iterable[Mapping[str, Any]], baseline_median_bps: float
+) -> Dict[str, Any]:
+    """Summarize one contiguous interval without overweighting short rounds."""
+    if baseline_median_bps <= 0:
+        raise ValueError("baseline_median_bps must be positive")
+    round_count = 0
+    total_bytes = 0
+    total_duration_s = 0.0
+    for row in rows:
+        duration_s = float(row["duration_s"])
+        bytes_completed = int(row["bytes_completed"])
+        if duration_s <= 0:
+            raise ValueError("round duration must be positive")
+        if bytes_completed < 0:
+            raise ValueError("bytes_completed must be non-negative")
+        round_count += 1
+        total_bytes += bytes_completed
+        total_duration_s += duration_s
+    if round_count == 0:
+        raise ValueError("at least one interval row is required")
+    interval_bps = total_bytes * 8.0 / total_duration_s
+    return {
+        "round_count": round_count,
+        "total_bytes_completed": total_bytes,
+        "total_duration_s": total_duration_s,
+        "interval_throughput_bps": interval_bps,
+        "interval_retention": interval_bps / float(baseline_median_bps),
+        "baseline_median_bps": float(baseline_median_bps),
+    }

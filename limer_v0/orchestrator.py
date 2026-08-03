@@ -20,14 +20,36 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, TextI
 
 from .coordinator import RecoveryCoordinator, TransitionDecision
 from .faults import TcProfile, read_operstate, sample_qdisc
-from .metrics import summarize_rounds
-from .refiner import HostRefiner, RefinerDecision
-from .sentinel import SentinelRule
+from .metrics import summarize_interval, summarize_rounds
+from .refiner import HostRefiner, RefinerDecision, StepGateRefiner
+from .route_plan import RoutePlan
+from .sentinel import BurstAwareSentinelRule, SentinelRule
 from .topology import BASE_PROFILE, WORLD_SIZE, TopologyDescriptor, build_topology
 
 
 CONDITIONS = {"C0", "C1", "C2", "C3", "C4", "C5"}
 TOPOLOGIES = {"single", "dual"}
+EXPERIMENT_FAMILIES = {"legacy_v0", "active_active_v1"}
+ROUTING_POLICIES = {"single_fabric", "balanced_active_active"}
+RECOVERY_POLICIES = {"none", "localized", "global_failover"}
+ACTIVE_SCENARIO_SPECS = {
+    "AA0_HEALTHY": ("C0", False, False, False, "none", False),
+    "AA1_FAULT": ("C1", False, False, False, "none", False),
+    "AA2_DETECT": ("C2", True, False, False, "none", False),
+    "AA3_LOCAL": ("C3", True, True, False, "localized", False),
+    "AA3_GLOBAL": ("C3", True, True, False, "global_failover", False),
+    "AA4_ORACLE": ("C4", False, True, True, "localized", False),
+    "AA5_TRANSIENT": ("C5", True, True, False, "localized", True),
+    "AA6_STEPDETECT": ("C3", True, True, False, "localized", False),
+}
+DETECTOR_RULES = {"legacy", "burst"}
+HOST_GATES = {"round", "step"}
+V1_CONFIG_FIELDS = {
+    "scenario_id",
+    "routing_policy",
+    "recovery_policy",
+    "fault_scope",
+}
 REQUIRED_CONFIG_FIELDS = {
     "condition",
     "topology",
@@ -48,8 +70,9 @@ WORKER_CSV_FIELDS = [
     "rank",
     "round_id",
     "period",
-    "route",
     "version",
+    "route_plan_fingerprint",
+    "routing_policy",
     "duration_ns",
     "duration_s",
     "bytes_sent",
@@ -58,18 +81,29 @@ WORKER_CSV_FIELDS = [
     "checksum_errors",
     "version_errors",
     "step_durations_ns",
+    "send_routes",
+    "receive_routes",
+    "send_steps_by_fabric",
+    "receive_steps_by_fabric",
+    "bytes_sent_by_fabric",
+    "bytes_received_by_fabric",
 ]
 AGGREGATE_CSV_FIELDS = [
     "round_id",
     "period",
-    "route",
     "version",
+    "route_plan_fingerprint",
+    "routing_policy",
     "duration_ns",
     "duration_s",
     "bytes_completed",
     "rank_count",
     "checksum_errors",
     "version_errors",
+    "fabric_steps_sent",
+    "fabric_steps_received",
+    "fabric_bytes_sent",
+    "fabric_bytes_received",
     "orchestrator_command_start_ns",
     "orchestrator_command_end_ns",
     "orchestrator_duration_ns",
@@ -102,8 +136,10 @@ VERSION_CSV_FIELDS = [
     "event",
     "rank",
     "version",
-    "route",
+    "plan_fingerprint",
+    "policy",
     "effective_round",
+    "changed_slots",
 ]
 
 
@@ -112,6 +148,16 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
     if missing:
         raise ValueError(f"missing config fields: {', '.join(missing)}")
     result = dict(config)
+    family = str(result.get("experiment_family", "legacy_v0"))
+    if family not in EXPERIMENT_FAMILIES:
+        raise ValueError(f"unknown experiment_family: {family!r}")
+    if family == "active_active_v1":
+        missing_v1 = sorted(V1_CONFIG_FIELDS - set(config))
+        if missing_v1:
+            raise ValueError(
+                "active_active_v1 missing fields: " + ", ".join(missing_v1)
+            )
+    result["experiment_family"] = family
     if result["condition"] not in CONDITIONS:
         raise ValueError(f"unknown condition: {result['condition']!r}")
     if result["topology"] not in TOPOLOGIES:
@@ -133,11 +179,82 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
     if not 0 <= float(result["fault_loss_pct"]) < 100:
         raise ValueError("fault_loss_pct must be in [0, 100)")
     result["fault_loss_pct"] = float(result["fault_loss_pct"])
+    fault_delay_ms = result.get("fault_delay_ms")
+    if fault_delay_ms is not None:
+        if float(fault_delay_ms) < 0:
+            raise ValueError("fault_delay_ms must be non-negative")
+        fault_delay_ms = float(fault_delay_ms)
+    result["fault_delay_ms"] = fault_delay_ms
     if int(result["transient_ms"]) < 0:
         raise ValueError("transient_ms must be non-negative")
     result["transient_ms"] = int(result["transient_ms"])
     for field in ("detector", "recovery", "oracle"):
         result[field] = bool(result[field])
+
+    scenario_id = str(result.get("scenario_id", result["condition"])).strip()
+    if not scenario_id:
+        raise ValueError("scenario_id must be a non-empty string")
+    result["scenario_id"] = scenario_id
+
+    routing_policy = str(result.get("routing_policy", "single_fabric"))
+    if routing_policy not in ROUTING_POLICIES:
+        raise ValueError(f"unknown routing_policy: {routing_policy!r}")
+    result["routing_policy"] = routing_policy
+
+    default_recovery_policy = "global_failover" if result["recovery"] else "none"
+    recovery_policy = str(
+        result.get("recovery_policy", default_recovery_policy)
+    )
+    if recovery_policy not in RECOVERY_POLICIES:
+        raise ValueError(f"unknown recovery_policy: {recovery_policy!r}")
+    if result["recovery"] and recovery_policy == "none":
+        raise ValueError("recovery_policy must select localized or global_failover")
+    if not result["recovery"] and recovery_policy != "none":
+        raise ValueError("recovery_policy must be none when recovery is disabled")
+    if family != "active_active_v1" and recovery_policy == "localized":
+        raise ValueError("localized recovery_policy requires active_active_v1")
+    result["recovery_policy"] = recovery_policy
+
+    raw_fault_scope = result.get(
+        "fault_scope", {"rank": 2, "fabric": "A", "direction": "egress"}
+    )
+    if not isinstance(raw_fault_scope, Mapping):
+        raise ValueError("fault_scope must be an object")
+    if set(raw_fault_scope) != {"rank", "fabric", "direction"}:
+        raise ValueError("fault_scope must contain rank, fabric, and direction")
+    fault_scope = {
+        "rank": int(raw_fault_scope["rank"]),
+        "fabric": str(raw_fault_scope["fabric"]),
+        "direction": str(raw_fault_scope["direction"]),
+    }
+    if not 0 <= fault_scope["rank"] < WORLD_SIZE:
+        raise ValueError("fault_scope rank is out of range")
+    if fault_scope["fabric"] not in {"A", "B"}:
+        raise ValueError("fault_scope fabric must be A or B")
+    if fault_scope["direction"] != "egress":
+        raise ValueError("fault_scope direction must be egress")
+    if family == "active_active_v1" and fault_scope != {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress",
+    }:
+        raise ValueError(
+            "active_active_v1 fault_scope must be rank 2, fabric A, egress"
+        )
+    result["fault_scope"] = fault_scope
+
+    if routing_policy == "balanced_active_active" and result["topology"] != "dual":
+        raise ValueError("active-active routing requires the dual topology")
+    if family == "active_active_v1":
+        if result["topology"] != "dual":
+            raise ValueError("active_active_v1 requires the dual topology")
+        if routing_policy != "balanced_active_active":
+            raise ValueError(
+                "active_active_v1 routing_policy must be balanced_active_active"
+            )
+    elif routing_policy != "single_fabric":
+        raise ValueError("legacy_v0 routing_policy must be single_fabric")
+
     if result["recovery"] and result["topology"] != "dual":
         raise ValueError("recovery requires the dual topology")
     if result["oracle"] and not result["recovery"]:
@@ -160,7 +277,76 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
         or result["transient_ms"] <= 0
     ):
         raise ValueError("C5 requires detector, recovery, and a transient duration")
+    detector_rule = str(result.get("detector_rule", "legacy"))
+    if detector_rule not in DETECTOR_RULES:
+        raise ValueError(f"unknown detector_rule: {detector_rule!r}")
+    if detector_rule == "burst" and not result["detector"]:
+        raise ValueError("detector_rule burst requires the switch detector")
+    result["detector_rule"] = detector_rule
+
+    host_gate = str(result.get("host_gate", "round"))
+    if host_gate not in HOST_GATES:
+        raise ValueError(f"unknown host_gate: {host_gate!r}")
+    if host_gate == "step":
+        if not result["detector"] or not result["recovery"] or result["oracle"]:
+            raise ValueError(
+                "host_gate step requires detector and recovery without oracle"
+            )
+        if detector_rule != "burst":
+            raise ValueError(
+                "host_gate step requires detector_rule burst: the step gate "
+                "consumes the burst-symptom state that only that rule tracks"
+            )
+    result["host_gate"] = host_gate
+
+    if family == "active_active_v1":
+        expected = ACTIVE_SCENARIO_SPECS.get(scenario_id)
+        if expected is None:
+            raise ValueError(f"unknown active_active_v1 scenario_id: {scenario_id!r}")
+        observed = (
+            result["condition"],
+            result["detector"],
+            result["recovery"],
+            result["oracle"],
+            result["recovery_policy"],
+            result["transient_ms"] > 0,
+        )
+        if observed != expected:
+            raise ValueError(
+                f"active_active_v1 scenario semantics mismatch for {scenario_id}"
+            )
+        if scenario_id == "AA6_STEPDETECT" and (
+            detector_rule != "burst" or host_gate != "step"
+        ):
+            raise ValueError(
+                "AA6_STEPDETECT requires detector_rule burst and host_gate step"
+            )
     return result
+
+
+def _initial_route_plan(config: Mapping[str, Any]) -> RoutePlan:
+    policy = str(config["routing_policy"])
+    if policy == "single_fabric":
+        return RoutePlan.single_fabric(WORLD_SIZE, "A")
+    if policy == "balanced_active_active":
+        return RoutePlan.balanced_active_active(WORLD_SIZE)
+    raise ValueError(f"unsupported routing_policy: {policy!r}")
+
+
+def _recovery_route_plan(
+    current_plan: RoutePlan, config: Mapping[str, Any]
+) -> RoutePlan:
+    policy = str(config["recovery_policy"])
+    if policy == "localized":
+        scope = config["fault_scope"]
+        return current_plan.localized_reroute(
+            int(scope["rank"]),
+            str(scope["fabric"]),
+            "B",
+        )
+    if policy == "global_failover":
+        return RoutePlan.global_fabric(current_plan.world_size, "B")
+    raise ValueError("recovery_policy must select localized or global_failover")
 
 
 def aggregate_round_events(
@@ -175,26 +361,81 @@ def aggregate_round_events(
     round_ids = {int(event["round_id"]) for event in events}
     if len(round_ids) != 1:
         raise ValueError(f"round_id split across ranks: {sorted(round_ids)}")
-    routes = {str(event["route"]) for event in events}
-    if len(routes) != 1:
-        raise ValueError(f"route split across ranks: {sorted(routes)}")
     versions = {int(event["version"]) for event in events}
     if len(versions) != 1:
         raise ValueError(f"version split across ranks: {sorted(versions)}")
+    fingerprints = {str(event["route_plan_fingerprint"]) for event in events}
+    if len(fingerprints) != 1:
+        raise ValueError(f"fingerprint split across ranks: {sorted(fingerprints)}")
+    policies = {str(event["routing_policy"]) for event in events}
+    if len(policies) != 1:
+        raise ValueError(f"routing policy split across ranks: {sorted(policies)}")
+
+    fabric_steps_sent = {"A": 0, "B": 0}
+    fabric_steps_received = {"A": 0, "B": 0}
+    fabric_bytes_sent = {"A": 0, "B": 0}
+    fabric_bytes_received = {"A": 0, "B": 0}
+    for event in events:
+        frame_count = int(event["frame_count"])
+        send_routes = list(event["send_routes"])
+        receive_routes = list(event["receive_routes"])
+        if len(send_routes) != frame_count or len(receive_routes) != frame_count:
+            raise ValueError("route-array lengths must match frame_count")
+        if set(send_routes + receive_routes) - {"A", "B"}:
+            raise ValueError("route arrays contain an unsupported fabric")
+        for field, expected_total, aggregate in (
+            ("send_steps_by_fabric", frame_count, fabric_steps_sent),
+            ("receive_steps_by_fabric", frame_count, fabric_steps_received),
+            ("bytes_sent_by_fabric", int(event["bytes_sent"]), fabric_bytes_sent),
+            (
+                "bytes_received_by_fabric",
+                int(event["bytes_received"]),
+                fabric_bytes_received,
+            ),
+        ):
+            value = event[field]
+            if not isinstance(value, Mapping) or set(value) != {"A", "B"}:
+                raise ValueError(f"{field} must contain exactly A and B")
+            normalized = {fabric: int(value[fabric]) for fabric in ("A", "B")}
+            if any(count < 0 for count in normalized.values()):
+                raise ValueError(f"{field} values must be non-negative")
+            if sum(normalized.values()) != expected_total:
+                base_field = field.replace("_by_fabric", "")
+                raise ValueError(f"{field} does not match {base_field}")
+            for fabric in ("A", "B"):
+                aggregate[fabric] += normalized[fabric]
+
+        expected_send_steps = {
+            fabric: send_routes.count(fabric) for fabric in ("A", "B")
+        }
+        expected_receive_steps = {
+            fabric: receive_routes.count(fabric) for fabric in ("A", "B")
+        }
+        if dict(event["send_steps_by_fabric"]) != expected_send_steps:
+            raise ValueError("send route array does not match send_steps_by_fabric")
+        if dict(event["receive_steps_by_fabric"]) != expected_receive_steps:
+            raise ValueError(
+                "receive route array does not match receive_steps_by_fabric"
+            )
     duration_ns = max(int(event["duration_ns"]) for event in events)
     if duration_ns <= 0:
         raise ValueError("collective duration must be positive")
     return {
         "round_id": round_ids.pop(),
         "period": period,
-        "route": routes.pop(),
         "version": versions.pop(),
+        "route_plan_fingerprint": fingerprints.pop(),
+        "routing_policy": policies.pop(),
         "duration_ns": duration_ns,
         "duration_s": duration_ns / 1_000_000_000.0,
         "bytes_completed": sum(int(event["bytes_sent"]) for event in events),
         "rank_count": world_size,
         "checksum_errors": sum(int(event.get("checksum_errors", 0)) for event in events),
         "version_errors": sum(int(event.get("version_errors", 0)) for event in events),
+        "fabric_steps_sent": fabric_steps_sent,
+        "fabric_steps_received": fabric_steps_received,
+        "fabric_bytes_sent": fabric_bytes_sent,
+        "fabric_bytes_received": fabric_bytes_received,
     }
 
 
@@ -214,6 +455,18 @@ def _write_csv(path: Path, fieldnames: Sequence[str], rows: Iterable[Mapping[str
         writer.writeheader()
         for row in rows:
             writer.writerow(dict(row))
+
+
+def _csv_json_fields(
+    row: Mapping[str, Any], fields: Sequence[str]
+) -> Dict[str, Any]:
+    materialized = dict(row)
+    for field in fields:
+        if field in materialized:
+            materialized[field] = json.dumps(
+                materialized[field], sort_keys=True, separators=(",", ":")
+            )
+    return materialized
 
 
 class EventLog:
@@ -280,6 +533,11 @@ class WorkerHandle:
             record["source"] = "worker"
             record["received_t_monotonic_ns"] = time.monotonic_ns()
             self.event_log.append(record)
+            if record.get("event") == "STEP_DONE":
+                # Step telemetry is consumed from the event log by the step
+                # gate monitor; keeping it out of the command queue stops
+                # wait_for from accumulating it in pending.
+                continue
             self.events.put(record)
         self.events.put(
             {
@@ -437,13 +695,135 @@ class SwitchSampler:
         return self.sentinel_rule.freeze_baseline()
 
 
+class StepGateMonitor:
+    """Confirm recovery from streamed STEP_DONE evidence during a round.
+
+    Consumes worker step telemetry from the shared event log while the main
+    thread is blocked inside a collective round. A slow step is confirmable
+    only when the burst-aware detector still reports an active degraded-burst
+    symptom at that moment; once enough confirmable steps accumulate, the
+    alternate-path probe runs and the decision event is emitted mid-round.
+    The route-plan handover itself still happens at the round boundary.
+    """
+
+    def __init__(
+        self,
+        event_log: EventLog,
+        sentinel_rule: "BurstAwareSentinelRule",
+        refiner: StepGateRefiner,
+        baseline_step_p95_s: float,
+        probe: Any,
+        poll_interval_s: float = 0.010,
+    ) -> None:
+        if baseline_step_p95_s <= 0:
+            raise ValueError("baseline_step_p95_s must be positive")
+        self.event_log = event_log
+        self.sentinel_rule = sentinel_rule
+        self.refiner = refiner
+        self.baseline_step_p95_s = baseline_step_p95_s
+        self.probe = probe
+        self.poll_interval_s = poll_interval_s
+        self.decision: Optional[RefinerDecision] = None
+        self.slow_steps: List[Dict[str, Any]] = []
+        self.confirmable_slow_steps: List[Dict[str, Any]] = []
+        self._switch_event: Optional[Dict[str, Any]] = None
+        self._seen = 0
+        self._seen_keys: set = set()
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._run, daemon=True)
+
+    def start(self) -> None:
+        self._thread.start()
+
+    def stop(self) -> None:
+        self._stop.set()
+        self._thread.join(timeout=10.0)
+
+    def _consume_new_events(self) -> None:
+        records = self.event_log.records
+        upto = len(records)
+        while self._seen < upto:
+            record = records[self._seen]
+            self._seen += 1
+            event = record.get("event")
+            if event == "SWITCH_SUSPECT" and self._switch_event is None:
+                self._switch_event = record
+            elif event == "STEP_DONE":
+                duration_s = int(record["duration_ns"]) / 1_000_000_000.0
+                if not self.refiner.is_slow(duration_s, self.baseline_step_p95_s):
+                    continue
+                key = (
+                    record.get("rank"),
+                    record.get("round_id"),
+                    record.get("step_id"),
+                )
+                if key in self._seen_keys:
+                    continue
+                self._seen_keys.add(key)
+                entry = {
+                    "rank": record.get("rank"),
+                    "round_id": record.get("round_id"),
+                    "step_id": record.get("step_id"),
+                    "duration_s": duration_s,
+                    "t_monotonic_ns": record.get("t_monotonic_ns"),
+                }
+                self.slow_steps.append(entry)
+                if (
+                    self._switch_event is not None
+                    and self.sentinel_rule.rate_degraded_burst_active()
+                ):
+                    self.confirmable_slow_steps.append(entry)
+
+    def _run(self) -> None:
+        while not self._stop.is_set() and self.decision is None:
+            self._consume_new_events()
+            if (
+                self._switch_event is not None
+                and len(self.confirmable_slow_steps) >= self.refiner.min_slow_steps
+            ):
+                assessed_probe = self.probe()
+                decision = self.refiner.evaluate(
+                    self._switch_event,
+                    list(self.confirmable_slow_steps),
+                    self.baseline_step_p95_s,
+                    assessed_probe,
+                )
+                event_name = (
+                    "HOST_CONFIRM" if decision.action == "confirm" else "HOST_DEFER"
+                )
+                self.event_log.emit(
+                    event_name,
+                    action=decision.action,
+                    reasons=decision.reasons,
+                    confidence=decision.confidence,
+                    calibration_version=decision.calibration_version,
+                    gate_mode="step",
+                    evaluated_round_id=None,
+                    evaluated_round_duration_s=None,
+                    baseline_step_p95_s=self.baseline_step_p95_s,
+                    evaluated_slow_steps=list(self.confirmable_slow_steps),
+                )
+                self.decision = decision
+                return
+            self._stop.wait(self.poll_interval_s)
+
+
 def _launch_workers(
     descriptor: TopologyDescriptor,
     chunk_bytes: int,
+    initial_plan: RoutePlan,
     workdir: Path,
     run_dir: Path,
     event_log: EventLog,
+    step_telemetry: bool = False,
 ) -> List[WorkerHandle]:
+    if initial_plan.world_size != WORLD_SIZE:
+        raise ValueError("initial plan world_size must match WORLD_SIZE")
+    worker_routing_policy = (
+        "balanced_active_active"
+        if initial_plan.policy == "balanced_active_active"
+        else "single_fabric"
+    )
     handles: List[WorkerHandle] = []
     for rank in range(WORLD_SIZE):
         command = [
@@ -457,7 +837,11 @@ def _launch_workers(
             str(WORLD_SIZE),
             "--chunk-bytes",
             str(chunk_bytes),
+            "--initial-routing-policy",
+            worker_routing_policy,
         ]
+        if step_telemetry:
+            command.append("--step-telemetry")
         for route in sorted(descriptor.fabrics):
             command.extend(
                 ["--fabric", descriptor.fabrics[route][rank].worker_argument()]
@@ -481,7 +865,16 @@ def _launch_workers(
             raise RuntimeError(
                 f"worker {handle.rank} fabric mismatch: {ready.get('fabrics')}"
             )
-    event_log.emit("ALL_WORKERS_READY", ranks=list(range(WORLD_SIZE)))
+        if str(ready.get("route_plan_fingerprint")) != initial_plan.fingerprint:
+            raise RuntimeError(
+                f"worker {handle.rank} initial plan fingerprint mismatch"
+            )
+    event_log.emit(
+        "ALL_WORKERS_READY",
+        ranks=list(range(WORLD_SIZE)),
+        routing_policy=initial_plan.policy,
+        route_plan_fingerprint=initial_plan.fingerprint,
+    )
     return handles
 
 
@@ -516,6 +909,20 @@ def _run_collective_round(
     return events, aggregate
 
 
+def _baseline_step_p95_s(rows: Sequence[Mapping[str, Any]]) -> float:
+    values = sorted(
+        int(duration_ns) / 1_000_000_000.0
+        for row in rows
+        if row.get("period") == "baseline"
+        for duration_ns in row["step_durations_ns"]
+    )
+    if not values or values[0] <= 0:
+        raise ValueError("positive baseline step durations are required")
+    if len(values) == 1:
+        return values[0]
+    return statistics.quantiles(values, n=20, method="inclusive")[18]
+
+
 def _baseline_median_bps(rows: Sequence[Mapping[str, Any]]) -> float:
     throughputs = [
         int(row["bytes_completed"]) * 8.0 / float(row["duration_s"]) for row in rows
@@ -534,9 +941,72 @@ def _p95_duration_s(rows: Sequence[Mapping[str, Any]]) -> float:
     return statistics.quantiles(values, n=20, method="inclusive")[18]
 
 
-def _assess_standby_probe(
-    current: Mapping[str, Any], baseline: Mapping[str, Any]
+def _latency_summary(
+    *,
+    fault_t_ns: Optional[int],
+    suspect_t_ns: Optional[int],
+    host_decision_t_ns: Optional[int],
+    host_action: Optional[str],
+    oracle_trigger_t_ns: Optional[int],
+    commit_t_ns: Optional[int],
+    recovered_round_end_t_ns: Optional[int],
 ) -> Dict[str, Any]:
+    def delta_ms(start_ns: Optional[int], end_ns: Optional[int]) -> Optional[float]:
+        if start_ns is None or end_ns is None:
+            return None
+        if end_ns < start_ns:
+            raise ValueError("latency timestamp order is negative")
+        return (end_ns - start_ns) / 1_000_000.0
+
+    confirmed_host_t_ns = (
+        host_decision_t_ns if host_action == "confirm" else None
+    )
+    coordination_start_t_ns = (
+        oracle_trigger_t_ns
+        if oracle_trigger_t_ns is not None
+        else confirmed_host_t_ns
+    )
+    return {
+        "l_switch_ms": delta_ms(fault_t_ns, suspect_t_ns),
+        "l_host_ms": delta_ms(suspect_t_ns, host_decision_t_ns),
+        "l_detection_ms": delta_ms(fault_t_ns, confirmed_host_t_ns),
+        "l_coordination_ms": delta_ms(coordination_start_t_ns, commit_t_ns),
+        "l_fault_to_commit_ms": delta_ms(fault_t_ns, commit_t_ns),
+        "l_commit_to_recovered_round_ms": delta_ms(
+            commit_t_ns, recovered_round_end_t_ns
+        ),
+        "l_fault_to_recovered_round_complete_ms": delta_ms(
+            fault_t_ns, recovered_round_end_t_ns
+        ),
+        "latency_target": {
+            "unit": "ms",
+            "numeric_target_ms": None,
+            "status": "not_formally_specified",
+            "source": (
+                "Review feedback requests millisecond-level detection and "
+                "recovery without a numeric threshold."
+            ),
+        },
+    }
+
+
+LOADED_PROBE_LATENCY_LIMIT_MS = 250.0
+
+
+def _assess_alternate_path_probe(
+    current: Mapping[str, Any],
+    baseline: Mapping[str, Any],
+    loaded: bool = False,
+) -> Dict[str, Any]:
+    """Judge alternate-fabric health against the idle-network baseline.
+
+    The strict limit (2x the idle baseline) is only meaningful on a quiet
+    network. A probe taken mid-round competes with the collective's own
+    bulk traffic, so its pings queue behind full buffers: with loaded=True
+    the latency bound is relaxed to a fixed queueing allowance and the check
+    answers "is the fabric reachable and not black-holed", while the strict
+    quiet-network check still guards the actual handover.
+    """
     result = dict(current)
     baseline_max = baseline.get("max_latency_ms")
     current_max = current.get("max_latency_ms")
@@ -544,9 +1014,12 @@ def _assess_standby_probe(
     latency_ok = False
     if baseline_max is not None and current_max is not None:
         latency_limit_ms = max(float(baseline_max) * 2.0, float(baseline_max) + 2.0)
+        if loaded:
+            latency_limit_ms = max(latency_limit_ms, LOADED_PROBE_LATENCY_LIMIT_MS)
         latency_ok = float(current_max) <= latency_limit_ms
     result["baseline_max_latency_ms"] = baseline_max
     result["latency_limit_ms"] = latency_limit_ms
+    result["probe_context"] = "loaded-mid-round" if loaded else "quiet-network"
     result["healthy"] = bool(current.get("healthy", False)) and latency_ok
     return result
 
@@ -554,15 +1027,21 @@ def _assess_standby_probe(
 def _execute_handover(
     handles: Sequence[WorkerHandle],
     event_log: EventLog,
+    current_plan: RoutePlan,
+    target_plan: RoutePlan,
     current_round: int,
     effective_round: int,
     prepare_timeout_s: float = 10.0,
 ) -> TransitionDecision:
     if prepare_timeout_s <= 0:
         raise ValueError("prepare timeout must be positive")
-    coordinator = RecoveryCoordinator(world_size=len(handles))
+    if current_plan.world_size != len(handles):
+        raise ValueError("current plan world_size must match worker handles")
+    if target_plan.world_size != len(handles):
+        raise ValueError("target plan world_size must match worker handles")
+    coordinator = RecoveryCoordinator(current_plan)
     proposal = coordinator.propose(
-        route="B", effective_round=effective_round, current_round=current_round
+        target_plan, effective_round=effective_round, current_round=current_round
     )
     event_log.emit(
         "RECOVERY_PROPOSE",
@@ -571,16 +1050,17 @@ def _execute_handover(
         cutover_contract={
             "safe_point": "completed_collective_round_boundary",
             "last_completed_round": current_round,
-            "first_new_route_round": effective_round,
+            "first_new_plan_round": effective_round,
             "in_flight_application_frames_at_prepare": 0,
-            "old_route_kept_open": True,
+            "both_fabric_sockets_kept_open": True,
             "rollback_allowed_until_effective_round": True,
         },
     )
     command = {
         "command": "prepare",
         "version": proposal.version,
-        "route": proposal.route,
+        "plan": proposal.plan.to_dict(),
+        "plan_fingerprint": proposal.plan_fingerprint,
         "effective_round": proposal.effective_round,
     }
     for handle in handles:
@@ -591,11 +1071,16 @@ def _execute_handover(
             ready = handle.wait_for(["READY"], timeout_s=prepare_timeout_s)
             if (
                 int(ready["version"]) != proposal.version
-                or str(ready["route"]) != proposal.route
+                or str(ready["plan_fingerprint"])
+                != proposal.plan_fingerprint
                 or int(ready["effective_round"]) != proposal.effective_round
             ):
                 raise RuntimeError(f"worker {handle.rank} returned mismatched READY")
-            coordinator.record_ready(handle.rank, proposal.version)
+            coordinator.record_ready(
+                handle.rank,
+                proposal.version,
+                proposal.plan_fingerprint,
+            )
         except BaseException as exc:
             prepare_error = exc
             break
@@ -674,7 +1159,8 @@ def _execute_handover(
             event_log.emit(
                 "RECOVERY_ROLLBACK",
                 version=decision.version,
-                route=decision.route,
+                plan_fingerprint=decision.plan_fingerprint,
+                policy=decision.plan.policy,
                 effective_round=decision.effective_round,
                 committed_ranks=committed_ranks,
                 reason=f"commit acknowledgement failed: {type(exc).__name__}: {exc}",
@@ -699,9 +1185,179 @@ def _correctness_report(
     worker_errors = [
         dict(record) for record in event_records if record.get("event") == "WORKER_ERROR"
     ]
+    worker_plan_sets: Dict[str, set] = {}
+    for row in worker_rows:
+        round_key = str(row["round_id"])
+        worker_plan_sets.setdefault(round_key, set()).add(
+            (
+                int(row["version"]),
+                str(row["route_plan_fingerprint"]),
+            )
+        )
+    aggregate_plan_sets: Dict[str, set] = {}
+    for row in aggregate_rows:
+        round_key = str(row["round_id"])
+        aggregate_plan_sets.setdefault(round_key, set()).add(
+            (
+                int(row["version"]),
+                str(row["route_plan_fingerprint"]),
+            )
+        )
     route_version_cardinality = {
-        str(row["round_id"]): 1 for row in aggregate_rows
+        round_key: len(values) for round_key, values in worker_plan_sets.items()
     }
+    plan_consistency_passed = (
+        set(worker_plan_sets) == set(aggregate_plan_sets)
+        and all(len(values) == 1 for values in worker_plan_sets.values())
+        and all(len(values) == 1 for values in aggregate_plan_sets.values())
+        and all(
+            worker_plan_sets[round_key] == aggregate_plan_sets[round_key]
+            for round_key in worker_plan_sets
+        )
+    )
+
+    expected_initial_plan = _initial_route_plan(config)
+    expected_plans = {0: expected_initial_plan}
+    recovery_policy = str(config.get("recovery_policy", "none"))
+    if recovery_policy != "none":
+        expected_plans[1] = _recovery_route_plan(expected_initial_plan, config)
+    schedule_conformance_failures: List[Dict[str, Any]] = []
+    for row in worker_rows:
+        rank = int(row["rank"])
+        version = int(row["version"])
+        expected_plan = expected_plans.get(version)
+        if expected_plan is None:
+            schedule_conformance_failures.append(
+                {
+                    "rank": rank,
+                    "round_id": int(row["round_id"]),
+                    "reason": f"unexpected plan version {version}",
+                }
+            )
+            continue
+        predecessor = (rank - 1) % WORLD_SIZE
+        observed_send = tuple(str(route) for route in row.get("send_routes", []))
+        observed_receive = tuple(
+            str(route) for route in row.get("receive_routes", [])
+        )
+        mismatches = []
+        if str(row["route_plan_fingerprint"]) != expected_plan.fingerprint:
+            mismatches.append("fingerprint")
+        if str(row.get("routing_policy")) != expected_plan.policy:
+            mismatches.append("routing_policy")
+        if observed_send != expected_plan.routes[rank]:
+            mismatches.append("send_routes")
+        if observed_receive != expected_plan.routes[predecessor]:
+            mismatches.append("receive_routes")
+        if mismatches:
+            schedule_conformance_failures.append(
+                {
+                    "rank": rank,
+                    "round_id": int(row["round_id"]),
+                    "version": version,
+                    "mismatches": mismatches,
+                }
+            )
+    schedule_conformance_passed = not schedule_conformance_failures
+
+    active_active_required = (
+        config.get("experiment_family") == "active_active_v1"
+    )
+    baseline_rows = [row for row in worker_rows if row.get("period") == "baseline"]
+    baseline_send_steps = {"A": 0, "B": 0}
+    baseline_send_bytes = {"A": 0, "B": 0}
+    for row in baseline_rows:
+        for route in row.get("send_routes", []):
+            if route in baseline_send_steps:
+                baseline_send_steps[route] += 1
+        by_fabric = row.get("bytes_sent_by_fabric", {})
+        for fabric in ("A", "B"):
+            baseline_send_bytes[fabric] += int(by_fabric.get(fabric, 0))
+    active_active_passed = (
+        all(baseline_send_steps[fabric] > 0 for fabric in ("A", "B"))
+        and all(baseline_send_bytes[fabric] > 0 for fabric in ("A", "B"))
+    )
+    if not active_active_required:
+        active_active_passed = True
+
+    recovery_committed = any(
+        record.get("event") == "RECOVERY_COMMIT" for record in event_records
+    )
+    locality_required = recovery_committed and recovery_policy in {
+        "localized",
+        "global_failover",
+    }
+    locality_passed: Optional[bool] = None
+    changed_slots: List[Dict[str, Any]] = []
+    changed_sender_ranks: List[int] = []
+    unchanged_sender_ranks: List[int] = []
+    if locality_required:
+        baseline_schedules: Dict[int, set] = {}
+        recovered_schedules: Dict[int, set] = {}
+        for row in worker_rows:
+            rank = int(row["rank"])
+            routes = tuple(str(route) for route in row.get("send_routes", []))
+            if row.get("period") == "baseline":
+                baseline_schedules.setdefault(rank, set()).add(routes)
+            elif row.get("period") == "post_fault" and int(row["version"]) > 0:
+                recovered_schedules.setdefault(rank, set()).add(routes)
+
+        schedules_complete = (
+            set(baseline_schedules) == set(range(WORLD_SIZE))
+            and set(recovered_schedules) == set(range(WORLD_SIZE))
+            and all(len(values) == 1 for values in baseline_schedules.values())
+            and all(len(values) == 1 for values in recovered_schedules.values())
+        )
+        if schedules_complete:
+            for rank in range(WORLD_SIZE):
+                baseline_schedule = next(iter(baseline_schedules[rank]))
+                recovered_schedule = next(iter(recovered_schedules[rank]))
+                if baseline_schedule == recovered_schedule:
+                    unchanged_sender_ranks.append(rank)
+                else:
+                    changed_sender_ranks.append(rank)
+                for step_id, (old_route, new_route) in enumerate(
+                    zip(baseline_schedule, recovered_schedule)
+                ):
+                    if old_route != new_route:
+                        changed_slots.append(
+                            {
+                                "sender_rank": rank,
+                                "step_id": step_id,
+                                "old_route": old_route,
+                                "new_route": new_route,
+                            }
+                        )
+
+            if recovery_policy == "localized":
+                fault_rank = int(config["fault_scope"]["rank"])
+                fault_fabric = str(config["fault_scope"]["fabric"])
+                expected_steps = sum(
+                    1
+                    for route in next(iter(baseline_schedules[fault_rank]))
+                    if route == fault_fabric
+                )
+                locality_passed = (
+                    changed_sender_ranks == [fault_rank]
+                    and unchanged_sender_ranks
+                    == [rank for rank in range(WORLD_SIZE) if rank != fault_rank]
+                    and len(changed_slots) == expected_steps
+                    and all(
+                        change["old_route"] == fault_fabric
+                        and change["new_route"] == "B"
+                        for change in changed_slots
+                    )
+                )
+            else:
+                locality_passed = all(
+                    route == "B"
+                    for values in recovered_schedules.values()
+                    for schedule in values
+                    for route in schedule
+                )
+        else:
+            locality_passed = False
+
     checksum_errors = sum(int(row.get("checksum_errors", 0)) for row in worker_rows)
     version_errors = sum(int(row.get("version_errors", 0)) for row in worker_rows)
     complete = (
@@ -711,6 +1367,10 @@ def _correctness_report(
         and checksum_errors == 0
         and version_errors == 0
         and all(int(row.get("rank_count", 0)) == WORLD_SIZE for row in aggregate_rows)
+        and plan_consistency_passed
+        and schedule_conformance_passed
+        and active_active_passed
+        and (not locality_required or locality_passed is True)
     )
     return {
         "status": "pass" if complete else "fail",
@@ -723,6 +1383,30 @@ def _correctness_report(
         "worker_error_count": len(worker_errors),
         "worker_errors": worker_errors,
         "route_version_cardinality": route_version_cardinality,
+        "plan_consistency": {
+            "passed": plan_consistency_passed,
+            "worker_round_cardinality": route_version_cardinality,
+        },
+        "schedule_conformance": {
+            "passed": schedule_conformance_passed,
+            "failure_count": len(schedule_conformance_failures),
+            "failures": schedule_conformance_failures,
+        },
+        "active_active_use": {
+            "required": active_active_required,
+            "passed": active_active_passed if active_active_required else None,
+            "baseline_send_steps": baseline_send_steps,
+            "baseline_send_bytes": baseline_send_bytes,
+        },
+        "locality": {
+            "required": locality_required,
+            "passed": locality_passed,
+            "mode": recovery_policy,
+            "changed_slot_count": len(changed_slots),
+            "changed_slots": changed_slots,
+            "changed_sender_ranks": changed_sender_ranks,
+            "unchanged_sender_ranks": unchanged_sender_ranks,
+        },
         "limitation": (
             "This checks framed byte transport and route-version agreement; "
             "it is not the deferred true-reduction correctness mode."
@@ -735,6 +1419,8 @@ def _ensure_output_contract(run_dir: Path) -> None:
         _write_csv(run_dir / "switch_timeseries.csv", SWITCH_CSV_FIELDS, [])
     if not (run_dir / "worker_rounds.csv").exists():
         _write_csv(run_dir / "worker_rounds.csv", WORKER_CSV_FIELDS, [])
+    if not (run_dir / "aggregate_rounds.csv").exists():
+        _write_csv(run_dir / "aggregate_rounds.csv", AGGREGATE_CSV_FIELDS, [])
     if not (run_dir / "version_commits.csv").exists():
         _write_csv(run_dir / "version_commits.csv", VERSION_CSV_FIELDS, [])
     if not (run_dir / "correctness.json").exists():
@@ -750,6 +1436,9 @@ def execute_run(
     run_id: Optional[str] = None,
 ) -> Dict[str, Any]:
     config = validate_config(raw_config)
+    initial_plan = _initial_route_plan(config)
+    fault_rank = int(config["fault_scope"]["rank"])
+    fault_route = str(config["fault_scope"]["fabric"])
     if run_id is None:
         run_id = (
             datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -758,7 +1447,11 @@ def execute_run(
     run_dir = results_dir / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     manifest: Dict[str, Any] = {
-        "schema_version": "limer-cpu-v0.1",
+        "schema_version": (
+            "limer-cpu-active-active-v1.0"
+            if config["experiment_family"] == "active_active_v1"
+            else "limer-cpu-v0.1-compatible"
+        ),
         "run_id": run_id,
         "status": "starting",
         "started_at_utc": _utc_now(),
@@ -766,6 +1459,13 @@ def execute_run(
         "config": config,
         "what_changes": config["what_changes"],
         "expected": config["expected"],
+        "experiment_family": config["experiment_family"],
+        "scenario_id": config["scenario_id"],
+        "routing": {
+            "initial_plan": initial_plan.to_dict(),
+            "initial_plan_fingerprint": initial_plan.fingerprint,
+            "recovery_policy": config["recovery_policy"],
+        },
         "host": {
             "platform": platform.platform(),
             "python": sys.version,
@@ -807,7 +1507,7 @@ def execute_run(
     worker_rows: List[Dict[str, Any]] = []
     aggregate_rows: List[Dict[str, Any]] = []
     fault_record: Optional[Dict[str, Any]] = None
-    standby_baseline_probe: Optional[Dict[str, Any]] = None
+    alternate_path_baseline_probe: Optional[Dict[str, Any]] = None
     refiner_decision: Optional[RefinerDecision] = None
     transition_decision: Optional[TransitionDecision] = None
     transient_thread: Optional[threading.Thread] = None
@@ -835,15 +1535,15 @@ def execute_run(
             raise RuntimeError(
                 f"topology ping failed: {ping['successes']}/{expected_pings}"
             )
-        fault_interface = descriptor.fault_interface("A", 2)
-        detector_interface = descriptor.detector_interface("A", 2)
+        fault_interface = descriptor.fault_interface(fault_route, fault_rank)
+        detector_interface = descriptor.detector_interface(fault_route, fault_rank)
         if fault_interface == detector_interface:
             raise RuntimeError("fault injector and detector interfaces must be distinct")
         manifest["topology"] = {
             "kind": descriptor.kind,
             "fabrics": sorted(descriptor.fabrics),
-            "fault_route": "A",
-            "fault_rank": 2,
+            "fault_route": fault_route,
+            "fault_rank": fault_rank,
             "fault_interface": fault_interface,
             "detector_interface": detector_interface,
             "fault_observation_isolation": {
@@ -871,9 +1571,13 @@ def execute_run(
             ping_successes=ping["successes"],
             ping_attempts=ping["attempts"],
         )
-        sentinel_rule = (
-            SentinelRule(detector_interface) if config["detector"] else None
-        )
+        sentinel_rule = None
+        if config["detector"]:
+            sentinel_rule = (
+                BurstAwareSentinelRule(detector_interface)
+                if config["detector_rule"] == "burst"
+                else SentinelRule(detector_interface)
+            )
         sampler = SwitchSampler(
             [detector_interface],
             event_log,
@@ -882,16 +1586,24 @@ def execute_run(
         )
         sampler.start()
         handles = _launch_workers(
-            descriptor, config["chunk_bytes"], workdir, run_dir, event_log
+            descriptor,
+            config["chunk_bytes"],
+            initial_plan,
+            workdir,
+            run_dir,
+            event_log,
+            step_telemetry=config["host_gate"] == "step",
         )
         if "B" in descriptor.fabrics:
-            standby_baseline_probe = descriptor.ping_fabric("B")
-            if not standby_baseline_probe["healthy"]:
-                raise RuntimeError("standby fabric B failed its baseline health probe")
+            alternate_path_baseline_probe = descriptor.ping_fabric("B")
+            if not alternate_path_baseline_probe["healthy"]:
+                raise RuntimeError(
+                    "alternate fabric B failed its baseline health probe"
+                )
             event_log.emit(
-                "STANDBY_BASELINE_PROBE",
+                "ALTERNATE_PATH_BASELINE_PROBE",
                 route="B",
-                probe=standby_baseline_probe,
+                probe=alternate_path_baseline_probe,
             )
 
         round_id = 0
@@ -930,17 +1642,23 @@ def execute_run(
                 "NO_FAULT_CONTROL",
                 fault_interface=fault_interface,
                 detector_interface=detector_interface,
-                fault_operstate=descriptor.fault_operstate("A", 2),
+                fault_operstate=descriptor.fault_operstate(
+                    fault_route, fault_rank
+                ),
                 detector_operstate=read_operstate(detector_interface),
             )
         else:
             degraded_profile = TcProfile(
                 rate_mbit=config["fault_rate_mbit"],
-                delay_ms=BASE_PROFILE.delay_ms,
+                delay_ms=(
+                    BASE_PROFILE.delay_ms
+                    if config["fault_delay_ms"] is None
+                    else config["fault_delay_ms"]
+                ),
                 loss_pct=config["fault_loss_pct"],
             )
             fault_record = descriptor.apply_fault_profile(
-                degraded_profile, "A", 2
+                degraded_profile, fault_route, fault_rank
             )
             event_log.emit(
                 "FAULT_APPLIED",
@@ -953,7 +1671,7 @@ def execute_run(
                     time.sleep(config["transient_ms"] / 1000.0)
                     try:
                         restore_record = descriptor.apply_fault_profile(
-                            BASE_PROFILE, "A", 2
+                            BASE_PROFILE, fault_route, fault_rank
                         )
                         event_log.emit(
                             "FAULT_RESTORED",
@@ -985,11 +1703,57 @@ def execute_run(
             transition_decision = _execute_handover(
                 handles,
                 event_log,
+                current_plan=initial_plan,
+                target_plan=_recovery_route_plan(initial_plan, config),
                 current_round=round_id - 1,
                 effective_round=round_id,
             )
 
         host_refiner = HostRefiner()
+        step_refiner: Optional[StepGateRefiner] = None
+        step_monitor: Optional[StepGateMonitor] = None
+        if (
+            config["host_gate"] == "step"
+            and config["recovery"]
+            and not config["oracle"]
+        ):
+            if not isinstance(sentinel_rule, BurstAwareSentinelRule):
+                raise RuntimeError(
+                    "host_gate step requires the burst-aware detector rule"
+                )
+            if alternate_path_baseline_probe is None:
+                raise RuntimeError(
+                    "recovery requires an alternate-path baseline probe"
+                )
+            baseline_step_p95_s = _baseline_step_p95_s(worker_rows)
+
+            def _step_gate_probe() -> Dict[str, Any]:
+                current_probe = descriptor.ping_fabric("B")
+                assessed = _assess_alternate_path_probe(
+                    current_probe, alternate_path_baseline_probe, loaded=True
+                )
+                event_log.emit(
+                    "ALTERNATE_PATH_CONFIRMATION_PROBE",
+                    route="B",
+                    probe=assessed,
+                )
+                return assessed
+
+            step_refiner = StepGateRefiner()
+            step_monitor = StepGateMonitor(
+                event_log,
+                sentinel_rule,
+                step_refiner,
+                baseline_step_p95_s,
+                _step_gate_probe,
+            )
+            event_log.emit(
+                "STEP_GATE_ARMED",
+                baseline_step_p95_s=baseline_step_p95_s,
+                slowdown_factor=step_refiner.slowdown_factor,
+                min_slow_steps=step_refiner.min_slow_steps,
+            )
+            step_monitor.start()
         for _ in range(config["post_fault_rounds"]):
             events, aggregate = _run_collective_round(
                 handles, round_id, "post_fault", config["chunk_bytes"], event_log
@@ -999,7 +1763,86 @@ def execute_run(
             round_id += 1
 
             if (
-                config["recovery"]
+                step_monitor is not None
+                and transition_decision is None
+                and refiner_decision is None
+            ):
+                switch_suspects_so_far = [
+                    record
+                    for record in event_log.records
+                    if record.get("event") == "SWITCH_SUSPECT"
+                ]
+                if step_monitor.decision is None and switch_suspects_so_far:
+                    # The impacted round finished without enough confirmable
+                    # step evidence: settle the gate now so a transient whose
+                    # symptom cleared is suppressed, not left pending.
+                    step_monitor.stop()
+                if step_monitor.decision is not None:
+                    refiner_decision = step_monitor.decision
+                    if refiner_decision.action == "confirm":
+                        # The mid-round probe only established reachability
+                        # under load; re-check with the strict quiet-network
+                        # criterion now that the round traffic has drained,
+                        # so the handover safety bar matches the round gate.
+                        quiet_probe = _assess_alternate_path_probe(
+                            descriptor.ping_fabric("B"),
+                            alternate_path_baseline_probe,
+                        )
+                        event_log.emit(
+                            "ALTERNATE_PATH_CONFIRMATION_PROBE",
+                            route="B",
+                            probe=quiet_probe,
+                        )
+                        if quiet_probe["healthy"]:
+                            transition_decision = _execute_handover(
+                                handles,
+                                event_log,
+                                current_plan=initial_plan,
+                                target_plan=_recovery_route_plan(
+                                    initial_plan, config
+                                ),
+                                current_round=int(aggregate["round_id"]),
+                                effective_round=round_id,
+                            )
+                        else:
+                            refiner_decision = RefinerDecision(
+                                "defer",
+                                [
+                                    "The quiet-network alternate fabric probe "
+                                    "failed before handover, so reroute is "
+                                    "unsafe despite confirmed step impact.",
+                                ],
+                            )
+                            event_log.emit(
+                                "HOST_DEFER",
+                                action=refiner_decision.action,
+                                reasons=refiner_decision.reasons,
+                                confidence=None,
+                                calibration_version=None,
+                                gate_mode="step",
+                                evaluated_round_id=aggregate["round_id"],
+                                evaluated_round_duration_s=aggregate["duration_s"],
+                                baseline_p95_s=baseline_p95_s,
+                            )
+                elif switch_suspects_so_far:
+                    refiner_decision = step_refiner.suppression(
+                        len(step_monitor.slow_steps),
+                        len(step_monitor.confirmable_slow_steps),
+                    )
+                    event_log.emit(
+                        "RECOVERY_SUPPRESSED",
+                        action=refiner_decision.action,
+                        reasons=refiner_decision.reasons,
+                        confidence=None,
+                        calibration_version=None,
+                        gate_mode="step",
+                        evaluated_round_id=aggregate["round_id"],
+                        evaluated_round_duration_s=aggregate["duration_s"],
+                        baseline_p95_s=baseline_p95_s,
+                    )
+            elif (
+                step_monitor is None
+                and config["recovery"]
                 and not config["oracle"]
                 and transition_decision is None
                 and refiner_decision is None
@@ -1010,14 +1853,16 @@ def execute_run(
                     if record.get("event") == "SWITCH_SUSPECT"
                 ]
                 if switch_suspects_so_far:
-                    if standby_baseline_probe is None:
-                        raise RuntimeError("recovery requires a standby baseline probe")
+                    if alternate_path_baseline_probe is None:
+                        raise RuntimeError(
+                            "recovery requires an alternate-path baseline probe"
+                        )
                     current_probe = descriptor.ping_fabric("B")
-                    assessed_probe = _assess_standby_probe(
-                        current_probe, standby_baseline_probe
+                    assessed_probe = _assess_alternate_path_probe(
+                        current_probe, alternate_path_baseline_probe
                     )
                     event_log.emit(
-                        "STANDBY_CONFIRMATION_PROBE",
+                        "ALTERNATE_PATH_CONFIRMATION_PROBE",
                         route="B",
                         probe=assessed_probe,
                     )
@@ -1046,9 +1891,16 @@ def execute_run(
                         transition_decision = _execute_handover(
                             handles,
                             event_log,
+                            current_plan=initial_plan,
+                            target_plan=_recovery_route_plan(
+                                initial_plan, config
+                            ),
                             current_round=int(aggregate["round_id"]),
                             effective_round=round_id,
                         )
+
+        if step_monitor is not None:
+            step_monitor.stop()
 
         if transient_thread is not None:
             transient_thread.join(timeout=5.0)
@@ -1063,7 +1915,9 @@ def execute_run(
         if config["recovery"] and not config["oracle"] and refiner_decision is None:
             action = "suppress" if config["condition"] == "C5" else "defer"
             reason = (
-                "No persistent switch-side suspicion survived the three-sample gate."
+                "No switch-side suspicion was raised, so the step gate made no decision."
+                if step_monitor is not None
+                else "No persistent switch-side suspicion survived the three-sample gate."
             )
             refiner_decision = RefinerDecision(action, [reason])
             event_log.emit(
@@ -1083,8 +1937,8 @@ def execute_run(
         baseline_median_bps = _baseline_median_bps(baseline_rows)
         baseline_summary = summarize_rounds(baseline_rows, baseline_median_bps)
         post_summary = summarize_rounds(post_rows, baseline_median_bps)
-        fault_window_rows = [row for row in post_rows if row["route"] == "A"]
-        post_recovery_rows = [row for row in post_rows if row["route"] == "B"]
+        fault_window_rows = [row for row in post_rows if int(row["version"]) == 0]
+        post_recovery_rows = [row for row in post_rows if int(row["version"]) > 0]
         fault_window_summary = (
             summarize_rounds(fault_window_rows, baseline_median_bps)
             if fault_window_rows
@@ -1094,6 +1948,24 @@ def execute_run(
             summarize_rounds(post_recovery_rows, baseline_median_bps)
             if post_recovery_rows
             else None
+        )
+        first_recovered_round = (
+            min(post_recovery_rows, key=lambda row: int(row["round_id"]))
+            if post_recovery_rows
+            else None
+        )
+        recovery_window_rows = (
+            [
+                row
+                for row in post_rows
+                if int(row["round_id"])
+                <= int(first_recovered_round["round_id"])
+            ]
+            if first_recovered_round is not None
+            else post_rows
+        )
+        recovery_window_summary = summarize_interval(
+            recovery_window_rows, baseline_median_bps
         )
         correctness = _correctness_report(
             config, worker_rows, aggregate_rows, event_log.records
@@ -1127,6 +1999,11 @@ def execute_run(
             for record in event_log.records
             if record.get("event") == "RECOVERY_COMMIT"
         ]
+        oracle_trigger_events = [
+            dict(record)
+            for record in event_log.records
+            if record.get("event") == "ORACLE_TRIGGER"
+        ]
         first_host_decision_t_ns = (
             int(host_decision_events[0]["t_monotonic_ns"])
             if host_decision_events
@@ -1137,20 +2014,56 @@ def execute_run(
             if recovery_commit_events
             else None
         )
-        first_recovered_round = (
-            min(post_recovery_rows, key=lambda row: int(row["round_id"]))
-            if post_recovery_rows
+        first_oracle_trigger_t_ns = (
+            int(oracle_trigger_events[0]["t_monotonic_ns"])
+            if oracle_trigger_events
             else None
+        )
+        first_recovered_round_end_t_ns = (
+            int(first_recovered_round["orchestrator_command_end_ns"])
+            if first_recovered_round is not None
+            else None
+        )
+        latency = _latency_summary(
+            fault_t_ns=fault_t_ns,
+            suspect_t_ns=first_suspect_t_ns,
+            host_decision_t_ns=first_host_decision_t_ns,
+            host_action=(
+                refiner_decision.action if refiner_decision is not None else None
+            ),
+            oracle_trigger_t_ns=first_oracle_trigger_t_ns,
+            commit_t_ns=first_commit_t_ns,
+            recovered_round_end_t_ns=first_recovered_round_end_t_ns,
         )
         summary = {
             "run_id": run_id,
             "status": "complete" if correctness["status"] == "pass" else "failed",
             "condition": config["condition"],
+            "experiment_family": config["experiment_family"],
+            "scenario_id": config["scenario_id"],
             "topology": config["topology"],
+            "routing": {
+                "initial_policy": initial_plan.policy,
+                "initial_plan_fingerprint": initial_plan.fingerprint,
+                "recovery_policy": config["recovery_policy"],
+                "recovered_plan_fingerprint": (
+                    transition_decision.plan_fingerprint
+                    if transition_decision is not None
+                    and transition_decision.action == "commit"
+                    else None
+                ),
+                "changed_slots": (
+                    transition_decision.changed_slots
+                    if transition_decision is not None
+                    else []
+                ),
+            },
             "fault_interface": fault_interface,
             "detector_interface": detector_interface,
             "fault_applied": fault_record is not None,
-            "fault_interface_operstate_after": descriptor.fault_operstate("A", 2),
+            "fault_interface_operstate_after": descriptor.fault_operstate(
+                fault_route, fault_rank
+            ),
             "detector_interface_operstate_after": read_operstate(detector_interface),
             "fault_observation_isolation": {
                 "same_interface": fault_interface == detector_interface,
@@ -1161,8 +2074,13 @@ def execute_run(
             },
             "baseline": baseline_summary,
             "post_fault": post_summary,
-            "fault_period_retention": post_summary["fault_period_retention"],
+            "fault_period_retention": (
+                fault_window_summary["fault_period_retention"]
+                if fault_window_summary is not None and fault_record is not None
+                else post_summary["fault_period_retention"]
+            ),
             "fault_window": fault_window_summary,
+            "fault_to_restoration_window": recovery_window_summary,
             "post_recovery": post_recovery_summary,
             "post_recovery_retention": (
                 post_recovery_summary["post_recovery_retention"]
@@ -1179,6 +2097,7 @@ def execute_run(
             },
             "switch_detection": {
                 "enabled": bool(config["detector"]),
+                "detector_rule": config["detector_rule"],
                 "triggered": bool(switch_suspects),
                 "suspect_count": len(switch_suspects),
                 "rule_version": (
@@ -1207,14 +2126,11 @@ def execute_run(
                 ),
                 "fault_t_monotonic_ns": fault_t_ns,
                 "first_suspect_t_monotonic_ns": first_suspect_t_ns,
-                "l_switch_ms": (
-                    (first_suspect_t_ns - fault_t_ns) / 1_000_000.0
-                    if first_suspect_t_ns is not None and fault_t_ns is not None
-                    else None
-                ),
+                "l_switch_ms": latency["l_switch_ms"],
             },
             "host_refinement": {
                 "enabled": bool(config["recovery"] and not config["oracle"]),
+                "gate_mode": config["host_gate"],
                 "action": (
                     refiner_decision.action if refiner_decision is not None else None
                 ),
@@ -1224,12 +2140,7 @@ def execute_run(
                 "confidence": None,
                 "baseline_p95_s": baseline_p95_s,
                 "decision_t_monotonic_ns": first_host_decision_t_ns,
-                "l_host_ms": (
-                    (first_host_decision_t_ns - first_suspect_t_ns) / 1_000_000.0
-                    if first_host_decision_t_ns is not None
-                    and first_suspect_t_ns is not None
-                    else None
-                ),
+                "l_host_ms": latency["l_host_ms"],
             },
             "recovery": {
                 "enabled": bool(config["recovery"]),
@@ -1241,36 +2152,25 @@ def execute_run(
                     else None
                 ),
                 "commit_t_monotonic_ns": first_commit_t_ns,
-                "l_coordination_ms": (
-                    (first_commit_t_ns - first_host_decision_t_ns) / 1_000_000.0
-                    if first_commit_t_ns is not None
-                    and first_host_decision_t_ns is not None
-                    else None
-                ),
-                "l_fault_to_commit_ms": (
-                    (first_commit_t_ns - fault_t_ns) / 1_000_000.0
-                    if first_commit_t_ns is not None and fault_t_ns is not None
-                    else None
-                ),
+                "l_coordination_ms": latency["l_coordination_ms"],
+                "l_fault_to_commit_ms": latency["l_fault_to_commit_ms"],
                 "first_recovered_round_id": (
                     int(first_recovered_round["round_id"])
                     if first_recovered_round is not None
                     else None
                 ),
-                "l_fault_to_recovered_round_complete_ms": (
-                    (
-                        int(first_recovered_round["orchestrator_command_end_ns"])
-                        - fault_t_ns
-                    )
-                    / 1_000_000.0
-                    if first_recovered_round is not None and fault_t_ns is not None
-                    else None
-                ),
+                "l_commit_to_recovered_round_ms": latency[
+                    "l_commit_to_recovered_round_ms"
+                ],
+                "l_fault_to_recovered_round_complete_ms": latency[
+                    "l_fault_to_recovered_round_complete_ms"
+                ],
             },
+            "latency": latency,
             "correctness_status": correctness["status"],
             "interpretation_boundary": (
                 "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, "
-                "a real GPU cluster, or Huawei switch hardware."
+                "a real GPU cluster, or production switch hardware."
             ),
         }
         _write_json(run_dir / "summary.json", summary)
@@ -1279,11 +2179,37 @@ def execute_run(
             run_dir / "worker_rounds.csv",
             WORKER_CSV_FIELDS,
             (
-                dict(row, step_durations_ns=json.dumps(row.get("step_durations_ns", [])))
+                _csv_json_fields(
+                    row,
+                    (
+                        "step_durations_ns",
+                        "send_routes",
+                        "receive_routes",
+                        "send_steps_by_fabric",
+                        "receive_steps_by_fabric",
+                        "bytes_sent_by_fabric",
+                        "bytes_received_by_fabric",
+                    ),
+                )
                 for row in worker_rows
             ),
         )
-        _write_csv(run_dir / "aggregate_rounds.csv", AGGREGATE_CSV_FIELDS, aggregate_rows)
+        _write_csv(
+            run_dir / "aggregate_rounds.csv",
+            AGGREGATE_CSV_FIELDS,
+            (
+                _csv_json_fields(
+                    row,
+                    (
+                        "fabric_steps_sent",
+                        "fabric_steps_received",
+                        "fabric_bytes_sent",
+                        "fabric_bytes_received",
+                    ),
+                )
+                for row in aggregate_rows
+            ),
+        )
         version_rows = [
             row
             for row in event_log.records
@@ -1298,7 +2224,14 @@ def execute_run(
                 "RECOVERY_ROLLBACK",
             }
         ]
-        _write_csv(run_dir / "version_commits.csv", VERSION_CSV_FIELDS, version_rows)
+        _write_csv(
+            run_dir / "version_commits.csv",
+            VERSION_CSV_FIELDS,
+            (
+                _csv_json_fields(row, ("changed_slots",))
+                for row in version_rows
+            ),
+        )
         manifest["status"] = summary["status"]
     except BaseException as exc:
         error_record = {"error_type": type(exc).__name__, "error": str(exc)}
@@ -1307,6 +2240,8 @@ def execute_run(
             "run_id": run_id,
             "status": "failed",
             "condition": config["condition"],
+            "experiment_family": config["experiment_family"],
+            "scenario_id": config["scenario_id"],
             **error_record,
         }
         _write_json(run_dir / "summary.json", summary)

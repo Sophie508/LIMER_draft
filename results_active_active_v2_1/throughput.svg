@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="520" viewBox="0 0 940 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="470" y="30" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold">LIMER active-active v1: selected performance retention</text>
+<text x="470" y="51" text-anchor="middle" font-family="sans-serif" font-size="12">Balanced A/B fault-free baseline; localized recovery compared with the global-failover baseline</text>
+<line x1="82" y1="400.0" x2="882" y2="400.0" stroke="#dddddd"/>
+<text x="72" y="404.0" text-anchor="end" font-family="sans-serif" font-size="11">0.0</text>
+<line x1="82" y1="345.0" x2="882" y2="345.0" stroke="#dddddd"/>
+<text x="72" y="349.0" text-anchor="end" font-family="sans-serif" font-size="11">0.2</text>
+<line x1="82" y1="290.0" x2="882" y2="290.0" stroke="#dddddd"/>
+<text x="72" y="294.0" text-anchor="end" font-family="sans-serif" font-size="11">0.4</text>
+<line x1="82" y1="235.0" x2="882" y2="235.0" stroke="#dddddd"/>
+<text x="72" y="239.0" text-anchor="end" font-family="sans-serif" font-size="11">0.6</text>
+<line x1="82" y1="180.0" x2="882" y2="180.0" stroke="#dddddd"/>
+<text x="72" y="184.0" text-anchor="end" font-family="sans-serif" font-size="11">0.8</text>
+<line x1="82" y1="125.0" x2="882" y2="125.0" stroke="#dddddd"/>
+<text x="72" y="129.0" text-anchor="end" font-family="sans-serif" font-size="11">1.0</text>
+<line x1="82" y1="70.0" x2="882" y2="70.0" stroke="#dddddd"/>
+<text x="72" y="74.0" text-anchor="end" font-family="sans-serif" font-size="11">1.2</text>
+<line x1="82" y1="70" x2="82" y2="400" stroke="#333"/>
+<line x1="82" y1="400" x2="882" y2="400" stroke="#333"/>
+<rect x="140.7" y="124.9" width="149.3" height="275.1" fill="#5b8ff9" rx="3"/>
+<circle cx="178.0" cy="124.9" r="3.5" fill="#222"/>
+<circle cx="215.3" cy="124.9" r="3.5" fill="#222"/>
+<circle cx="252.7" cy="125.1" r="3.5" fill="#222"/>
+<text x="215.3" y="116.9" text-anchor="middle" font-family="sans-serif" font-size="12">1.000</text>
+<text x="215.3" y="420" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">AA3_LOCAL</text>
+<text x="215.3" y="437" text-anchor="middle" font-family="sans-serif" font-size="10">Closed-loop localized recovery</text>
+<rect x="407.3" y="126.8" width="149.3" height="273.2" fill="#e8684a" rx="3"/>
+<circle cx="444.7" cy="126.8" r="3.5" fill="#222"/>
+<circle cx="482.0" cy="126.9" r="3.5" fill="#222"/>
+<circle cx="519.3" cy="126.8" r="3.5" fill="#222"/>
+<text x="482.0" y="118.8" text-anchor="middle" font-family="sans-serif" font-size="12">0.993</text>
+<text x="482.0" y="420" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">AA5_TRANSIENT</text>
+<text x="482.0" y="437" text-anchor="middle" font-family="sans-serif" font-size="10">Transient suppression</text>
+<rect x="674.0" y="125.0" width="149.3" height="275.0" fill="#f6bd16" rx="3"/>
+<circle cx="711.3" cy="125.0" r="3.5" fill="#222"/>
+<circle cx="748.7" cy="124.6" r="3.5" fill="#222"/>
+<circle cx="786.0" cy="125.0" r="3.5" fill="#222"/>
+<text x="748.7" y="117.0" text-anchor="middle" font-family="sans-serif" font-size="12">1.000</text>
+<text x="748.7" y="420" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold">AA6_STEPDETECT</text>
+<text x="748.7" y="437" text-anchor="middle" font-family="sans-serif" font-size="10">Step-level detection closed loop</text>
+<text x="20" y="235" transform="rotate(-90 20 235)" text-anchor="middle" font-family="sans-serif" font-size="12">Retention vs matched pre-fault baseline</text>
+<text x="470" y="485" text-anchor="middle" font-family="sans-serif" font-size="11">Dots are three independent formal runs; bars are medians. Dual-fabric recovery assumption applies to C3/C4.</text>
+</svg>

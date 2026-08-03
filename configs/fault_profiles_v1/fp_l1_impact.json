@@ -1,0 +1,25 @@
+{
+    "condition": "C1",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 3,
+    "fault_rate_mbit": 100.0,
+    "fault_loss_pct": 1.0,
+    "detector": false,
+    "recovery": false,
+    "oracle": false,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA1_FAULT",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "none",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "Fault-profile FP-L1: worker 2's Fabric A egress keeps the full 100 Mbit link rate but drops 1 percent of packets at random, to measure a pure loss-type gray fault whose TCP behavior differs qualitatively from a rate cap.",
+    "expected": "Retention degrades through TCP retransmission and congestion response rather than a hard rate ceiling; both interfaces stay up and no recovery claim is made."
+}

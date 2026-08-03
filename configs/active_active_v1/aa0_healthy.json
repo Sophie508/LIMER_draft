@@ -1,0 +1,25 @@
+{
+  "condition": "C0",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": false,
+  "recovery": false,
+  "oracle": false,
+  "transient_ms": 0,
+  "experiment_family": "active_active_v1",
+  "scenario_id": "AA0_HEALTHY",
+  "routing_policy": "balanced_active_active",
+  "recovery_policy": "none",
+  "fault_scope": {
+    "rank": 2,
+    "fabric": "A",
+    "direction": "egress"
+  },
+  "what_changes": "No fault is injected. Every worker uses the rank-offset active-active route plan so both fabrics carry framed ring traffic in every collective step.",
+  "expected": "Both fabrics carry non-zero baseline and post-marker traffic, all ranks observe one plan fingerprint at version 0, throughput remains close to the matched baseline, and no recovery or transport error occurs."
+}

@@ -483,6 +483,19 @@ h3 {
   stroke: var(--recovered);
 }
 
+.edge.changed {
+  stroke-width: 5;
+  filter: drop-shadow(0 0 3px rgba(79, 105, 214, 0.45));
+}
+
+.edge.directed-egress {
+  marker-end: url(#egress-arrow);
+}
+
+#egress-arrow path {
+  fill: context-stroke;
+}
+
 .edge.fault {
   stroke: var(--fault);
   stroke-width: 5;
@@ -1284,5 +1297,154 @@ h3 {
   .scrubber-labels span:nth-child(2),
   .scrubber-labels span:nth-child(4) {
     display: none;
+  }
+}
+
+/* Meeting switch: previous review vs feedback-revision review */
+.meeting-switch {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1.6rem auto 0;
+  padding: 0.4rem;
+  max-width: 60rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.meeting-tab {
+  flex: 1 1 16rem;
+  padding: 0.75rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.meeting-tab:hover {
+  color: var(--ink);
+}
+
+.meeting-tab.active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.meeting-tab:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+body[data-meeting="1"] .meeting-2-only {
+  display: none;
+}
+
+body[data-meeting="2"] .meeting-1-only {
+  display: none;
+}
+
+.revisions-intro p {
+  max-width: 62rem;
+  color: var(--muted);
+}
+
+.revision-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+  margin: 1.4rem 0 1.8rem;
+}
+
+.revision-metric {
+  padding: 1.1rem 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.revision-metric strong {
+  display: block;
+  font-size: 1.55rem;
+  color: var(--primary);
+}
+
+.revision-metric span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.revision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 1.2rem;
+}
+
+.revision-card {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.revision-card header {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.revision-tag {
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.revision-card strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.revision-ask p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.revision-body p {
+  margin: 0;
+  color: var(--ink);
+}
+
+.decision-card h3 {
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 760px) {
+  .meeting-switch {
+    margin: 1rem 0.8rem 0;
+  }
+
+  .revision-grid {
+    grid-template-columns: 1fr;
   }
 }

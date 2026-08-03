@@ -1,0 +1,25 @@
+{
+  "condition": "C1",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": false,
+  "recovery": false,
+  "oracle": false,
+  "transient_ms": 0,
+  "experiment_family": "active_active_v1",
+  "scenario_id": "AA1_FAULT",
+  "routing_policy": "balanced_active_active",
+  "recovery_policy": "none",
+  "fault_scope": {
+    "rank": 2,
+    "fabric": "A",
+    "direction": "egress"
+  },
+  "what_changes": "After the matched active-active baseline, only worker 2's Fabric A egress changes from 100 to 20 Mbit/s while operstate remains UP; detection and recovery are disabled.",
+  "expected": "The rounds that continue to use worker 2's degraded A slots show measurable collective slowdown, both fabrics remain in the route plan, and no detector, recovery, checksum, or mixed-plan event occurs."
+}

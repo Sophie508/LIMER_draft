@@ -1,0 +1,25 @@
+{
+  "condition": "C5",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": true,
+  "recovery": true,
+  "oracle": false,
+  "transient_ms": 100,
+  "experiment_family": "active_active_v1",
+  "scenario_id": "AA5_TRANSIENT",
+  "routing_policy": "balanced_active_active",
+  "recovery_policy": "localized",
+  "fault_scope": {
+    "rank": 2,
+    "fabric": "A",
+    "direction": "egress"
+  },
+  "what_changes": "Worker 2's Fabric A egress is rate-limited for 100 ms and restored while UP; the detector and host gate run, but the localized recovery policy may commit only after persistent collective impact is confirmed.",
+  "expected": "Transient evidence is suppressed or deferred, plan version 0 remains active, both fabrics continue their healthy schedules after restoration, and no false recovery or transport inconsistency occurs."
+}

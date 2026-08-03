@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, TextIO, Tuple
 
 from .protocol import FrameHeader, crc32, recv_frame, send_frame
+from .route_plan import RoutePlan
 from .state import RouteState
 
 
@@ -62,6 +63,8 @@ class RingWorker:
         world_size: int,
         fabrics: List[FabricConfig],
         chunk_bytes: int,
+        initial_routing_policy: str = "single_fabric",
+        step_telemetry: bool = False,
         output: TextIO = sys.stdout,
     ) -> None:
         if world_size < 2:
@@ -75,12 +78,26 @@ class RingWorker:
             raise ValueError("fabric names must be unique")
         if "A" not in names:
             raise ValueError("fabric A is required")
+        if initial_routing_policy == "single_fabric":
+            initial_plan = RoutePlan.single_fabric(world_size, "A")
+        elif initial_routing_policy == "balanced_active_active":
+            if "B" not in names:
+                raise ValueError(
+                    "balanced_active_active routing requires fabrics A and B"
+                )
+            initial_plan = RoutePlan.balanced_active_active(world_size)
+        else:
+            raise ValueError(
+                "initial_routing_policy must be single_fabric or "
+                "balanced_active_active"
+            )
         self.rank = rank
         self.world_size = world_size
         self.configs = {fabric.name: fabric for fabric in fabrics}
         self.chunk_bytes = chunk_bytes
+        self.step_telemetry = bool(step_telemetry)
         self.output = output
-        self.route_state = RouteState()
+        self.route_state = RouteState(initial_plan)
         self.sockets: Dict[str, FabricSockets] = {}
         self.listeners: Dict[str, socket.socket] = {}
 
@@ -135,7 +152,12 @@ class RingWorker:
             self.sockets[name] = FabricSockets(incoming, outgoing[name])
             listener.close()
         self.listeners.clear()
-        self.emit("WORKER_READY", fabrics=sorted(self.sockets))
+        self.emit(
+            "WORKER_READY",
+            fabrics=sorted(self.sockets),
+            routing_policy=self.route_state.active_plan.policy,
+            route_plan_fingerprint=self.route_state.active_plan.fingerprint,
+        )
 
     def _receive_one(
         self,
@@ -149,17 +171,30 @@ class RingWorker:
             errors.append(exc)
 
     def run_round(self, round_id: int, chunk_bytes: Optional[int] = None) -> Dict[str, object]:
-        route, version = self.route_state.route_for(round_id)
-        if route not in self.sockets:
-            raise ValueError(f"route {route} has no established fabric")
-        sockets = self.sockets[route]
+        plan, version = self.route_state.plan_for(round_id)
+        if plan.world_size != self.world_size:
+            raise ValueError("active route plan world_size does not match worker")
+        missing_fabrics = sorted(
+            {route for row in plan.routes for route in row} - set(self.sockets)
+        )
+        if missing_fabrics:
+            raise ValueError(
+                "active route plan uses unavailable fabrics: "
+                + ", ".join(missing_fabrics)
+            )
         size = self.chunk_bytes if chunk_bytes is None else int(chunk_bytes)
         if size <= 0:
             raise ValueError("round chunk_bytes must be positive")
         payload = bytes([self.rank & 0xFF]) * size
         payload_checksum = crc32(payload)
-        steps = 2 * (self.world_size - 1)
+        steps = plan.steps
         step_durations_ns: List[int] = []
+        send_routes: List[str] = []
+        receive_routes: List[str] = []
+        send_steps_by_fabric = {"A": 0, "B": 0}
+        receive_steps_by_fabric = {"A": 0, "B": 0}
+        bytes_sent_by_fabric = {"A": 0, "B": 0}
+        bytes_received_by_fabric = {"A": 0, "B": 0}
         bytes_sent = 0
         bytes_received = 0
         checksum_errors = 0
@@ -167,11 +202,16 @@ class RingWorker:
         round_start = time.monotonic_ns()
 
         for step_id in range(steps):
+            send_route = plan.route_for(self.rank, step_id)
+            predecessor = (self.rank - 1) % self.world_size
+            receive_route = plan.route_for(predecessor, step_id)
+            send_sockets = self.sockets[send_route]
+            receive_sockets = self.sockets[receive_route]
             received: List[Tuple[FrameHeader, bytes]] = []
             errors: List[BaseException] = []
             receiver = threading.Thread(
                 target=self._receive_one,
-                args=(sockets.incoming, received, errors),
+                args=(receive_sockets.incoming, received, errors),
                 daemon=True,
             )
             step_start = time.monotonic_ns()
@@ -183,7 +223,7 @@ class RingWorker:
                 payload_len=size,
                 checksum=payload_checksum,
             )
-            send_frame(sockets.outgoing, header, payload)
+            send_frame(send_sockets.outgoing, header, payload)
             receiver.join(timeout=65.0)
             if receiver.is_alive():
                 raise TimeoutError(f"receive timed out at round {round_id} step {step_id}")
@@ -206,6 +246,21 @@ class RingWorker:
                 checksum_errors += 1
                 raise ValueError("received payload checksum mismatch")
             step_durations_ns.append(time.monotonic_ns() - step_start)
+            if self.step_telemetry:
+                self.emit(
+                    "STEP_DONE",
+                    round_id=round_id,
+                    step_id=step_id,
+                    version=version,
+                    send_route=send_route,
+                    duration_ns=step_durations_ns[-1],
+                )
+            send_routes.append(send_route)
+            receive_routes.append(receive_route)
+            send_steps_by_fabric[send_route] += 1
+            receive_steps_by_fabric[receive_route] += 1
+            bytes_sent_by_fabric[send_route] += size
+            bytes_received_by_fabric[receive_route] += size
             bytes_sent += size
             bytes_received += size
 
@@ -213,8 +268,15 @@ class RingWorker:
         return {
             "event": "ROUND_DONE",
             "round_id": round_id,
-            "route": route,
             "version": version,
+            "route_plan_fingerprint": plan.fingerprint,
+            "routing_policy": plan.policy,
+            "send_routes": send_routes,
+            "receive_routes": receive_routes,
+            "send_steps_by_fabric": send_steps_by_fabric,
+            "receive_steps_by_fabric": receive_steps_by_fabric,
+            "bytes_sent_by_fabric": bytes_sent_by_fabric,
+            "bytes_received_by_fabric": bytes_received_by_fabric,
             "step_durations_ns": step_durations_ns,
             "duration_ns": duration_ns,
             "bytes_sent": bytes_sent,
@@ -246,20 +308,43 @@ class RingWorker:
                     event_name = str(result.pop("event"))
                     self.emit(event_name, **result)
                 elif name == "prepare":
+                    plan = RoutePlan.from_dict(command["plan"])
+                    plan_fingerprint = str(command["plan_fingerprint"])
+                    if plan.fingerprint != plan_fingerprint:
+                        raise ValueError(
+                            "prepare plan fingerprint does not match plan content"
+                        )
+                    unavailable = sorted(
+                        {route for row in plan.routes for route in row}
+                        - set(self.sockets)
+                    )
+                    if unavailable:
+                        raise ValueError(
+                            "prepare plan uses unavailable fabrics: "
+                            + ", ".join(unavailable)
+                        )
                     self.route_state.prepare(
                         int(command["version"]),
-                        str(command["route"]),
+                        plan,
                         int(command["effective_round"]),
                     )
                     self.emit(
                         "READY",
                         version=int(command["version"]),
-                        route=str(command["route"]),
+                        plan_fingerprint=plan_fingerprint,
+                        routing_policy=plan.policy,
                         effective_round=int(command["effective_round"]),
                     )
                 elif name == "commit":
+                    if self.route_state.prepared is None:
+                        raise ValueError("no prepared transition to commit")
+                    plan_fingerprint = self.route_state.prepared.plan.fingerprint
                     self.route_state.commit(int(command["version"]))
-                    self.emit("COMMITTED", version=int(command["version"]))
+                    self.emit(
+                        "COMMITTED",
+                        version=int(command["version"]),
+                        plan_fingerprint=plan_fingerprint,
+                    )
                 elif name == "abort":
                     self.route_state.abort(int(command["version"]))
                     self.emit("ABORTED", version=int(command["version"]))
@@ -285,12 +370,25 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser.add_argument("--world-size", type=int, required=True)
     parser.add_argument("--fabric", action="append", type=FabricConfig.parse, required=True)
     parser.add_argument("--chunk-bytes", type=int, default=2 * 1024 * 1024)
+    parser.add_argument(
+        "--initial-routing-policy",
+        choices=("single_fabric", "balanced_active_active"),
+        default="single_fabric",
+    )
+    parser.add_argument("--step-telemetry", action="store_true")
     return parser.parse_args(argv)
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = parse_args(argv)
-    worker = RingWorker(args.rank, args.world_size, args.fabric, args.chunk_bytes)
+    worker = RingWorker(
+        args.rank,
+        args.world_size,
+        args.fabric,
+        args.chunk_bytes,
+        initial_routing_policy=args.initial_routing_policy,
+        step_telemetry=args.step_telemetry,
+    )
     try:
         worker.start()
         return worker.control_loop()

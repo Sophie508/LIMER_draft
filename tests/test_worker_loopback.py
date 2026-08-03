@@ -9,6 +9,8 @@ import time
 import unittest
 from pathlib import Path
 
+from limer_v0.route_plan import RoutePlan
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -34,7 +36,16 @@ def loopback_alias_available():
 
 
 class WorkerProcess:
-    def __init__(self, rank, local_ip, next_ip, port_a, port_b):
+    def __init__(
+        self,
+        rank,
+        local_ip,
+        next_ip,
+        port_a,
+        port_b,
+        initial_routing_policy="balanced_active_active",
+        step_telemetry=False,
+    ):
         command = [
             sys.executable,
             "-m",
@@ -49,7 +60,11 @@ class WorkerProcess:
             f"B,{local_ip},{next_ip},{port_b}",
             "--chunk-bytes",
             "65536",
+            "--initial-routing-policy",
+            initial_routing_policy,
         ]
+        if step_telemetry:
+            command.append("--step-telemetry")
         env = dict(os.environ)
         env["PYTHONUNBUFFERED"] = "1"
         self.process = subprocess.Popen(
@@ -121,54 +136,106 @@ class WorkerLoopbackTest(unittest.TestCase):
         loopback_alias_available(),
         "host does not route arbitrary 127/8 aliases; the Debian/Mininet run covers this test",
     )
-    def test_two_workers_switch_fabrics_at_committed_round(self):
+    def test_two_workers_apply_localized_plan_at_committed_round(self):
         port_a = unused_port()
         port_b = unused_port()
         workers = [
-            WorkerProcess(0, "127.0.0.11", "127.0.0.12", port_a, port_b),
-            WorkerProcess(1, "127.0.0.12", "127.0.0.11", port_a, port_b),
+            WorkerProcess(
+                0, "127.0.0.11", "127.0.0.12", port_a, port_b, step_telemetry=True
+            ),
+            WorkerProcess(
+                1, "127.0.0.12", "127.0.0.11", port_a, port_b, step_telemetry=True
+            ),
         ]
         try:
             for worker in workers:
                 ready = worker.wait_event("WORKER_READY")
                 self.assertEqual(set(ready["fabrics"]), {"A", "B"})
+                self.assertEqual(
+                    ready["routing_policy"], "balanced_active_active"
+                )
 
             for worker in workers:
                 worker.send({"command": "run_round", "round_id": 0})
+            step_events = [
+                [worker.wait_event("STEP_DONE") for _ in range(2)]
+                for worker in workers
+            ]
+            for rank, events in enumerate(step_events):
+                self.assertEqual(
+                    [event["step_id"] for event in events], [0, 1]
+                )
+                for event in events:
+                    self.assertEqual(event["round_id"], 0)
+                    self.assertEqual(event["version"], 0)
+                    self.assertGreater(event["duration_ns"], 0)
+            self.assertEqual(step_events[0][0]["send_route"], "A")
+            self.assertEqual(step_events[1][0]["send_route"], "B")
             first = [worker.wait_event("ROUND_DONE") for worker in workers]
-            self.assertTrue(all(event["route"] == "A" for event in first))
             self.assertTrue(all(event["version"] == 0 for event in first))
+            self.assertEqual(first[0]["send_routes"], ["A", "B"])
+            self.assertEqual(first[1]["send_routes"], ["B", "A"])
+            self.assertEqual(first[0]["receive_routes"], ["B", "A"])
+            self.assertEqual(first[1]["receive_routes"], ["A", "B"])
+            self.assertTrue(
+                all(
+                    event["send_steps_by_fabric"] == {"A": 1, "B": 1}
+                    for event in first
+                )
+            )
+
+            baseline = RoutePlan.balanced_active_active(2)
+            recovered = baseline.localized_reroute(0, "A", "B")
 
             for worker in workers:
                 worker.send(
                     {
                         "command": "prepare",
                         "version": 1,
-                        "route": "B",
+                        "plan": recovered.to_dict(),
+                        "plan_fingerprint": recovered.fingerprint,
                         "effective_round": 2,
                     }
                 )
             for worker in workers:
-                self.assertEqual(worker.wait_event("READY")["version"], 1)
+                ready = worker.wait_event("READY")
+                self.assertEqual(ready["version"], 1)
+                self.assertEqual(
+                    ready["plan_fingerprint"], recovered.fingerprint
+                )
             for worker in workers:
                 worker.send({"command": "commit", "version": 1})
             for worker in workers:
                 self.assertEqual(worker.wait_event("COMMITTED")["version"], 1)
 
-            for round_id, expected_route, expected_version in (
-                (1, "A", 0),
-                (2, "B", 1),
-            ):
+            for round_id, expected_version in ((1, 0), (2, 1)):
                 for worker in workers:
                     worker.send({"command": "run_round", "round_id": round_id})
                 events = [worker.wait_event("ROUND_DONE") for worker in workers]
                 for event in events:
-                    self.assertEqual(event["route"], expected_route)
                     self.assertEqual(event["version"], expected_version)
                     self.assertEqual(event["bytes_sent"], 2 * 65536)
                     self.assertEqual(event["bytes_received"], 2 * 65536)
                     self.assertEqual(event["checksum_errors"], 0)
                     self.assertEqual(event["version_errors"], 0)
+                if round_id == 1:
+                    self.assertEqual(events[0]["send_routes"], ["A", "B"])
+                    self.assertEqual(events[1]["send_routes"], ["B", "A"])
+                    self.assertEqual(
+                        events[0]["route_plan_fingerprint"], baseline.fingerprint
+                    )
+                else:
+                    self.assertEqual(events[0]["send_routes"], ["B", "B"])
+                    self.assertEqual(events[1]["send_routes"], ["B", "A"])
+                    self.assertEqual(events[0]["receive_routes"], ["B", "A"])
+                    self.assertEqual(events[1]["receive_routes"], ["B", "B"])
+                    self.assertTrue(
+                        all(
+                            event["route_plan_fingerprint"]
+                            == recovered.fingerprint
+                            for event in events
+                        )
+                    )
         finally:
             for worker in workers:
                 worker.close()

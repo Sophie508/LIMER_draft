@@ -1,114 +1,155 @@
 # Current Limitations and Next Experiments
 
-## What this snapshot supports
+## Evidence boundary
 
-The current evidence supports three bounded statements:
+Two generations must not be mixed:
 
-1. Limiting one still-up access link from 100 to 20 Mbit/s reduces the matched
-   four-rank AllReduce-like throughput to about 21%.
-2. A detector isolated to the switch-facing peer counter can flag that
-   persistent rate degradation in roughly 40-55 ms in this emulation.
-3. A four-rank versioned route transition can move traffic to a pre-existing
-   healthy fabric without observed CRC or mixed-version failures, although the
-   fixed C3 performance gate currently passes only 1/3 repeats.
+- `results/` is immutable legacy CPU v0 evidence. Its closed loop uses a
+  coordinated whole-ring A-to-B transition and remains a valid record of the
+  original minimum demo.
+- `results_active_active/` contains the measured active-active v1 matrix. Its
+  21 formal runs prove both-fabric healthy use and policy-specific plan
+  correctness in this emulator; the website displays only the three complete
+  `AA3_LOCAL` repeats.
+
+All 21 v1 runs completed with correctness `pass`; 20/21 predeclared performance
+gates passed. The retained failure is `aa3_global_rep02`, an explicit global
+comparison whose post-recovery retention was 0.882. These are emulator results,
+not evidence of production performance, hardware compatibility, or large-scale
+training behavior.
+
+## What the prototype can establish
+
+The complete Linux/Mininet artifacts let the CPU prototype answer five bounded
+questions:
+
+1. Do Fabric A and Fabric B both carry non-zero normal traffic under the
+   balanced active-active schedule?
+2. Does a 100-to-20 Mbit/s impairment on worker 2's A egress remain `UP` while
+   reducing completed collective-like throughput?
+3. Can a distinct switch-facing counter raise a suspicion without reading the
+   injector qdisc?
+4. Can every rank commit the same route-plan version and fingerprint at one
+   completed-round boundary?
+5. Does localized recovery change exactly worker 2's three baseline-A send
+   slots while leaving workers 0, 1, and 3 unchanged?
+
+Retention is always divided by the matched active-active baseline from the
+same run. Failed repeats remain part of the denominator.
 
 ## Unsupported inferences
 
 ### It is not numerical AllReduce
 
-Workers exchange repeated byte payloads and validate frame CRCs. They do not
-perform reduce-scatter, summation, or all-gather semantics. `correctness.json`
-proves framed transport, rank completeness, and route/version agreement, not
-tensor equality.
+Workers exchange framed byte payloads and validate CRC, round, step, version,
+and route-plan agreement. They do not perform reduce-scatter, summation, or
+all-gather. Transport correctness is not tensor equality.
 
-### It is not a GPU, NCCL, or RDMA result
+### It is not a GPU, NCCL, RDMA, or training result
 
-No GPU or training framework participates. There is no NCCL communicator,
-PyTorch process group, RDMA queue pair, NIC firmware signal, checkpoint, or
-optimizer state. The no-checkpoint property here means only that the synthetic
-traffic loop changes route without restarting its round history.
+No GPU, training framework, NCCL communicator, RDMA queue pair, checkpoint, or
+optimizer state participates. “No rollback” means only that the synthetic
+round sequence continues across a route-plan commit.
 
-### Detection is not switch-resident
+### Detection is switch-facing, not switch-resident
 
-The detector process polls Linux counters from outside the OVS bridge. It
-models a management-plane switch-first interface. It does not demonstrate P4,
-ASIC logic, a switch CPU agent, gNMI/SNMP integration, or a bounded switch
-memory footprint.
+The Python sampler polls the Linux counter on the OVS-facing endpoint from the
+root namespace. It models a switch-first management interface but does not
+demonstrate ASIC or P4 logic, a switch CPU agent, gNMI/SNMP streaming, or a
+bounded switch memory and compute budget.
 
 ### The end-host gate is not the proposed ML method
 
-The v0 gate is a fixed explainable rule. It has no neuro-fuzzy fault classifier,
-Gaussian-process uncertainty, confidence calibration, weak supervision, online
-adaptation, or unseen-fault evaluation.
+The current rule combines switch suspicion, completed-round slowdown, and
+alternate-path health. It has no neuro-fuzzy fault classifier, Gaussian-process
+uncertainty, calibration study, weak supervision, online adaptation, or
+unseen-fault evaluation.
 
-### Recovery assumes physical redundancy
+### The fault is directed, not a full physical-link model
 
-C3 and C4 start with a healthy fabric B and persistent B-side TCP rings. This
-tests coordinated reroute when a second path exists. It cannot recover a
-strictly single-homed access link that has no alternative NIC, link, or route.
+Active-active v1 rate-limits only `w2 -> Fabric A` egress. This is enough to test
+the corrected locality semantics, but it does not model a bidirectional cable
+fault or independent ingress impairment. The public diagram labels the arrow
+direction explicitly.
 
-### The latency target is not met end to end
+### Recovery still assumes a usable alternate path
 
-Counter-proxy detection is about 50 ms, but the host gate waits for one full
-degraded round and takes about 5.27 s median in C3. The sub-millisecond
-coordination stage does not make the complete loop millisecond-scale.
+Fabric B already carries ordinary traffic before the fault; it is not a cold
+backup. Localized rerouting therefore assumes worker 2 has a healthy alternate
+connection. A strictly single-homed access link cannot be repaired by route
+selection alone.
 
-### Current formal faults are rate degradations only
+### All-rank coordination is a consistency scaffold
 
-All C0-C5 configurations use 0% random packet loss. Queue, drop, overlimit, and
-error fields are collected, and the injector supports a loss percentage, but
-the archived matrix does not validate gray packet-loss detection.
+All ranks receive the plan because each receiver must listen on its
+predecessor's selected fabric. This proves coordinated plan installation, not a
+real PyTorch process-group or NCCL communicator rebuild. Timeout, partial-READY,
+process death, and control-channel partition handling remain incomplete.
 
-### Statistical scope is small
+### End-to-end millisecond recovery is not established
 
-Three repeats per condition are appropriate for a first engineering sanity
-check, not a publication-level claim about tail behavior, false-positive rate,
-hardware diversity, or production workloads.
+The switch sampler targets a 20 ms interval, but the host gate waits for an
+entire degraded round before confirmation. Latency artifacts report switch,
+host, coordination, commit-to-completion, and fault-to-restoration stages in
+milliseconds. The formal numeric target is unspecified, and raw stage values
+must not be converted into a claim that millisecond end-to-end recovery was
+achieved.
 
-### One result field has an ambiguous name
+In the three formal `AA3_LOCAL` repeats, median switch-suspicion latency was
+about 2.78 s and median fault-to-completed-recovered-round latency about 3.96 s.
+Coordination itself was sub-millisecond, but it begins only after the slow
+round and host gate. The measured bottleneck is therefore confirmation timing,
+not plan dissemination.
 
-For C3, top-level `fault_period_retention` summarizes every post-injection round,
-including recovered B rounds. Use nested `fault_window.fault_period_retention`
-for the isolated degraded A round and `post_recovery_retention` for the recovery
-gate. See [`experiment_design.md`](experiment_design.md).
+### Fault and statistical coverage remain narrow
+
+The current v1 matrix uses a 20 Mbit/s directed rate cap and 0% configured
+random loss, plus one 100 ms transient. Three repeats per scenario are an
+engineering sanity check, not a publication-level tail, recall, false-positive,
+or hardware-diversity result.
 
 ## Prioritized next experiments
 
-### 1. Isolate the C3 standby-path effect
+### 1. Replace whole-round confirmation with step-level evidence
 
-Keep the existing `>= 0.9` gate and all other parameters fixed. Compare:
+Emit duration and progress while a round is in flight. Compare time-to-confirm
+against the current completed-round gate while retaining the transient scenario
+to measure false-trigger suppression. The change is successful only if latency
+falls without turning the 100 ms transient into a recovery commit.
 
-- idle B ring, matching the current implementation;
-- low-rate B keepalive before the fault;
-- explicit pre-fault performance rounds on B.
+### 2. Expand concrete fault profiles
 
-The hypothesis is that an idle or cold B-side TCP path causes the first two
-recovery rounds to lag. This is not yet proven; the controlled comparison must
-either support or reject it.
+Predeclare separate experiments for:
 
-### 2. Reduce host-confirmation latency
+- bidirectional 100-to-20 Mbit/s degradation;
+- constant-rate low non-zero packet loss;
+- queue buildup and congestion drops; and
+- several fault durations around the confirmation boundary.
 
-Emit step-level duration and progress evidence while a collective round is in
-flight. Compare time-to-confirm against the whole-round gate while retaining a
-transient condition like C5 to measure false-trigger suppression.
+Configured impairment, observed counters, and congestion-induced drops must be
+kept as separate fields. This replaces ambiguous shorthand with explicit
+variables and expected observations.
 
-### 3. Add an orthogonal gray-loss matrix
+### 3. Replace telemetry proxies one boundary at a time
 
-Predeclare low non-zero loss levels with the rate held constant, distinguish
-configured loss from congestion drops, and test whether the same switch-facing
-signals retain high recall without directly observing the injector state.
+First connect the existing Layer 1 interface to a realistic streaming source
+and measure sampling delay, memory, and CPU cost. Then evaluate the end-host
+classifier and calibrated uncertainty estimator on separately generated train,
+calibration, and test traces. Do not infer switch feasibility from Python
+process overhead.
 
-### 4. Replace proxies one boundary at a time
+### 4. Add realistic collective simulation up to 128 GPUs
 
-First connect the counter interface to realistic streaming telemetry and measure
-poll/stream overhead. Next train and calibrate the end-host classifier and GP on
-separate traces. Only then move the workload to PyTorch/Gloo for CPU numerical
-AllReduce and to `nccl-tests` on a GPU host.
+Use SimAI as a separate model-backed experiment track for small-to-medium scale
+collectives, with at most 128 simulated GPUs initially. Calibrate its topology,
+collective schedule, and fault assumptions against the measured CPU emulator
+where the two overlap. SimAI output is not interchangeable with Mininet packet
+and counter evidence.
 
 ### 5. Implement real collective recovery
 
-The final systems step is a safe-point protocol that rebuilds or changes the
-actual collective communicator consistently across ranks without checkpoint
-rollback. It needs failure-timeout handling, partial-READY behavior, rollback
-or abort semantics, and real GPU validation; the current TCP route-version
-protocol is only its executable scaffold.
+Validate numerical CPU collectives before moving to GPU `nccl-tests`. The final
+systems step must adapt or rebuild the real communicator at a safe point,
+handle partial coordination and timeouts, and continue without checkpoint
+rollback. The current route-plan protocol is only the executable scaffold for
+that work.

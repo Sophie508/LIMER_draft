@@ -74,7 +74,11 @@ class SiteStructureTests(unittest.TestCase):
             "implementation-stack",
             "limer_v0/sentinel.py",
             "limer_v0/refiner.py",
+            "limer_v0/route_plan.py",
             "limer_v0/coordinator.py",
+            "configs/active_active_v1/aa3_local.json",
+            "tests/test_worker_data_path.py",
+            "docs/active_active_v1_verification.md",
             "results/c3_rep01/events.jsonl",
         ):
             self.assertIn(token, app)
@@ -117,6 +121,8 @@ class SiteStructureTests(unittest.TestCase):
             ".edge.route-a",
             ".edge.route-b",
             ".edge.fault",
+            ".edge.changed",
+            ".edge.directed-egress",
             ":focus-visible",
             "@media (max-width: 760px)",
         ):
@@ -142,6 +148,25 @@ class SiteStructureTests(unittest.TestCase):
         self.assertIn('payload.meta.formal_run_count', app)
         self.assertIn('payload.meta.gate_pass_count', app)
         self.assertIn('payload.conditions.C3.gate_pass_count', app)
+        self.assertIn('payload.replay_runs || payload.c3_runs', app)
+        self.assertIn('payload.active_active_runs?.[0]?.id', app)
+
+    def test_public_copy_exposes_v1_scope_without_overclaiming(self):
+        paths = (
+            ROOT / "README.md",
+            ROOT / "docs/current_limitations.md",
+            ROOT / "docs/assets/js/app.js",
+        )
+        text = "\n".join(path.read_text(encoding="utf-8") for path in paths)
+        for required in (
+            "active-active",
+            "localized",
+            "results_active_active",
+            "directed egress",
+            "all-rank",
+        ):
+            self.assertIn(required, text)
+        self.assertNotIn("millisecond end-to-end recovery achieved", text)
 
     def test_replay_svg_uses_the_approved_anchored_paths(self):
         app = (ROOT / "docs/assets/js/app.js").read_text(encoding="utf-8")

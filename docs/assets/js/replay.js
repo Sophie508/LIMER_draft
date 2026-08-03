@@ -10,7 +10,7 @@ export const PHASES = [
 
 export function createReplayModel(runs, runId = runs[0]?.id) {
   if (!Array.isArray(runs) || runs.length === 0) {
-    throw new Error("At least one C3 run is required");
+    throw new Error("At least one replay run is required");
   }
   if (!runs.some((run) => run.id === runId)) {
     throw new Error(`Unknown run: ${runId}`);
@@ -51,17 +51,31 @@ export function setState(model, index) {
 
 export function deriveScene(model) {
   const run = model.runs.find((candidate) => candidate.id === model.runId);
+  const mode = run.mode || "legacy_global";
   const recovered = model.stateIndex >= 4;
   const faultActive = model.stateIndex >= 1 && !recovered;
   const edgeClasses = {};
 
-  for (const id of ["a0", "a1", "a2", "a3"]) {
-    edgeClasses[id] = `edge${recovered ? "" : " route-a"}${
-      id === "a2" && faultActive ? " fault" : ""
-    }`;
-  }
-  for (const id of ["b0", "b1", "b2", "b3"]) {
-    edgeClasses[id] = `edge${recovered ? " route-b" : ""}`;
+  if (mode === "active_active_local") {
+    for (const id of ["a0", "a1", "a2", "a3"]) {
+      edgeClasses[id] = `edge${id === "a2" && recovered ? "" : " route-a"}${
+        id === "a2" && faultActive ? " fault" : ""
+      }`;
+    }
+    for (const id of ["b0", "b1", "b2", "b3"]) {
+      edgeClasses[id] = `edge route-b${
+        id === "b2" && recovered ? " changed" : ""
+      }`;
+    }
+  } else {
+    for (const id of ["a0", "a1", "a2", "a3"]) {
+      edgeClasses[id] = `edge${recovered ? "" : " route-a"}${
+        id === "a2" && faultActive ? " fault" : ""
+      }`;
+    }
+    for (const id of ["b0", "b1", "b2", "b3"]) {
+      edgeClasses[id] = `edge${recovered ? " route-b" : ""}`;
+    }
   }
 
   return {
@@ -72,7 +86,16 @@ export function deriveScene(model) {
         : model.stateIndex < 5
           ? run.fault_retention
           : run.post_recovery_retention,
-    route: recovered ? "B" : "A",
+    mode,
+    route: mode === "active_active_local" ? "A+B" : recovered ? "B" : "A",
+    routeLabel:
+      mode === "active_active_local"
+        ? recovered
+          ? "A+B · w2 A slots rerouted to B"
+          : "A+B active-active"
+        : recovered
+          ? "B global failover"
+          : "A primary",
     version: recovered ? 1 : 0,
     gate: run.gate,
     faultActive,
