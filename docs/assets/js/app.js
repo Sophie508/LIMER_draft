@@ -389,6 +389,7 @@ const content = {
       labels: {
         ask: "Feedback point",
         revision: "Revision and measured result",
+        method: "How we got here — design reasoning and supporting theory",
         artifacts: "Artifacts (open the implementation)",
         open: "Open in repository",
       },
@@ -402,6 +403,13 @@ const content = {
           tag: "Q1 · Detection latency",
           ask: "Millisecond-level fault detection and recovery is the top KPI.",
           revision: "The detector was rebuilt. The old rule calibrated its baseline on idle-mode samples and could only see silence, so a capped-but-flowing fault took 2.78 s to detect. The new burst-aware rule calibrates on burst windows only and raises suspicion in 34.8–37.1 ms across three formal repeats; an in-round step-level host gate confirms in about 1.07 s instead of waiting for the full degraded round. The route commit itself still happens at the round boundary (~2.87 s): removing that wait is the declared next work item, and the page makes no millisecond end-to-end recovery claim.",
+          method: [
+            "Step 1 — diagnose before redesigning. Instead of guessing, we replayed the archived switch-counter traces of all 21 previous runs sample by sample and asked: at which exact 20 ms window did the old rule accumulate evidence, and why not earlier? The replay reproduced every historical trigger to within 0.1 ms, so we trusted what it showed.",
+            "Step 2 — the finding. On a bursty port, healthy traffic is bimodal: half of the 20 ms windows are line-rate bursts (84–105 Mbit/s, when the worker is actually sending) and half are near-idle gaps (0.26–0.42 Mbit/s of ACK-level traffic between sends). The old rule computed one median over all positive windows, and with two modes of similar weight the median landed inside the idle mode: 0.42 Mbit/s, giving an alarm threshold of 0.6 × 0.42 ≈ 0.25 Mbit/s. A fault that caps the link to 20 Mbit/s still flows at ~17.5 Mbit/s — seventy times above that threshold — so the rule was structurally blind to it. It could only fire after the port fell silent, which happens once the affected worker finishes pushing its bytes through the capped link. That explains both the 2.78 s and its worst property: detection time ≈ remaining bytes ÷ cap rate, so the milder (grayer) the fault, the slower the detection.",
+            "Step 3 — the design principle that follows. A threshold statistic is only meaningful if it is computed within one mode of the signal, not across modes. So the burst-aware rule first classifies each 20 ms window as burst or gap using a fixed noise floor (1 Mbit/s, sitting between the two modes with wide margin on both sides), calibrates the baseline median on burst windows only (≈100 Mbit/s), and treats a burst that flows far below the burst baseline as direct evidence of degradation — no need to wait for silence. Two consecutive degraded bursts are required because a single sub-threshold window also occurs on healthy ports when a burst happens to straddle a polling boundary; persistence across two windows filters those edge artifacts. A separate silence path (a gap run far longer than anything seen during calibration) still covers hard failures. Expected detection time becomes ~2 polling periods; measured: 34.8–37.1 ms.",
+            "Step 4 — the second bottleneck was structural, not statistical. Host confirmation used to evaluate only completed rounds (\"did the whole round take 1.5× longer than normal?\"), so it inherited the full 2.85 s degraded-round duration. But the ring advances step by step, and a degraded link inflates individual step durations long before the round ends. We therefore stream a STEP_DONE event per step and compare each duration against the fault-free per-step p95 (~178 ms; slow means > 1.5×). The subtle part came from the data: a 100 ms transient inflates roughly as many steps as a persistent fault, so counting slow steps cannot separate the two. What does separate them is temporal coincidence — in the transient runs the switch-side symptom clears after ~0.5 s while slow steps keep completing, in persistent runs it stays active. Hence the confirm condition: at least two slow steps completing while the burst-degraded symptom is still active, plus a healthy alternate path. All three transient repeats remain correctly suppressed under this rule.",
+            "Step 5 — validate before running. The new rule and the step gate were first validated offline against all 21 archived runs (every fault detected fast, zero false triggers on healthy traffic), the pass/fail gates were preregistered, and only then was the new campaign executed. The first live campaign exposed one real design flaw — the mid-round health probe queued behind the loaded fabric and falsely deferred — which we preserved as failed evidence, amended in the preregistration, and fixed with a two-stage probe (reachability check under load mid-round; the strict quiet-network check re-run at the round boundary right before the handover).",
+          ],
           artifacts: ["limer_v0/sentinel.py", "limer_v0/orchestrator.py", "limer_v0/worker.py", "scripts/replay_sentinel.py", "configs/active_active_v2/aa6_stepdetect.json", "results_active_active_v2_1/aa6_stepdetect_rep01/summary.json", "docs/step_level_detection_v2_prereg.md", "tests/test_sentinel_burst.py"],
           status: "partial",
         },
@@ -409,6 +417,13 @@ const content = {
           tag: "Q1 · Performance loss",
           ask: "Failure-case performance should stay as close as possible to the fault-free scenario.",
           revision: "A 20-round post-recovery window (three repeats) shows localized recovery settles back to retention ≈ 1.000 of the fault-free baseline. The 0.936 reported previously was a convergence transient limited to the first ~5 recovered rounds, not a steady-state cost.",
+          method: [
+            "The 0.936 bothered us: after the localized reroute the plan is only mildly asymmetric, so a permanent 6.4% loss had no obvious cause. Instead of accepting it, we treated it as a hypothesis-testing problem with the arms we already had.",
+            "Ruling out detection overhead: the oracle arm commits the identical localized plan without any detector running, and it showed nearly the same loss (0.947) with the same shape — so the detection machinery accounts for at most ~1 percentage point, and is not the story.",
+            "Ruling out fabric-B capacity: if the loss came from overloading Fabric B, then the global-failover arm — which pushes all traffic onto B — should lose more. It lost less (0.961). That inverted ordering falsified the capacity hypothesis.",
+            "What remained was the estimator itself. The per-round data showed the loss was not stationary: the three recovered rounds we measured ran 0.98, 0.94, 0.92 — still moving. A median over three rounds taken immediately after a control action does not estimate the steady state; it samples the transient. So the fix was methodological: extend the post-recovery window to 20 rounds and report the whole series, not one number.",
+            "The 20-round series (three repeats, both detection stacks) settles at 1.000 from about the fifth recovered round onward: 0.98 → 0.92 dip → 1.000 for the remaining fifteen rounds. Conclusion stated carefully: localized recovery has no measurable steady-state cost in this emulation; there is a real ~5-round settling transient whose timescale is consistent with TCP windows and queues re-converging, though we have not done packet-level attribution of it and say so explicitly.",
+          ],
           artifacts: ["configs/active_active_v2/aa3_local_longwindow.json", "results_active_active_v2_1/aa3_local_rep01/aggregate_rounds.csv", "results_active_active_v2_1/aggregate_summary.json"],
           status: "delivered",
         },
@@ -416,6 +431,12 @@ const content = {
           tag: "Q2 · Second fabric is not a backup",
           ask: "The second Dual-ToR fabric must forward traffic like a normal switch in healthy operation, not sit idle as a backup.",
           revision: "The baseline is now balanced active-active: in every round, every worker sends on both Fabric A and Fabric B, and the per-rank byte counts on both fabrics are verified in the archived correctness evidence of each healthy run.",
+          method: [
+            "The design question was how to make \"both switches forward traffic\" a property we can verify, not just an intention. Dynamic load balancing would satisfy it on average but makes every run's routing different, which destroys reproducibility and makes \"what changed after recovery\" ill-defined. So we chose the opposite: routing is a static, declared table — a route plan that assigns one fabric to every (worker, step) send slot.",
+            "The balanced schedule itself is a parity rule: worker w sends on Fabric A in step s when w + s is even, otherwise on B. Two consequences follow by construction: within every single step, half the workers transmit on A and half on B (so both switches are active at every instant, not merely on average), and over a six-step round every worker splits its bytes exactly 50/50 between the fabrics.",
+            "Because the schedule is declared, conformance is checkable: every run archives per-worker, per-fabric byte counters, and the correctness stage recomputes them against the declared plan — a healthy run in which either fabric carried zero bytes for any worker fails outright. This turned the advisor's requirement from a diagram property into a machine-checked invariant on every run.",
+            "The same declared-table decision is what later makes localized recovery clean: a recovery is just a new table differing from the old one in an explicit, enumerable set of slots, so \"only affected traffic moved\" becomes a diff you can gate on.",
+          ],
           artifacts: ["limer_v0/route_plan.py", "configs/active_active_v1/aa0_healthy.json", "results_active_active/aa0_healthy_rep01/correctness.json"],
           status: "delivered",
         },
@@ -423,6 +444,12 @@ const content = {
           tag: "Q2 · Localized rerouting",
           ask: "When the link between one worker and Fabric A degrades, only that worker's affected traffic should move; the other workers keep using Fabric A. The earlier demo incorrectly showed the whole ring shifting to Fabric B.",
           revision: "Recovery now installs a localized route plan: exactly the affected worker's three Fabric-A send slots move to B, and the other three workers' send schedules are byte-identical before and after (checked from raw per-round send routes, and enforced as a run gate). The replay demo on this page shows the localized plan.",
+          method: [
+            "Start from the fault model: the impairment is directed — one worker's egress toward one fabric. In the declared route table, the set of send slots that traverse that link is exact and enumerable: the affected worker's slots assigned to Fabric A (three of the twenty-four slots in a round). The minimal repair is, by definition, to change exactly that set and nothing else; every additional changed slot is collateral disturbance to healthy paths. The old whole-ring failover changed twelve slots where three sufficed — that is what the advisor's correction identified, and \"exactly three slots, exactly the affected worker\" is now itself a pass/fail gate rather than a demo behavior.",
+            "The hard part of rerouting a lock-step ring is consistency, not path choice. Each step, the receiver must listen on the fabric its predecessor sends on; if some workers ran the old plan while others ran the new one for even a single step, frames would wait on the wrong fabric and the collective would stall. So a plan switch must be atomic across all four workers at an agreed round boundary.",
+            "The mechanism: plans are immutable objects identified by a SHA-256 fingerprint of their canonical form, and a switch is a two-phase agreement — the coordinator proposes (new plan, version, effective round), every worker acknowledges READY with the same fingerprint, and only then is the commit issued. Every data frame carries the plan version in its header, so if any worker ever ran a different plan than its peer, the receiver would flag a version error immediately. Across all campaigns that counter is zero, which is how we know cutovers were truly atomic rather than merely usually-working.",
+            "Verification closes the loop from the raw data upward: the archived per-round send routes show the three unaffected workers' schedules are byte-identical before and after recovery, the changed-slot set equals exactly the affected worker's three Fabric-A slots, and all four workers' READY/COMMIT records carry a single fingerprint. Each of these is enforced by the report's gates, so a regression would fail the run, not just look odd in a chart.",
+          ],
           artifacts: ["limer_v0/route_plan.py", "results_active_active/aa3_local_rep01/correctness.json", "results_active_active_v2_1/aa6_stepdetect_rep01/correctness.json", "tests/test_worker_data_path.py"],
           status: "delivered",
         },
@@ -708,6 +735,7 @@ const content = {
       labels: {
         ask: "反馈要点",
         revision: "修订内容与实测结果",
+        method: "设计思路与支撑原理——我们是怎么想出来的",
         artifacts: "Artifact（点击打开实现）",
         open: "在仓库中打开",
       },
@@ -721,6 +749,13 @@ const content = {
           tag: "Q1 · 检测延迟",
           ask: "毫秒级故障检测与恢复是最重要的 KPI。",
           revision: "检测器已重建。旧规则的基线被空闲态样本拉低，只能检测“静默”，导致限速但仍在流动的故障要 2.78 s 才被发现。新的 burst 感知规则只用突发窗口做校准，三次正式重复中 34.8–37.1 ms 即产生可疑信号；轮内 step 级端侧 gate 约 1.07 s 完成确认，不再等完整退化轮。路由 commit 仍发生在轮边界（约 2.87 s）：消除这一等待是已声明的下一工作项，页面不声称已实现毫秒级端到端恢复。",
+          method: [
+            "第一步——先诊断，再重设计。我们没有靠猜，而是把此前全部 21 个归档 run 的交换机计数器时序逐样本回放，追问：旧规则到底在哪个 20 ms 窗口才开始积累证据、为什么不能更早？回放把每一次历史触发都复现到 0.1 ms 以内，所以它给出的答案是可信的。",
+            "第二步——发现。在突发型端口上，健康流量是双峰的：一半 20 ms 窗口是线速突发（84–105 Mbit/s，worker 真正在发送时），另一半是发送间隙里 ACK 级的近空闲窗口（0.26–0.42 Mbit/s）。旧规则对所有正速率窗口取一个中位数，两个峰权重相近时，中位数恰好落进空闲峰：0.42 Mbit/s，于是告警阈值 = 0.6 × 0.42 ≈ 0.25 Mbit/s。而把链路限到 20 Mbit/s 的故障，流量仍以约 17.5 Mbit/s 流动——比阈值高七十倍——规则在结构上就看不见它，只能等端口彻底静默（受影响 worker 把字节全部挤完）才触发。这同时解释了 2.78 s 和它最糟的性质：检测时间 ≈ 剩余字节 ÷ 限速值，故障越温和（越 gray），检测反而越慢。",
+            "第三步——由此得出的设计原则。阈值统计量只有在信号的单一模态内计算才有意义，不能跨模态混算。所以 burst 感知规则先用一个固定噪声地板（1 Mbit/s，落在两峰之间、两侧余量都很大）把每个 20 ms 窗口分类为突发或间隙，只用突发窗口校准基线中位数（≈100 Mbit/s），把“明显低于突发基线、但仍在流动的突发”本身当作退化的直接证据——不必再等静默。要求连续两个退化突发，是因为健康端口上也会出现单个低于阈值的窗口（一次突发恰好跨越轮询边界时），跨两个窗口的持续性能滤掉这种边缘伪影。另保留一条静默路径（间隙长度远超校准期所见）兜底硬失效。期望检测时间约为两个轮询周期；实测 34.8–37.1 ms。",
+            "第四步——第二个瓶颈是结构性的，不是统计性的。端侧确认原本只评判完整轮（“整轮是否比正常慢 1.5 倍？”），因此天然继承了 2.85 s 的退化轮时长。但 ring 是逐 step 推进的，退化链路早在轮结束前就会拉长单个 step。于是 worker 每完成一个 step 就流式上报 STEP_DONE，把每步时长与无故障 step p95（约 178 ms；超过 1.5 倍算慢）比较。微妙之处来自数据本身：100 ms 的 transient 拖慢的 step 数量与持久故障几乎一样多，数慢 step 分不开两者；能分开的是时间上的重合——transient 场景里交换机侧症状约 0.5 s 后消失而慢 step 仍在完成，持久故障则症状一直活跃。因此确认条件是：至少两个慢 step 在突发退化症状仍活跃时完成，且备用路径健康。此规则下三个 transient 重复全部被正确抑制。",
+            "第五步——先验证，再上线。新规则与 step 级 gate 先对全部 21 个归档 run 离线回放验证（所有故障快速检出、健康流量零误触发），通过/失败 gate 先预注册，然后才执行新 campaign。第一次实跑暴露了一个真实设计缺陷——轮中健康探测的 ping 被满载 fabric 的流量排队而误判 defer——我们把失败 run 原样保留、先修订预注册文档，再用两段式探测修复（轮中做负载下可达性检查；commit 前在轮边界的安静网络下重跑严格标准）。",
+          ],
           artifacts: ["limer_v0/sentinel.py", "limer_v0/orchestrator.py", "limer_v0/worker.py", "scripts/replay_sentinel.py", "configs/active_active_v2/aa6_stepdetect.json", "results_active_active_v2_1/aa6_stepdetect_rep01/summary.json", "docs/step_level_detection_v2_prereg.md", "tests/test_sentinel_burst.py"],
           status: "partial",
         },
@@ -728,6 +763,13 @@ const content = {
           tag: "Q1 · 性能损失",
           ask: "故障情况下的性能应尽量接近无故障训练场景。",
           revision: "20 个恢复轮的长窗口（三次重复）显示：局部恢复最终回到无故障基线的 retention ≈ 1.000。此前汇报的 0.936 只是恢复后前约 5 轮的收敛瞬态，不是稳态代价。",
+          method: [
+            "0.936 这个数字让我们不安：局部改道后的计划只是轻微不对称，永久损失 6.4% 找不到合理来源。我们没有接受它，而是把它当作一个假设检验问题——用手里已有的对照臂逐一排除。",
+            "排除“检测开销”：oracle 臂提交完全相同的局部计划、但不运行任何检测器，它的损失几乎一样（0.947）且形态相同——检测机制最多解释约 1 个百分点，不是主因。",
+            "排除“Fabric B 容量不足”：如果损失来自 B 过载，那么把全部流量都压到 B 上的全局切换臂应该损失更大。实测它反而更小（0.961）。这个反序直接证伪了容量假设。",
+            "剩下的嫌疑是估计量本身。逐轮数据显示损失并不平稳：我们测的三个恢复轮分别是 0.98、0.94、0.92——还在变化。对一个控制动作刚发生后的三轮取中位数，估计的不是稳态，而是瞬态。于是修正是方法学层面的：把恢复后窗口拉长到 20 轮，并报告整条序列，而不是一个数。",
+            "20 轮序列（三次重复、新旧两套检测栈一致）从第 5 个恢复轮起稳定在 1.000：0.98 → 低谷 0.92 → 之后十五轮 1.000。结论谨慎表述为：在本仿真中，局部恢复没有可测量的稳态代价；存在一个真实的约 5 轮沉降瞬态，其时间尺度与 TCP 窗口和队列重新收敛一致——但我们没有做逐包归因，并如实说明。",
+          ],
           artifacts: ["configs/active_active_v2/aa3_local_longwindow.json", "results_active_active_v2_1/aa3_local_rep01/aggregate_rounds.csv", "results_active_active_v2_1/aggregate_summary.json"],
           status: "delivered",
         },
@@ -735,6 +777,12 @@ const content = {
           tag: "Q2 · 第二张 fabric 不是备份",
           ask: "Dual-ToR 中的第二台交换机在健康状态下应像普通交换机一样正常转发流量，而不是只作备份。",
           revision: "基线已改为 balanced active-active：每一轮里每个 worker 都同时在 Fabric A 和 B 上发送，每个健康 run 的归档 correctness 证据都验证了两张 fabric 上的逐 rank 字节数均非零。",
+          method: [
+            "设计问题是：怎样让“两台交换机都在转发”成为可验证的性质，而不只是一个意图。动态负载均衡平均意义上也能满足，但每次运行的路由都不一样，可复现性被破坏，“恢复后到底改了什么”也变得说不清。所以我们选了相反的路线：路由是一张静态的、事先声明的表——route plan 给每个（worker, step）发送槽位指定一张 fabric。",
+            "均衡调度本身是一条奇偶规则：worker w 在 step s 上走 Fabric A 当且仅当 w + s 为偶数，否则走 B。由构造直接得到两个推论：每一个 step 内部恰有一半 worker 在 A 上、一半在 B 上发送（两台交换机在每个瞬间都在工作，而不只是平均意义上），且六步一轮下来每个 worker 的字节恰好 50/50 分到两张 fabric。",
+            "因为调度是声明式的，符合性就可检验：每个 run 归档逐 worker、逐 fabric 的字节计数，correctness 阶段把它们和声明的计划重新对账——健康 run 里任何一张 fabric 对任何一个 worker 承载了零字节，整个 run 直接判失败。导师的要求由此从一张示意图变成了每次运行都被机器检查的不变量。",
+            "同一个“声明式表格”的决定也是后来局部恢复能做干净的原因：一次恢复就是一张与旧表只在显式可枚举的槽位集合上不同的新表，“只有受影响的流量动了”因此变成一个可以设 gate 的 diff。",
+          ],
           artifacts: ["limer_v0/route_plan.py", "configs/active_active_v1/aa0_healthy.json", "results_active_active/aa0_healthy_rep01/correctness.json"],
           status: "delivered",
         },
@@ -742,6 +790,12 @@ const content = {
           tag: "Q2 · 局部改道",
           ask: "某个 worker 到 Fabric A 的链路故障时，只应改道该 worker 受影响的通信；其余 worker 继续使用 Fabric A。此前 demo 里整个 ring 都切到 Fabric B 是不对的。",
           revision: "恢复现在安装局部路由计划：只有受影响 worker 的三个 Fabric-A 发送槽位改走 B，其余三个 worker 的发送调度在故障前后逐字节一致（从原始逐轮 send routes 核验，并作为 run gate 强制）。本页的回放 demo 展示的就是局部计划。",
+          method: [
+            "从故障模型出发：损伤是定向的——某一个 worker 发往某一张 fabric 的 egress。在声明式路由表里，经过这条链路的发送槽位集合是精确可枚举的：受影响 worker 分配到 Fabric A 的那些槽位（一轮二十四个槽位中的三个）。最小修复在定义上就是：恰好改这个集合、其余不动——每多改一个槽位都是对健康路径的无谓扰动。旧的整环切换在三个槽位就够的情况下改了十二个，这正是导师指出的问题；现在“恰好三个槽位、恰好受影响的 worker”本身就是通过/失败 gate，而不是演示行为。",
+            "对一个逐步阻塞推进的 ring 来说，改道真正难的不是选路径，而是一致性。每个 step，接收方必须在上家发送的那张 fabric 上收听；哪怕只有一个 step 里部分 worker 用旧表、部分用新表，帧就会在错误的 fabric 上等待，整个集体通信卡死。所以换表必须在约定的轮边界、跨全部四个 worker 原子生效。",
+            "机制是：计划是不可变对象，身份由其规范形式的 SHA-256 指纹标识；换表是两阶段协议——协调者提出（新计划、版本号、生效轮），每个 worker 以同一指纹回 READY，之后才下发 commit。每一个数据帧的帧头都携带计划版本号，任何 worker 若与对端运行了不同计划，接收方会立刻记 version error。所有 campaign 里这个计数是零——这是我们知道切换“真正原子”而非“通常没出事”的依据。",
+            "验证从原始数据向上闭环：归档的逐轮 send routes 显示三个未受影响 worker 的调度在恢复前后逐字节一致；变更槽位集合恰等于受影响 worker 的三个 Fabric-A 槽位；四个 worker 的 READY/COMMIT 记录携带唯一指纹。这三条都由 report 的 gate 强制——出现回归会让 run 判失败，而不是只在图上看着不对劲。",
+          ],
           artifacts: ["limer_v0/route_plan.py", "results_active_active/aa3_local_rep01/correctness.json", "results_active_active_v2_1/aa6_stepdetect_rep01/correctness.json", "tests/test_worker_data_path.py"],
           status: "delivered",
         },
@@ -1276,6 +1330,10 @@ export function renderMeeting2() {
           </header>
           <div class="revision-ask"><strong>${c.labels.ask}</strong><p>${item.ask}</p></div>
           <div class="revision-body"><strong>${c.labels.revision}</strong><p>${item.revision}</p></div>
+          ${item.method ? `<details class="revision-method">
+            <summary>${c.labels.method}</summary>
+            <div class="revision-method-body">${item.method.map((paragraph) => `<p>${paragraph}</p>`).join("")}</div>
+          </details>` : ""}
           <div class="revision-artifacts"><strong>${c.labels.artifacts}</strong>${renderRepositoryLinks(item.artifacts, c.labels.open)}</div>
         </article>`).join("")}
     </div>`;
