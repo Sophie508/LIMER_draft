@@ -94,7 +94,16 @@ class StepGateMonitorTest(unittest.TestCase):
         self.assertIsNone(decision)
         self.assertEqual(len(monitor.slow_steps), 3)
         self.assertEqual(len(monitor.confirmable_slow_steps), 0)
-        self.assertEqual(self.probe_calls, [])
+        # The probe prefetches once when suspicion appears (overlapping the
+        # evidence wait), but no decision event may be emitted without
+        # confirmable steps.
+        self.assertLessEqual(len(self.probe_calls), 1)
+        decision_events = [
+            record
+            for record in self.event_log.records
+            if record.get("event") in {"HOST_CONFIRM", "HOST_DEFER"}
+        ]
+        self.assertEqual(decision_events, [])
 
     def test_fast_steps_are_ignored(self):
         monitor = self.monitor()

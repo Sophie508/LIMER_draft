@@ -20,6 +20,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, TextI
 
 from .coordinator import RecoveryCoordinator, TransitionDecision
 from .faults import TcProfile, read_operstate, sample_qdisc
+from .linkwatch import LinkEventMonitor
 from .metrics import summarize_interval, summarize_rounds
 from .refiner import HostRefiner, RefinerDecision, StepGateRefiner
 from .route_plan import RoutePlan
@@ -31,7 +32,7 @@ CONDITIONS = {"C0", "C1", "C2", "C3", "C4", "C5"}
 TOPOLOGIES = {"single", "dual"}
 EXPERIMENT_FAMILIES = {"legacy_v0", "active_active_v1"}
 ROUTING_POLICIES = {"single_fabric", "balanced_active_active"}
-RECOVERY_POLICIES = {"none", "localized", "global_failover"}
+RECOVERY_POLICIES = {"none", "localized", "localized_link", "global_failover"}
 ACTIVE_SCENARIO_SPECS = {
     "AA0_HEALTHY": ("C0", False, False, False, "none", False),
     "AA1_FAULT": ("C1", False, False, False, "none", False),
@@ -41,9 +42,12 @@ ACTIVE_SCENARIO_SPECS = {
     "AA4_ORACLE": ("C4", False, True, True, "localized", False),
     "AA5_TRANSIENT": ("C5", True, True, False, "localized", True),
     "AA6_STEPDETECT": ("C3", True, True, False, "localized", False),
+    "AA7_HARD": ("C3", True, True, False, "localized_link", False),
+    "AA8_GRAYFAST": ("C3", True, True, False, "localized", False),
 }
 DETECTOR_RULES = {"legacy", "burst"}
-HOST_GATES = {"round", "step"}
+HOST_GATES = {"round", "step", "step_cutover", "immediate"}
+FAULT_KINDS = {"rate_cap", "link_down"}
 V1_CONFIG_FIELDS = {
     "scenario_id",
     "routing_policy",
@@ -80,6 +84,7 @@ WORKER_CSV_FIELDS = [
     "frame_count",
     "checksum_errors",
     "version_errors",
+    "redo_count",
     "step_durations_ns",
     "send_routes",
     "receive_routes",
@@ -287,7 +292,7 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
     host_gate = str(result.get("host_gate", "round"))
     if host_gate not in HOST_GATES:
         raise ValueError(f"unknown host_gate: {host_gate!r}")
-    if host_gate == "step":
+    if host_gate in {"step", "step_cutover"}:
         if not result["detector"] or not result["recovery"] or result["oracle"]:
             raise ValueError(
                 "host_gate step requires detector and recovery without oracle"
@@ -298,6 +303,47 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
                 "consumes the burst-symptom state that only that rule tracks"
             )
     result["host_gate"] = host_gate
+
+    fault_kind = str(result.get("fault_kind", "rate_cap"))
+    if fault_kind not in FAULT_KINDS:
+        raise ValueError(f"unknown fault_kind: {fault_kind!r}")
+    if fault_kind == "link_down":
+        if result["transient_ms"]:
+            raise ValueError("link_down faults do not support a transient")
+        if result["condition"] == "C0":
+            raise ValueError("link_down requires a fault condition")
+    result["fault_kind"] = fault_kind
+
+    min_slow_steps = int(result.get("min_slow_steps", 2))
+    if min_slow_steps < 1:
+        raise ValueError("min_slow_steps must be at least 1")
+    result["min_slow_steps"] = min_slow_steps
+
+    step_timeout_s = float(result.get("step_timeout_s", 65.0))
+    if step_timeout_s <= 0:
+        raise ValueError("step_timeout_s must be positive")
+    result["step_timeout_s"] = step_timeout_s
+
+    if host_gate == "immediate":
+        if fault_kind != "link_down":
+            raise ValueError(
+                "host_gate immediate is reserved for hard link_down faults"
+            )
+        if not result["detector"] or not result["recovery"] or result["oracle"]:
+            raise ValueError(
+                "host_gate immediate requires detector and recovery without oracle"
+            )
+    if fault_kind == "link_down" and result["recovery"]:
+        if result["recovery_policy"] != "localized_link":
+            raise ValueError(
+                "a hard link failure severs both directions, so recovery "
+                "must use the localized_link policy"
+            )
+        if host_gate != "immediate":
+            raise ValueError(
+                "link_down recovery uses the immediate gate: hard evidence "
+                "is definitive and needs no impact confirmation"
+            )
 
     if family == "active_active_v1":
         expected = ACTIVE_SCENARIO_SPECS.get(scenario_id)
@@ -321,6 +367,18 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
             raise ValueError(
                 "AA6_STEPDETECT requires detector_rule burst and host_gate step"
             )
+        if scenario_id == "AA7_HARD" and (
+            fault_kind != "link_down" or host_gate != "immediate"
+        ):
+            raise ValueError(
+                "AA7_HARD requires fault_kind link_down and host_gate immediate"
+            )
+        if scenario_id == "AA8_GRAYFAST" and (
+            host_gate != "step_cutover" or result["min_slow_steps"] != 1
+        ):
+            raise ValueError(
+                "AA8_GRAYFAST requires host_gate step_cutover and min_slow_steps 1"
+            )
     return result
 
 
@@ -337,9 +395,15 @@ def _recovery_route_plan(
     current_plan: RoutePlan, config: Mapping[str, Any]
 ) -> RoutePlan:
     policy = str(config["recovery_policy"])
+    scope = config["fault_scope"]
     if policy == "localized":
-        scope = config["fault_scope"]
         return current_plan.localized_reroute(
+            int(scope["rank"]),
+            str(scope["fabric"]),
+            "B",
+        )
+    if policy == "localized_link":
+        return current_plan.localized_link_reroute(
             int(scope["rank"]),
             str(scope["fabric"]),
             "B",
@@ -507,6 +571,8 @@ class WorkerHandle:
     def __post_init__(self) -> None:
         self.events: "queue.Queue[Dict[str, Any]]" = queue.Queue()
         self.pending: List[Dict[str, Any]] = []
+        self.control_events: "queue.Queue[Dict[str, Any]]" = queue.Queue()
+        self.control_pending: List[Dict[str, Any]] = []
         self._stdout_thread = threading.Thread(target=self._read_stdout, daemon=True)
         self._stderr_thread = threading.Thread(target=self._read_stderr, daemon=True)
         self._stdout_thread.start()
@@ -537,6 +603,12 @@ class WorkerHandle:
                 # Step telemetry is consumed from the event log by the step
                 # gate monitor; keeping it out of the command queue stops
                 # wait_for from accumulating it in pending.
+                continue
+            if record.get("event") in {"READY", "COMMITTED", "ABORTED"}:
+                # Route-plan control acknowledgements go to their own queue so
+                # a handover can run from a monitor thread while the main
+                # thread is blocked waiting for ROUND_DONE.
+                self.control_events.put(record)
                 continue
             self.events.put(record)
         self.events.put(
@@ -592,6 +664,32 @@ class WorkerHandle:
             if event in expected_set:
                 return record
             self.pending.append(record)
+
+    def wait_for_control(
+        self, expected: Sequence[str], timeout_s: float = 90.0
+    ) -> Dict[str, Any]:
+        expected_set = set(expected)
+        for index, record in enumerate(self.control_pending):
+            if record.get("event") in expected_set:
+                return self.control_pending.pop(index)
+        deadline = time.monotonic() + timeout_s
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError(
+                    f"worker {self.rank} did not emit {sorted(expected_set)} "
+                    f"within {timeout_s}s"
+                )
+            try:
+                record = self.control_events.get(timeout=remaining)
+            except queue.Empty as exc:
+                raise TimeoutError(
+                    f"worker {self.rank} did not emit {sorted(expected_set)} "
+                    f"within {timeout_s}s"
+                ) from exc
+            if record.get("event") in expected_set:
+                return record
+            self.control_pending.append(record)
 
     def stop(self) -> None:
         if self.process.poll() is None:
@@ -714,6 +812,7 @@ class StepGateMonitor:
         baseline_step_p95_s: float,
         probe: Any,
         poll_interval_s: float = 0.010,
+        cutover: Optional[Any] = None,
     ) -> None:
         if baseline_step_p95_s <= 0:
             raise ValueError("baseline_step_p95_s must be positive")
@@ -723,7 +822,10 @@ class StepGateMonitor:
         self.baseline_step_p95_s = baseline_step_p95_s
         self.probe = probe
         self.poll_interval_s = poll_interval_s
+        self.cutover = cutover
         self.decision: Optional[RefinerDecision] = None
+        self.transition: Optional[TransitionDecision] = None
+        self.cutover_error: Optional[BaseException] = None
         self.slow_steps: List[Dict[str, Any]] = []
         self.confirmable_slow_steps: List[Dict[str, Any]] = []
         self._switch_event: Optional[Dict[str, Any]] = None
@@ -775,13 +877,22 @@ class StepGateMonitor:
                     self.confirmable_slow_steps.append(entry)
 
     def _run(self) -> None:
+        prefetched_probe: Optional[Dict[str, Any]] = None
         while not self._stop.is_set() and self.decision is None:
             self._consume_new_events()
+            if self._switch_event is not None and prefetched_probe is None:
+                # Probe the alternate fabric while step evidence is still
+                # accumulating, so the probe cost overlaps the wait instead
+                # of extending the confirm-to-restore critical path.
+                prefetched_probe = self.probe()
             if (
                 self._switch_event is not None
                 and len(self.confirmable_slow_steps) >= self.refiner.min_slow_steps
             ):
-                assessed_probe = self.probe()
+                self._consume_new_events()
+                assessed_probe = (
+                    prefetched_probe if prefetched_probe is not None else self.probe()
+                )
                 decision = self.refiner.evaluate(
                     self._switch_event,
                     list(self.confirmable_slow_steps),
@@ -804,6 +915,16 @@ class StepGateMonitor:
                     evaluated_slow_steps=list(self.confirmable_slow_steps),
                 )
                 self.decision = decision
+                if decision.action == "confirm" and self.cutover is not None:
+                    try:
+                        self.transition = self.cutover()
+                    except BaseException as exc:
+                        self.cutover_error = exc
+                        self.event_log.emit(
+                            "CUTOVER_FAILED",
+                            error_type=type(exc).__name__,
+                            error=str(exc),
+                        )
                 return
             self._stop.wait(self.poll_interval_s)
 
@@ -816,6 +937,7 @@ def _launch_workers(
     run_dir: Path,
     event_log: EventLog,
     step_telemetry: bool = False,
+    step_timeout_s: float = 65.0,
 ) -> List[WorkerHandle]:
     if initial_plan.world_size != WORLD_SIZE:
         raise ValueError("initial plan world_size must match WORLD_SIZE")
@@ -842,6 +964,7 @@ def _launch_workers(
         ]
         if step_telemetry:
             command.append("--step-telemetry")
+        command.extend(["--step-timeout", str(step_timeout_s)])
         for route in sorted(descriptor.fabrics):
             command.extend(
                 ["--fabric", descriptor.fabrics[route][rank].worker_argument()]
@@ -1024,6 +1147,77 @@ def _assess_alternate_path_probe(
     return result
 
 
+def _worker_positions(
+    event_records: Sequence[Mapping[str, Any]], round_id: int, world_size: int
+) -> Dict[int, int]:
+    """Next-step position per rank in the given round, from STEP_DONE telemetry."""
+    positions = {rank: 0 for rank in range(world_size)}
+    for record in event_records:
+        if record.get("event") != "STEP_DONE":
+            continue
+        if int(record.get("round_id", -1)) != round_id:
+            continue
+        rank = int(record.get("rank", -1))
+        if rank in positions:
+            positions[rank] = max(positions[rank], int(record["step_id"]) + 1)
+    return positions
+
+
+def _cutover_socket_closures(
+    old_plan: RoutePlan, new_plan: RoutePlan
+) -> Dict[int, Dict[str, List[str]]]:
+    """Sockets each rank must close so blocked operations unblock.
+
+    A socket is closed exactly when the old plan used it and the new plan
+    never does: the outgoing side follows the rank's own send slots, the
+    incoming side follows its ring predecessor's.
+    """
+    closures: Dict[int, Dict[str, List[str]]] = {}
+    for rank in range(old_plan.world_size):
+        predecessor = (rank - 1) % old_plan.world_size
+        entry: Dict[str, List[str]] = {"close_incoming": [], "close_outgoing": []}
+        for fabric in sorted({route for row in old_plan.routes for route in row}):
+            if (
+                fabric in old_plan.routes[rank]
+                and fabric not in new_plan.routes[rank]
+            ):
+                entry["close_outgoing"].append(fabric)
+            if (
+                fabric in old_plan.routes[predecessor]
+                and fabric not in new_plan.routes[predecessor]
+            ):
+                entry["close_incoming"].append(fabric)
+        if entry["close_incoming"] or entry["close_outgoing"]:
+            closures[rank] = entry
+    return closures
+
+
+def _cutover_resend_steps(
+    old_plan: RoutePlan,
+    positions: Mapping[int, int],
+    failed_route: str,
+    round_id: int,
+) -> Dict[int, List[Dict[str, int]]]:
+    """Frames a sender completed on the failed route that its receiver lacks.
+
+    A sender's send can complete into socket buffers while the frame dies on
+    the failed path, leaving the sender one step ahead of a receiver that
+    will never see the frame. Those steps must be re-sent on the new plan;
+    if the original copy does arrive after all, the receiver's duplicate
+    handling discards the re-sent one.
+    """
+    resends: Dict[int, List[Dict[str, int]]] = {}
+    for sender in range(old_plan.world_size):
+        receiver = (sender + 1) % old_plan.world_size
+        entries: List[Dict[str, int]] = []
+        for step_id in range(positions.get(receiver, 0), positions.get(sender, 0)):
+            if old_plan.route_for(sender, step_id) == failed_route:
+                entries.append({"round_id": round_id, "step_id": step_id})
+        if entries:
+            resends[sender] = entries
+    return resends
+
+
 def _execute_handover(
     handles: Sequence[WorkerHandle],
     event_log: EventLog,
@@ -1031,6 +1225,9 @@ def _execute_handover(
     target_plan: RoutePlan,
     current_round: int,
     effective_round: int,
+    effective_step: int = 0,
+    commit_extras: Optional[Mapping[int, Mapping[str, Any]]] = None,
+    allow_current_round: bool = False,
     prepare_timeout_s: float = 10.0,
 ) -> TransitionDecision:
     if prepare_timeout_s <= 0:
@@ -1041,14 +1238,26 @@ def _execute_handover(
         raise ValueError("target plan world_size must match worker handles")
     coordinator = RecoveryCoordinator(current_plan)
     proposal = coordinator.propose(
-        target_plan, effective_round=effective_round, current_round=current_round
+        target_plan,
+        effective_round=effective_round,
+        current_round=current_round,
+        effective_step=effective_step,
+        allow_current_round=allow_current_round,
     )
     event_log.emit(
         "RECOVERY_PROPOSE",
         **proposal.to_dict(),
         prepare_timeout_s=prepare_timeout_s,
+        commit_extras={
+            str(rank): dict(extras)
+            for rank, extras in (commit_extras or {}).items()
+        },
         cutover_contract={
-            "safe_point": "completed_collective_round_boundary",
+            "safe_point": (
+                "completed_collective_round_boundary"
+                if effective_step == 0
+                else "step_boundary_with_abort_and_redo"
+            ),
             "last_completed_round": current_round,
             "first_new_plan_round": effective_round,
             "in_flight_application_frames_at_prepare": 0,
@@ -1062,18 +1271,20 @@ def _execute_handover(
         "plan": proposal.plan.to_dict(),
         "plan_fingerprint": proposal.plan_fingerprint,
         "effective_round": proposal.effective_round,
+        "effective_step": proposal.effective_step,
     }
     for handle in handles:
         handle.send(command)
     prepare_error: Optional[BaseException] = None
     for handle in handles:
         try:
-            ready = handle.wait_for(["READY"], timeout_s=prepare_timeout_s)
+            ready = handle.wait_for_control(["READY"], timeout_s=prepare_timeout_s)
             if (
                 int(ready["version"]) != proposal.version
                 or str(ready["plan_fingerprint"])
                 != proposal.plan_fingerprint
                 or int(ready["effective_round"]) != proposal.effective_round
+                or int(ready.get("effective_step", 0)) != proposal.effective_step
             ):
                 raise RuntimeError(f"worker {handle.rank} returned mismatched READY")
             coordinator.record_ready(
@@ -1103,7 +1314,7 @@ def _execute_handover(
             if any(item["rank"] == handle.rank for item in abort_failures):
                 continue
             try:
-                handle.wait_for(["ABORTED"], timeout_s=prepare_timeout_s)
+                handle.wait_for_control(["ABORTED"], timeout_s=prepare_timeout_s)
             except BaseException as exc:
                 abort_failures.append(
                     {
@@ -1134,11 +1345,20 @@ def _execute_handover(
             )
     else:
         for handle in handles:
-            handle.send({"command": "commit", "version": decision.version})
+            commit_command: Dict[str, Any] = {
+                "command": "commit",
+                "version": decision.version,
+            }
+            extras = (commit_extras or {}).get(handle.rank)
+            if extras:
+                commit_command.update(dict(extras))
+            handle.send(commit_command)
         committed_ranks: List[int] = []
         try:
             for handle in handles:
-                committed = handle.wait_for(["COMMITTED"], timeout_s=prepare_timeout_s)
+                committed = handle.wait_for_control(
+                    ["COMMITTED"], timeout_s=prepare_timeout_s
+                )
                 if int(committed["version"]) != decision.version:
                     raise RuntimeError(f"worker {handle.rank} committed a wrong version")
                 committed_ranks.append(handle.rank)
@@ -1147,7 +1367,7 @@ def _execute_handover(
             for handle in handles:
                 try:
                     handle.send({"command": "abort", "version": decision.version})
-                    handle.wait_for(["ABORTED"], timeout_s=prepare_timeout_s)
+                    handle.wait_for_control(["ABORTED"], timeout_s=prepare_timeout_s)
                 except BaseException as rollback_exc:
                     rollback_failures.append(
                         {
@@ -1171,11 +1391,32 @@ def _execute_handover(
     return decision
 
 
+def _monotone_route_switch(
+    observed: Sequence[str],
+    old_routes: Sequence[str],
+    new_routes: Sequence[str],
+) -> bool:
+    """True when observed routes are old-plan up to one cut, new-plan after.
+
+    A mid-round cutover legitimately yields a mixed route vector, but any
+    interleaving (old, new, old, ...) would mean torn plan application; a
+    single monotone switch point is the correctness requirement.
+    """
+    observed = tuple(str(route) for route in observed)
+    for cut in range(len(observed) + 1):
+        if observed[:cut] == tuple(old_routes[:cut]) and observed[cut:] == tuple(
+            new_routes[cut:]
+        ):
+            return True
+    return False
+
+
 def _correctness_report(
     config: Mapping[str, Any],
     worker_rows: Sequence[Mapping[str, Any]],
     aggregate_rows: Sequence[Mapping[str, Any]],
     event_records: Sequence[Mapping[str, Any]],
+    cutover: Optional[Mapping[str, Any]] = None,
 ) -> Dict[str, Any]:
     expected_rounds = (
         int(config["warmup_rounds"])
@@ -1240,15 +1481,35 @@ def _correctness_report(
         observed_receive = tuple(
             str(route) for route in row.get("receive_routes", [])
         )
+        cutover_round = (
+            cutover is not None
+            and bool(cutover.get("mid_round"))
+            and int(row["round_id"]) == int(cutover["effective_round"])
+        )
         mismatches = []
         if str(row["route_plan_fingerprint"]) != expected_plan.fingerprint:
             mismatches.append("fingerprint")
         if str(row.get("routing_policy")) != expected_plan.policy:
             mismatches.append("routing_policy")
-        if observed_send != expected_plan.routes[rank]:
-            mismatches.append("send_routes")
-        if observed_receive != expected_plan.routes[predecessor]:
-            mismatches.append("receive_routes")
+        if cutover_round and version == 1:
+            old_plan = expected_plans[0]
+            if not _monotone_route_switch(
+                observed_send,
+                old_plan.routes[rank],
+                expected_plan.routes[rank],
+            ):
+                mismatches.append("send_routes")
+            if not _monotone_route_switch(
+                observed_receive,
+                old_plan.routes[predecessor],
+                expected_plan.routes[predecessor],
+            ):
+                mismatches.append("receive_routes")
+        else:
+            if observed_send != expected_plan.routes[rank]:
+                mismatches.append("send_routes")
+            if observed_receive != expected_plan.routes[predecessor]:
+                mismatches.append("receive_routes")
         if mismatches:
             schedule_conformance_failures.append(
                 {
@@ -1285,8 +1546,14 @@ def _correctness_report(
     )
     locality_required = recovery_committed and recovery_policy in {
         "localized",
+        "localized_link",
         "global_failover",
     }
+    cutover_round_id = (
+        int(cutover["effective_round"])
+        if cutover is not None and bool(cutover.get("mid_round"))
+        else None
+    )
     locality_passed: Optional[bool] = None
     changed_slots: List[Dict[str, Any]] = []
     changed_sender_ranks: List[int] = []
@@ -1300,6 +1567,10 @@ def _correctness_report(
             if row.get("period") == "baseline":
                 baseline_schedules.setdefault(rank, set()).add(routes)
             elif row.get("period") == "post_fault" and int(row["version"]) > 0:
+                if int(row["round_id"]) == cutover_round_id:
+                    # The cutover round legitimately mixes both plans; its
+                    # conformance is covered by the monotone-switch check.
+                    continue
                 recovered_schedules.setdefault(rank, set()).add(routes)
 
         schedules_complete = (
@@ -1329,18 +1600,28 @@ def _correctness_report(
                             }
                         )
 
-            if recovery_policy == "localized":
+            if recovery_policy in {"localized", "localized_link"}:
                 fault_rank = int(config["fault_scope"]["rank"])
                 fault_fabric = str(config["fault_scope"]["fabric"])
+                expected_ranks = (
+                    [fault_rank]
+                    if recovery_policy == "localized"
+                    else sorted({fault_rank, (fault_rank - 1) % WORLD_SIZE})
+                )
                 expected_steps = sum(
                     1
-                    for route in next(iter(baseline_schedules[fault_rank]))
+                    for rank in expected_ranks
+                    for route in next(iter(baseline_schedules[rank]))
                     if route == fault_fabric
                 )
                 locality_passed = (
-                    changed_sender_ranks == [fault_rank]
+                    changed_sender_ranks == expected_ranks
                     and unchanged_sender_ranks
-                    == [rank for rank in range(WORLD_SIZE) if rank != fault_rank]
+                    == [
+                        rank
+                        for rank in range(WORLD_SIZE)
+                        if rank not in expected_ranks
+                    ]
                     and len(changed_slots) == expected_steps
                     and all(
                         change["old_route"] == fault_fabric
@@ -1585,6 +1866,38 @@ def execute_run(
             sentinel_rule=sentinel_rule,
         )
         sampler.start()
+        hard_link_event = threading.Event()
+        link_monitor: Optional[LinkEventMonitor] = None
+        if config["fault_kind"] == "link_down" and config["detector"]:
+
+            def _on_link_down(record: Dict[str, Any]) -> None:
+                event_log.append(
+                    {
+                        "event": "SWITCH_SUSPECT",
+                        "source": "netlink_link_monitor",
+                        "interface": record["interface"],
+                        "t_monotonic_ns": record["t_monotonic_ns"],
+                        "rule_version": record["rule_version"],
+                        "signals": {
+                            "operstate": record.get("operstate"),
+                            "lower_up": record.get("lower_up"),
+                            "running": record.get("running"),
+                            "link_down": record.get("link_down"),
+                            "observed_counter": "netlink_rtm_newlink",
+                            "injector_state_read": False,
+                        },
+                        "evidence_samples": [],
+                    }
+                )
+                hard_link_event.set()
+
+            link_monitor = LinkEventMonitor(detector_interface, _on_link_down)
+            link_monitor.start()
+            event_log.emit(
+                "LINK_MONITOR_ARMED",
+                interface=detector_interface,
+                rule_version=LinkEventMonitor.rule_version,
+            )
         handles = _launch_workers(
             descriptor,
             config["chunk_bytes"],
@@ -1592,7 +1905,8 @@ def execute_run(
             workdir,
             run_dir,
             event_log,
-            step_telemetry=config["host_gate"] == "step",
+            step_telemetry=config["host_gate"] in {"step", "step_cutover", "immediate"},
+            step_timeout_s=config["step_timeout_s"],
         )
         if "B" in descriptor.fabrics:
             alternate_path_baseline_probe = descriptor.ping_fabric("B")
@@ -1648,18 +1962,21 @@ def execute_run(
                 detector_operstate=read_operstate(detector_interface),
             )
         else:
-            degraded_profile = TcProfile(
-                rate_mbit=config["fault_rate_mbit"],
-                delay_ms=(
-                    BASE_PROFILE.delay_ms
-                    if config["fault_delay_ms"] is None
-                    else config["fault_delay_ms"]
-                ),
-                loss_pct=config["fault_loss_pct"],
-            )
-            fault_record = descriptor.apply_fault_profile(
-                degraded_profile, fault_route, fault_rank
-            )
+            if config["fault_kind"] == "link_down":
+                fault_record = descriptor.apply_link_down(fault_route, fault_rank)
+            else:
+                degraded_profile = TcProfile(
+                    rate_mbit=config["fault_rate_mbit"],
+                    delay_ms=(
+                        BASE_PROFILE.delay_ms
+                        if config["fault_delay_ms"] is None
+                        else config["fault_delay_ms"]
+                    ),
+                    loss_pct=config["fault_loss_pct"],
+                )
+                fault_record = descriptor.apply_fault_profile(
+                    degraded_profile, fault_route, fault_rank
+                )
             event_log.emit(
                 "FAULT_APPLIED",
                 interface=fault_interface,
@@ -1712,8 +2029,69 @@ def execute_run(
         host_refiner = HostRefiner()
         step_refiner: Optional[StepGateRefiner] = None
         step_monitor: Optional[StepGateMonitor] = None
+        hard_state: Dict[str, Any] = {
+            "decision": None,
+            "transition": None,
+            "error": None,
+        }
+        hard_thread: Optional[threading.Thread] = None
+
+        def _loaded_alternate_probe() -> Dict[str, Any]:
+            current_probe = descriptor.ping_fabric("B")
+            assessed = _assess_alternate_path_probe(
+                current_probe, alternate_path_baseline_probe, loaded=True
+            )
+            event_log.emit(
+                "ALTERNATE_PATH_CONFIRMATION_PROBE",
+                route="B",
+                probe=assessed,
+            )
+            return assessed
+
+        def _mid_round_cutover() -> TransitionDecision:
+            target_plan = _recovery_route_plan(initial_plan, config)
+            records = list(event_log.records)
+            current_round = max(
+                (
+                    int(record["round_id"])
+                    for record in records
+                    if record.get("event") == "ROUND_COMMAND"
+                ),
+                default=0,
+            )
+            positions = _worker_positions(records, current_round, WORLD_SIZE)
+            effective_round = current_round
+            effective_step = min(positions.values())
+            if effective_step >= initial_plan.steps:
+                effective_round, effective_step = current_round + 1, 0
+            closures = _cutover_socket_closures(initial_plan, target_plan)
+            resends = _cutover_resend_steps(
+                initial_plan,
+                positions,
+                str(config["fault_scope"]["fabric"]),
+                current_round,
+            )
+            commit_extras: Dict[int, Dict[str, Any]] = {}
+            for rank in sorted(set(closures) | set(resends)):
+                extras: Dict[str, Any] = {}
+                extras.update(closures.get(rank, {}))
+                if resends.get(rank):
+                    extras["resend_steps"] = resends[rank]
+                commit_extras[rank] = extras
+            return _execute_handover(
+                handles,
+                event_log,
+                current_plan=initial_plan,
+                target_plan=target_plan,
+                current_round=current_round,
+                effective_round=effective_round,
+                effective_step=effective_step,
+                commit_extras=commit_extras,
+                allow_current_round=True,
+            )
+
         if (
-            config["host_gate"] == "step"
+            config["host_gate"] in {"step", "step_cutover"}
             and config["recovery"]
             and not config["oracle"]
         ):
@@ -1726,34 +2104,94 @@ def execute_run(
                     "recovery requires an alternate-path baseline probe"
                 )
             baseline_step_p95_s = _baseline_step_p95_s(worker_rows)
-
-            def _step_gate_probe() -> Dict[str, Any]:
-                current_probe = descriptor.ping_fabric("B")
-                assessed = _assess_alternate_path_probe(
-                    current_probe, alternate_path_baseline_probe, loaded=True
-                )
-                event_log.emit(
-                    "ALTERNATE_PATH_CONFIRMATION_PROBE",
-                    route="B",
-                    probe=assessed,
-                )
-                return assessed
-
-            step_refiner = StepGateRefiner()
+            step_refiner = StepGateRefiner(
+                min_slow_steps=config["min_slow_steps"]
+            )
             step_monitor = StepGateMonitor(
                 event_log,
                 sentinel_rule,
                 step_refiner,
                 baseline_step_p95_s,
-                _step_gate_probe,
+                _loaded_alternate_probe,
+                cutover=(
+                    _mid_round_cutover
+                    if config["host_gate"] == "step_cutover"
+                    else None
+                ),
             )
             event_log.emit(
                 "STEP_GATE_ARMED",
                 baseline_step_p95_s=baseline_step_p95_s,
                 slowdown_factor=step_refiner.slowdown_factor,
                 min_slow_steps=step_refiner.min_slow_steps,
+                gate_mode=config["host_gate"],
             )
             step_monitor.start()
+        elif (
+            config["host_gate"] == "immediate"
+            and config["recovery"]
+            and not config["oracle"]
+        ):
+            if alternate_path_baseline_probe is None:
+                raise RuntimeError(
+                    "recovery requires an alternate-path baseline probe"
+                )
+
+            def _hard_cutover_controller() -> None:
+                hard_link_event.wait()
+                try:
+                    assessed_probe = _loaded_alternate_probe()
+                    if not assessed_probe.get("healthy"):
+                        decision = RefinerDecision(
+                            "defer",
+                            [
+                                "The alternate fabric probe failed under load, "
+                                "so hard failover is unsafe.",
+                            ],
+                        )
+                        hard_state["decision"] = decision
+                        event_log.emit(
+                            "HOST_DEFER",
+                            action=decision.action,
+                            reasons=decision.reasons,
+                            confidence=None,
+                            calibration_version=None,
+                            gate_mode="immediate",
+                        )
+                        return
+                    decision = RefinerDecision(
+                        "confirm",
+                        [
+                            "The kernel reported the watched port down; hard "
+                            "link evidence is definitive and needs no impact "
+                            "confirmation.",
+                            "The alternate fabric probe passed under load.",
+                        ],
+                    )
+                    hard_state["decision"] = decision
+                    event_log.emit(
+                        "HOST_CONFIRM",
+                        action=decision.action,
+                        reasons=decision.reasons,
+                        confidence=None,
+                        calibration_version=None,
+                        gate_mode="immediate",
+                        evaluated_round_id=None,
+                        evaluated_round_duration_s=None,
+                    )
+                    hard_state["transition"] = _mid_round_cutover()
+                except BaseException as exc:
+                    hard_state["error"] = exc
+                    event_log.emit(
+                        "CUTOVER_FAILED",
+                        error_type=type(exc).__name__,
+                        error=str(exc),
+                    )
+
+            hard_thread = threading.Thread(
+                target=_hard_cutover_controller, daemon=True
+            )
+            hard_thread.start()
         for _ in range(config["post_fault_rounds"]):
             events, aggregate = _run_collective_round(
                 handles, round_id, "post_fault", config["chunk_bytes"], event_log
@@ -1763,7 +2201,59 @@ def execute_run(
             round_id += 1
 
             if (
-                step_monitor is not None
+                config["host_gate"] == "immediate"
+                and transition_decision is None
+                and refiner_decision is None
+            ):
+                if hard_state["error"] is not None:
+                    raise RuntimeError(
+                        "hard cutover failed"
+                    ) from hard_state["error"]
+                if hard_state["decision"] is not None:
+                    refiner_decision = hard_state["decision"]
+                    transition_decision = hard_state["transition"]
+            elif (
+                config["host_gate"] == "step_cutover"
+                and step_monitor is not None
+                and transition_decision is None
+                and refiner_decision is None
+            ):
+                switch_suspects_so_far = [
+                    record
+                    for record in event_log.records
+                    if record.get("event") == "SWITCH_SUSPECT"
+                ]
+                if step_monitor.decision is None and switch_suspects_so_far:
+                    # The impacted round finished without confirmable step
+                    # evidence: settle the gate now so a transient is
+                    # suppressed rather than left pending.
+                    step_monitor.stop()
+                if step_monitor.decision is not None:
+                    if step_monitor.cutover_error is not None:
+                        raise RuntimeError(
+                            "mid-round cutover failed"
+                        ) from step_monitor.cutover_error
+                    refiner_decision = step_monitor.decision
+                    transition_decision = step_monitor.transition
+                elif switch_suspects_so_far:
+                    refiner_decision = step_refiner.suppression(
+                        len(step_monitor.slow_steps),
+                        len(step_monitor.confirmable_slow_steps),
+                    )
+                    event_log.emit(
+                        "RECOVERY_SUPPRESSED",
+                        action=refiner_decision.action,
+                        reasons=refiner_decision.reasons,
+                        confidence=None,
+                        calibration_version=None,
+                        gate_mode="step_cutover",
+                        evaluated_round_id=aggregate["round_id"],
+                        evaluated_round_duration_s=aggregate["duration_s"],
+                        baseline_p95_s=baseline_p95_s,
+                    )
+            elif (
+                config["host_gate"] == "step"
+                and step_monitor is not None
                 and transition_decision is None
                 and refiner_decision is None
             ):
@@ -1968,7 +2458,20 @@ def execute_run(
             recovery_window_rows, baseline_median_bps
         )
         correctness = _correctness_report(
-            config, worker_rows, aggregate_rows, event_log.records
+            config,
+            worker_rows,
+            aggregate_rows,
+            event_log.records,
+            cutover=(
+                {
+                    "effective_round": transition_decision.effective_round,
+                    "effective_step": transition_decision.effective_step,
+                    "mid_round": config["host_gate"] in {"immediate", "step_cutover"},
+                }
+                if transition_decision is not None
+                and transition_decision.action == "commit"
+                else None
+            ),
         )
         _write_json(run_dir / "correctness.json", correctness)
         switch_rows = list(sampler.records)
@@ -1982,7 +2485,18 @@ def execute_run(
             for record in event_log.records
             if record.get("event") == "SWITCH_SUSPECT"
         ]
-        fault_t_ns = fault_record["t_after_ns"] if fault_record is not None else None
+        # For a hard link_down, the kernel notification can arrive before the
+        # injection command itself returns; reference the command start so the
+        # measured detection latency is a positive, conservative upper bound.
+        fault_t_ns = (
+            None
+            if fault_record is None
+            else int(
+                fault_record["t_before_ns"]
+                if config["fault_kind"] == "link_down"
+                else fault_record["t_after_ns"]
+            )
+        )
         first_suspect_t_ns = (
             int(switch_suspects[0]["t_monotonic_ns"])
             if switch_suspects
@@ -2035,6 +2549,34 @@ def execute_run(
             commit_t_ns=first_commit_t_ns,
             recovered_round_end_t_ns=first_recovered_round_end_t_ns,
         )
+        first_recovered_step_t_ns = min(
+            (
+                int(record["t_monotonic_ns"])
+                for record in event_log.records
+                if record.get("event") == "STEP_DONE"
+                and int(record.get("version", 0)) > 0
+            ),
+            default=None,
+        )
+
+        def _delta_ms(start_ns: Optional[int], end_ns: Optional[int]) -> Optional[float]:
+            if start_ns is None or end_ns is None or end_ns < start_ns:
+                return None
+            return (end_ns - start_ns) / 1_000_000.0
+
+        # Restore-KPI stages: detection is the reference point, per the
+        # advisor's numeric requirements. "Traffic off the failed port" is
+        # bounded by the commit (the failed-path sockets close with it), and
+        # "training making progress again" by the first recovered-plan step.
+        latency["l_suspect_to_commit_ms"] = _delta_ms(
+            first_suspect_t_ns, first_commit_t_ns
+        )
+        latency["l_suspect_to_first_recovered_step_ms"] = _delta_ms(
+            first_suspect_t_ns, first_recovered_step_t_ns
+        )
+        latency["l_fault_to_first_recovered_step_ms"] = _delta_ms(
+            fault_t_ns, first_recovered_step_t_ns
+        )
         summary = {
             "run_id": run_id,
             "status": "complete" if correctness["status"] == "pass" else "failed",
@@ -2060,6 +2602,7 @@ def execute_run(
             },
             "fault_interface": fault_interface,
             "detector_interface": detector_interface,
+            "fault_kind": config["fault_kind"],
             "fault_applied": fault_record is not None,
             "fault_interface_operstate_after": descriptor.fault_operstate(
                 fault_route, fault_rank
@@ -2248,6 +2791,11 @@ def execute_run(
         manifest["status"] = "failed"
         manifest["error"] = error_record
     finally:
+        try:
+            if link_monitor is not None:
+                link_monitor.stop()
+        except NameError:
+            pass
         if sampler is not None:
             sampler.stop()
             if not (run_dir / "switch_timeseries.csv").exists():

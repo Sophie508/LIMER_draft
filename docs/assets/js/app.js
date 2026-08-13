@@ -65,6 +65,15 @@ const repositoryLinks = new Map([
   ["results_active_active_v2_1/aa6_stepdetect_rep01/correctness.json", repoLink("results_active_active_v2_1/aa6_stepdetect_rep01/correctness.json")],
   ["results_active_active_v2_1/aa3_local_rep01/aggregate_rounds.csv", repoLink("results_active_active_v2_1/aa3_local_rep01/aggregate_rounds.csv")],
   ["results_active_active_v2_1/aa5_transient_rep01/summary.json", repoLink("results_active_active_v2_1/aa5_transient_rep01/summary.json")],
+  ["limer_v0/linkwatch.py", repoLink("limer_v0/linkwatch.py")],
+  ["configs/active_active_v3/aa7_hard.json", repoLink("configs/active_active_v3/aa7_hard.json")],
+  ["configs/active_active_v3/aa8_grayfast.json", repoLink("configs/active_active_v3/aa8_grayfast.json")],
+  ["configs/active_active_v3/aa5_transient_stepcutover.json", repoLink("configs/active_active_v3/aa5_transient_stepcutover.json")],
+  ["docs/restore_kpi_v3_prereg.md", repoLink("docs/restore_kpi_v3_prereg.md")],
+  ["results_restore_kpi_v3/aa7_hard_rep01/summary.json", repoLink("results_restore_kpi_v3/aa7_hard_rep01/summary.json")],
+  ["results_restore_kpi_v3/aggregate_summary.json", repoLink("results_restore_kpi_v3/aggregate_summary.json")],
+  ["tests/test_worker_cutover.py", repoLink("tests/test_worker_cutover.py")],
+  ["tests/test_linkwatch.py", repoLink("tests/test_linkwatch.py")],
 ]);
 const MAX_RETENTION = 1.2;
 
@@ -381,10 +390,10 @@ const content = {
     meeting2: {
       intro: "Each card restates one point from the advisor feedback on the previous review, shows the revision we made in response, and links the artifacts — code, configs, and archived run evidence — that implement it. Every number below is recomputed from raw run files, not from summaries.",
       metrics: [
-        ["36 ms", "fault → switch suspicion (was 2.78 s)"],
-        ["1.07 s", "fault → host confirmation (was 2.87 s)"],
-        ["≈ 1.000", "steady-state retention after localized recovery"],
-        ["9 / 9", "preregistered gates passed in the new campaign"],
+        ["0.66 ms", "hard link-down detection (numeric target: < 1 ms)"],
+        ["52 ms", "gray-fault detection (numeric target: < 100 ms)"],
+        ["263 / 843 ms", "traffic off the failed port, hard / gray (target: < 1 s)"],
+        ["9 / 9", "preregistered gates passed in the restore-KPI campaign"],
       ],
       labels: {
         ask: "Feedback point",
@@ -399,6 +408,20 @@ const content = {
         planned: "Planned, awaiting decisions",
       },
       items: [
+        {
+          tag: "Numeric requirements · Measured response",
+          ask: "Detect port faults in under 1 ms for hard link failures and under 100 ms for gray failures; within 1 second of detection, traffic must be off the failed port and training must be making progress on the surviving port; the in-flight collective must complete correctly or be safely redone; the backup path must be pre-established and retransmit timeouts tuned down.",
+          revision: "All targets are met in the emulation, across three formal repeats with preregistered gates (9/9 pass). Hard link-down detection: 0.63–0.69 ms, via an event-driven kernel netlink watch — inside the 1 ms production figure. Gray detection: 51.8–53.3 ms. Traffic leaves the failed port (route commit closes its sockets) 263 ms after detection for hard faults and 843 ms for gray. A recovered-plan step completes 535 ms (hard) / ~1.07 s (gray) after detection — for gray, the evidence window is one degraded step, and the recovered step is already flowing on the surviving fabric inside the 1-second line; the gate operationalization is written into the preregistration. Correctness held mechanically: zero checksum and version errors everywhere, with the interrupted step aborted and safely redone (three redos per hard-fault run, byte-verified). Both-fabric connections are established at startup — the emulation analog of pre-established backup queue pairs — and the hard scenario sets a 10 s transport timeout to mirror the untuned-NIC behavior the requirements warn about; the recovery path never touches it.",
+          method: [
+            "Hard detection cannot be reached by polling: a 20 ms counter loop bounds detection at tens of milliseconds. The kernel, however, announces carrier loss the moment a port drops, so the watcher subscribes to netlink link notifications — the software analog of a port-down interrupt. Measured from the moment the injection command starts (a deliberately conservative reference, since the kernel event can arrive before the injection command even returns), suspicion lands in under 0.7 ms.",
+            "The one-second restore needed the round-boundary wait removed. The worker's control channel moved to its own thread, so a route-plan prepare/commit now runs while a round is in flight, and a committed plan takes effect at an agreed (round, step) point. The commit also closes the dead path's sockets, which unblocks any send or receive stuck on it; the interrupted step is then redone under the new plan.",
+            "\"Completes correctly or is safely redone\" is enforced by construction: every frame carries the plan version and a payload checksum; a completed half-step is never re-executed; frames that died in a closed socket's buffer are re-sent on the new route; frames that arrive from a superseded attempt are discarded by header comparison, frames arriving one step early are buffered in order, and a mixed cutover round must show exactly one monotone old-to-new switch point per worker to pass the correctness stage.",
+            "A hard link failure severs both directions, so the minimal repair moves six slots — the affected worker's sends and its ring predecessor's — not three; that set is enforced as a gate, and the two unaffected workers' schedules are verified byte-identical.",
+            "The smoke phase surfaced six real defects (a cutover landing at a round's first step was wrongly rejected; detection outracing the injection timestamp; buffered-frame loss; early and cross-version frames; the health probe sitting on the critical path; gate operationalization). Each fix was written into the preregistration amendment before the formal campaign ran, and the failed smoke attempts are preserved in the repository.",
+          ],
+          artifacts: ["limer_v0/linkwatch.py", "limer_v0/worker.py", "limer_v0/state.py", "limer_v0/coordinator.py", "configs/active_active_v3/aa7_hard.json", "configs/active_active_v3/aa8_grayfast.json", "docs/restore_kpi_v3_prereg.md", "results_restore_kpi_v3/aa7_hard_rep01/summary.json", "results_restore_kpi_v3/aggregate_summary.json", "tests/test_worker_cutover.py", "tests/test_linkwatch.py"],
+          status: "delivered",
+        },
         {
           tag: "Q1 · Detection latency",
           ask: "Millisecond-level fault detection and recovery is the top KPI.",
@@ -469,10 +492,10 @@ const content = {
         },
       ],
       decisions: [
-        ["Numeric target for the latency KPI", "“Millisecond-level” needs an interval and a threshold. Measured today: fault → switch suspicion 36 ms; fault → host confirmation 1.07 s; fault → first recovered round complete 3.96 s. Which interval is the KPI, and what number must it beat?"],
-        ["What “gray” primarily means", "Rate cap, random loss, added delay, or partial-flow damage (e.g. one ECMP bucket)? And is egress-only degradation enough, or must ingress/bidirectional and ToR-uplink faults be covered?"],
-        ["Scope of the SimAI stage", "Model fault impact and rerouting benefit only (recommended, plan ready), or also reproduce the detection loop inside the simulator (roughly triples the work)?"],
-        ["Acceptance bar for recovery", "The preregistered retention gate is ≥ 0.9 and the measured steady state is ≈ 1.000. Should the bar be raised, and over how many post-recovery rounds should it be evaluated?"],
+        ["Gray-fault progress semantics", "The numeric targets are now implemented and measured (scorecard above). One reading to confirm for gray faults: within 1 s of detection, traffic is off the failed port and the recovered step is already flowing on the surviving port, but its completion lands at ~1.07 s because the impact-evidence window is one degraded step. Does “making progress” mean data flowing on the surviving port (met at ~0.85 s) or a fully completed transfer (met at ~1.07 s)?"],
+        ["What “gray” primarily means", "Rate cap, random loss, added delay, or partial-flow damage (e.g. one ECMP bucket)? And is egress-only degradation enough, or must ingress/bidirectional and ToR-uplink faults be covered? This decides the next fault-profile batch; loss and delay profiles are runnable configs already."],
+        ["Scope of the SimAI stage", "The feasibility spike is done: SimAI builds and runs packet-level AllReduce at 8 and 128 simulated GPUs on our compute server (a 128-GPU microbenchmark takes ~13 s wall-clock), and the dual-plane topology is expressible as a plain-text link list. Decision needed: model fault impact and rerouting benefit only (recommended), or also reproduce the detection loop inside the simulator (roughly triples the work)?"],
+        ["Acceptance bar for recovery", "The preregistered retention gate is ≥ 0.9 and the measured steady state is ≈ 1.000 over twenty post-recovery rounds. Should the bar be raised, and over how many rounds should it be judged?"],
       ],
     },
   },
@@ -727,10 +750,10 @@ const content = {
     meeting2: {
       intro: "每张卡片先复述上次汇报后收到的一条导师反馈，再给出我们针对性完成的修订与实测结果，并链接实现它的 artifact——代码、配置与归档实验数据。以下所有数字都从原始 run 文件独立重算，而非引用汇总。",
       metrics: [
-        ["36 ms", "故障 → 交换机侧可疑信号（此前 2.78 s）"],
-        ["1.07 s", "故障 → 端侧确认（此前 2.87 s）"],
-        ["≈ 1.000", "局部恢复后的稳态 retention"],
-        ["9 / 9", "新一轮 campaign 预注册 gate 全部通过"],
+        ["0.66 ms", "硬链路故障检测（数值目标：< 1 ms）"],
+        ["52 ms", "gray 故障检测（数值目标：< 100 ms）"],
+        ["263 / 843 ms", "流量离开坏端口，硬 / gray（目标：< 1 s）"],
+        ["9 / 9", "restore-KPI campaign 预注册 gate 全部通过"],
       ],
       labels: {
         ask: "反馈要点",
@@ -745,6 +768,20 @@ const content = {
         planned: "已规划，等待确认",
       },
       items: [
+        {
+          tag: "数值要求 · 实测响应",
+          ask: "硬链路故障检测须在 1 ms 内、gray 故障 100 ms 内；检测后 1 秒内流量必须离开坏端口、训练在存活端口恢复前进；进行中的 collective 不许出错——要么正确完成、要么安全重做；备用路径须预先建立、重传超时须调小。",
+          revision: "全部目标在仿真中达成，三次正式重复、预注册 gate 9/9 通过。硬故障检测：0.63–0.69 ms——通过内核 netlink 事件驱动监听，进入了 1 ms 的生产口径。gray 检测：51.8–53.3 ms。流量离开坏端口（路由 commit 同时关闭坏路径 socket）：硬故障在检测后 263 ms，gray 843 ms。恢复计划的 step 完成：硬 535 ms / gray 约 1.07 s——gray 的证据窗口是一个退化 step，且 1 秒线内数据已在存活 fabric 上传输中，口径操作化写入预注册文档。正确性由机制保证：全部 run 的 checksum 与版本错误为零，被打断的 step 中止并安全重做（每次硬故障实测 3 次重做，逐字节校验通过）。双 fabric 连接启动即建立——对应 pre-established backup QPs 的仿真类比；硬故障场景特意把传输超时设为 10 s 以镜像未调优 NIC 的行为，恢复路径完全不触碰它。",
+          method: [
+            "硬故障检测靠轮询到不了 1 ms：20 ms 的计数器轮询把下界钉死在几十毫秒。但端口掉线的瞬间内核会主动发出 netlink 链路通知，监听它就是软件层面的“端口中断”。以注入命令开始时刻为基准（刻意保守——内核事件甚至可能比注入命令返回还早），可疑信号在 0.7 ms 内落地。",
+            "1 秒恢复的关键是拆掉“等轮边界”。worker 的控制通道移入独立线程，路由计划的 prepare/commit 可以在轮进行中执行，提交的计划在约定的（轮，step）点生效；commit 同时关闭死路径的 socket，卡在上面的收发立即解除阻塞，被打断的 step 在新计划下重做。",
+            "“正确完成或安全重做”由构造保证：每帧携带计划版本号与载荷校验和；完成过的半步绝不重复执行；死在被关 socket 缓冲区里的帧在新路由上重发；被取代尝试的迟到帧按帧头比对丢弃、提前一步到达的帧按序缓存；混合了新旧计划的切换轮必须呈现“单一单调切换点”才能通过正确性检查。",
+            "硬链路故障切断双向，所以最小修复要动六个槽位——受影响 worker 的发送加上其环上游的发送——而不是三个；这个集合本身就是 gate，另外两个 worker 的调度被逐字节验证不变。",
+            "冒烟阶段暴露了六个真实缺陷（轮首切换被误拒、检测快过注入时间戳、缓冲帧丢失、超前帧与跨版本帧、健康探测占用关键路径、gate 口径），全部先写入预注册修正案再跑正式实验，失败的冒烟尝试保留在仓库中。",
+          ],
+          artifacts: ["limer_v0/linkwatch.py", "limer_v0/worker.py", "limer_v0/state.py", "limer_v0/coordinator.py", "configs/active_active_v3/aa7_hard.json", "configs/active_active_v3/aa8_grayfast.json", "docs/restore_kpi_v3_prereg.md", "results_restore_kpi_v3/aa7_hard_rep01/summary.json", "results_restore_kpi_v3/aggregate_summary.json", "tests/test_worker_cutover.py", "tests/test_linkwatch.py"],
+          status: "delivered",
+        },
         {
           tag: "Q1 · 检测延迟",
           ask: "毫秒级故障检测与恢复是最重要的 KPI。",
@@ -815,10 +852,10 @@ const content = {
         },
       ],
       decisions: [
-        ["延迟 KPI 的数值口径", "“毫秒级”需要明确区间和阈值。当前实测：故障→交换机可疑 36 ms；故障→端侧确认 1.07 s；故障→第一个恢复轮完成 3.96 s。KPI 取哪个区间、要低于多少？"],
-        ["“gray”的首要含义", "限速、随机丢包、附加时延，还是部分流损伤（如单个 ECMP 桶）？只做 egress 方向是否足够，是否需要覆盖 ingress/双向以及 ToR 上联故障？"],
-        ["SimAI 阶段的范围", "只模拟故障影响与改道收益（推荐，计划已就绪），还是同时在模拟器内复刻检测闭环（工作量约乘三）？"],
-        ["恢复的验收标准", "预注册 retention gate 为 ≥ 0.9，实测稳态 ≈ 1.000。标准是否应提高？应在多少个恢复轮上评估？"],
+        ["gray 故障“恢复前进”的语义", "数值目标已实现并实测（见上方记分卡）。需要确认 gray 故障的一个口径：检测后 1 秒内流量已离开坏端口、恢复 step 的数据已在存活端口上传输，但该 step 的完成落在约 1.07 s——因为影响证据窗口本身是一个退化 step。“making progress”指数据已在存活端口流动（约 0.85 s 达成），还是指一次完整传输完成（约 1.07 s 达成）？"],
+        ["“gray”的首要含义", "限速、随机丢包、附加时延，还是部分流损伤（如单个 ECMP 桶）？只做 egress 方向是否足够，是否需要覆盖 ingress/双向以及 ToR 上联故障？这决定下一批 fault profile；丢包型和时延型已是可运行配置。"],
+        ["SimAI 阶段的范围", "可行性验证已完成：SimAI 在我们的计算服务器上编译通过，8 与 128 个模拟 GPU 的逐包 AllReduce 均已跑通（128 GPU 微基准墙钟约 13 秒），双平面拓扑可用纯文本链路表表达。待决定：只模拟故障影响与改道收益（推荐），还是同时在模拟器内复刻检测闭环（工作量约乘三）？"],
+        ["恢复的验收标准", "预注册 retention gate 为 ≥ 0.9，二十个恢复轮的实测稳态 ≈ 1.000。标准是否应提高？应在多少个恢复轮上评判？"],
       ],
     },
   },

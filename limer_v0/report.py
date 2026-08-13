@@ -15,7 +15,8 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
 
 FORMAL_RUN = re.compile(r"^c([0-5])_rep([0-9]{2})$")
 ACTIVE_RUN = re.compile(
-    r"^(aa(?:0_healthy|1_fault|2_detect|3_local|3_global|4_oracle|5_transient|6_stepdetect))_rep([0-9]{2})$"
+    r"^(aa(?:0_healthy|1_fault|2_detect|3_local|3_global|4_oracle|5_transient"
+    r"|6_stepdetect|7_hard|8_grayfast))_rep([0-9]{2})$"
 )
 REQUIRED_ARTIFACTS = {
     "manifest.json",
@@ -44,9 +45,15 @@ ACTIVE_SCENARIO_LABELS = {
     "AA4_ORACLE": "Oracle localized recovery",
     "AA5_TRANSIENT": "Transient suppression",
     "AA6_STEPDETECT": "Step-level detection closed loop",
+    "AA7_HARD": "Hard link-down immediate failover",
+    "AA8_GRAYFAST": "Fast gray step-cutover recovery",
 }
 AA6_L_SWITCH_GATE_MS = 200.0
 AA6_L_DETECTION_GATE_MS = 1500.0
+AA7_L_SWITCH_GATE_MS = 10.0
+AA8_L_SWITCH_GATE_MS = 200.0
+RESTORE_GATE_MS = 1000.0
+GRAY_PROGRESS_GATE_MS = 1300.0
 SUMMARY_FIELDS = [
     "run_id",
     "experiment_family",
@@ -100,7 +107,15 @@ def select_retention(summary: Mapping[str, Any]) -> float:
     scenario = str(summary.get("scenario_id", ""))
     field = (
         "post_recovery_retention"
-        if scenario in {"AA3_LOCAL", "AA3_GLOBAL", "AA4_ORACLE", "AA6_STEPDETECT"}
+        if scenario
+        in {
+            "AA3_LOCAL",
+            "AA3_GLOBAL",
+            "AA4_ORACLE",
+            "AA6_STEPDETECT",
+            "AA7_HARD",
+            "AA8_GRAYFAST",
+        }
         or (
             summary.get("experiment_family") != "active_active_v1"
             and condition in {"C3", "C4"}
@@ -120,10 +135,19 @@ def evaluate_run(summary: Mapping[str, Any]) -> List[str]:
         failures.append("run status must be complete")
     if summary.get("correctness_status") != "pass":
         failures.append("correctness must pass")
-    if summary.get("fault_interface_operstate_after") != "up":
-        failures.append("fault interface must remain up")
-    if summary.get("detector_interface_operstate_after") != "up":
-        failures.append("detector interface must remain up")
+    fault_kind = str(summary.get("fault_kind", "rate_cap"))
+    if fault_kind == "link_down":
+        # A hard fault is only real if the port actually went down; the
+        # switch-side peer of a downed access link cannot stay up either.
+        if summary.get("fault_interface_operstate_after") == "up":
+            failures.append("link_down fault interface must actually be down")
+        if summary.get("detector_interface_operstate_after") == "up":
+            failures.append("link_down detector interface must reflect carrier loss")
+    else:
+        if summary.get("fault_interface_operstate_after") != "up":
+            failures.append("fault interface must remain up")
+        if summary.get("detector_interface_operstate_after") != "up":
+            failures.append("detector interface must remain up")
     isolation = summary.get("fault_observation_isolation", {})
     if isolation.get("same_interface") is not False:
         failures.append("fault injector and detector interfaces must be distinct")
@@ -168,7 +192,13 @@ def evaluate_run(summary: Mapping[str, Any]) -> List[str]:
                 failures.append("AA2 must not commit recovery")
             if selected >= 0.8:
                 failures.append("AA2 must remain degraded below 0.8")
-        elif scenario in {"AA3_LOCAL", "AA3_GLOBAL", "AA6_STEPDETECT"}:
+        elif scenario in {
+            "AA3_LOCAL",
+            "AA3_GLOBAL",
+            "AA6_STEPDETECT",
+            "AA7_HARD",
+            "AA8_GRAYFAST",
+        }:
             if not detection.get("triggered"):
                 failures.append(f"{scenario} switch detector must trigger")
             if host.get("action") != "confirm":
@@ -177,11 +207,18 @@ def evaluate_run(summary: Mapping[str, Any]) -> List[str]:
                 failures.append(f"{scenario} recovery must commit")
             if selected < 0.9:
                 failures.append(f"{scenario} post-recovery retention must be at least 0.9")
-            if scenario in {"AA3_LOCAL", "AA6_STEPDETECT"} and (
+            if scenario in {"AA3_LOCAL", "AA6_STEPDETECT", "AA8_GRAYFAST"} and (
                 len(changed_slots) != 3 or changed_ranks != [2]
             ):
                 failures.append(
                     f"{scenario} must change exactly three worker 2 route slots"
+                )
+            if scenario == "AA7_HARD" and (
+                len(changed_slots) != 6 or changed_ranks != [1, 2]
+            ):
+                failures.append(
+                    "AA7_HARD must move exactly the six slots that traverse "
+                    "the failed access link (senders 1 and 2)"
                 )
             if scenario == "AA6_STEPDETECT":
                 l_switch = (summary.get("latency") or {}).get("l_switch_ms")
@@ -201,6 +238,43 @@ def evaluate_run(summary: Mapping[str, Any]) -> List[str]:
                     )
                 if host.get("gate_mode") != "step":
                     failures.append("AA6 host gate must run in step mode")
+            if scenario in {"AA7_HARD", "AA8_GRAYFAST"}:
+                latency_block = summary.get("latency") or {}
+                l_switch = latency_block.get("l_switch_ms")
+                switch_gate = (
+                    AA7_L_SWITCH_GATE_MS
+                    if scenario == "AA7_HARD"
+                    else AA8_L_SWITCH_GATE_MS
+                )
+                if l_switch is None or float(l_switch) >= switch_gate:
+                    failures.append(
+                        f"{scenario} switch suspicion must land within "
+                        f"{switch_gate:.0f} ms"
+                    )
+                traffic_off = latency_block.get("l_suspect_to_commit_ms")
+                if traffic_off is None or float(traffic_off) >= RESTORE_GATE_MS:
+                    failures.append(
+                        f"{scenario} must take traffic off the failed port "
+                        f"within {RESTORE_GATE_MS:.0f} ms of detection"
+                    )
+                progress_gate = (
+                    RESTORE_GATE_MS
+                    if scenario == "AA7_HARD"
+                    else GRAY_PROGRESS_GATE_MS
+                )
+                restore = latency_block.get("l_suspect_to_first_recovered_step_ms")
+                if restore is None or float(restore) >= progress_gate:
+                    failures.append(
+                        f"{scenario} must complete a recovered-plan step within "
+                        f"{progress_gate:.0f} ms of detection"
+                    )
+                expected_mode = (
+                    "immediate" if scenario == "AA7_HARD" else "step_cutover"
+                )
+                if host.get("gate_mode") != expected_mode:
+                    failures.append(
+                        f"{scenario} host gate must run in {expected_mode} mode"
+                    )
             if scenario == "AA3_GLOBAL" and (
                 len(changed_slots) != 12 or changed_ranks != [0, 1, 2, 3]
             ):
@@ -286,7 +360,15 @@ def _selected_throughput(summary: Mapping[str, Any]) -> Optional[float]:
     scenario = str(summary.get("scenario_id", ""))
     section = (
         "post_recovery"
-        if scenario in {"AA3_LOCAL", "AA3_GLOBAL", "AA4_ORACLE", "AA6_STEPDETECT"}
+        if scenario
+        in {
+            "AA3_LOCAL",
+            "AA3_GLOBAL",
+            "AA4_ORACLE",
+            "AA6_STEPDETECT",
+            "AA7_HARD",
+            "AA8_GRAYFAST",
+        }
         or (
             summary.get("experiment_family") != "active_active_v1"
             and summary["condition"] in {"C3", "C4"}

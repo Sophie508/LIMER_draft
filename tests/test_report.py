@@ -50,21 +50,37 @@ def active_summary(scenario_id):
                 "AA4_ORACLE": "C4",
                 "AA5_TRANSIENT": "C5",
                 "AA6_STEPDETECT": "C3",
+                "AA7_HARD": "C3",
+                "AA8_GRAYFAST": "C3",
             }[scenario_id],
             "routing": {
                 "initial_policy": "balanced_active_active",
                 "recovery_policy": (
-                    "global_failover"
+                    "localized_link"
+                    if scenario_id == "AA7_HARD"
+                    else "global_failover"
                     if scenario_id == "AA3_GLOBAL"
                     else "localized"
                     if scenario_id
-                    in {"AA3_LOCAL", "AA4_ORACLE", "AA5_TRANSIENT", "AA6_STEPDETECT"}
+                    in {
+                        "AA3_LOCAL",
+                        "AA4_ORACLE",
+                        "AA5_TRANSIENT",
+                        "AA6_STEPDETECT",
+                        "AA8_GRAYFAST",
+                    }
                     else "none"
                 ),
                 "changed_slots": (
-                    [{"sender_rank": 2, "step_id": step} for step in (0, 2, 4)]
+                    [
+                        {"sender_rank": rank, "step_id": step}
+                        for rank in (1, 2)
+                        for step in (0, 2, 4)
+                    ]
+                    if scenario_id == "AA7_HARD"
+                    else [{"sender_rank": 2, "step_id": step} for step in (0, 2, 4)]
                     if scenario_id
-                    in {"AA3_LOCAL", "AA4_ORACLE", "AA6_STEPDETECT"}
+                    in {"AA3_LOCAL", "AA4_ORACLE", "AA6_STEPDETECT", "AA8_GRAYFAST"}
                     else [
                         {"sender_rank": rank, "step_id": step}
                         for rank in range(4)
@@ -98,23 +114,39 @@ def active_summary(scenario_id):
             "AA3_GLOBAL",
             "AA5_TRANSIENT",
             "AA6_STEPDETECT",
+            "AA7_HARD",
+            "AA8_GRAYFAST",
         }
     }
     value["host_refinement"] = {
         "action": (
             "confirm"
-            if scenario_id in {"AA3_LOCAL", "AA3_GLOBAL", "AA6_STEPDETECT"}
+            if scenario_id
+            in {"AA3_LOCAL", "AA3_GLOBAL", "AA6_STEPDETECT", "AA7_HARD", "AA8_GRAYFAST"}
             else "suppress"
             if scenario_id == "AA5_TRANSIENT"
             else None
         ),
         "gate_mode": (
-            "step" if scenario_id == "AA6_STEPDETECT" else "round"
+            "step"
+            if scenario_id == "AA6_STEPDETECT"
+            else "immediate"
+            if scenario_id == "AA7_HARD"
+            else "step_cutover"
+            if scenario_id == "AA8_GRAYFAST"
+            else "round"
         ),
     }
     value["recovery"] = {
         "committed": scenario_id
-        in {"AA3_LOCAL", "AA3_GLOBAL", "AA4_ORACLE", "AA6_STEPDETECT"}
+        in {
+            "AA3_LOCAL",
+            "AA3_GLOBAL",
+            "AA4_ORACLE",
+            "AA6_STEPDETECT",
+            "AA7_HARD",
+            "AA8_GRAYFAST",
+        }
     }
     if scenario_id == "AA6_STEPDETECT":
         value["latency"] = dict(
@@ -124,6 +156,31 @@ def active_summary(scenario_id):
             l_detection_ms=900.0,
             l_fault_to_commit_ms=2900.0,
             l_fault_to_recovered_round_complete_ms=4000.0,
+        )
+    if scenario_id == "AA7_HARD":
+        value["fault_kind"] = "link_down"
+        value["fault_interface_operstate_after"] = "down"
+        value["detector_interface_operstate_after"] = "lowerlayerdown"
+        value["latency"] = dict(
+            value["latency"],
+            l_switch_ms=1.2,
+            l_host_ms=20.0,
+            l_detection_ms=21.2,
+            l_fault_to_commit_ms=60.0,
+            l_fault_to_recovered_round_complete_ms=900.0,
+            l_suspect_to_commit_ms=58.8,
+            l_suspect_to_first_recovered_step_ms=250.0,
+        )
+    if scenario_id == "AA8_GRAYFAST":
+        value["latency"] = dict(
+            value["latency"],
+            l_switch_ms=40.0,
+            l_host_ms=820.0,
+            l_detection_ms=860.0,
+            l_fault_to_commit_ms=880.0,
+            l_fault_to_recovered_round_complete_ms=1900.0,
+            l_suspect_to_commit_ms=840.0,
+            l_suspect_to_first_recovered_step_ms=950.0,
         )
     if scenario_id == "AA0_HEALTHY":
         value["fault_period_retention"] = 1.0
@@ -371,6 +428,63 @@ class StepDetectGateTest(unittest.TestCase):
         self.assertIn("AA0_HEALTHY", aggregate["scenarios_absent"])
         self.assertTrue(aggregate["three_runs_per_scenario"])
         self.assertTrue(aggregate["overall_acceptance"])
+
+
+class RestoreKpiGateTest(unittest.TestCase):
+    def summary_for(self, scenario_id):
+        value = active_summary(scenario_id)
+        value["post_recovery_retention"] = 0.97
+        return value
+
+    def test_accepts_hard_failover_within_targets(self):
+        self.assertEqual(evaluate_run(self.summary_for("AA7_HARD")), [])
+
+    def test_accepts_fast_gray_within_targets(self):
+        self.assertEqual(evaluate_run(self.summary_for("AA8_GRAYFAST")), [])
+
+    def test_hard_detection_gate_is_ten_ms(self):
+        value = self.summary_for("AA7_HARD")
+        value["latency"]["l_switch_ms"] = 36.0
+        failures = evaluate_run(value)
+        self.assertTrue(any("within 10 ms" in f for f in failures))
+
+    def test_traffic_off_gate_is_one_second_from_detection(self):
+        for scenario_id in ("AA7_HARD", "AA8_GRAYFAST"):
+            value = self.summary_for(scenario_id)
+            value["latency"]["l_suspect_to_commit_ms"] = 1500.0
+            failures = evaluate_run(value)
+            self.assertTrue(
+                any("traffic off the failed port" in f for f in failures),
+                scenario_id,
+            )
+
+    def test_progress_gate_allows_one_step_of_slack_for_gray(self):
+        hard = self.summary_for("AA7_HARD")
+        hard["latency"]["l_suspect_to_first_recovered_step_ms"] = 1100.0
+        self.assertTrue(
+            any("within 1000 ms" in f for f in evaluate_run(hard))
+        )
+        gray = self.summary_for("AA8_GRAYFAST")
+        gray["latency"]["l_suspect_to_first_recovered_step_ms"] = 1100.0
+        self.assertEqual(evaluate_run(gray), [])
+        gray["latency"]["l_suspect_to_first_recovered_step_ms"] = 1400.0
+        self.assertTrue(
+            any("within 1300 ms" in f for f in evaluate_run(gray))
+        )
+
+    def test_hard_fault_interface_must_actually_go_down(self):
+        value = self.summary_for("AA7_HARD")
+        value["fault_interface_operstate_after"] = "up"
+        failures = evaluate_run(value)
+        self.assertTrue(any("actually be down" in f for f in failures))
+
+    def test_hard_link_reroute_must_move_six_slots(self):
+        value = self.summary_for("AA7_HARD")
+        value["routing"]["changed_slots"] = [
+            {"sender_rank": 2, "step_id": step} for step in (0, 2, 4)
+        ]
+        failures = evaluate_run(value)
+        self.assertTrue(any("six slots" in f for f in failures))
 
 
 if __name__ == "__main__":

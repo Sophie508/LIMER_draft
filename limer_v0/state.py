@@ -13,6 +13,7 @@ class PreparedTransition:
     version: int
     plan: RoutePlan
     effective_round: int
+    effective_step: int = 0
     committed: bool = False
 
 
@@ -21,9 +22,15 @@ class RouteState:
         self.active_plan = initial_plan
         self.active_version = 0
         self.prepared: Optional[PreparedTransition] = None
+        self.previous_plan: Optional[RoutePlan] = None
+        self.previous_version: Optional[int] = None
 
     def prepare(
-        self, version: int, plan: RoutePlan, effective_round: int
+        self,
+        version: int,
+        plan: RoutePlan,
+        effective_round: int,
+        effective_step: int = 0,
     ) -> None:
         if self.prepared is not None:
             raise ValueError("a route transition is already prepared")
@@ -35,7 +42,11 @@ class RouteState:
             raise ValueError("prepared plan must differ from the active plan")
         if effective_round < 0:
             raise ValueError("effective_round must be non-negative")
-        self.prepared = PreparedTransition(version, plan, effective_round)
+        if not 0 <= effective_step < plan.steps:
+            raise ValueError("effective_step must be a valid step index")
+        self.prepared = PreparedTransition(
+            version, plan, effective_round, effective_step
+        )
 
     def commit(self, version: int) -> None:
         if self.prepared is None:
@@ -51,14 +62,19 @@ class RouteState:
             raise ValueError("abort version does not match prepared version")
         self.prepared = None
 
-    def plan_for(self, round_id: int) -> Tuple[RoutePlan, int]:
+    def plan_for(self, round_id: int, step_id: int = 0) -> Tuple[RoutePlan, int]:
         if round_id < 0:
             raise ValueError("round_id must be non-negative")
+        if step_id < 0:
+            raise ValueError("step_id must be non-negative")
         if (
             self.prepared is not None
             and self.prepared.committed
-            and round_id >= self.prepared.effective_round
+            and (round_id, step_id)
+            >= (self.prepared.effective_round, self.prepared.effective_step)
         ):
+            self.previous_plan = self.active_plan
+            self.previous_version = self.active_version
             self.active_plan = self.prepared.plan
             self.active_version = self.prepared.version
             self.prepared = None

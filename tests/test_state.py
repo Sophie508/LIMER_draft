@@ -79,5 +79,54 @@ class RouteStateTest(unittest.TestCase):
             state.abort(version=2)
 
 
+class StepGranularTransitionTest(unittest.TestCase):
+    def test_commit_applies_from_effective_round_and_step(self):
+        base = RoutePlan.balanced_active_active(4)
+        state = RouteState(base)
+        target = base.localized_reroute(2, "A", "B")
+        state.prepare(1, target, 3, 2)
+        state.commit(1)
+        self.assertEqual(state.plan_for(3, 1)[1], 0)
+        self.assertEqual(state.plan_for(3, 2)[1], 1)
+
+    def test_commit_at_step_zero_matches_round_granularity(self):
+        base = RoutePlan.balanced_active_active(4)
+        state = RouteState(base)
+        target = base.localized_reroute(2, "A", "B")
+        state.prepare(1, target, 3)
+        state.commit(1)
+        self.assertEqual(state.plan_for(2, 5)[1], 0)
+        self.assertEqual(state.plan_for(3, 0)[1], 1)
+
+    def test_effective_step_must_be_valid(self):
+        base = RoutePlan.balanced_active_active(4)
+        state = RouteState(base)
+        target = base.localized_reroute(2, "A", "B")
+        with self.assertRaises(ValueError):
+            state.prepare(1, target, 3, 6)
+
+
+class LinkRerouteTest(unittest.TestCase):
+    def test_link_reroute_moves_both_affected_senders(self):
+        base = RoutePlan.balanced_active_active(4)
+        target = base.localized_link_reroute(2, "A", "B")
+        changes = base.changed_slots(target)
+        self.assertEqual(len(changes), 6)
+        self.assertEqual(
+            sorted({change["sender_rank"] for change in changes}), [1, 2]
+        )
+        for change in changes:
+            self.assertEqual(change["old_route"], "A")
+            self.assertEqual(change["new_route"], "B")
+        for rank in (0, 3):
+            self.assertEqual(base.routes[rank], target.routes[rank])
+        self.assertEqual(target.policy, "localized_link_reroute")
+
+    def test_link_reroute_requires_slots_on_failed_route(self):
+        base = RoutePlan.global_fabric(4, "B")
+        with self.assertRaises(ValueError):
+            base.localized_link_reroute(2, "A", "B")
+
+
 if __name__ == "__main__":
     unittest.main()

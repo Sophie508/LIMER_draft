@@ -117,6 +117,40 @@ class RoutePlan:
             tuple(tuple(row) for row in routes),
         )
 
+    def localized_link_reroute(
+        self, affected_rank: int, failed_route: str, alternate_route: str
+    ) -> "RoutePlan":
+        """Reroute every slot that traverses one worker's access link.
+
+        A hard (bidirectional) failure of the link between affected_rank and
+        one fabric kills both that worker's sends on the fabric and the sends
+        of its ring predecessor addressed to it. The minimal repair therefore
+        moves exactly two senders' failed-route slots: the affected rank's own,
+        and its predecessor's. Contrast with localized_reroute, which models a
+        directed egress-only impairment and moves one sender's slots.
+        """
+        if not 0 <= affected_rank < self.world_size:
+            raise IndexError("affected_rank is out of range")
+        self._validate_fabric(failed_route)
+        self._validate_fabric(alternate_route)
+        if failed_route == alternate_route:
+            raise ValueError("failed and alternate routes must be different")
+        predecessor = (affected_rank - 1) % self.world_size
+        routes: List[List[str]] = [list(row) for row in self.routes]
+        changed = 0
+        for sender_rank in (affected_rank, predecessor):
+            for step_id, route in enumerate(routes[sender_rank]):
+                if route == failed_route:
+                    routes[sender_rank][step_id] = alternate_route
+                    changed += 1
+        if changed == 0:
+            raise ValueError("link reroute found no slots on the failed route")
+        return RoutePlan(
+            self.world_size,
+            "localized_link_reroute",
+            tuple(tuple(row) for row in routes),
+        )
+
     def changed_slots(self, target: "RoutePlan") -> List[Dict[str, Any]]:
         if self.world_size != target.world_size:
             raise ValueError("route plans must have the same world_size")

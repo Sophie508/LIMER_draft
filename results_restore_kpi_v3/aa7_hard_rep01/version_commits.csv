@@ -1,0 +1,11 @@
+t_monotonic_ns,event,rank,version,plan_fingerprint,policy,effective_round,changed_slots
+3864420003102076,RECOVERY_PROPOSE,,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,localized_link_reroute,3,"[{""new_route"":""B"",""old_route"":""A"",""sender_rank"":1,""step_id"":1},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":1,""step_id"":3},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":1,""step_id"":5},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":0},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":2},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":4}]"
+3864420003266877,READY,0,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,3,
+3864420003273637,READY,1,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,3,
+3864420003280707,READY,3,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,3,
+3864420003284737,READY,2,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,3,
+3864420003582248,COMMITTED,0,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,,
+3864420003611799,COMMITTED,3,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,,
+3864420003615749,COMMITTED,1,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,,
+3864420003641079,COMMITTED,2,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,,,
+3864420003712219,RECOVERY_COMMIT,,1,23fed2f53d9332b0bdd2e5dde1a51f2f43c111551a4e9c6b2b81419db7af8692,localized_link_reroute,3,"[{""new_route"":""B"",""old_route"":""A"",""sender_rank"":1,""step_id"":1},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":1,""step_id"":3},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":1,""step_id"":5},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":0},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":2},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":4}]"

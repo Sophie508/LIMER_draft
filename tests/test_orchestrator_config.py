@@ -439,5 +439,75 @@ class AlternatePathProbeAssessmentTest(unittest.TestCase):
         self.assertFalse(assessed["healthy"])
 
 
+class RestoreKpiConfigTest(unittest.TestCase):
+    def hard_config(self):
+        config = valid_active_active_config()
+        config.update(
+            {
+                "scenario_id": "AA7_HARD",
+                "fault_kind": "link_down",
+                "recovery_policy": "localized_link",
+                "detector_rule": "burst",
+                "host_gate": "immediate",
+                "step_timeout_s": 10.0,
+            }
+        )
+        return config
+
+    def test_hard_scenario_validates(self):
+        config = validate_config(self.hard_config())
+        self.assertEqual(config["fault_kind"], "link_down")
+        self.assertEqual(config["host_gate"], "immediate")
+
+    def test_link_down_requires_link_reroute_policy(self):
+        config = self.hard_config()
+        config["recovery_policy"] = "localized"
+        with self.assertRaises(ValueError):
+            validate_config(config)
+
+    def test_link_down_requires_immediate_gate(self):
+        config = self.hard_config()
+        config["host_gate"] = "step_cutover"
+        config["min_slow_steps"] = 1
+        with self.assertRaises(ValueError):
+            validate_config(config)
+
+    def test_link_down_forbids_transient(self):
+        config = self.hard_config()
+        config["scenario_id"] = "AA5_TRANSIENT"
+        config["condition"] = "C5"
+        config["transient_ms"] = 100
+        with self.assertRaises(ValueError):
+            validate_config(config)
+
+    def test_grayfast_requires_step_cutover_and_single_slow_step(self):
+        config = valid_active_active_config()
+        config.update(
+            {
+                "scenario_id": "AA8_GRAYFAST",
+                "detector_rule": "burst",
+                "host_gate": "step_cutover",
+                "min_slow_steps": 1,
+            }
+        )
+        validated = validate_config(config)
+        self.assertEqual(validated["min_slow_steps"], 1)
+        config["min_slow_steps"] = 2
+        with self.assertRaises(ValueError):
+            validate_config(config)
+
+    def test_immediate_gate_is_reserved_for_link_down(self):
+        config = valid_active_active_config()
+        config["host_gate"] = "immediate"
+        with self.assertRaises(ValueError):
+            validate_config(config)
+
+    def test_step_timeout_must_be_positive(self):
+        config = valid_active_active_config()
+        config["step_timeout_s"] = 0
+        with self.assertRaises(ValueError):
+            validate_config(config)
+
+
 if __name__ == "__main__":
     unittest.main()

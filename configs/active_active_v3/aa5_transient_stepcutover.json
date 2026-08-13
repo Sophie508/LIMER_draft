@@ -1,0 +1,28 @@
+{
+    "condition": "C5",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 3,
+    "fault_rate_mbit": 20.0,
+    "fault_loss_pct": 0.0,
+    "detector": true,
+    "recovery": true,
+    "oracle": false,
+    "transient_ms": 100,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA5_TRANSIENT",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "localized",
+    "detector_rule": "burst",
+    "host_gate": "step_cutover",
+    "min_slow_steps": 1,
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "The 100 ms transient runs against the most trigger-happy stack (single slow step, mid-round cutover) to check that suppression still holds: slow steps only count while the switch-side symptom is active, and the archived traces show the transient's symptom clears roughly 60 ms before its first slow step completes.",
+    "expected": "The burst rule may raise suspicion during the transient, but no slow step completes while the symptom is still active, so nothing commits and retention stays near the fault-free baseline. The known-thin 60 ms margin is the point of the regression: if it erodes, this gate fails loudly."
+}

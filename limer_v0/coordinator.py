@@ -15,6 +15,7 @@ class TransitionProposal:
     effective_round: int
     current_round: int
     changed_slots: List[Dict[str, Any]]
+    effective_step: int = 0
 
     @property
     def plan_fingerprint(self) -> str:
@@ -27,6 +28,7 @@ class TransitionProposal:
             "plan_fingerprint": self.plan_fingerprint,
             "policy": self.plan.policy,
             "effective_round": self.effective_round,
+            "effective_step": self.effective_step,
             "current_round": self.current_round,
             "changed_slots": list(self.changed_slots),
         }
@@ -41,6 +43,7 @@ class TransitionDecision:
     ready_ranks: List[int]
     missing_ranks: List[int]
     changed_slots: List[Dict[str, Any]]
+    effective_step: int = 0
 
     @property
     def plan_fingerprint(self) -> str:
@@ -54,6 +57,7 @@ class TransitionDecision:
             "plan_fingerprint": self.plan_fingerprint,
             "policy": self.plan.policy,
             "effective_round": self.effective_round,
+            "effective_step": self.effective_step,
             "ready_ranks": list(self.ready_ranks),
             "missing_ranks": list(self.missing_ranks),
             "changed_slots": list(self.changed_slots),
@@ -69,7 +73,12 @@ class RecoveryCoordinator:
         self._ready: Set[int] = set()
 
     def propose(
-        self, plan: RoutePlan, effective_round: int, current_round: int
+        self,
+        plan: RoutePlan,
+        effective_round: int,
+        current_round: int,
+        effective_step: int = 0,
+        allow_current_round: bool = False,
     ) -> TransitionProposal:
         if self.pending is not None:
             raise ValueError("a transition is already pending")
@@ -77,14 +86,24 @@ class RecoveryCoordinator:
             raise ValueError("proposal plan world_size does not match the coordinator")
         if plan.fingerprint == self.active_plan.fingerprint:
             raise ValueError("proposal plan must differ from the active plan")
-        if effective_round <= current_round:
-            raise ValueError("effective round must be in the future")
+        if not 0 <= effective_step < plan.steps:
+            raise ValueError("effective_step must be a valid step index")
+        if effective_step == 0 and not allow_current_round:
+            # A round-boundary cutover must land on a future round.
+            if effective_round <= current_round:
+                raise ValueError("effective round must be in the future")
+        elif effective_round < current_round:
+            # A mid-round cutover may target the round in flight, including
+            # its very first step when the fault lands before any step
+            # completes (allow_current_round).
+            raise ValueError("effective round must not be in the past")
         self.pending = TransitionProposal(
             version=self.active_version + 1,
             plan=plan,
             effective_round=effective_round,
             current_round=current_round,
             changed_slots=self.active_plan.changed_slots(plan),
+            effective_step=effective_step,
         )
         self._ready.clear()
         return self.pending
@@ -119,6 +138,7 @@ class RecoveryCoordinator:
             ready_ranks=ready,
             missing_ranks=missing,
             changed_slots=proposal.changed_slots,
+            effective_step=proposal.effective_step,
         )
         if action == "commit":
             self.active_version = proposal.version

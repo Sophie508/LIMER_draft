@@ -7,6 +7,7 @@ import json
 import re
 import statistics
 import subprocess
+import time
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -90,6 +91,28 @@ class TopologyDescriptor:
             run_command=self._host_command_runner(rank),
             read_text=self._host_text_reader(rank),
         )
+
+    def apply_link_down(
+        self, route: str = "A", rank: int = 2
+    ) -> Dict[str, Any]:
+        """Take the worker-side access interface administratively down.
+
+        Models a hard port failure: unlike the qdisc profiles, the link stops
+        carrying traffic in both directions and the switch-side peer loses
+        carrier, which the kernel announces via netlink immediately.
+        """
+        interface = self.fault_interface(route, rank)
+        run = self._host_command_runner(rank)
+        t_before_ns = time.monotonic_ns()
+        run(["ip", "link", "set", interface, "down"])
+        t_after_ns = time.monotonic_ns()
+        return {
+            "interface": interface,
+            "kind": "link_down",
+            "t_before_ns": t_before_ns,
+            "t_after_ns": t_after_ns,
+            "operstate": self.fault_operstate(route, rank),
+        }
 
     def fault_operstate(self, route: str = "A", rank: int = 2) -> str:
         """Read host-interface state from the worker namespace."""

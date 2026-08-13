@@ -32,6 +32,9 @@ class FakeHandle:
     def send(self, command):
         self.commands.append(dict(command))
 
+    def wait_for_control(self, expected, timeout_s=0):
+        return self.wait_for(expected, timeout_s)
+
     def wait_for(self, expected, timeout_s=0):
         event = expected[0]
         if event == "READY":
