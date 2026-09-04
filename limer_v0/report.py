@@ -16,7 +16,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
 FORMAL_RUN = re.compile(r"^c([0-5])_rep([0-9]{2})$")
 ACTIVE_RUN = re.compile(
     r"^(aa(?:0_healthy|1_fault|2_detect|3_local|3_global|4_oracle|5_transient"
-    r"|6_stepdetect|7_hard|8_grayfast))_rep([0-9]{2})$"
+    r"|6_stepdetect|7_hard|8_grayfast|9_stay|10_switch))_rep([0-9]{2})$"
 )
 REQUIRED_ARTIFACTS = {
     "manifest.json",
@@ -47,6 +47,8 @@ ACTIVE_SCENARIO_LABELS = {
     "AA6_STEPDETECT": "Step-level detection closed loop",
     "AA7_HARD": "Hard link-down immediate failover",
     "AA8_GRAYFAST": "Fast gray step-cutover recovery",
+    "AA9_STAY": "Loss fault, stay and retransmit (measurement arm)",
+    "AA10_SWITCH": "Loss fault, oracle localized switch (measurement arm)",
 }
 AA6_L_SWITCH_GATE_MS = 200.0
 AA6_L_DETECTION_GATE_MS = 1500.0
@@ -115,6 +117,7 @@ def select_retention(summary: Mapping[str, Any]) -> float:
             "AA6_STEPDETECT",
             "AA7_HARD",
             "AA8_GRAYFAST",
+            "AA10_SWITCH",
         }
         or (
             summary.get("experiment_family") != "active_active_v1"
@@ -290,6 +293,20 @@ def evaluate_run(summary: Mapping[str, Any]) -> List[str]:
                 failures.append(
                     "AA4_ORACLE must change exactly three worker 2 route slots"
                 )
+        elif scenario == "AA9_STAY":
+            # Measurement arm: quantify staying on a lossy link. Retention is
+            # the measured quantity, so it carries no pass bound here.
+            if detection.get("triggered") or recovery.get("committed"):
+                failures.append("AA9_STAY must not detect or recover")
+        elif scenario == "AA10_SWITCH":
+            # Measurement arm: quantify the cost of switching. Locality still
+            # gates; retention is the measured quantity, so no bound.
+            if not recovery.get("committed"):
+                failures.append("AA10_SWITCH oracle recovery must commit")
+            if len(changed_slots) != 3 or changed_ranks != [2]:
+                failures.append(
+                    "AA10_SWITCH must change exactly three worker 2 route slots"
+                )
         elif scenario == "AA5_TRANSIENT":
             if host.get("action") != "suppress":
                 failures.append("AA5 host gate must suppress")
@@ -368,6 +385,7 @@ def _selected_throughput(summary: Mapping[str, Any]) -> Optional[float]:
             "AA6_STEPDETECT",
             "AA7_HARD",
             "AA8_GRAYFAST",
+            "AA10_SWITCH",
         }
         or (
             summary.get("experiment_family") != "active_active_v1"

@@ -1,0 +1,6 @@
+RUN aa9_stay_rep01 rc=0
+RUN aa9_stay_rep02 rc=0
+RUN aa9_stay_rep03 rc=0
+RUN aa10_switch_rep01 rc=0
+RUN aa10_switch_rep02 rc=0
+RUN aa10_switch_rep03 rc=0

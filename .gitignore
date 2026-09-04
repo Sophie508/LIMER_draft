@@ -32,3 +32,4 @@ results_pre_audit_same_qdisc_2026-07-14/
 *.key
 id_rsa*
 id_ed25519*
+.codex_tmp/

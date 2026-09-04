@@ -44,6 +44,8 @@ ACTIVE_SCENARIO_SPECS = {
     "AA6_STEPDETECT": ("C3", True, True, False, "localized", False),
     "AA7_HARD": ("C3", True, True, False, "localized_link", False),
     "AA8_GRAYFAST": ("C3", True, True, False, "localized", False),
+    "AA9_STAY": ("C1", False, False, False, "none", False),
+    "AA10_SWITCH": ("C4", False, True, True, "localized", False),
 }
 DETECTOR_RULES = {"legacy", "burst"}
 HOST_GATES = {"round", "step", "step_cutover", "immediate"}
@@ -323,6 +325,13 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
     if step_timeout_s <= 0:
         raise ValueError("step_timeout_s must be positive")
     result["step_timeout_s"] = step_timeout_s
+
+    b_access_rate_mbit = result.get("b_access_rate_mbit")
+    if b_access_rate_mbit is not None:
+        if float(b_access_rate_mbit) <= 0:
+            raise ValueError("b_access_rate_mbit must be positive")
+        b_access_rate_mbit = float(b_access_rate_mbit)
+    result["b_access_rate_mbit"] = b_access_rate_mbit
 
     if host_gate == "immediate":
         if fault_kind != "link_down":
@@ -1918,6 +1927,22 @@ def execute_run(
                 "ALTERNATE_PATH_BASELINE_PROBE",
                 route="B",
                 probe=alternate_path_baseline_probe,
+            )
+
+        if config["b_access_rate_mbit"] is not None:
+            constrained_profile = TcProfile(
+                rate_mbit=config["b_access_rate_mbit"],
+                delay_ms=BASE_PROFILE.delay_ms,
+                loss_pct=0.0,
+            )
+            constrained_record = descriptor.apply_fault_profile(
+                constrained_profile, "B", fault_rank
+            )
+            event_log.emit(
+                "B_ACCESS_CONSTRAINED",
+                interface=descriptor.fault_interface("B", fault_rank),
+                rate_mbit=config["b_access_rate_mbit"],
+                record=constrained_record,
             )
 
         round_id = 0

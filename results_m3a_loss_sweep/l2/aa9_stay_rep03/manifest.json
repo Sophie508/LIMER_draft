@@ -1,0 +1,511 @@
+{
+  "config": {
+    "b_access_rate_mbit": null,
+    "baseline_rounds": 2,
+    "chunk_bytes": 2097152,
+    "condition": "C1",
+    "detector": false,
+    "detector_rule": "legacy",
+    "expected": "The run completes with zero checksum and version errors and reports the stay-arm retention for this loss level; no retention bound is asserted because this is the measured quantity.",
+    "experiment_family": "active_active_v1",
+    "fault_delay_ms": null,
+    "fault_kind": "rate_cap",
+    "fault_loss_pct": 2.0,
+    "fault_rate_mbit": 100.0,
+    "fault_scope": {
+      "direction": "egress",
+      "fabric": "A",
+      "rank": 2
+    },
+    "host_gate": "round",
+    "min_slow_steps": 2,
+    "oracle": false,
+    "post_fault_rounds": 8,
+    "recovery": false,
+    "recovery_policy": "none",
+    "routing_policy": "balanced_active_active",
+    "scenario_id": "AA9_STAY",
+    "step_timeout_s": 300.0,
+    "topology": "dual",
+    "transient_ms": 0,
+    "warmup_rounds": 1,
+    "what_changes": "Worker 2's Fabric A egress drops 2.0% of packets at random while the link stays up and full rate; no detection and no recovery run, so the measured retention is the pure cost of staying on the lossy link and paying TCP retransmissions."
+  },
+  "detector_execution_boundary": {
+    "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+    "data_source": "switch-facing Linux interface counters",
+    "process_placement": "orchestrator/root namespace management-plane proxy",
+    "resource_budget_enforced": false,
+    "switch_resident": false
+  },
+  "expected": "The run completes with zero checksum and version errors and reports the stay-arm retention for this loss level; no retention bound is asserted because this is the measured quantity.",
+  "experiment_family": "active_active_v1",
+  "finished_at_utc": "2026-09-04T15:55:41.147304+00:00",
+  "finished_t_monotonic_ns": 1095277775528,
+  "host": {
+    "hostname": "7338c31f934e",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]"
+  },
+  "routing": {
+    "initial_plan": {
+      "policy": "balanced_active_active",
+      "routes": [
+        [
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A"
+        ],
+        [
+          "A",
+          "B",
+          "A",
+          "B",
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "A",
+          "B",
+          "A",
+          "B",
+          "A"
+        ]
+      ],
+      "world_size": 4
+    },
+    "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+    "recovery_policy": "none"
+  },
+  "run_id": "aa9_stay_rep03",
+  "scenario_id": "AA9_STAY",
+  "schema_version": "limer-cpu-active-active-v1.0",
+  "started_at_utc": "2026-09-04T15:55:25.607085+00:00",
+  "started_t_monotonic_ns": 1079737552110,
+  "status": "complete",
+  "topology": {
+    "base_profile": {
+      "delay_ms": 1.0,
+      "loss_pct": 0.0,
+      "rate_mbit": 100.0
+    },
+    "detector_interface": "sA-eth3",
+    "fabrics": [
+      "A",
+      "B"
+    ],
+    "fault_interface": "w2-eth0",
+    "fault_observation_isolation": {
+      "detector_location": "peer switch-facing interface counters",
+      "detector_reads_injector_qdisc": false,
+      "injector_location": "worker-side egress qdisc",
+      "observed_signal": "switch-port RX byte rate while operstate stays up",
+      "same_interface": false
+    },
+    "fault_rank": 2,
+    "fault_route": "A",
+    "kind": "dual",
+    "ping_attempts": 8,
+    "ping_successes": 8,
+    "profile_records": [
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth1",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth1",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth1",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 1080985238649,
+          "tx_bytes": 266,
+          "tx_dropped": 0,
+          "tx_packets": 3
+        },
+        "t_after_ns": 1080985238649,
+        "t_before_ns": 1080983345814
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth2",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth2",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth2",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 1080991727195,
+          "tx_bytes": 266,
+          "tx_dropped": 0,
+          "tx_packets": 3
+        },
+        "t_after_ns": 1080991727195,
+        "t_before_ns": 1080990016981
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth3",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth3",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth3",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 1080998387791,
+          "tx_bytes": 270,
+          "tx_dropped": 0,
+          "tx_packets": 3
+        },
+        "t_after_ns": 1080998387791,
+        "t_before_ns": 1080996719507
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth4",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth4",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth4",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 1081004766877,
+          "tx_bytes": 266,
+          "tx_dropped": 0,
+          "tx_packets": 3
+        },
+        "t_after_ns": 1081004766877,
+        "t_before_ns": 1081003165083
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sB-eth1",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sB-eth1",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sB-eth1",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 90,
+          "rx_dropped": 0,
+          "rx_packets": 1,
+          "t_ns": 1081010938262,
+          "tx_bytes": 90,
+          "tx_dropped": 0,
+          "tx_packets": 1
+        },
+        "t_after_ns": 1081010938262,
+        "t_before_ns": 1081009281088
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sB-eth2",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sB-eth2",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sB-eth2",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 90,
+          "rx_dropped": 0,
+          "rx_packets": 1,
+          "t_ns": 1081017819339,
+          "tx_bytes": 90,
+          "tx_dropped": 0,
+          "tx_packets": 1
+        },
+        "t_after_ns": 1081017819339,
+        "t_before_ns": 1081016063745
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sB-eth3",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sB-eth3",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sB-eth3",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 90,
+          "rx_dropped": 0,
+          "rx_packets": 1,
+          "t_ns": 1081024295304,
+          "tx_bytes": 90,
+          "tx_dropped": 0,
+          "tx_packets": 1
+        },
+        "t_after_ns": 1081024295304,
+        "t_before_ns": 1081022741651
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sB-eth4",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sB-eth4",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sB-eth4",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 90,
+          "rx_dropped": 0,
+          "rx_packets": 1,
+          "t_ns": 1081031056181,
+          "tx_bytes": 266,
+          "tx_dropped": 0,
+          "tx_packets": 3
+        },
+        "t_after_ns": 1081031056181,
+        "t_before_ns": 1081029478538
+      }
+    ]
+  },
+  "what_changes": "Worker 2's Fabric A egress drops 2.0% of packets at random while the link stays up and full rate; no detection and no recovery run, so the measured retention is the pure cost of staying on the lossy link and paying TCP retransmissions.",
+  "workload": {
+    "bytes_per_rank_per_round": 12582912,
+    "chunk_bytes_per_step_per_rank": 2097152,
+    "metric_denominator": "sum of application payload bytes reported sent by all ranks in a fully completed round, divided by the slowest rank duration; this is an aggregate wire-volume proxy, not unique tensor bytes",
+    "name": "framed-ring-AllReduce-like",
+    "retry_accounting": "TCP retransmissions are below the application counter and do not increase bytes_completed; an incomplete rank makes the run fail",
+    "steps_per_round": 6,
+    "world_size": 4
+  }
+}
