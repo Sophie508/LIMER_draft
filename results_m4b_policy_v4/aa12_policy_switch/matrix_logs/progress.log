@@ -1,0 +1,3 @@
+RUN aa12_policy_rep01 rc=1
+RUN aa12_policy_rep02 rc=1
+RUN aa12_policy_rep03 rc=1

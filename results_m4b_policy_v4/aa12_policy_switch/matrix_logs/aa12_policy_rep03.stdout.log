@@ -1,0 +1,10 @@
+*** Error setting resource limits. Mininet's performance may be affected.
+{
+  "condition": "C3",
+  "error": "worker 0 error during run_round: EOFError: expected 24 bytes, received 0",
+  "error_type": "RuntimeError",
+  "experiment_family": "active_active_v1",
+  "run_id": "aa12_policy_rep03",
+  "scenario_id": "AA12_POLICY",
+  "status": "failed"
+}

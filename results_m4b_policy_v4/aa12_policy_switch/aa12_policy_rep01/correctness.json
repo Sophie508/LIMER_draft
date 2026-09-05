@@ -1,0 +1,84 @@
+{
+  "active_active_use": {
+    "baseline_send_bytes": {
+      "A": 50331648,
+      "B": 50331648
+    },
+    "baseline_send_steps": {
+      "A": 24,
+      "B": 24
+    },
+    "passed": true,
+    "required": true
+  },
+  "checksum_errors": 0,
+  "expected_collective_rounds": 11,
+  "limitation": "This checks framed byte transport and route-version agreement; it is not the deferred true-reduction correctness mode.",
+  "locality": {
+    "changed_sender_ranks": [],
+    "changed_slot_count": 0,
+    "changed_slots": [],
+    "mode": "localized",
+    "passed": false,
+    "required": true,
+    "unchanged_sender_ranks": []
+  },
+  "mode": "framed-transport-integrity",
+  "observed_collective_rounds": 11,
+  "observed_worker_rounds": 44,
+  "plan_consistency": {
+    "passed": true,
+    "worker_round_cardinality": {
+      "0": 1,
+      "1": 1,
+      "10": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+      "9": 1
+    }
+  },
+  "route_version_cardinality": {
+    "0": 1,
+    "1": 1,
+    "10": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1,
+    "6": 1,
+    "7": 1,
+    "8": 1,
+    "9": 1
+  },
+  "schedule_conformance": {
+    "failure_count": 2,
+    "failures": [
+      {
+        "mismatches": [
+          "send_routes"
+        ],
+        "rank": 2,
+        "round_id": 3,
+        "version": 1
+      },
+      {
+        "mismatches": [
+          "receive_routes"
+        ],
+        "rank": 3,
+        "round_id": 3,
+        "version": 1
+      }
+    ],
+    "passed": false
+  },
+  "status": "fail",
+  "version_errors": 0,
+  "worker_error_count": 0,
+  "worker_errors": []
+}
