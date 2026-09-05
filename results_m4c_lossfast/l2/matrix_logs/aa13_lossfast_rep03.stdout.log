@@ -1,0 +1,209 @@
+*** Error setting resource limits. Mininet's performance may be affected.
+{
+  "baseline": {
+    "baseline_median_bps": 371548742.61235034,
+    "bytes_completed": [
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.082927607,
+      1.084504824
+    ],
+    "fault_period_retention": 1.0,
+    "iqr_throughput_bps": 270371.9778274298,
+    "median_throughput_bps": 371548742.61235034,
+    "post_recovery_retention": 1.0,
+    "round_count": 2,
+    "throughput_bps": [
+      371819114.5901778,
+      371278370.6345229
+    ]
+  },
+  "condition": "C2",
+  "correctness_status": "pass",
+  "detector_interface": "sA-eth3",
+  "detector_interface_operstate_after": "up",
+  "experiment_family": "active_active_v1",
+  "fault_applied": true,
+  "fault_interface": "w2-eth0",
+  "fault_interface_operstate_after": "up",
+  "fault_kind": "rate_cap",
+  "fault_observation_isolation": {
+    "detector_location": "switch-facing peer interface counters",
+    "detector_reads_injector_qdisc": false,
+    "injector_location": "worker-side egress qdisc",
+    "observed_counter": "rx_bytes",
+    "same_interface": false
+  },
+  "fault_period_retention": 0.9818090904081129,
+  "fault_to_restoration_window": {
+    "baseline_median_bps": 371548742.61235034,
+    "interval_retention": 0.9292806252518779,
+    "interval_throughput_bps": 345273047.846354,
+    "round_count": 8,
+    "total_bytes_completed": 402653184,
+    "total_duration_s": 9.329501657
+  },
+  "fault_window": {
+    "baseline_median_bps": 371548742.61235034,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.093271581,
+      1.107040924,
+      1.106686691,
+      1.123536018,
+      1.100416431,
+      1.100917726,
+      1.600809876,
+      1.09682241
+    ],
+    "fault_period_retention": 0.9818090904081129,
+    "iqr_throughput_bps": 3824322.203128338,
+    "median_throughput_bps": 364789933.02650976,
+    "post_recovery_retention": 0.9818090904081129,
+    "round_count": 8,
+    "throughput_bps": [
+      368301153.16058874,
+      363720234.067878,
+      363836655.1929556,
+      358380307.83985066,
+      365909825.2777725,
+      365743210.86006385,
+      251530921.96440196,
+      367108823.0226806
+    ]
+  },
+  "host_refinement": {
+    "action": null,
+    "baseline_p95_s": 1.0844259631499997,
+    "confidence": null,
+    "decision_t_monotonic_ns": null,
+    "enabled": false,
+    "gate_mode": "round",
+    "l_host_ms": null,
+    "reasons": []
+  },
+  "interpretation_boundary": "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, a real GPU cluster, or production switch hardware.",
+  "latency": {
+    "l_commit_to_recovered_round_ms": null,
+    "l_coordination_ms": null,
+    "l_detection_ms": null,
+    "l_fault_to_commit_ms": null,
+    "l_fault_to_first_recovered_step_ms": null,
+    "l_fault_to_recovered_round_complete_ms": null,
+    "l_host_ms": null,
+    "l_suspect_to_commit_ms": null,
+    "l_suspect_to_first_recovered_step_ms": null,
+    "l_switch_ms": 1480.58119,
+    "latency_target": {
+      "numeric_target_ms": null,
+      "source": "Review feedback requests millisecond-level detection and recovery without a numeric threshold.",
+      "status": "not_formally_specified",
+      "unit": "ms"
+    }
+  },
+  "post_fault": {
+    "baseline_median_bps": 371548742.61235034,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.093271581,
+      1.107040924,
+      1.106686691,
+      1.123536018,
+      1.100416431,
+      1.100917726,
+      1.600809876,
+      1.09682241
+    ],
+    "fault_period_retention": 0.9818090904081129,
+    "iqr_throughput_bps": 3824322.203128338,
+    "median_throughput_bps": 364789933.02650976,
+    "post_recovery_retention": 0.9818090904081129,
+    "round_count": 8,
+    "throughput_bps": [
+      368301153.16058874,
+      363720234.067878,
+      363836655.1929556,
+      358380307.83985066,
+      365909825.2777725,
+      365743210.86006385,
+      251530921.96440196,
+      367108823.0226806
+    ]
+  },
+  "post_recovery": null,
+  "post_recovery_retention": null,
+  "recovery": {
+    "commit_t_monotonic_ns": null,
+    "committed": false,
+    "decision": null,
+    "enabled": false,
+    "first_recovered_round_id": null,
+    "l_commit_to_recovered_round_ms": null,
+    "l_coordination_ms": null,
+    "l_fault_to_commit_ms": null,
+    "l_fault_to_recovered_round_complete_ms": null,
+    "oracle": false
+  },
+  "routing": {
+    "changed_slots": [],
+    "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+    "initial_policy": "balanced_active_active",
+    "recovered_plan_fingerprint": null,
+    "recovery_policy": "none"
+  },
+  "run_id": "aa13_lossfast_rep03",
+  "scenario_id": "AA13_LOSSFAST",
+  "status": "complete",
+  "switch_detection": {
+    "baseline_median_bps": 95336864.13491538,
+    "detector_rule": "burst",
+    "enabled": true,
+    "execution_boundary": {
+      "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+      "data_source": "switch-facing Linux interface counters",
+      "process_placement": "orchestrator/root namespace management-plane proxy",
+      "resource_budget_enforced": false,
+      "switch_resident": false
+    },
+    "fault_t_monotonic_ns": 41982946732110,
+    "first_suspect_t_monotonic_ns": 41984427313300,
+    "interface": "sA-eth3",
+    "l_switch_ms": 1480.58119,
+    "rule_version": "l1-v0.3-burst-aware-rx-rate",
+    "state_proxy": {
+      "calibration_rate_samples": 88,
+      "max_consecutive_evidence_samples": 2,
+      "monitored_ports": 1,
+      "rss_isolated_or_budgeted": false
+    },
+    "suspect_count": 1,
+    "triggered": true
+  },
+  "switch_sampling": {
+    "max_actual_interval_ms": 20.093634,
+    "median_actual_interval_ms": 19.999927999999997,
+    "sample_count": 637,
+    "target_interval_ms": 20.0
+  },
+  "topology": "dual"
+}

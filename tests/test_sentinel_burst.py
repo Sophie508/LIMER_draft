@@ -201,3 +201,104 @@ class BurstRuleReplayOnPreservedEvidenceTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HeadroomEstimatorTest(unittest.TestCase):
+    def feed(self, estimator, pattern, mbit_values):
+        byte_count = 0
+        t_ns = 0
+        from limer_v0.sentinel import HeadroomEstimator  # noqa: F401
+        for value in pattern:
+            byte_count += mbit_per_20ms(mbit_values[value])
+            t_ns += 20_000_000
+            estimator.observe(sample(t_ns, byte_count))
+
+    def test_half_duty_port_reports_half_spare(self):
+        from limer_v0.sentinel import HeadroomEstimator
+        estimator = HeadroomEstimator("sA-eth3")
+        # Alternate 100 Mbit bursts with idle windows: 50% duty.
+        self.feed(estimator, [0, 1] * 40, {0: 100, 1: 0.3})
+        snap = estimator.snapshot()
+        self.assertAlmostEqual(snap["busy_fraction"], 0.5, delta=0.05)
+        self.assertAlmostEqual(snap["burst_rate_bps"], 100e6, delta=5e6)
+        self.assertAlmostEqual(snap["demand_bps"], 50e6, delta=6e6)
+        self.assertAlmostEqual(snap["spare_bps"], 50e6, delta=6e6)
+
+    def test_saturated_port_reports_no_spare(self):
+        from limer_v0.sentinel import HeadroomEstimator
+        estimator = HeadroomEstimator("sA-eth3")
+        self.feed(estimator, [0] * 40, {0: 100})
+        snap = estimator.snapshot()
+        self.assertGreater(snap["busy_fraction"], 0.95)
+        self.assertLess(snap["spare_bps"], 6e6)
+
+    def test_idle_port_reports_unknown_spare(self):
+        from limer_v0.sentinel import HeadroomEstimator
+        estimator = HeadroomEstimator("sA-eth3")
+        self.feed(estimator, [0] * 10, {0: 0.2})
+        snap = estimator.snapshot()
+        self.assertIsNone(snap["spare_bps"])
+        self.assertEqual(snap["demand_bps"], 0.0)
+
+
+class SymptomActivationCountTest(unittest.TestCase):
+    def test_transient_produces_one_activation(self):
+        rule = BurstAwareSentinelRule(interface="sA-eth3")
+        harness = BurstAwareSentinelRuleTest()
+        rule, byte_count, t_ns = harness.calibrated_rule()
+        for _ in range(4):  # one contiguous degraded episode
+            byte_count += mbit_per_20ms(17.5)
+            t_ns += 20_000_000
+            rule.observe(sample(t_ns, byte_count))
+        byte_count += mbit_per_20ms(100)  # recovery, episode over
+        t_ns += 20_000_000
+        rule.observe(sample(t_ns, byte_count))
+        self.assertEqual(rule.symptom_activation_count, 1)
+
+    def test_flickering_loss_produces_many_activations(self):
+        harness = BurstAwareSentinelRuleTest()
+        rule, byte_count, t_ns = harness.calibrated_rule()
+        for _ in range(4):  # degraded pair, healthy, repeat: 4 episodes
+            for _ in range(2):
+                byte_count += mbit_per_20ms(17.5)
+                t_ns += 20_000_000
+                rule.observe(sample(t_ns, byte_count))
+            byte_count += mbit_per_20ms(100)
+            t_ns += 20_000_000
+            rule.observe(sample(t_ns, byte_count))
+        self.assertEqual(rule.symptom_activation_count, 4)
+
+
+class DeepStallLossFastTest(unittest.TestCase):
+    def calibrated(self):
+        harness = BurstAwareSentinelRuleTest()
+        rule, byte_count, t_ns = harness.calibrated_rule(deep_stall_fraction=0.3)
+        return rule, byte_count, t_ns
+
+    def test_single_deep_stall_triggers_immediately(self):
+        rule, byte_count, t_ns = self.calibrated()
+        # One burst window at 15 Mbit (~15% of 100 baseline): below 30%.
+        byte_count += mbit_per_20ms(15)
+        t_ns += 20_000_000
+        event = rule.observe(sample(t_ns, byte_count))
+        self.assertIsNotNone(event)
+        self.assertEqual(event["signals"]["mode"], "deep_stall")
+
+    def test_healthy_burst_never_deep_stalls(self):
+        rule, byte_count, t_ns = self.calibrated()
+        for _ in range(20):
+            byte_count += mbit_per_20ms(100)
+            t_ns += 20_000_000
+            self.assertIsNone(rule.observe(sample(t_ns, byte_count)))
+            for _ in range(2):
+                byte_count += mbit_per_20ms(0.3)
+                t_ns += 20_000_000
+                rule.observe(sample(t_ns, byte_count))
+
+    def test_shallow_sag_uses_consecutive_path_not_fast_path(self):
+        # A 50 Mbit sag (52% > 30% deep floor, < 60% threshold) must not
+        # fast-trigger; it needs the consecutive-evidence path.
+        rule, byte_count, t_ns = self.calibrated()
+        byte_count += mbit_per_20ms(50)
+        t_ns += 20_000_000
+        self.assertIsNone(rule.observe(sample(t_ns, byte_count)))

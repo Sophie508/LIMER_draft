@@ -16,7 +16,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
 FORMAL_RUN = re.compile(r"^c([0-5])_rep([0-9]{2})$")
 ACTIVE_RUN = re.compile(
     r"^(aa(?:0_healthy|1_fault|2_detect|3_local|3_global|4_oracle|5_transient"
-    r"|6_stepdetect|7_hard|8_grayfast|9_stay|10_switch))_rep([0-9]{2})$"
+    r"|6_stepdetect|7_hard|8_grayfast|9_stay|10_switch|11_lossdetect|12_policy|13_lossfast))_rep([0-9]{2})$"
 )
 REQUIRED_ARTIFACTS = {
     "manifest.json",
@@ -49,6 +49,9 @@ ACTIVE_SCENARIO_LABELS = {
     "AA8_GRAYFAST": "Fast gray step-cutover recovery",
     "AA9_STAY": "Loss fault, stay and retransmit (measurement arm)",
     "AA10_SWITCH": "Loss fault, oracle localized switch (measurement arm)",
+    "AA11_LOSSDETECT": "Loss fault, detector armed (detectability measurement)",
+    "AA12_POLICY": "Loss fault, switch/stay policy decides (demonstration)",
+    "AA13_LOSSFAST": "Loss fault, deep-stall fast detection (latency measurement)",
 }
 AA6_L_SWITCH_GATE_MS = 200.0
 AA6_L_DETECTION_GATE_MS = 1500.0
@@ -293,6 +296,24 @@ def evaluate_run(summary: Mapping[str, Any]) -> List[str]:
                 failures.append(
                     "AA4_ORACLE must change exactly three worker 2 route slots"
                 )
+        elif scenario == "AA12_POLICY":
+            # Policy demonstration: the branch taken depends on the arm's
+            # topology, so the machine gate only requires that a policy
+            # decision was actually made and correctness held; the branch
+            # expectations are asserted by the campaign analysis.
+            if host.get("action") not in {"confirm", "suppress"}:
+                failures.append("AA12_POLICY must reach a policy decision")
+        elif scenario == "AA13_LOSSFAST":
+            # Detection-latency measurement with the deep-stall fast path;
+            # latency is the measured quantity, recovery stays off.
+            if recovery.get("committed"):
+                failures.append("AA13_LOSSFAST must not commit recovery")
+        elif scenario == "AA11_LOSSDETECT":
+            # Detectability measurement: whether the burst rule fires on a
+            # loss-type fault IS the measured quantity, so neither a trigger
+            # nor a retention bound is asserted; recovery must stay off.
+            if recovery.get("committed"):
+                failures.append("AA11_LOSSDETECT must not commit recovery")
         elif scenario == "AA9_STAY":
             # Measurement arm: quantify staying on a lossy link. Retention is
             # the measured quantity, so it carries no pass bound here.

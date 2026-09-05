@@ -1,0 +1,3 @@
+RUN aa11_lossdetect_rep01 rc=0
+RUN aa11_lossdetect_rep02 rc=0
+RUN aa11_lossdetect_rep03 rc=0

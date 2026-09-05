@@ -24,7 +24,7 @@ from .linkwatch import LinkEventMonitor
 from .metrics import summarize_interval, summarize_rounds
 from .refiner import HostRefiner, RefinerDecision, StepGateRefiner
 from .route_plan import RoutePlan
-from .sentinel import BurstAwareSentinelRule, SentinelRule
+from .sentinel import BurstAwareSentinelRule, HeadroomEstimator, SentinelRule
 from .topology import BASE_PROFILE, WORLD_SIZE, TopologyDescriptor, build_topology
 
 
@@ -46,9 +46,12 @@ ACTIVE_SCENARIO_SPECS = {
     "AA8_GRAYFAST": ("C3", True, True, False, "localized", False),
     "AA9_STAY": ("C1", False, False, False, "none", False),
     "AA10_SWITCH": ("C4", False, True, True, "localized", False),
+    "AA11_LOSSDETECT": ("C2", True, False, False, "none", False),
+    "AA12_POLICY": ("C3", True, True, False, "localized", False),
+    "AA13_LOSSFAST": ("C2", True, False, False, "none", False),
 }
 DETECTOR_RULES = {"legacy", "burst"}
-HOST_GATES = {"round", "step", "step_cutover", "immediate"}
+HOST_GATES = {"round", "step", "step_cutover", "immediate", "policy"}
 FAULT_KINDS = {"rate_cap", "link_down"}
 V1_CONFIG_FIELDS = {
     "scenario_id",
@@ -294,7 +297,7 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
     host_gate = str(result.get("host_gate", "round"))
     if host_gate not in HOST_GATES:
         raise ValueError(f"unknown host_gate: {host_gate!r}")
-    if host_gate in {"step", "step_cutover"}:
+    if host_gate in {"step", "step_cutover", "policy"}:
         if not result["detector"] or not result["recovery"] or result["oracle"]:
             raise ValueError(
                 "host_gate step requires detector and recovery without oracle"
@@ -315,6 +318,13 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
         if result["condition"] == "C0":
             raise ValueError("link_down requires a fault condition")
     result["fault_kind"] = fault_kind
+
+    deep_stall_fraction = result.get("deep_stall_fraction")
+    if deep_stall_fraction is not None:
+        if not 0 < float(deep_stall_fraction) < 1:
+            raise ValueError("deep_stall_fraction must be between zero and one")
+        deep_stall_fraction = float(deep_stall_fraction)
+    result["deep_stall_fraction"] = deep_stall_fraction
 
     min_slow_steps = int(result.get("min_slow_steps", 2))
     if min_slow_steps < 1:
@@ -388,6 +398,8 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
             raise ValueError(
                 "AA8_GRAYFAST requires host_gate step_cutover and min_slow_steps 1"
             )
+        if scenario_id == "AA12_POLICY" and host_gate != "policy":
+            raise ValueError("AA12_POLICY requires host_gate policy")
     return result
 
 
@@ -730,6 +742,7 @@ class SwitchSampler:
         event_log: EventLog,
         poll_interval_s: float = 0.020,
         sentinel_rule: Optional[SentinelRule] = None,
+        estimators: Optional[Mapping[str, HeadroomEstimator]] = None,
     ) -> None:
         if not interfaces:
             raise ValueError("at least one switch interface is required")
@@ -739,6 +752,7 @@ class SwitchSampler:
         self.event_log = event_log
         self.poll_interval_s = poll_interval_s
         self.sentinel_rule = sentinel_rule
+        self.estimators = dict(estimators or {})
         self.records: List[Dict[str, Any]] = []
         self._stop = threading.Event()
         self._thread = threading.Thread(target=self._run, daemon=True)
@@ -768,6 +782,9 @@ class SwitchSampler:
                     }
                     record.update(sample.to_dict())
                     self.records.append(record)
+                    estimator = self.estimators.get(interface)
+                    if estimator is not None:
+                        estimator.observe(sample, operstate=str(record["operstate"]))
                     if (
                         self.sentinel_rule is not None
                         and interface == self.sentinel_rule.interface
@@ -822,6 +839,8 @@ class StepGateMonitor:
         probe: Any,
         poll_interval_s: float = 0.010,
         cutover: Optional[Any] = None,
+        policy: Optional[Any] = None,
+        slot_baselines_s: Optional[Mapping[Any, float]] = None,
     ) -> None:
         if baseline_step_p95_s <= 0:
             raise ValueError("baseline_step_p95_s must be positive")
@@ -832,6 +851,8 @@ class StepGateMonitor:
         self.probe = probe
         self.poll_interval_s = poll_interval_s
         self.cutover = cutover
+        self.policy = policy
+        self.slot_baselines_s = dict(slot_baselines_s or {})
         self.decision: Optional[RefinerDecision] = None
         self.transition: Optional[TransitionDecision] = None
         self.cutover_error: Optional[BaseException] = None
@@ -861,7 +882,11 @@ class StepGateMonitor:
                 self._switch_event = record
             elif event == "STEP_DONE":
                 duration_s = int(record["duration_ns"]) / 1_000_000_000.0
-                if not self.refiner.is_slow(duration_s, self.baseline_step_p95_s):
+                slot_key = (record.get("rank"), record.get("step_id"))
+                slot_baseline = self.slot_baselines_s.get(
+                    slot_key, self.baseline_step_p95_s
+                )
+                if not self.refiner.is_slow(duration_s, slot_baseline):
                     continue
                 key = (
                     record.get("rank"),
@@ -879,10 +904,17 @@ class StepGateMonitor:
                     "t_monotonic_ns": record.get("t_monotonic_ns"),
                 }
                 self.slow_steps.append(entry)
-                if (
-                    self._switch_event is not None
-                    and self.sentinel_rule.rate_degraded_burst_active()
-                ):
+                symptom_now = self.sentinel_rule.rate_degraded_burst_active()
+                recurring = (
+                    getattr(self.sentinel_rule, "symptom_activation_count", 0)
+                    >= 3
+                )
+                if self._switch_event is not None and (symptom_now or recurring):
+                    # Persistence has two shapes: a cap keeps the symptom
+                    # continuously active, while random loss flickers it in
+                    # short episodes. A transient produces a single episode,
+                    # so recurrence (>= 3 episodes) is persistence evidence
+                    # even when the flicker happens to be off right now.
                     self.confirmable_slow_steps.append(entry)
 
     def _run(self) -> None:
@@ -923,6 +955,36 @@ class StepGateMonitor:
                     baseline_step_p95_s=self.baseline_step_p95_s,
                     evaluated_slow_steps=list(self.confirmable_slow_steps),
                 )
+                if decision.action == "confirm" and self.policy is not None:
+                    verdict, metrics = self.policy()
+                    self.event_log.emit(
+                        "POLICY_DECISION",
+                        verdict=verdict,
+                        metrics=metrics,
+                    )
+                    if verdict == "stay":
+                        decision = RefinerDecision(
+                            "suppress",
+                            [
+                                "Impact confirmed, but the surviving plane "
+                                "lacks the headroom to absorb the displaced "
+                                "traffic; staying on the degraded path is "
+                                "the lesser cost.",
+                                json.dumps(metrics, sort_keys=True),
+                            ],
+                        )
+                        self.event_log.emit(
+                            "RECOVERY_SUPPRESSED",
+                            action=decision.action,
+                            reasons=decision.reasons,
+                            confidence=None,
+                            calibration_version=None,
+                            gate_mode="policy",
+                            evaluated_round_id=None,
+                            evaluated_round_duration_s=None,
+                        )
+                        self.decision = decision
+                        return
                 self.decision = decision
                 if decision.action == "confirm" and self.cutover is not None:
                     try:
@@ -1039,6 +1101,31 @@ def _run_collective_round(
     aggregate["orchestrator_duration_ns"] = command_end_ns - command_start_ns
     event_log.emit("ROUND_AGGREGATED", **aggregate)
     return events, aggregate
+
+
+def _baseline_step_thresholds_s(
+    rows: Sequence[Mapping[str, Any]],
+) -> Dict[Any, float]:
+    """Per-(rank, step) baseline durations, worst observed value.
+
+    A single global p95 breaks when the healthy schedule is itself uneven
+    (e.g. one worker's fabric access is constrained): the slow slots drag
+    the threshold up and mask genuine degradation on the fast slots. Each
+    slot is judged against its own fault-free baseline instead.
+    """
+    thresholds: Dict[Any, float] = {}
+    for row in rows:
+        if row.get("period") != "baseline":
+            continue
+        rank = int(row["rank"])
+        for step_id, duration_ns in enumerate(row["step_durations_ns"]):
+            key = (rank, step_id)
+            value = int(duration_ns) / 1_000_000_000.0
+            if value > thresholds.get(key, 0.0):
+                thresholds[key] = value
+    if not thresholds:
+        raise ValueError("positive baseline step durations are required")
+    return thresholds
 
 
 def _baseline_step_p95_s(rows: Sequence[Mapping[str, Any]]) -> float:
@@ -1864,15 +1951,31 @@ def execute_run(
         sentinel_rule = None
         if config["detector"]:
             sentinel_rule = (
-                BurstAwareSentinelRule(detector_interface)
+                BurstAwareSentinelRule(
+                    detector_interface,
+                    deep_stall_fraction=config["deep_stall_fraction"],
+                )
                 if config["detector_rule"] == "burst"
                 else SentinelRule(detector_interface)
             )
+        sampled_interfaces = [detector_interface]
+        headroom_estimators: Dict[str, HeadroomEstimator] = {}
+        if config["host_gate"] == "policy":
+            # The switch/stay policy weighs the demand currently on the
+            # faulted fabric against the spare capacity of the surviving
+            # one, so both switch-facing ports are sampled.
+            surviving_interface = descriptor.detector_interface("B", fault_rank)
+            sampled_interfaces.append(surviving_interface)
+            headroom_estimators = {
+                detector_interface: HeadroomEstimator(detector_interface),
+                surviving_interface: HeadroomEstimator(surviving_interface),
+            }
         sampler = SwitchSampler(
-            [detector_interface],
+            sampled_interfaces,
             event_log,
             poll_interval_s=0.020,
             sentinel_rule=sentinel_rule,
+            estimators=headroom_estimators,
         )
         sampler.start()
         hard_link_event = threading.Event()
@@ -1914,7 +2017,8 @@ def execute_run(
             workdir,
             run_dir,
             event_log,
-            step_telemetry=config["host_gate"] in {"step", "step_cutover", "immediate"},
+            step_telemetry=config["host_gate"]
+            in {"step", "step_cutover", "immediate", "policy"},
             step_timeout_s=config["step_timeout_s"],
         )
         if "B" in descriptor.fabrics:
@@ -1958,8 +2062,16 @@ def execute_run(
                 aggregate_rows.append(aggregate)
                 round_id += 1
 
+        frozen_demand_snapshot: Optional[Dict[str, Any]] = None
         if config["detector"]:
             detector_baseline_bps = sampler.freeze_detector_baseline()
+            if headroom_estimators:
+                # The quantity a switch would displace is the pre-fault
+                # offered load, not whatever survives the fault; freeze it
+                # alongside the detector baseline.
+                frozen_demand_snapshot = headroom_estimators[
+                    detector_interface
+                ].snapshot()
             event_log.emit(
                 "SWITCH_BASELINE_FROZEN",
                 interface=detector_interface,
@@ -2115,8 +2227,41 @@ def execute_run(
                 allow_current_round=True,
             )
 
+        def _switch_stay_policy() -> "tuple[str, Dict[str, Any]]":
+            surviving_interface = descriptor.detector_interface("B", fault_rank)
+            demand = (
+                frozen_demand_snapshot
+                if frozen_demand_snapshot is not None
+                else headroom_estimators[detector_interface].snapshot()
+            )
+            spare = headroom_estimators[surviving_interface].snapshot()
+            demand_bps = float(demand["demand_bps"] or 0.0)
+            spare_bps = spare["spare_bps"]
+            # The ring serializes steps, so displaced traffic fills the
+            # surviving port's idle slots rather than stacking on top of its
+            # peaks; duty-cycle spare therefore underestimates what the port
+            # can absorb, and a bounded reuse factor corrects for it.
+            reuse_factor = 1.25
+            metrics = {
+                "faulted_fabric": demand,
+                "surviving_fabric": spare,
+                "reuse_factor": reuse_factor,
+                "rule": (
+                    "switch iff surviving spare x reuse_factor >= "
+                    "faulted pre-fault demand"
+                ),
+            }
+            if spare_bps is None:
+                return "stay", metrics
+            verdict = (
+                "switch"
+                if float(spare_bps) * reuse_factor >= demand_bps
+                else "stay"
+            )
+            return verdict, metrics
+
         if (
-            config["host_gate"] in {"step", "step_cutover"}
+            config["host_gate"] in {"step", "step_cutover", "policy"}
             and config["recovery"]
             and not config["oracle"]
         ):
@@ -2129,6 +2274,7 @@ def execute_run(
                     "recovery requires an alternate-path baseline probe"
                 )
             baseline_step_p95_s = _baseline_step_p95_s(worker_rows)
+            slot_baselines_s = _baseline_step_thresholds_s(worker_rows)
             step_refiner = StepGateRefiner(
                 min_slow_steps=config["min_slow_steps"]
             )
@@ -2140,9 +2286,15 @@ def execute_run(
                 _loaded_alternate_probe,
                 cutover=(
                     _mid_round_cutover
-                    if config["host_gate"] == "step_cutover"
+                    if config["host_gate"] in {"step_cutover", "policy"}
                     else None
                 ),
+                policy=(
+                    _switch_stay_policy
+                    if config["host_gate"] == "policy"
+                    else None
+                ),
+                slot_baselines_s=slot_baselines_s,
             )
             event_log.emit(
                 "STEP_GATE_ARMED",
@@ -2238,7 +2390,7 @@ def execute_run(
                     refiner_decision = hard_state["decision"]
                     transition_decision = hard_state["transition"]
             elif (
-                config["host_gate"] == "step_cutover"
+                config["host_gate"] in {"step_cutover", "policy"}
                 and step_monitor is not None
                 and transition_decision is None
                 and refiner_decision is None
@@ -2491,7 +2643,7 @@ def execute_run(
                 {
                     "effective_round": transition_decision.effective_round,
                     "effective_step": transition_decision.effective_step,
-                    "mid_round": config["host_gate"] in {"immediate", "step_cutover"},
+                    "mid_round": config["host_gate"] in {"immediate", "step_cutover", "policy"},
                 }
                 if transition_decision is not None
                 and transition_decision.action == "commit"

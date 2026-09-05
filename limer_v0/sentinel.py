@@ -134,12 +134,15 @@ class BurstAwareSentinelRule:
         burst_floor_bps: float = 1_000_000.0,
         silence_multiple: int = 3,
         min_silence_samples: int = 6,
+        deep_stall_fraction: Optional[float] = None,
         rule_version: str = "l1-v0.3-burst-aware-rx-rate",
     ) -> None:
         if not 0 < threshold_fraction < 1:
             raise ValueError("threshold_fraction must be between zero and one")
         if consecutive_required <= 0:
             raise ValueError("consecutive_required must be positive")
+        if deep_stall_fraction is not None and not 0 < deep_stall_fraction < 1:
+            raise ValueError("deep_stall_fraction must be between zero and one")
         if burst_floor_bps <= 0:
             raise ValueError("burst_floor_bps must be positive")
         if silence_multiple <= 0:
@@ -152,6 +155,7 @@ class BurstAwareSentinelRule:
         self.burst_floor_bps = burst_floor_bps
         self.silence_multiple = silence_multiple
         self.min_silence_samples = min_silence_samples
+        self.deep_stall_fraction = deep_stall_fraction
         self.rule_version = rule_version
         self._previous: Optional[PortSample] = None
         self._calibration_rates: List[float] = []
@@ -163,6 +167,8 @@ class BurstAwareSentinelRule:
         self._evidence: Deque[Dict[str, Any]] = deque(maxlen=consecutive_required)
         self._gap_run = 0
         self._triggered = False
+        self.symptom_activation_count = 0
+        self._symptom_was_active = False
 
     @property
     def calibration_sample_count(self) -> int:
@@ -259,9 +265,37 @@ class BurstAwareSentinelRule:
 
         if is_burst:
             self._gap_run = 0
+            if (
+                not self._triggered
+                and self.deep_stall_fraction is not None
+                and not link_reported_down
+                and observed_bps
+                < self.deep_stall_fraction * self.baseline_median_bps
+            ):
+                # A single burst window collapsing far below baseline is the
+                # signature of a loss-induced retransmission stall. Unlike a
+                # rate cap (a sustained sag needing consecutive evidence),
+                # loss stalls are isolated and intermittent, so one deep
+                # stall is sufficient — and healthy bursts never fall this
+                # low, so this stays false-positive-free.
+                deep_evidence = dict(evidence, mode="deep_stall")
+                deep_evidence["deep_stall_bps"] = (
+                    self.deep_stall_fraction * self.baseline_median_bps
+                )
+                self.symptom_activation_count += 1
+                self._symptom_was_active = True
+                return self._suspect(sample, deep_evidence)
             if observed_bps < threshold_bps and not link_reported_down:
                 self.consecutive_evidence += 1
                 self._evidence.append(evidence)
+                if (
+                    not self._symptom_was_active
+                    and self.consecutive_evidence >= self.consecutive_required
+                ):
+                    # A fresh degraded episode: a transient produces one,
+                    # an intermittent fault (e.g. random loss) produces many.
+                    self.symptom_activation_count += 1
+                    self._symptom_was_active = True
                 if (
                     not self._triggered
                     and self.consecutive_evidence >= self.consecutive_required
@@ -269,6 +303,7 @@ class BurstAwareSentinelRule:
                     return self._suspect(sample, evidence)
             else:
                 self._reset_evidence()
+                self._symptom_was_active = False
             return None
 
         self._gap_run += 1
@@ -282,3 +317,68 @@ class BurstAwareSentinelRule:
             evidence["mode"] = "silence"
             return self._suspect(sample, evidence)
         return None
+
+
+class HeadroomEstimator:
+    """Estimate a port's average demand and spare capacity from rx counters.
+
+    On a bursty port, the burst-sample rate approximates the achievable line
+    rate and the busy fraction approximates the duty cycle, so average
+    demand ~ busy_fraction x burst_rate and spare ~ idle_fraction x
+    burst_rate. Both are rolling estimates over a bounded sample window and
+    are read by the switch/stay policy at decision time.
+    """
+
+    def __init__(
+        self,
+        interface: str,
+        window: int = 256,
+        burst_floor_bps: float = 1_000_000.0,
+    ) -> None:
+        if window <= 0:
+            raise ValueError("window must be positive")
+        if burst_floor_bps <= 0:
+            raise ValueError("burst_floor_bps must be positive")
+        self.interface = interface
+        self.burst_floor_bps = burst_floor_bps
+        self._rates: Deque[float] = deque(maxlen=window)
+        self._previous: Optional[PortSample] = None
+
+    def observe(self, sample: PortSample, operstate: str = "unknown") -> None:
+        if sample.interface != self.interface:
+            raise ValueError(
+                f"sample interface {sample.interface!r} does not match "
+                f"{self.interface!r}"
+            )
+        previous = self._previous
+        self._previous = sample
+        if previous is None:
+            return
+        elapsed_ns = sample.t_ns - previous.t_ns
+        byte_delta = sample.rx_bytes - previous.rx_bytes
+        if elapsed_ns <= 0 or byte_delta < 0:
+            return
+        self._rates.append(byte_delta * 8_000_000_000.0 / elapsed_ns)
+
+    def snapshot(self) -> Dict[str, Any]:
+        rates = list(self._rates)
+        bursts = [rate for rate in rates if rate > self.burst_floor_bps]
+        if not rates or not bursts:
+            return {
+                "interface": self.interface,
+                "sample_count": len(rates),
+                "busy_fraction": 0.0,
+                "burst_rate_bps": None,
+                "demand_bps": 0.0,
+                "spare_bps": None,
+            }
+        busy_fraction = len(bursts) / len(rates)
+        burst_rate = statistics.median(bursts)
+        return {
+            "interface": self.interface,
+            "sample_count": len(rates),
+            "busy_fraction": busy_fraction,
+            "burst_rate_bps": burst_rate,
+            "demand_bps": busy_fraction * burst_rate,
+            "spare_bps": (1.0 - busy_fraction) * burst_rate,
+        }

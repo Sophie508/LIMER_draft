@@ -1,0 +1,3 @@
+RUN aa13_lossfast_rep01 rc=0
+RUN aa13_lossfast_rep02 rc=0
+RUN aa13_lossfast_rep03 rc=0

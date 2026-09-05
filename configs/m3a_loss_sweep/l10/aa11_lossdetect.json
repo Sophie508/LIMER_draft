@@ -1,0 +1,27 @@
+{
+    "condition": "C2",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 8,
+    "fault_rate_mbit": 100.0,
+    "fault_loss_pct": 10.0,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "routing_policy": "balanced_active_active",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "detector": true,
+    "recovery": false,
+    "oracle": false,
+    "recovery_policy": "none",
+    "detector_rule": "burst",
+    "scenario_id": "AA11_LOSSDETECT",
+    "step_timeout_s": 300.0,
+    "what_changes": "The same 10.0% loss fault with the burst-aware detector armed and recovery off: the measured quantities are whether suspicion fires at all, how late, and on which signal path.",
+    "expected": "Preregistered prediction: the burst rule keys on burst-rate collapse, which random loss barely moves until TCP breaks down, so low loss levels likely go undetected; wherever it fires, the latency and signal are reported. No trigger or retention bound is asserted."
+}

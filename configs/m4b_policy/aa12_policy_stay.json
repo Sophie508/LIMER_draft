@@ -1,0 +1,29 @@
+{
+    "condition": "C3",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 8,
+    "fault_rate_mbit": 100.0,
+    "fault_loss_pct": 25.0,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA12_POLICY",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "localized",
+    "detector": true,
+    "recovery": true,
+    "oracle": false,
+    "detector_rule": "burst",
+    "host_gate": "policy",
+    "step_timeout_s": 300.0,
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "b_access_rate_mbit": 10.0,
+    "what_changes": "The same 25% loss fault and policy loop, but worker 2's Fabric B access is capped to 10 Mbit before any round runs, so the surviving fabric cannot absorb the displaced traffic. The policy is expected to choose stay and suppress recovery.",
+    "expected": "Detection fires, impact confirms, the policy records its metrics and chooses stay; nothing commits and correctness holds. The branch expectation is verified by the campaign analysis."
+}

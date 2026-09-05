@@ -90,6 +90,37 @@ def switch_config(loss_pct: float) -> dict:
     return config
 
 
+def detect_config(loss_pct: float) -> dict:
+    config = dict(COMMON)
+    config.update(
+        {
+            "condition": "C2",
+            "fault_loss_pct": loss_pct,
+            "detector": True,
+            "recovery": False,
+            "oracle": False,
+            "recovery_policy": "none",
+            "detector_rule": "burst",
+            "scenario_id": "AA11_LOSSDETECT",
+            "step_timeout_s": 300.0,
+            "what_changes": (
+                f"The same {loss_pct}% loss fault with the burst-aware "
+                "detector armed and recovery off: the measured quantities are "
+                "whether suspicion fires at all, how late, and on which "
+                "signal path."
+            ),
+            "expected": (
+                "Preregistered prediction: the burst rule keys on burst-rate "
+                "collapse, which random loss barely moves until TCP breaks "
+                "down, so low loss levels likely go undetected; wherever it "
+                "fires, the latency and signal are reported. No trigger or "
+                "retention bound is asserted."
+            ),
+        }
+    )
+    return config
+
+
 def write(directory: Path, config: dict, name: str) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     (directory / name).write_text(json.dumps(config, indent=4) + "\n")
@@ -100,6 +131,7 @@ def main() -> None:
         level_dir = OUT / f"l{str(loss_pct).replace('.', 'p').removesuffix('p0')}"
         write(level_dir, stay_config(loss_pct), "aa9_stay.json")
         write(level_dir, switch_config(loss_pct), "aa10_switch.json")
+        write(level_dir, detect_config(loss_pct), "aa11_lossdetect.json")
     constrained_dir = OUT / CONSTRAINED["dir"]
     for build in (stay_config, switch_config):
         config = build(CONSTRAINED["level"])

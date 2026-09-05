@@ -1,0 +1,211 @@
+{
+  "baseline": {
+    "baseline_median_bps": 71429141.17496163,
+    "bytes_completed": [
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      5.591802451,
+      5.683136638
+    ],
+    "fault_period_retention": 1.0,
+    "iqr_throughput_bps": 578621.5327485055,
+    "median_throughput_bps": 71429141.17496163,
+    "post_recovery_retention": 1.0,
+    "round_count": 2,
+    "throughput_bps": [
+      72007762.70771015,
+      70850519.64221312
+    ]
+  },
+  "condition": "C3",
+  "correctness_status": "pass",
+  "detector_interface": "sA-eth3",
+  "detector_interface_operstate_after": "up",
+  "experiment_family": "active_active_v1",
+  "fault_applied": true,
+  "fault_interface": "w2-eth0",
+  "fault_interface_operstate_after": "up",
+  "fault_kind": "rate_cap",
+  "fault_observation_isolation": {
+    "detector_location": "switch-facing peer interface counters",
+    "detector_reads_injector_qdisc": false,
+    "injector_location": "worker-side egress qdisc",
+    "observed_counter": "rx_bytes",
+    "same_interface": false
+  },
+  "fault_period_retention": 0.6158384747672884,
+  "fault_to_restoration_window": {
+    "baseline_median_bps": 71429141.17496163,
+    "interval_retention": 0.6042292129896992,
+    "interval_throughput_bps": 43159573.75667718,
+    "round_count": 8,
+    "total_bytes_completed": 402653184,
+    "total_duration_s": 74.635247562
+  },
+  "fault_window": {
+    "baseline_median_bps": 71429141.17496163,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      8.110167804,
+      8.241457862,
+      5.450994987,
+      6.922710071,
+      11.56038241,
+      11.609563203,
+      12.447356712,
+      10.292614513
+    ],
+    "fault_period_retention": 0.6158384747672884,
+    "iqr_throughput_bps": 16983434.233715132,
+    "median_throughput_bps": 43988813.35512568,
+    "post_recovery_retention": 0.6158384747672884,
+    "round_count": 8,
+    "throughput_bps": [
+      49647947.333643116,
+      48857033.63922629,
+      73867832.37927788,
+      58164097.5673326,
+      34830438.1048585,
+      34682888.31882592,
+      32348489.186609246,
+      39120593.07102508
+    ]
+  },
+  "host_refinement": {
+    "action": "suppress",
+    "baseline_p95_s": 5.67856992865,
+    "confidence": null,
+    "decision_t_monotonic_ns": 35577460803070,
+    "enabled": true,
+    "gate_mode": "policy",
+    "l_host_ms": 1335.849805,
+    "reasons": [
+      "Impact confirmed, but the surviving plane lacks the headroom to absorb the displaced traffic; staying on the degraded path is the lesser cost.",
+      "{\"faulted_fabric\": {\"burst_rate_bps\": 37684387.93004168, \"busy_fraction\": 0.1328125, \"demand_bps\": 5004957.77195866, \"interface\": \"sA-eth3\", \"sample_count\": 256, \"spare_bps\": 32679430.158083018}, \"reuse_factor\": 1.25, \"rule\": \"switch iff surviving spare x reuse_factor >= faulted pre-fault demand\", \"surviving_fabric\": {\"burst_rate_bps\": 9676817.585810132, \"busy_fraction\": 0.9609375, \"demand_bps\": 9298816.898864424, \"interface\": \"sB-eth3\", \"sample_count\": 256, \"spare_bps\": 378000.6869457083}}"
+    ]
+  },
+  "interpretation_boundary": "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, a real GPU cluster, or production switch hardware.",
+  "latency": {
+    "l_commit_to_recovered_round_ms": null,
+    "l_coordination_ms": null,
+    "l_detection_ms": null,
+    "l_fault_to_commit_ms": null,
+    "l_fault_to_first_recovered_step_ms": null,
+    "l_fault_to_recovered_round_complete_ms": null,
+    "l_host_ms": 1335.849805,
+    "l_suspect_to_commit_ms": null,
+    "l_suspect_to_first_recovered_step_ms": null,
+    "l_switch_ms": 179.445573,
+    "latency_target": {
+      "numeric_target_ms": null,
+      "source": "Review feedback requests millisecond-level detection and recovery without a numeric threshold.",
+      "status": "not_formally_specified",
+      "unit": "ms"
+    }
+  },
+  "post_fault": {
+    "baseline_median_bps": 71429141.17496163,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      8.110167804,
+      8.241457862,
+      5.450994987,
+      6.922710071,
+      11.56038241,
+      11.609563203,
+      12.447356712,
+      10.292614513
+    ],
+    "fault_period_retention": 0.6158384747672884,
+    "iqr_throughput_bps": 16983434.233715132,
+    "median_throughput_bps": 43988813.35512568,
+    "post_recovery_retention": 0.6158384747672884,
+    "round_count": 8,
+    "throughput_bps": [
+      49647947.333643116,
+      48857033.63922629,
+      73867832.37927788,
+      58164097.5673326,
+      34830438.1048585,
+      34682888.31882592,
+      32348489.186609246,
+      39120593.07102508
+    ]
+  },
+  "post_recovery": null,
+  "post_recovery_retention": null,
+  "recovery": {
+    "commit_t_monotonic_ns": null,
+    "committed": false,
+    "decision": null,
+    "enabled": true,
+    "first_recovered_round_id": null,
+    "l_commit_to_recovered_round_ms": null,
+    "l_coordination_ms": null,
+    "l_fault_to_commit_ms": null,
+    "l_fault_to_recovered_round_complete_ms": null,
+    "oracle": false
+  },
+  "routing": {
+    "changed_slots": [],
+    "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+    "initial_policy": "balanced_active_active",
+    "recovered_plan_fingerprint": null,
+    "recovery_policy": "localized"
+  },
+  "run_id": "aa12_policy_rep03",
+  "scenario_id": "AA12_POLICY",
+  "status": "complete",
+  "switch_detection": {
+    "baseline_median_bps": 93086019.21387169,
+    "detector_rule": "burst",
+    "enabled": true,
+    "execution_boundary": {
+      "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+      "data_source": "switch-facing Linux interface counters",
+      "process_placement": "orchestrator/root namespace management-plane proxy",
+      "resource_budget_enforced": false,
+      "switch_resident": false
+    },
+    "fault_t_monotonic_ns": 35575945507692,
+    "first_suspect_t_monotonic_ns": 35576124953265,
+    "interface": "sA-eth3",
+    "l_switch_ms": 179.445573,
+    "rule_version": "l1-v0.3-burst-aware-rx-rate",
+    "state_proxy": {
+      "calibration_rate_samples": 107,
+      "max_consecutive_evidence_samples": 2,
+      "monitored_ports": 1,
+      "rss_isolated_or_budgeted": false
+    },
+    "suspect_count": 1,
+    "triggered": true
+  },
+  "switch_sampling": {
+    "max_actual_interval_ms": 27.397457,
+    "median_actual_interval_ms": 20.000044,
+    "sample_count": 9160,
+    "target_interval_ms": 20.0
+  },
+  "topology": "dual"
+}

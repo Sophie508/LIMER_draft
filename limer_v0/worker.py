@@ -565,6 +565,24 @@ class RingWorker:
             except BaseException as exc:
                 with self._route_lock:
                     cutover_seen = self._cutover_generation != generation
+                # A connection error on the send side can race ahead of this
+                # worker's own commit: a peer closed the socket for the
+                # cutover while this worker's commit command is still queued
+                # on the control thread. Give the commit a brief window to
+                # land before treating the error as fatal, so the step is
+                # redone under the new plan rather than crashing the worker.
+                if (
+                    not cutover_seen
+                    and isinstance(exc, (OSError, EOFError))
+                    and self.route_state.prepared is not None
+                ):
+                    deadline = time.monotonic() + 1.0
+                    while time.monotonic() < deadline:
+                        with self._route_lock:
+                            if self._cutover_generation != generation:
+                                cutover_seen = True
+                                break
+                        time.sleep(0.005)
                 if cutover_seen and redo_count < MAX_STEP_RETRIES * steps:
                     redo_count += 1
                     self.emit(

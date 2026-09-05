@@ -1,0 +1,11 @@
+t_monotonic_ns,event,rank,version,plan_fingerprint,policy,effective_round,changed_slots
+35313462580253,RECOVERY_PROPOSE,,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,localized_reroute,3,"[{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":0},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":2},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":4}]"
+35313462934837,READY,3,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,3,
+35313462943997,READY,2,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,3,
+35313462993938,READY,1,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,3,
+35313462853116,READY,0,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,3,
+35313463852148,COMMITTED,0,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,,
+35313463923138,COMMITTED,1,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,,
+35313464037559,COMMITTED,2,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,,
+35313464220171,COMMITTED,3,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,,,
+35313464448734,RECOVERY_COMMIT,,1,1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5,localized_reroute,3,"[{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":0},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":2},{""new_route"":""B"",""old_route"":""A"",""sender_rank"":2,""step_id"":4}]"
