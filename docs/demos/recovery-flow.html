@@ -1,0 +1,1615 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Limer Recovery Demo</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Limer Recovery Demo" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Limer Recovery Demo&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;limer-recovery-demo&quot;&gt;
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot;&gt;故障场景
+      &lt;select class=&quot;form-select&quot; id=&quot;lr-scenario&quot;&gt;
+        &lt;option value=&quot;hard&quot;&gt;硬故障：W2—A 断线&lt;/option&gt;
+        &lt;option value=&quot;cap&quot;&gt;灰故障：W2→A 限速&lt;/option&gt;
+        &lt;option value=&quot;loss&quot;&gt;灰故障：丢包，B 有余量&lt;/option&gt;
+        &lt;option value=&quot;stay&quot;&gt;灰故障：丢包，B 余量不足&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-prev&quot;&gt;上一步&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;lr-next&quot;&gt;下一步&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-play&quot;&gt;播放全过程&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-recover&quot;&gt;直接看恢复&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;lr-stage-head&quot;&gt;&lt;span id=&quot;lr-stage&quot;&gt;1 / 11 · 正常双活&lt;/span&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;放慢示意 · 非实时实验&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;lr-legend text-small&quot;&gt;&lt;span&gt;&lt;b class=&quot;lr-a-key&quot;&gt;━&lt;/b&gt; 接 A：4 条&lt;/span&gt;&lt;span&gt;&lt;b class=&quot;lr-b-key&quot;&gt;━&lt;/b&gt; 接 B：4 条&lt;/span&gt;&lt;span&gt;交叉处不相连 · A 与 B 不直连&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;lr-scene&quot; role=&quot;img&quot; aria-label=&quot;四个 worker 同时连接交换机 A 和 B；逐步展示 W2 链路故障后的协调恢复。&quot;&gt;
+    &lt;svg class=&quot;lr-wires&quot; aria-hidden=&quot;true&quot;&gt;&lt;/svg&gt;
+    &lt;div class=&quot;lr-device lr-switch&quot; id=&quot;lr-a&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;server&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch A&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;lr-a-status&quot;&gt;正常&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;lr-device lr-switch&quot; id=&quot;lr-b&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;server&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch B&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;lr-b-status&quot;&gt;已连接 · 正在用&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;lr-device lr-worker&quot; id=&quot;lr-w0&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;monitor&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W0&lt;/span&gt;&lt;span class=&quot;text-small lr-version&quot;&gt;v0&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;lr-device lr-worker&quot; id=&quot;lr-w1&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;monitor&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W1&lt;/span&gt;&lt;span class=&quot;text-small lr-version&quot;&gt;v0&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;lr-device lr-worker&quot; id=&quot;lr-w2&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;monitor&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W2&lt;/span&gt;&lt;span class=&quot;text-small lr-version&quot;&gt;v0&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;lr-device lr-worker&quot; id=&quot;lr-w3&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;monitor&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W3&lt;/span&gt;&lt;span class=&quot;text-small lr-version&quot;&gt;v0&lt;/span&gt;&lt;/div&gt;
+    &lt;span id=&quot;lr-fault&quot; class=&quot;text-small&quot;&gt;&lt;/span&gt;
+    &lt;span id=&quot;lr-packet-label&quot; class=&quot;text-small&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;lr-handover&quot; aria-live=&quot;polite&quot;&gt;
+    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;W2：发送端&lt;/span&gt;&lt;div id=&quot;lr-sender&quot;&gt;经 A 发送&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;W3：接收端&lt;/span&gt;&lt;div id=&quot;lr-receiver&quot;&gt;从 A 接收&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;示意数据块 #42&lt;/span&gt;&lt;div id=&quot;lr-ledger&quot;&gt;等待本次交接&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;lr-detail&quot; id=&quot;lr-detail&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;lr-route text-small&quot; id=&quot;lr-route&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;text-small text-muted&quot; id=&quot;lr-boundary&quot;&gt;&lt;/div&gt;
+  &lt;hr&gt;
+  &lt;h3&gt;“恢复了”到底是哪一个时刻？&lt;/h3&gt;
+  &lt;div class=&quot;text-small&quot;&gt;真实记录：硬故障、限速故障各取第 1 次实验；以下两条时间轴都从&lt;strong&gt;收到告警&lt;/strong&gt;开始。&lt;/div&gt;
+  &lt;div id=&quot;lr-timelines&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;text-small text-muted&quot;&gt;圆点＝告警；方块＝提交切换、关闭坏路径连接；菱形＝第一个恢复后的通信步骤完成。&lt;/div&gt;
+  &lt;hr&gt;
+  &lt;h3&gt;发现故障：与时间目标对照&lt;/h3&gt;
+  &lt;div class=&quot;table-responsive&quot;&gt;&lt;table class=&quot;table table-sm&quot;&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;故障&lt;/th&gt;&lt;th&gt;目标&lt;/th&gt;&lt;th&gt;实测检测时间&lt;/th&gt;&lt;th&gt;达到目标&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;硬故障&lt;/td&gt;&lt;td&gt;&amp;lt;1 ms&lt;/td&gt;&lt;td&gt;0.631 / 0.688 / 0.687 ms&lt;/td&gt;&lt;td&gt;3 / 3&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;限速&lt;/td&gt;&lt;td&gt;&amp;lt;100 ms&lt;/td&gt;&lt;td&gt;53.33 / 51.81 / 52.64 ms&lt;/td&gt;&lt;td&gt;3 / 3&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;丢包 · 新规则&lt;/td&gt;&lt;td&gt;&amp;lt;100 ms&lt;/td&gt;&lt;td&gt;下面每个数是一轮实验&lt;/td&gt;&lt;td&gt;6 / 18&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;&lt;/div&gt;
+  &lt;div class=&quot;lr-loss-grid&quot; id=&quot;lr-loss-grid&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;text-small text-muted&quot;&gt;✓ 小于 100 ms；× 未达到。丢包组只测检测，未开启恢复；不与下方自动决策实验混用。&lt;/div&gt;
+  &lt;hr&gt;
+  &lt;h3&gt;“选对分支”与“完整跑完”也不同&lt;/h3&gt;
+  &lt;div class=&quot;lr-policy-grid&quot;&gt;
+    &lt;div&gt;&lt;span&gt;B 有余量 → 选择切换&lt;/span&gt;&lt;div class=&quot;lr-outcomes&quot;&gt;✓ 选择切换 → ✓ 完成&lt;br&gt;✓ 选择切换 → ✓ 完成&lt;br&gt;✓ 选择切换 → × 提交后超时&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span&gt;B 余量不足 → 选择保持&lt;/span&gt;&lt;div class=&quot;lr-outcomes&quot;&gt;✓ 选择保持 → ✓ 完成&lt;br&gt;✓ 选择保持 → ✓ 完成&lt;br&gt;✓ 选择保持 → ✓ 完成&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;text-small text-muted&quot;&gt;6 次分支符合预期；5 次完整完成。未证明该规则在所有网络中最优。&lt;/div&gt;
+  &lt;details class=&quot;text-small&quot;&gt;&lt;summary&gt;数据口径与来源&lt;/summary&gt;
+    &lt;ul&gt;&lt;li&gt;机制：route_plan.py、state.py、orchestrator.py、worker.py。通信环为 W0→W1→W2→W3→W0；每个 worker 都连接 A、B。线表示连接，不代表所有发送任务同一时刻发送。&lt;/li&gt;&lt;li&gt;硬故障计时从关闭网卡命令开始；灰故障计时从注入命令完成开始；检测终点为 SWITCH_SUSPECT。不是完整恢复时间。&lt;/li&gt;&lt;li&gt;时间轴：results_restore_kpi_v3/aa7_hard_rep01 与 aa8_grayfast_rep01/summary.json。图中均减去检测时刻作为零点。原始故障到检测分别为 0.631453、53.330729 ms。&lt;/li&gt;&lt;li&gt;检测门槛按合作方目标比较。程序原有自动门槛为硬故障 10 ms、限速检测 200 ms；新丢包实验没有 100 ms 的自动通过门槛。&lt;/li&gt;&lt;li&gt;丢包检测：results_m4c_lossfast 的六档、每档三次；决策与执行：results_m4b_policy_v5。高丢包恢复失败被保留。&lt;/li&gt;&lt;li&gt;动画中的数据块与步骤编号仅为讲解；播放秒数不代表实测延迟。当前原型为 CPU/Mininet/TCP，不是真实 GPU/RDMA 集群。&lt;/li&gt;&lt;/ul&gt;
+  &lt;/details&gt;
+&lt;/div&gt;
+&lt;style&gt;
+  #limer-recovery-demo { color:var(--foreground); }
+  #limer-recovery-demo .lr-stage-head {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px;}
+  #limer-recovery-demo .lr-scene {position:relative;height:355px;margin:8px 0;}
+  #limer-recovery-demo .lr-wires {position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+  #limer-recovery-demo .lr-device {position:absolute;transform:translateX(-50%);display:flex;align-items:center;flex-direction:column;gap:3px;color:var(--foreground);}
+  #limer-recovery-demo .lr-picture {display:flex;align-items:center;justify-content:center;width:48px;height:46px;}
+  #limer-recovery-demo .lr-picture svg {transform:scale(2.5);background:var(--background);}
+  #limer-recovery-demo .lr-switch {top:12px;}
+  #limer-recovery-demo .lr-worker {top:267px;}
+  #limer-recovery-demo #lr-a {left:29%;} #limer-recovery-demo #lr-b {left:71%;}
+  #limer-recovery-demo #lr-w0 {left:10%;} #limer-recovery-demo #lr-w1 {left:36.67%;}
+  #limer-recovery-demo #lr-w2 {left:63.33%;} #limer-recovery-demo #lr-w3 {left:90%;}
+  #limer-recovery-demo #lr-fault {position:absolute;left:43%;top:176px;color:var(--destructive);background:var(--background);}
+  #limer-recovery-demo #lr-packet-label {position:absolute;left:50%;top:130px;transform:translateX(-50%);background:var(--background);white-space:nowrap;}
+  #limer-recovery-demo .lr-legend {display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;}
+  #limer-recovery-demo .lr-a-key {color:var(--viz-series-1);font-weight:500;}
+  #limer-recovery-demo .lr-b-key {color:var(--viz-series-2);font-weight:500;}
+  #limer-recovery-demo .lr-handover {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:4px 0 14px;}
+  #limer-recovery-demo .lr-detail {min-height:44px;margin-top:8px;}
+  #limer-recovery-demo .lr-route {margin:6px 0;}
+  #limer-recovery-demo .lr-loss-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:16px 0;}
+  #limer-recovery-demo .lr-loss-level {display:flex;flex-direction:column;gap:4px;}
+  #limer-recovery-demo .lr-policy-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:12px 0;}
+  #limer-recovery-demo .lr-outcomes {margin-top:10px;}
+  #limer-recovery-demo .lr-time-title {margin-top:18px;}
+  #limer-recovery-demo .lr-time-chart {width:100%;display:block;}
+  #limer-recovery-demo .lr-time-chart text {fill:var(--foreground);font-size:12px;}
+  #limer-recovery-demo details {margin-top:20px;}
+  @media(max-width:480px){#limer-recovery-demo .lr-loss-grid{grid-template-columns:repeat(2,minmax(0,1fr));}#limer-recovery-demo .lr-policy-grid{grid-template-columns:1fr;}#limer-recovery-demo .lr-switch .text-small{max-width:110px;text-align:center;}}
+&lt;/style&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(()=&gt;{
+  const root=document.getElementById(&#x27;limer-recovery-demo&#x27;);
+  const q=s=&gt;root.querySelector(s), qa=s=&gt;[...root.querySelectorAll(s)];
+  const scene=q(&#x27;.lr-scene&#x27;), wires=q(&#x27;.lr-wires&#x27;);
+  let step=0, scenario=&#x27;hard&#x27;, timer=null, frame=null, lastWidth=0;
+  const names=[&#x27;正常双活&#x27;,&#x27;数据传到一半，故障发生&#x27;,&#x27;发现异常，判断能否绕道&#x27;,&#x27;PREPARE：发出同一份新安排&#x27;,&#x27;READY：四个 worker 准备就绪&#x27;,&#x27;COMMIT：双方一起换到 B&#x27;,&#x27;关闭旧连接，解除等待&#x27;,&#x27;经 B 补发数据块 #42&#x27;,&#x27;W3 校验并接收 #42&#x27;,&#x27;如果收到重复的 #42&#x27;,&#x27;继续发送下一块数据&#x27;];
+  const paths={};
+  const ns=&#x27;http://www.w3.org/2000/svg&#x27;;
+  function svg(tag,attrs,parent=wires){const el=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=&gt;el.setAttribute(k,v));parent.appendChild(el);return el;}
+  function stop(){clearTimeout(timer);timer=null;q(&#x27;#lr-play&#x27;).textContent=&#x27;播放全过程&#x27;;}
+  function drawScene(animate=false){
+    cancelAnimationFrame(frame);wires.replaceChildren();
+    const w=scene.clientWidth, xs=[.1,.3667,.6333,.9].map(x=&gt;x*w), sw=[.29*w,.71*w];
+    wires.setAttribute(&#x27;viewBox&#x27;,`0 0 ${w} 355`);
+    const stay=scenario===&#x27;stay&#x27;, hard=scenario===&#x27;hard&#x27;, cap=scenario===&#x27;cap&#x27;, changed=step&gt;=5&amp;&amp;!stay;
+    const colors=[&#x27;var(--viz-series-1)&#x27;,&#x27;var(--viz-series-2)&#x27;];
+    const starts=[], ends=[], geometry={};
+    for(let i=0;i&lt;4;i++)for(let f=0;f&lt;2;f++){
+      const x=xs[i]+(f===0?-9:9), end=sw[f]+(i-1.5)*12;
+      const d=`M ${x} 266 C ${x} 212 ${end} 162 ${end} 98`;
+      const bad=i===2&amp;&amp;f===0&amp;&amp;step&gt;=1;
+      paths[`${i}${f}`]=d;
+      geometry[`${i}${f}`]={x,end};
+      // Each cable has its own worker socket and switch port. Underpainting makes crossings non-junctions.
+      svg(&#x27;path&#x27;,{d,fill:&#x27;none&#x27;,stroke:&#x27;var(--background)&#x27;,&#x27;stroke-width&#x27;:5});
+      svg(&#x27;path&#x27;,{d,fill:&#x27;none&#x27;,stroke:bad?&#x27;var(--destructive)&#x27;:colors[f],&#x27;stroke-width&#x27;:1.6,&#x27;stroke-dasharray&#x27;:bad&amp;&amp;hard?&#x27;5 6&#x27;:&#x27;none&#x27;,opacity:bad?1:.62,&#x27;data-cable&#x27;:`W${i}-${f===0?&#x27;A&#x27;:&#x27;B&#x27;}`});
+      starts.push({x,y:266,c:colors[f]});ends.push({x:end,y:98,c:colors[f]});
+    }
+    [...starts,...ends].forEach(p=&gt;svg(&#x27;circle&#x27;,{cx:p.x,cy:p.y,r:3,fill:p.c}));
+    function routePath(sender,f,visible=false){
+      const receiver=(sender+1)%4, a=geometry[`${sender}${f}`],b=geometry[`${receiver}${f}`];
+      const d=`${paths[`${sender}${f}`]} L ${b.end} 98 C ${b.end} 162 ${b.x} 212 ${b.x} 266`;
+      return svg(&#x27;path&#x27;,{d,fill:&#x27;none&#x27;,stroke:visible?colors[f]:&#x27;none&#x27;,&#x27;stroke-width&#x27;:3,opacity:.95,&#x27;data-flow&#x27;:`W${sender}-${f===0?&#x27;A&#x27;:&#x27;B&#x27;}-W${receiver}`});
+    }
+    // Step 0 uses A for senders 0/2, B for 1/3. The initial animation matches the real rank-offset plan.
+    const focus=routePath(2,changed?1:0,step===0||changed);
+    const background=[0,1,3].map(rank=&gt;({path:routePath(rank,rank%2),rank}));
+    const faultPath=svg(&#x27;path&#x27;,{d:paths[&#x27;20&#x27;],fill:&#x27;none&#x27;,stroke:&#x27;none&#x27;});
+    const faultPoint=faultPath.getPointAtLength(faultPath.getTotalLength()*.28);
+    q(&#x27;#lr-fault&#x27;).style.left=`${faultPoint.x+9}px`;q(&#x27;#lr-fault&#x27;).style.top=`${faultPoint.y+6}px`;
+    if(hard&amp;&amp;step&gt;=1){svg(&#x27;path&#x27;,{d:`M ${faultPoint.x-6} ${faultPoint.y-6} l 12 12 M ${faultPoint.x-6} ${faultPoint.y+6} l 12 -12`,stroke:&#x27;var(--destructive)&#x27;,&#x27;stroke-width&#x27;:2});}
+    const packet=svg(&#x27;g&#x27;,{}), token=svg(&#x27;rect&#x27;,{x:-15,y:-10,width:30,height:20,rx:3,fill:&#x27;var(--background)&#x27;,stroke:changed?colors[1]:colors[0],&#x27;stroke-width&#x27;:2},packet);
+    const number=svg(&#x27;text&#x27;,{&#x27;text-anchor&#x27;:&#x27;middle&#x27;,y:4,fill:&#x27;var(--foreground)&#x27;,&#x27;font-size&#x27;:12},packet);number.textContent=step===10?&#x27;43&#x27;:&#x27;42&#x27;;
+    const bg=background.map(o=&gt;({...o,token:svg(&#x27;circle&#x27;,{r:3,fill:colors[o.rank%2]})}));
+    function position(t){
+      let u=step===0?t:step===7?t:step&gt;=8?1:.14;
+      if(step===9)u=.86+.14*t;
+      const p=focus.getPointAtLength(focus.getTotalLength()*u);
+      packet.setAttribute(&#x27;transform&#x27;,`translate(${p.x},${p.y})`);
+      packet.setAttribute(&#x27;opacity&#x27;,step===5||step===6?0:1);
+      if(step===10){const p2=focus.getPointAtLength(focus.getTotalLength()*t);packet.setAttribute(&#x27;transform&#x27;,`translate(${p2.x},${p2.y})`);}
+      token.setAttribute(&#x27;stroke&#x27;,step===9?&#x27;var(--destructive)&#x27;:changed?colors[1]:colors[0]);
+      bg.forEach((o,i)=&gt;{const p=o.path.getPointAtLength(o.path.getTotalLength()*Math.min(1,t+i*.1));o.token.setAttribute(&#x27;cx&#x27;,p.x);o.token.setAttribute(&#x27;cy&#x27;,p.y);o.token.setAttribute(&#x27;opacity&#x27;,step===0||step===10?.75:.15);});
+      if(!hard&amp;&amp;!cap&amp;&amp;step===1){packet.setAttribute(&#x27;transform&#x27;,`translate(${faultPoint.x},${faultPoint.y+24})`);token.setAttribute(&#x27;stroke&#x27;,&#x27;var(--destructive)&#x27;);}
+    }
+    const initial=step&gt;=8?1:.2;position(initial);
+    if(animate&amp;&amp;!matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches){const start=performance.now();const tick=t=&gt;{const u=Math.min(1,(t-start)/2000);position(u);if(u&lt;1)frame=requestAnimationFrame(tick);};frame=requestAnimationFrame(tick);}
+  }
+  function update(animate=false){
+    const hard=scenario===&#x27;hard&#x27;, cap=scenario===&#x27;cap&#x27;, stay=scenario===&#x27;stay&#x27;;
+    const titles=[...names];if(stay){titles[3]=&#x27;B 余量不足：不提出切换&#x27;;titles[4]=&#x27;保留 v0，继续原路传输&#x27;;}
+    const details=[
+      &#x27;以第 0 步为例：W0、W2 经 A 发送；W1、W3 经 B 发送。重点跟随 W2→W3 的 #42。&#x27;,
+      hard?&#x27;W2—A 断线；W3 没有收全 #42，仍在等待。&#x27;:cap?&#x27;W2→A 限速；#42 传输变慢，W3 等待完成。&#x27;:&#x27;netem 丢掉部分包；#42 尚未完整到达 W3。&#x27;,
+      hard?&#x27;收到 down 告警，确认 B 可用，决定绕道。&#x27;:stay?&#x27;流量异常触发告警，主机确认受影响；但 B 余量不足。&#x27;:&#x27;流量异常触发告警；主机确认受影响，检查 B 后决定绕道。&#x27;,
+      stay?&#x27;不向 worker 下发新计划，不为 B 增加待转移流量。&#x27;:&#x27;协调器向四个 worker 下发 v1，约定相同的生效轮次与步骤。&#x27;,
+      stay?&#x27;两端继续使用 A 的原连接；TCP 处理丢包，性能仍可能下降。&#x27;:&#x27;四个 worker 检查同一份计划并回复 READY；此时还没有提交切换。&#x27;,
+      &#x27;协调器发出 COMMIT：W2 选 B 的发送连接，W3 选 B 的接收连接。&#x27;,
+      &#x27;提交时关闭受影响的旧连接，让卡住的读写退出；为讲解把这个动作单独展开。&#x27;,
+      &#x27;W2 通过已经建立的 B 连接，补发或重做中断的数据块 #42；不用重新连接。&#x27;,
+      &#x27;W3 检查轮次、步骤、版本与校验值；完整接收 #42 后继续执行。&#x27;,
+      &#x27;条件示例：若 #42 其实已到，补发又带来同一份数据，接收端忽略重复副本。&#x27;,
+      &#x27;后续数据继续走新安排；A 上的故障仍存在，我们绕开它，没有修好原链路。&#x27;
+    ];
+    q(&#x27;#lr-stage&#x27;).textContent=`${step+1} / ${stay?5:11} · ${titles[step]}`;
+    q(&#x27;#lr-detail&#x27;).textContent=details[step];
+    q(&#x27;#lr-a-status&#x27;).textContent=step===0?&#x27;正常&#x27;:hard?&#x27;W2 端口 DOWN&#x27;:&#x27;W2 端口 UP&#x27;;
+    q(&#x27;#lr-b-status&#x27;).textContent=stay?&#x27;已连接 · 余量不足&#x27;:step&gt;=5?&#x27;承接受影响通信&#x27;:&#x27;已连接 · 正在用&#x27;;
+    qa(&#x27;.lr-version&#x27;).forEach(el=&gt;el.textContent=step===3&amp;&amp;!stay?&#x27;v1 待准备&#x27;:step===4&amp;&amp;!stay?&#x27;✓ READY&#x27;:step&gt;=5&amp;&amp;!stay?&#x27;v1&#x27;:&#x27;v0&#x27;);
+    q(&#x27;#lr-fault&#x27;).textContent=step&gt;=1?(hard?&#x27;× 断线&#x27;:cap?&#x27;↓ 限速&#x27;:&#x27;× 丢包&#x27;):&#x27;&#x27;;
+    q(&#x27;#lr-packet-label&#x27;).textContent=stay&amp;&amp;step&gt;=3?&#x27;保持原路&#x27;:step===3?&#x27;同一计划 v1 → 四个 worker&#x27;:step===4?&#x27;READY：4 / 4&#x27;:step===5?&#x27;COMMIT → 双方改用 B&#x27;:step===6?&#x27;旧连接关闭 · 不再等待&#x27;:step===7?&#x27;#42：W2 → B → W3&#x27;:step===8?&#x27;#42 ✓ 完整接收&#x27;:step===9?&#x27;重复 #42 × 忽略&#x27;:step===10?&#x27;#43：继续传输&#x27;:&#x27;&#x27;;
+    q(&#x27;#lr-route&#x27;).textContent=step&gt;=5&amp;&amp;!stay?(hard?&#x27;本图跟随 W2→W3；硬故障还会把 W1→W2 原本走 A 的发送步骤改到 B。&#x27;:&#x27;只改 W2 原本走 A 的发送任务；其他发送安排保留。&#x27;):&#x27;8 条独立连接始终画出；粗线与移动数据块表示本次关注的通信。&#x27;;
+    const switched=step&gt;=5&amp;&amp;!stay;
+    q(&#x27;#lr-sender&#x27;).textContent=switched?(step===6?&#x27;旧连接已关闭&#x27;:step===7?&#x27;经 B 补发 #42&#x27;:&#x27;选择 B 连接&#x27;):&#x27;选择 A 连接&#x27;;
+    q(&#x27;#lr-receiver&#x27;).textContent=switched?(step&gt;=8?&#x27;从 B 接收并核对&#x27;:&#x27;改为从 B 接收&#x27;):(step&gt;=1?&#x27;在 A 等待 #42&#x27;:&#x27;从 A 接收&#x27;);
+    q(&#x27;#lr-ledger&#x27;).textContent=stay?&#x27;未切换；仍可能变慢&#x27;:step&gt;=8?(step===9?&#x27;已接收 1 份；重复不计入&#x27;:&#x27;#42 已完整接收 ✓&#x27;):step&gt;=1?&#x27;#42 未完成&#x27;:&#x27;#42 正在传输&#x27;;
+    q(&#x27;#lr-boundary&#x27;).textContent=(!hard&amp;&amp;!cap)?&#x27;过程示意；自动决策实测：保持 3/3 完成，切换 2/3 完成。&#x27;:&#x27;机制示意；下面时间轴使用已完成实验的实际记录。&#x27;;
+    q(&#x27;#lr-prev&#x27;).disabled=step===0;q(&#x27;#lr-next&#x27;).disabled=step===(stay?4:10);drawScene(animate);
+  }
+  q(&#x27;#lr-prev&#x27;).onclick=()=&gt;{stop();step=Math.max(0,step-1);update(true);};
+  q(&#x27;#lr-next&#x27;).onclick=()=&gt;{stop();step=Math.min(scenario===&#x27;stay&#x27;?4:10,step+1);update(true);};
+  q(&#x27;#lr-scenario&#x27;).onchange=e=&gt;{stop();scenario=e.target.value;step=0;update();};
+  q(&#x27;#lr-recover&#x27;).onclick=()=&gt;{stop();step=3;update(true);};
+  q(&#x27;#lr-play&#x27;).onclick=()=&gt;{if(timer){stop();return;}const end=scenario===&#x27;stay&#x27;?4:10;if(step===end)step=0;q(&#x27;#lr-play&#x27;).textContent=&#x27;暂停&#x27;;update(true);const advance=()=&gt;{if(step&lt;end){step++;update(true);if(step&lt;end)timer=setTimeout(advance,3500);else stop();}else stop();};timer=setTimeout(advance,3500);};
+  const loss=[[&#x27;0.5%&#x27;,384.223357,381.915971,382.873591],[&#x27;1%&#x27;,18.05446,383.570169,381.663058],[&#x27;2%&#x27;,18.503816,387.338109,1480.58119],[&#x27;5%&#x27;,585.052168,385.214404,17.714817],[&#x27;10%&#x27;,606.857069,21.231125,21.972605],[&#x27;25%&#x27;,22.968056,111.645241,252.223643]];
+  loss.forEach(([level,...values])=&gt;{const d=document.createElement(&#x27;div&#x27;);d.className=&#x27;lr-loss-level&#x27;;const label=document.createElement(&#x27;span&#x27;);label.textContent=`丢包 ${level}`;d.append(label);values.forEach(v=&gt;{const s=document.createElement(&#x27;span&#x27;);s.className=&#x27;text-small tabular-nums&#x27;;s.textContent=`${v&lt;100?&#x27;✓&#x27;:&#x27;×&#x27;} ${v.toFixed(1)} ms`;d.append(s);});q(&#x27;#lr-loss-grid&#x27;).append(d);});
+  const timelineData=[{name:&#x27;硬故障&#x27;,commit:263.454947,progress:535.736452},{name:&#x27;限速型灰故障&#x27;,commit:843.604799,progress:1065.169869}];
+  function drawTimes(){
+    if(!window.d3)return;
+    const target=q(&#x27;#lr-timelines&#x27;);target.replaceChildren();
+    timelineData.forEach(row=&gt;{
+      const title=document.createElement(&#x27;div&#x27;);title.className=&#x27;lr-time-title&#x27;;title.textContent=row.name;target.append(title);
+      const w=target.clientWidth,h=166,left=28,right=28;
+      const chart=d3.select(target).append(&#x27;svg&#x27;).attr(&#x27;class&#x27;,&#x27;lr-time-chart&#x27;).attr(&#x27;viewBox&#x27;,`0 0 ${w} ${h}`).attr(&#x27;role&#x27;,&#x27;img&#x27;).attr(&#x27;aria-label&#x27;,`${row.name}：告警后 ${row.commit.toFixed(1)} 毫秒提交切换，${row.progress.toFixed(1)} 毫秒完成恢复步骤。目标为1000毫秒。`);
+      const max=d3.max(timelineData,d=&gt;Math.max(d.commit,d.progress,1000));
+      const x=d3.scaleLinear().domain([0,max*1.16]).range([left,w-right]);
+      chart.append(&#x27;rect&#x27;).attr(&#x27;data-chart-frame&#x27;,&#x27;&#x27;).attr(&#x27;x&#x27;,left).attr(&#x27;y&#x27;,12).attr(&#x27;width&#x27;,w-left-right).attr(&#x27;height&#x27;,110).attr(&#x27;fill&#x27;,&#x27;none&#x27;).attr(&#x27;stroke&#x27;,&#x27;var(--border)&#x27;);
+      chart.append(&#x27;line&#x27;).attr(&#x27;x1&#x27;,x(0)).attr(&#x27;x2&#x27;,x(row.progress)).attr(&#x27;y1&#x27;,66).attr(&#x27;y2&#x27;,66).attr(&#x27;stroke&#x27;,&#x27;var(--viz-series-1)&#x27;).attr(&#x27;stroke-width&#x27;,2);
+      chart.append(&#x27;line&#x27;).attr(&#x27;x1&#x27;,x(1000)).attr(&#x27;x2&#x27;,x(1000)).attr(&#x27;y1&#x27;,20).attr(&#x27;y2&#x27;,112).attr(&#x27;stroke&#x27;,&#x27;var(--foreground)&#x27;).attr(&#x27;stroke-dasharray&#x27;,&#x27;3 4&#x27;);
+      chart.append(&#x27;text&#x27;).attr(&#x27;x&#x27;,x(1000)-4).attr(&#x27;y&#x27;,27).attr(&#x27;text-anchor&#x27;,&#x27;end&#x27;).text(&#x27;1 秒目标&#x27;);
+      const points=[{v:0,name:&#x27;告警&#x27;,shape:d3.symbolCircle,y:36},{v:row.commit,name:&#x27;离开坏端口&#x27;,shape:d3.symbolSquare,y:100},{v:row.progress,name:&#x27;恢复步骤完成&#x27;,shape:d3.symbolDiamond,y:52}];
+      points.forEach((p,i)=&gt;{
+        chart.append(&#x27;path&#x27;).attr(&#x27;d&#x27;,d3.symbol().type(p.shape).size(64)()).attr(&#x27;transform&#x27;,`translate(${x(p.v)},66)`).attr(&#x27;fill&#x27;,i===2?&#x27;var(--viz-series-2)&#x27;:&#x27;var(--viz-series-1)&#x27;).attr(&#x27;data-tooltip&#x27;,`${p.name}：告警后 ${p.v.toFixed(3)} ms`);
+        const anchor=i===0?&#x27;start&#x27;:i===2?&#x27;end&#x27;:&#x27;middle&#x27;;
+        chart.append(&#x27;text&#x27;).attr(&#x27;x&#x27;,x(p.v)+(i===0?4:0)).attr(&#x27;y&#x27;,p.y).attr(&#x27;text-anchor&#x27;,anchor).text(`${p.name} ${p.v.toFixed(0)} ms`);
+      });
+      chart.append(&#x27;g&#x27;).attr(&#x27;transform&#x27;,&#x27;translate(0,122)&#x27;).call(d3.axisBottom(x).tickValues(w&lt;480?[0,500,1000]:[0,250,500,750,1000]).tickSize(3)).call(g=&gt;g.select(&#x27;.domain&#x27;).remove());
+      chart.append(&#x27;text&#x27;).attr(&#x27;class&#x27;,&#x27;axis-title&#x27;).attr(&#x27;data-axis&#x27;,&#x27;x&#x27;).attr(&#x27;x&#x27;,w-right).attr(&#x27;y&#x27;,163).attr(&#x27;text-anchor&#x27;,&#x27;end&#x27;).text(&#x27;告警后经过的时间（ms）&#x27;);
+    });
+  }
+  update();drawTimes();
+  new ResizeObserver(()=&gt;{const w=scene.clientWidth;if(w!==lastWidth){lastWidth=w;drawScene();drawTimes();}}).observe(scene);
+  if(window.lucide)lucide.createIcons();
+})();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
+    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
+    document.removeEventListener(&quot;click&quot;, handleTouchClick);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
+  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
+  document.addEventListener(&quot;click&quot;, handleTouchClick);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
