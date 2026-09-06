@@ -10,20 +10,20 @@
 </head>
 <body>
 <main>
-  <a href="index.html">Back to LIMER stage review / 返回阶段汇报</a>
+  <a href="index.html">Back to LIMER stage review</a>
   <h1>Current mechanisms and experiment record</h1>
   <p>CPU / Mininet / TCP prototype. Four emulated hosts each connect to A and B. The switches have no direct link. Animations explain mechanisms, not measured playback speed or production NCCL behavior.</p>
   <nav aria-label="Sections"><a href="#normal">Healthy traffic</a><a href="#hard">Hard failure</a><a href="#loss">Gray loss</a><a href="#recovery">Recovery</a><a href="#record">93-run record</a></nav>
 
   <section id="normal">
-    <h2>1. Healthy traffic / 正常通信</h2>
+    <h2>1. Healthy traffic</h2>
     <p>The eight cables are physical connections. A step chooses the path for each sender. In step 0, W0/W2 send on A and W1/W3 send on B. A receiver listens on the path chosen by its predecessor.</p>
-    <p><a href="demos/normal-flow.html" target="_blank" rel="noopener">Open the step-through animation / 单独打开动画</a></p>
+    <p><a href="demos/normal-flow.html" target="_blank" rel="noopener">Open the step-through animation</a></p>
     <iframe src="demos/normal-flow.html" title="Healthy communication step-through" sandbox="allow-scripts" loading="lazy"></iframe>
   </section>
 
   <section id="hard">
-    <h2>2. Hard failure / 链路断开</h2>
+    <h2>2. Hard failure</h2>
     <img src="assets/weekly/hard.png" alt="The W2 to A link is down in both directions, while all other physical connections remain." width="720" height="420">
     <dl>
       <dt>Inject</dt><dd>Administratively close <code>w2-eth0</code> with <code>ip link set ... down</code>. This interrupts both directions of W2's A access link.</dd>
@@ -35,7 +35,7 @@
   </section>
 
   <section id="loss">
-    <h2>3. Gray loss / 链路仍在线但随机丢包</h2>
+    <h2>3. Gray loss</h2>
     <img src="assets/weekly/gray.png" alt="Netem drops packets on W2's outgoing A interface. The link remains UP, and A's receive counter supplies the detection signal." width="720" height="420">
     <dl>
       <dt>Inject</dt><dd>Linux <code>tc/netem</code> applies random loss at <code>w2-eth0</code> egress. Six levels: 0.5%, 1%, 2%, 5%, 10%, and 25%. The configured rate stays 100 Mbit/s and the interface stays UP.</dd>
@@ -49,22 +49,22 @@
   </section>
 
   <section id="recovery">
-    <h2>4. Recovery / 协调收发双方后换路</h2>
+    <h2>4. Recovery</h2>
     <p>Prepare a common plan, collect READY from all workers, and commit its activation round/step. Endpoints select existing B connections, close affected A sockets to unblock I/O, retry interrupted work, and validate framed data. The bad link remains bad.</p>
     <p>Hard link-down changes W2's and W1's A-send slots, six in total. A directed gray egress fault changes W2's three A-send slots if switching passes the impact and capacity policy. All-rank coordination does not mean all traffic reroutes.</p>
     <p>Hard failure requires a healthy alternate path. The gray-loss policy switches when estimated B spare capacity × 1.25 covers A's pre-fault demand. Otherwise it stays. This estimate is workload-specific, not a measurement of every bottleneck in the network.</p>
-    <p><a href="demos/recovery-flow.html" target="_blank" rel="noopener">Open recovery animation and measured timelines / 单独打开恢复动画</a></p>
+    <p><a href="demos/recovery-flow.html" target="_blank" rel="noopener">Open recovery animation and measured timelines</a></p>
     <iframe src="demos/recovery-flow.html" title="Recovery mechanisms and measured timing distinctions" sandbox="allow-scripts" loading="lazy"></iframe>
     <div class="table-wrap"><table id="recovery-table"><caption>Prior hard and rate-cap recovery: all three repeats, milliseconds after suspicion</caption><thead><tr><th>Fault / repeat</th><th>Commit</th><th>First complete recovery step</th></tr></thead><tbody></tbody></table></div>
     <p>Rate cap is a separate gray-fault type, not packet loss. A committed plan does not yet prove that communication has completed. Under automatic 25% loss switching, 2/3 runs completed. The third committed then failed with an EOF / communication error. Its exact root cause still needs investigation.</p>
   </section>
 
   <section id="record">
-    <h2>5. Experiment record / 实验次数与逐次数据</h2>
+    <h2>5. Experiment record</h2>
     <p id="record-summary">Loading local experiment records…</p>
     <div class="table-wrap"><table id="campaign-table"><caption>Selected campaigns, not the entire repository history</caption><thead><tr><th>Campaign</th><th>Design</th><th>Runs</th><th>Completed</th></tr></thead><tbody></tbody></table></div>
     <p>M3a retention comes from raw round-level throughput: selected-period median divided by that arm's own baseline median. Oracle switch arms measure switching cost, not automatic detection. M4b's constrained stay arm uses B at 10 Mbit/s and 25% loss, unlike the M3a B50/5% loss comparison.</p>
-    <details><summary>Show all 93 runs with source links / 展开逐次记录</summary>
+    <details><summary>Show all 93 runs with source links</summary>
       <div class="table-wrap"><table id="run-table"><thead><tr><th>Campaign / run</th><th>Loss</th><th>B rate</th><th>Status</th><th>Detect ms</th><th>Commit ms after alert</th><th>First step ms after alert</th><th>Policy</th><th>Retention</th></tr></thead><tbody></tbody></table></div>
     </details>
     <h3>Decisions for the next milestone</h3>

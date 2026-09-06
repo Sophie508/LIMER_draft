@@ -1037,25 +1037,25 @@ html&gt;body{padding:0}&lt;/style&gt;
 &lt;body&gt;
 &lt;div id=&quot;limer-recovery-demo&quot;&gt;
   &lt;div class=&quot;viz-controls&quot;&gt;
-    &lt;label class=&quot;form-label&quot;&gt;故障场景
+    &lt;label class=&quot;form-label&quot;&gt;Fault scenario
       &lt;select class=&quot;form-select&quot; id=&quot;lr-scenario&quot;&gt;
-        &lt;option value=&quot;hard&quot;&gt;硬故障：W2—A 断线&lt;/option&gt;
-        &lt;option value=&quot;cap&quot;&gt;灰故障：W2→A 限速&lt;/option&gt;
-        &lt;option value=&quot;loss&quot;&gt;灰故障：丢包，B 有余量&lt;/option&gt;
-        &lt;option value=&quot;stay&quot;&gt;灰故障：丢包，B 余量不足&lt;/option&gt;
+        &lt;option value=&quot;hard&quot;&gt;Hard: W2–A link down&lt;/option&gt;
+        &lt;option value=&quot;cap&quot;&gt;Gray: W2→A rate cap&lt;/option&gt;
+        &lt;option value=&quot;loss&quot;&gt;Gray: loss, B has spare capacity&lt;/option&gt;
+        &lt;option value=&quot;stay&quot;&gt;Gray: loss, insufficient B capacity&lt;/option&gt;
       &lt;/select&gt;
     &lt;/label&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-prev&quot;&gt;上一步&lt;/button&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;lr-next&quot;&gt;下一步&lt;/button&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-play&quot;&gt;播放全过程&lt;/button&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-recover&quot;&gt;直接看恢复&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-prev&quot;&gt;Previous&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;lr-next&quot;&gt;Next&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-play&quot;&gt;Play all steps&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;lr-recover&quot;&gt;Jump to recovery&lt;/button&gt;
   &lt;/div&gt;
-  &lt;div class=&quot;lr-stage-head&quot;&gt;&lt;span id=&quot;lr-stage&quot;&gt;1 / 11 · 正常双活&lt;/span&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;放慢示意 · 非实时实验&lt;/span&gt;&lt;/div&gt;
-  &lt;div class=&quot;lr-legend text-small&quot;&gt;&lt;span&gt;&lt;b class=&quot;lr-a-key&quot;&gt;━&lt;/b&gt; 接 A：4 条&lt;/span&gt;&lt;span&gt;&lt;b class=&quot;lr-b-key&quot;&gt;━&lt;/b&gt; 接 B：4 条&lt;/span&gt;&lt;span&gt;交叉处不相连 · A 与 B 不直连&lt;/span&gt;&lt;/div&gt;
-  &lt;div class=&quot;lr-scene&quot; role=&quot;img&quot; aria-label=&quot;四个 worker 同时连接交换机 A 和 B；逐步展示 W2 链路故障后的协调恢复。&quot;&gt;
+  &lt;div class=&quot;lr-stage-head&quot;&gt;&lt;span id=&quot;lr-stage&quot;&gt;1 / 11 · Healthy active-active&lt;/span&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;Slowed illustration · not a live experiment&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;lr-legend text-small&quot;&gt;&lt;span&gt;&lt;b class=&quot;lr-a-key&quot;&gt;━&lt;/b&gt; A: four links&lt;/span&gt;&lt;span&gt;&lt;b class=&quot;lr-b-key&quot;&gt;━&lt;/b&gt; B: four links&lt;/span&gt;&lt;span&gt;Crossings are not junctions · no A–B link&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;lr-scene&quot; role=&quot;img&quot; aria-label=&quot;All four workers connect to switches A and B. Follow coordinated recovery after a W2 link fault.&quot;&gt;
     &lt;svg class=&quot;lr-wires&quot; aria-hidden=&quot;true&quot;&gt;&lt;/svg&gt;
-    &lt;div class=&quot;lr-device lr-switch&quot; id=&quot;lr-a&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;server&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch A&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;lr-a-status&quot;&gt;正常&lt;/span&gt;&lt;/div&gt;
-    &lt;div class=&quot;lr-device lr-switch&quot; id=&quot;lr-b&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;server&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch B&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;lr-b-status&quot;&gt;已连接 · 正在用&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;lr-device lr-switch&quot; id=&quot;lr-a&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;server&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch A&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;lr-a-status&quot;&gt;Healthy&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;lr-device lr-switch&quot; id=&quot;lr-b&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;server&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch B&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;lr-b-status&quot;&gt;Connected · active&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;lr-device lr-worker&quot; id=&quot;lr-w0&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;monitor&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W0&lt;/span&gt;&lt;span class=&quot;text-small lr-version&quot;&gt;v0&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;lr-device lr-worker&quot; id=&quot;lr-w1&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;monitor&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W1&lt;/span&gt;&lt;span class=&quot;text-small lr-version&quot;&gt;v0&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;lr-device lr-worker&quot; id=&quot;lr-w2&quot;&gt;&lt;span class=&quot;lr-picture&quot;&gt;&lt;i data-lucide=&quot;monitor&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W2&lt;/span&gt;&lt;span class=&quot;text-small lr-version&quot;&gt;v0&lt;/span&gt;&lt;/div&gt;
@@ -1064,39 +1064,39 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;span id=&quot;lr-packet-label&quot; class=&quot;text-small&quot;&gt;&lt;/span&gt;
   &lt;/div&gt;
   &lt;div class=&quot;lr-handover&quot; aria-live=&quot;polite&quot;&gt;
-    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;W2：发送端&lt;/span&gt;&lt;div id=&quot;lr-sender&quot;&gt;经 A 发送&lt;/div&gt;&lt;/div&gt;
-    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;W3：接收端&lt;/span&gt;&lt;div id=&quot;lr-receiver&quot;&gt;从 A 接收&lt;/div&gt;&lt;/div&gt;
-    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;示意数据块 #42&lt;/span&gt;&lt;div id=&quot;lr-ledger&quot;&gt;等待本次交接&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;W2: sender&lt;/span&gt;&lt;div id=&quot;lr-sender&quot;&gt;Send via A&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;W3: receiver&lt;/span&gt;&lt;div id=&quot;lr-receiver&quot;&gt;Receive on A&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;Illustrative block #42&lt;/span&gt;&lt;div id=&quot;lr-ledger&quot;&gt;Awaiting transfer&lt;/div&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;lr-detail&quot; id=&quot;lr-detail&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;lr-route text-small&quot; id=&quot;lr-route&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;text-small text-muted&quot; id=&quot;lr-boundary&quot;&gt;&lt;/div&gt;
   &lt;hr&gt;
-  &lt;h3&gt;“恢复了”到底是哪一个时刻？&lt;/h3&gt;
-  &lt;div class=&quot;text-small&quot;&gt;真实记录：硬故障、限速故障各取第 1 次实验；以下两条时间轴都从&lt;strong&gt;收到告警&lt;/strong&gt;开始。&lt;/div&gt;
+  &lt;h3&gt;What does recovery time measure?&lt;/h3&gt;
+  &lt;div class=&quot;text-small&quot;&gt;Measured records: repeat 1 for hard failure and rate cap. Both timelines start at the &lt;strong&gt;alert&lt;/strong&gt;.&lt;/div&gt;
   &lt;div id=&quot;lr-timelines&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;text-small text-muted&quot;&gt;圆点＝告警；方块＝提交切换、关闭坏路径连接；菱形＝第一个恢复后的通信步骤完成。&lt;/div&gt;
+  &lt;div class=&quot;text-small text-muted&quot;&gt;Circle: alert. Square: commit and close affected sockets. Diamond: first completed recovery step.&lt;/div&gt;
   &lt;hr&gt;
-  &lt;h3&gt;发现故障：与时间目标对照&lt;/h3&gt;
+  &lt;h3&gt;Detection latency versus target&lt;/h3&gt;
   &lt;div class=&quot;table-responsive&quot;&gt;&lt;table class=&quot;table table-sm&quot;&gt;
-    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;故障&lt;/th&gt;&lt;th&gt;目标&lt;/th&gt;&lt;th&gt;实测检测时间&lt;/th&gt;&lt;th&gt;达到目标&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Fault&lt;/th&gt;&lt;th&gt;Target&lt;/th&gt;&lt;th&gt;Measured detection time&lt;/th&gt;&lt;th&gt;Met target&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
     &lt;tbody&gt;
-      &lt;tr&gt;&lt;td&gt;硬故障&lt;/td&gt;&lt;td&gt;&amp;lt;1 ms&lt;/td&gt;&lt;td&gt;0.631 / 0.688 / 0.687 ms&lt;/td&gt;&lt;td&gt;3 / 3&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;限速&lt;/td&gt;&lt;td&gt;&amp;lt;100 ms&lt;/td&gt;&lt;td&gt;53.33 / 51.81 / 52.64 ms&lt;/td&gt;&lt;td&gt;3 / 3&lt;/td&gt;&lt;/tr&gt;
-      &lt;tr&gt;&lt;td&gt;丢包 · 新规则&lt;/td&gt;&lt;td&gt;&amp;lt;100 ms&lt;/td&gt;&lt;td&gt;下面每个数是一轮实验&lt;/td&gt;&lt;td&gt;6 / 18&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Hard failure&lt;/td&gt;&lt;td&gt;&amp;lt;1 ms&lt;/td&gt;&lt;td&gt;0.631 / 0.688 / 0.687 ms&lt;/td&gt;&lt;td&gt;3 / 3&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Rate cap&lt;/td&gt;&lt;td&gt;&amp;lt;100 ms&lt;/td&gt;&lt;td&gt;53.33 / 51.81 / 52.64 ms&lt;/td&gt;&lt;td&gt;3 / 3&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;Packet loss · new rule&lt;/td&gt;&lt;td&gt;&amp;lt;100 ms&lt;/td&gt;&lt;td&gt;Each value below is one run&lt;/td&gt;&lt;td&gt;6 / 18&lt;/td&gt;&lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;&lt;/div&gt;
   &lt;div class=&quot;lr-loss-grid&quot; id=&quot;lr-loss-grid&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;text-small text-muted&quot;&gt;✓ 小于 100 ms；× 未达到。丢包组只测检测，未开启恢复；不与下方自动决策实验混用。&lt;/div&gt;
+  &lt;div class=&quot;text-small text-muted&quot;&gt;✓ Below 100 ms; × missed target. Loss runs test detection only, with recovery disabled. They are separate from the automatic-policy runs below.&lt;/div&gt;
   &lt;hr&gt;
-  &lt;h3&gt;“选对分支”与“完整跑完”也不同&lt;/h3&gt;
+  &lt;h3&gt;Correct policy choice is not completed recovery&lt;/h3&gt;
   &lt;div class=&quot;lr-policy-grid&quot;&gt;
-    &lt;div&gt;&lt;span&gt;B 有余量 → 选择切换&lt;/span&gt;&lt;div class=&quot;lr-outcomes&quot;&gt;✓ 选择切换 → ✓ 完成&lt;br&gt;✓ 选择切换 → ✓ 完成&lt;br&gt;✓ 选择切换 → × 提交后超时&lt;/div&gt;&lt;/div&gt;
-    &lt;div&gt;&lt;span&gt;B 余量不足 → 选择保持&lt;/span&gt;&lt;div class=&quot;lr-outcomes&quot;&gt;✓ 选择保持 → ✓ 完成&lt;br&gt;✓ 选择保持 → ✓ 完成&lt;br&gt;✓ 选择保持 → ✓ 完成&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span&gt;B has spare capacity → switch&lt;/span&gt;&lt;div class=&quot;lr-outcomes&quot;&gt;✓ Switch chosen → ✓ completed&lt;br&gt;✓ Switch chosen → ✓ completed&lt;br&gt;✓ Switch chosen → × post-commit failure&lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;span&gt;Insufficient B capacity → stay&lt;/span&gt;&lt;div class=&quot;lr-outcomes&quot;&gt;✓ Stay chosen → ✓ completed&lt;br&gt;✓ Stay chosen → ✓ completed&lt;br&gt;✓ Stay chosen → ✓ completed&lt;/div&gt;&lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class=&quot;text-small text-muted&quot;&gt;6 次分支符合预期；5 次完整完成。未证明该规则在所有网络中最优。&lt;/div&gt;
-  &lt;details class=&quot;text-small&quot;&gt;&lt;summary&gt;数据口径与来源&lt;/summary&gt;
-    &lt;ul&gt;&lt;li&gt;机制：route_plan.py、state.py、orchestrator.py、worker.py。通信环为 W0→W1→W2→W3→W0；每个 worker 都连接 A、B。线表示连接，不代表所有发送任务同一时刻发送。&lt;/li&gt;&lt;li&gt;硬故障计时从关闭网卡命令开始；灰故障计时从注入命令完成开始；检测终点为 SWITCH_SUSPECT。不是完整恢复时间。&lt;/li&gt;&lt;li&gt;时间轴：results_restore_kpi_v3/aa7_hard_rep01 与 aa8_grayfast_rep01/summary.json。图中均减去检测时刻作为零点。原始故障到检测分别为 0.631453、53.330729 ms。&lt;/li&gt;&lt;li&gt;检测门槛按合作方目标比较。程序原有自动门槛为硬故障 10 ms、限速检测 200 ms；新丢包实验没有 100 ms 的自动通过门槛。&lt;/li&gt;&lt;li&gt;丢包检测：results_m4c_lossfast 的六档、每档三次；决策与执行：results_m4b_policy_v5。高丢包恢复失败被保留。&lt;/li&gt;&lt;li&gt;动画中的数据块与步骤编号仅为讲解；播放秒数不代表实测延迟。当前原型为 CPU/Mininet/TCP，不是真实 GPU/RDMA 集群。&lt;/li&gt;&lt;/ul&gt;
+  &lt;div class=&quot;text-small text-muted&quot;&gt;All six choices matched expectations; five runs completed. This does not establish optimality across networks.&lt;/div&gt;
+  &lt;details class=&quot;text-small&quot;&gt;&lt;summary&gt;Metric definitions and sources&lt;/summary&gt;
+    &lt;ul&gt;&lt;li&gt;Mechanism: route_plan.py, state.py, orchestrator.py, worker.py. Ring: W0→W1→W2→W3→W0. Every worker connects to A and B. Cables show connections, not simultaneous use by every send task.&lt;/li&gt;&lt;li&gt;Hard detection starts at the interface-down command; gray detection starts when injection completes. Both end at SWITCH_SUSPECT, not completed recovery.&lt;/li&gt;&lt;li&gt;Timelines: results_restore_kpi_v3/aa7_hard_rep01 and aa8_grayfast_rep01/summary.json. Detection is subtracted to set time zero. Fault-to-detection times were 0.631453 and 53.330729 ms.&lt;/li&gt;&lt;li&gt;Measurements are compared with partner targets. Original automatic gates were 10 ms for hard detection and 200 ms for rate-cap detection. The new loss campaign has no automatic 100 ms pass gate.&lt;/li&gt;&lt;li&gt;Loss detection: six levels with three repeats each in results_m4c_lossfast. Policy and execution: results_m4b_policy_v5. The high-loss recovery failure is retained.&lt;/li&gt;&lt;li&gt;Block and step numbers illustrate the mechanism; playback time is not measured latency. The prototype uses CPU/Mininet/TCP, not a real GPU/RDMA cluster.&lt;/li&gt;&lt;/ul&gt;
   &lt;/details&gt;
 &lt;/div&gt;
 &lt;style&gt;
@@ -1137,11 +1137,11 @@ html&gt;body{padding:0}&lt;/style&gt;
   const q=s=&gt;root.querySelector(s), qa=s=&gt;[...root.querySelectorAll(s)];
   const scene=q(&#x27;.lr-scene&#x27;), wires=q(&#x27;.lr-wires&#x27;);
   let step=0, scenario=&#x27;hard&#x27;, timer=null, frame=null, lastWidth=0;
-  const names=[&#x27;正常双活&#x27;,&#x27;数据传到一半，故障发生&#x27;,&#x27;发现异常，判断能否绕道&#x27;,&#x27;PREPARE：发出同一份新安排&#x27;,&#x27;READY：四个 worker 准备就绪&#x27;,&#x27;COMMIT：双方一起换到 B&#x27;,&#x27;关闭旧连接，解除等待&#x27;,&#x27;经 B 补发数据块 #42&#x27;,&#x27;W3 校验并接收 #42&#x27;,&#x27;如果收到重复的 #42&#x27;,&#x27;继续发送下一块数据&#x27;];
+  const names=[&#x27;Healthy active-active&#x27;,&#x27;Fault during an incomplete transfer&#x27;,&#x27;Detect the fault and check the alternate path&#x27;,&#x27;PREPARE: distribute one common plan&#x27;,&#x27;READY: all four workers prepared&#x27;,&#x27;COMMIT: align both endpoints on B&#x27;,&#x27;Close old sockets to unblock I/O&#x27;,&#x27;Retry block #42 through B&#x27;,&#x27;W3 validates and accepts #42&#x27;,&#x27;If a duplicate #42 arrives&#x27;,&#x27;Continue with the next block&#x27;];
   const paths={};
   const ns=&#x27;http://www.w3.org/2000/svg&#x27;;
   function svg(tag,attrs,parent=wires){const el=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=&gt;el.setAttribute(k,v));parent.appendChild(el);return el;}
-  function stop(){clearTimeout(timer);timer=null;q(&#x27;#lr-play&#x27;).textContent=&#x27;播放全过程&#x27;;}
+  function stop(){clearTimeout(timer);timer=null;q(&#x27;#lr-play&#x27;).textContent=&#x27;Play all steps&#x27;;}
   function drawScene(animate=false){
     cancelAnimationFrame(frame);wires.replaceChildren();
     const w=scene.clientWidth, xs=[.1,.3667,.6333,.9].map(x=&gt;x*w), sw=[.29*w,.71*w];
@@ -1192,64 +1192,64 @@ html&gt;body{padding:0}&lt;/style&gt;
   }
   function update(animate=false){
     const hard=scenario===&#x27;hard&#x27;, cap=scenario===&#x27;cap&#x27;, stay=scenario===&#x27;stay&#x27;;
-    const titles=[...names];if(stay){titles[3]=&#x27;B 余量不足：不提出切换&#x27;;titles[4]=&#x27;保留 v0，继续原路传输&#x27;;}
+    const titles=[...names];if(stay){titles[3]=&#x27;Insufficient B capacity: do not switch&#x27;;titles[4]=&#x27;Keep v0 and continue on A&#x27;;}
     const details=[
-      &#x27;以第 0 步为例：W0、W2 经 A 发送；W1、W3 经 B 发送。重点跟随 W2→W3 的 #42。&#x27;,
-      hard?&#x27;W2—A 断线；W3 没有收全 #42，仍在等待。&#x27;:cap?&#x27;W2→A 限速；#42 传输变慢，W3 等待完成。&#x27;:&#x27;netem 丢掉部分包；#42 尚未完整到达 W3。&#x27;,
-      hard?&#x27;收到 down 告警，确认 B 可用，决定绕道。&#x27;:stay?&#x27;流量异常触发告警，主机确认受影响；但 B 余量不足。&#x27;:&#x27;流量异常触发告警；主机确认受影响，检查 B 后决定绕道。&#x27;,
-      stay?&#x27;不向 worker 下发新计划，不为 B 增加待转移流量。&#x27;:&#x27;协调器向四个 worker 下发 v1，约定相同的生效轮次与步骤。&#x27;,
-      stay?&#x27;两端继续使用 A 的原连接；TCP 处理丢包，性能仍可能下降。&#x27;:&#x27;四个 worker 检查同一份计划并回复 READY；此时还没有提交切换。&#x27;,
-      &#x27;协调器发出 COMMIT：W2 选 B 的发送连接，W3 选 B 的接收连接。&#x27;,
-      &#x27;提交时关闭受影响的旧连接，让卡住的读写退出；为讲解把这个动作单独展开。&#x27;,
-      &#x27;W2 通过已经建立的 B 连接，补发或重做中断的数据块 #42；不用重新连接。&#x27;,
-      &#x27;W3 检查轮次、步骤、版本与校验值；完整接收 #42 后继续执行。&#x27;,
-      &#x27;条件示例：若 #42 其实已到，补发又带来同一份数据，接收端忽略重复副本。&#x27;,
-      &#x27;后续数据继续走新安排；A 上的故障仍存在，我们绕开它，没有修好原链路。&#x27;
+      &#x27;Step 0: W0/W2 send via A; W1/W3 send via B. Follow block #42 from W2 to W3.&#x27;,
+      hard?&#x27;W2–A goes down. W3 has not received all of #42 and is waiting.&#x27;:cap?&#x27;W2→A is rate-limited. Block #42 slows down; W3 waits for completion.&#x27;:&#x27;Netem drops some packets. W3 has not yet received all of #42.&#x27;,
+      hard?&#x27;A down event arrives. Confirm B is healthy and choose to reroute.&#x27;:stay?&#x27;Traffic symptoms trigger an alert. The host confirms impact, but B lacks spare capacity.&#x27;:&#x27;Traffic symptoms trigger an alert. The host confirms impact and checks B before switching.&#x27;,
+      stay?&#x27;Do not distribute a new plan or move extra traffic onto B.&#x27;:&#x27;The coordinator sends v1 to all four workers with one activation round and step.&#x27;,
+      stay?&#x27;Both endpoints keep their A connections. TCP handles loss; performance can still degrade.&#x27;:&#x27;All four workers validate the common plan and reply READY. Cutover is not committed yet.&#x27;,
+      &#x27;The coordinator sends COMMIT. W2 selects its B send connection; W3 selects its B receive connection.&#x27;,
+      &#x27;At commit, close affected sockets to unblock reads and writes. This action is shown separately for clarity.&#x27;,
+      &#x27;W2 retries interrupted block #42 through its existing B connection; no new connection is needed.&#x27;,
+      &#x27;W3 checks the round, step, version, and checksum, then proceeds after receiving all of #42.&#x27;,
+      &#x27;Conditional example: if #42 already arrived, the receiver discards a duplicate from the retry.&#x27;,
+      &#x27;Later data follows the new plan. The A fault still exists: we bypass it, not repair the link.&#x27;
     ];
     q(&#x27;#lr-stage&#x27;).textContent=`${step+1} / ${stay?5:11} · ${titles[step]}`;
     q(&#x27;#lr-detail&#x27;).textContent=details[step];
-    q(&#x27;#lr-a-status&#x27;).textContent=step===0?&#x27;正常&#x27;:hard?&#x27;W2 端口 DOWN&#x27;:&#x27;W2 端口 UP&#x27;;
-    q(&#x27;#lr-b-status&#x27;).textContent=stay?&#x27;已连接 · 余量不足&#x27;:step&gt;=5?&#x27;承接受影响通信&#x27;:&#x27;已连接 · 正在用&#x27;;
-    qa(&#x27;.lr-version&#x27;).forEach(el=&gt;el.textContent=step===3&amp;&amp;!stay?&#x27;v1 待准备&#x27;:step===4&amp;&amp;!stay?&#x27;✓ READY&#x27;:step&gt;=5&amp;&amp;!stay?&#x27;v1&#x27;:&#x27;v0&#x27;);
-    q(&#x27;#lr-fault&#x27;).textContent=step&gt;=1?(hard?&#x27;× 断线&#x27;:cap?&#x27;↓ 限速&#x27;:&#x27;× 丢包&#x27;):&#x27;&#x27;;
-    q(&#x27;#lr-packet-label&#x27;).textContent=stay&amp;&amp;step&gt;=3?&#x27;保持原路&#x27;:step===3?&#x27;同一计划 v1 → 四个 worker&#x27;:step===4?&#x27;READY：4 / 4&#x27;:step===5?&#x27;COMMIT → 双方改用 B&#x27;:step===6?&#x27;旧连接关闭 · 不再等待&#x27;:step===7?&#x27;#42：W2 → B → W3&#x27;:step===8?&#x27;#42 ✓ 完整接收&#x27;:step===9?&#x27;重复 #42 × 忽略&#x27;:step===10?&#x27;#43：继续传输&#x27;:&#x27;&#x27;;
-    q(&#x27;#lr-route&#x27;).textContent=step&gt;=5&amp;&amp;!stay?(hard?&#x27;本图跟随 W2→W3；硬故障还会把 W1→W2 原本走 A 的发送步骤改到 B。&#x27;:&#x27;只改 W2 原本走 A 的发送任务；其他发送安排保留。&#x27;):&#x27;8 条独立连接始终画出；粗线与移动数据块表示本次关注的通信。&#x27;;
+    q(&#x27;#lr-a-status&#x27;).textContent=step===0?&#x27;Healthy&#x27;:hard?&#x27;W2 port DOWN&#x27;:&#x27;W2 port UP&#x27;;
+    q(&#x27;#lr-b-status&#x27;).textContent=stay?&#x27;Connected · no spare capacity&#x27;:step&gt;=5?&#x27;Carries rerouted traffic&#x27;:&#x27;Connected · active&#x27;;
+    qa(&#x27;.lr-version&#x27;).forEach(el=&gt;el.textContent=step===3&amp;&amp;!stay?&#x27;v1 pending&#x27;:step===4&amp;&amp;!stay?&#x27;✓ READY&#x27;:step&gt;=5&amp;&amp;!stay?&#x27;v1&#x27;:&#x27;v0&#x27;);
+    q(&#x27;#lr-fault&#x27;).textContent=step&gt;=1?(hard?&#x27;× Link down&#x27;:cap?&#x27;↓ Rate cap&#x27;:&#x27;× Packet loss&#x27;):&#x27;&#x27;;
+    q(&#x27;#lr-packet-label&#x27;).textContent=stay&amp;&amp;step&gt;=3?&#x27;Stay on A&#x27;:step===3?&#x27;One plan v1 → all four workers&#x27;:step===4?&#x27;READY: 4 / 4&#x27;:step===5?&#x27;COMMIT → both endpoints use B&#x27;:step===6?&#x27;Old sockets closed · I/O unblocked&#x27;:step===7?&#x27;#42: W2 → B → W3&#x27;:step===8?&#x27;#42 ✓ received in full&#x27;:step===9?&#x27;Duplicate #42 × discarded&#x27;:step===10?&#x27;#43: continue transfer&#x27;:&#x27;&#x27;;
+    q(&#x27;#lr-route&#x27;).textContent=step&gt;=5&amp;&amp;!stay?(hard?&#x27;This view follows W2→W3. Hard failure also moves the A-send slots for W1→W2 onto B.&#x27;:&#x27;Only W2 send slots previously on A move to B. Other send schedules stay unchanged.&#x27;):&#x27;All eight links remain visible. Thick lines and moving blocks highlight the transfer in focus.&#x27;;
     const switched=step&gt;=5&amp;&amp;!stay;
-    q(&#x27;#lr-sender&#x27;).textContent=switched?(step===6?&#x27;旧连接已关闭&#x27;:step===7?&#x27;经 B 补发 #42&#x27;:&#x27;选择 B 连接&#x27;):&#x27;选择 A 连接&#x27;;
-    q(&#x27;#lr-receiver&#x27;).textContent=switched?(step&gt;=8?&#x27;从 B 接收并核对&#x27;:&#x27;改为从 B 接收&#x27;):(step&gt;=1?&#x27;在 A 等待 #42&#x27;:&#x27;从 A 接收&#x27;);
-    q(&#x27;#lr-ledger&#x27;).textContent=stay?&#x27;未切换；仍可能变慢&#x27;:step&gt;=8?(step===9?&#x27;已接收 1 份；重复不计入&#x27;:&#x27;#42 已完整接收 ✓&#x27;):step&gt;=1?&#x27;#42 未完成&#x27;:&#x27;#42 正在传输&#x27;;
-    q(&#x27;#lr-boundary&#x27;).textContent=(!hard&amp;&amp;!cap)?&#x27;过程示意；自动决策实测：保持 3/3 完成，切换 2/3 完成。&#x27;:&#x27;机制示意；下面时间轴使用已完成实验的实际记录。&#x27;;
+    q(&#x27;#lr-sender&#x27;).textContent=switched?(step===6?&#x27;Old sockets closed&#x27;:step===7?&#x27;Retry #42 via B&#x27;:&#x27;Use B connection&#x27;):&#x27;Use A connection&#x27;;
+    q(&#x27;#lr-receiver&#x27;).textContent=switched?(step&gt;=8?&#x27;Receive and validate on B&#x27;:&#x27;Switch reception to B&#x27;):(step&gt;=1?&#x27;Wait for #42 on A&#x27;:&#x27;Receive on A&#x27;);
+    q(&#x27;#lr-ledger&#x27;).textContent=stay?&#x27;No switch; slowdown still possible&#x27;:step&gt;=8?(step===9?&#x27;One copy accepted; duplicate ignored&#x27;:&#x27;#42 fully received ✓&#x27;):step&gt;=1?&#x27;#42 incomplete&#x27;:&#x27;#42 in flight&#x27;;
+    q(&#x27;#lr-boundary&#x27;).textContent=(!hard&amp;&amp;!cap)?&#x27;Mechanism illustration. Measured automatic policy: stay completed 3/3; switch completed 2/3.&#x27;:&#x27;Mechanism illustration. The timelines below use actual completed-run records.&#x27;;
     q(&#x27;#lr-prev&#x27;).disabled=step===0;q(&#x27;#lr-next&#x27;).disabled=step===(stay?4:10);drawScene(animate);
   }
   q(&#x27;#lr-prev&#x27;).onclick=()=&gt;{stop();step=Math.max(0,step-1);update(true);};
   q(&#x27;#lr-next&#x27;).onclick=()=&gt;{stop();step=Math.min(scenario===&#x27;stay&#x27;?4:10,step+1);update(true);};
   q(&#x27;#lr-scenario&#x27;).onchange=e=&gt;{stop();scenario=e.target.value;step=0;update();};
   q(&#x27;#lr-recover&#x27;).onclick=()=&gt;{stop();step=3;update(true);};
-  q(&#x27;#lr-play&#x27;).onclick=()=&gt;{if(timer){stop();return;}const end=scenario===&#x27;stay&#x27;?4:10;if(step===end)step=0;q(&#x27;#lr-play&#x27;).textContent=&#x27;暂停&#x27;;update(true);const advance=()=&gt;{if(step&lt;end){step++;update(true);if(step&lt;end)timer=setTimeout(advance,3500);else stop();}else stop();};timer=setTimeout(advance,3500);};
+  q(&#x27;#lr-play&#x27;).onclick=()=&gt;{if(timer){stop();return;}const end=scenario===&#x27;stay&#x27;?4:10;if(step===end)step=0;q(&#x27;#lr-play&#x27;).textContent=&#x27;Pause&#x27;;update(true);const advance=()=&gt;{if(step&lt;end){step++;update(true);if(step&lt;end)timer=setTimeout(advance,3500);else stop();}else stop();};timer=setTimeout(advance,3500);};
   const loss=[[&#x27;0.5%&#x27;,384.223357,381.915971,382.873591],[&#x27;1%&#x27;,18.05446,383.570169,381.663058],[&#x27;2%&#x27;,18.503816,387.338109,1480.58119],[&#x27;5%&#x27;,585.052168,385.214404,17.714817],[&#x27;10%&#x27;,606.857069,21.231125,21.972605],[&#x27;25%&#x27;,22.968056,111.645241,252.223643]];
-  loss.forEach(([level,...values])=&gt;{const d=document.createElement(&#x27;div&#x27;);d.className=&#x27;lr-loss-level&#x27;;const label=document.createElement(&#x27;span&#x27;);label.textContent=`丢包 ${level}`;d.append(label);values.forEach(v=&gt;{const s=document.createElement(&#x27;span&#x27;);s.className=&#x27;text-small tabular-nums&#x27;;s.textContent=`${v&lt;100?&#x27;✓&#x27;:&#x27;×&#x27;} ${v.toFixed(1)} ms`;d.append(s);});q(&#x27;#lr-loss-grid&#x27;).append(d);});
-  const timelineData=[{name:&#x27;硬故障&#x27;,commit:263.454947,progress:535.736452},{name:&#x27;限速型灰故障&#x27;,commit:843.604799,progress:1065.169869}];
+  loss.forEach(([level,...values])=&gt;{const d=document.createElement(&#x27;div&#x27;);d.className=&#x27;lr-loss-level&#x27;;const label=document.createElement(&#x27;span&#x27;);label.textContent=`Packet loss ${level}`;d.append(label);values.forEach(v=&gt;{const s=document.createElement(&#x27;span&#x27;);s.className=&#x27;text-small tabular-nums&#x27;;s.textContent=`${v&lt;100?&#x27;✓&#x27;:&#x27;×&#x27;} ${v.toFixed(1)} ms`;d.append(s);});q(&#x27;#lr-loss-grid&#x27;).append(d);});
+  const timelineData=[{name:&#x27;Hard failure&#x27;,commit:263.454947,progress:535.736452},{name:&#x27;Rate-cap gray failure&#x27;,commit:843.604799,progress:1065.169869}];
   function drawTimes(){
     if(!window.d3)return;
     const target=q(&#x27;#lr-timelines&#x27;);target.replaceChildren();
     timelineData.forEach(row=&gt;{
       const title=document.createElement(&#x27;div&#x27;);title.className=&#x27;lr-time-title&#x27;;title.textContent=row.name;target.append(title);
       const w=target.clientWidth,h=166,left=28,right=28;
-      const chart=d3.select(target).append(&#x27;svg&#x27;).attr(&#x27;class&#x27;,&#x27;lr-time-chart&#x27;).attr(&#x27;viewBox&#x27;,`0 0 ${w} ${h}`).attr(&#x27;role&#x27;,&#x27;img&#x27;).attr(&#x27;aria-label&#x27;,`${row.name}：告警后 ${row.commit.toFixed(1)} 毫秒提交切换，${row.progress.toFixed(1)} 毫秒完成恢复步骤。目标为1000毫秒。`);
+      const chart=d3.select(target).append(&#x27;svg&#x27;).attr(&#x27;class&#x27;,&#x27;lr-time-chart&#x27;).attr(&#x27;viewBox&#x27;,`0 0 ${w} ${h}`).attr(&#x27;role&#x27;,&#x27;img&#x27;).attr(&#x27;aria-label&#x27;,`${row.name}: commit ${row.commit.toFixed(1)} ms after alert; first recovery step ${row.progress.toFixed(1)} ms after alert. Target: 1000 ms.`);
       const max=d3.max(timelineData,d=&gt;Math.max(d.commit,d.progress,1000));
       const x=d3.scaleLinear().domain([0,max*1.16]).range([left,w-right]);
       chart.append(&#x27;rect&#x27;).attr(&#x27;data-chart-frame&#x27;,&#x27;&#x27;).attr(&#x27;x&#x27;,left).attr(&#x27;y&#x27;,12).attr(&#x27;width&#x27;,w-left-right).attr(&#x27;height&#x27;,110).attr(&#x27;fill&#x27;,&#x27;none&#x27;).attr(&#x27;stroke&#x27;,&#x27;var(--border)&#x27;);
       chart.append(&#x27;line&#x27;).attr(&#x27;x1&#x27;,x(0)).attr(&#x27;x2&#x27;,x(row.progress)).attr(&#x27;y1&#x27;,66).attr(&#x27;y2&#x27;,66).attr(&#x27;stroke&#x27;,&#x27;var(--viz-series-1)&#x27;).attr(&#x27;stroke-width&#x27;,2);
       chart.append(&#x27;line&#x27;).attr(&#x27;x1&#x27;,x(1000)).attr(&#x27;x2&#x27;,x(1000)).attr(&#x27;y1&#x27;,20).attr(&#x27;y2&#x27;,112).attr(&#x27;stroke&#x27;,&#x27;var(--foreground)&#x27;).attr(&#x27;stroke-dasharray&#x27;,&#x27;3 4&#x27;);
-      chart.append(&#x27;text&#x27;).attr(&#x27;x&#x27;,x(1000)-4).attr(&#x27;y&#x27;,27).attr(&#x27;text-anchor&#x27;,&#x27;end&#x27;).text(&#x27;1 秒目标&#x27;);
-      const points=[{v:0,name:&#x27;告警&#x27;,shape:d3.symbolCircle,y:36},{v:row.commit,name:&#x27;离开坏端口&#x27;,shape:d3.symbolSquare,y:100},{v:row.progress,name:&#x27;恢复步骤完成&#x27;,shape:d3.symbolDiamond,y:52}];
+      chart.append(&#x27;text&#x27;).attr(&#x27;x&#x27;,x(1000)-4).attr(&#x27;y&#x27;,27).attr(&#x27;text-anchor&#x27;,&#x27;end&#x27;).text(&#x27;1 s target&#x27;);
+      const points=[{v:0,name:&#x27;Alert&#x27;,shape:d3.symbolCircle,y:36},{v:row.commit,name:&#x27;Cutover committed&#x27;,shape:d3.symbolSquare,y:100},{v:row.progress,name:&#x27;First recovery step&#x27;,shape:d3.symbolDiamond,y:52}];
       points.forEach((p,i)=&gt;{
-        chart.append(&#x27;path&#x27;).attr(&#x27;d&#x27;,d3.symbol().type(p.shape).size(64)()).attr(&#x27;transform&#x27;,`translate(${x(p.v)},66)`).attr(&#x27;fill&#x27;,i===2?&#x27;var(--viz-series-2)&#x27;:&#x27;var(--viz-series-1)&#x27;).attr(&#x27;data-tooltip&#x27;,`${p.name}：告警后 ${p.v.toFixed(3)} ms`);
+        chart.append(&#x27;path&#x27;).attr(&#x27;d&#x27;,d3.symbol().type(p.shape).size(64)()).attr(&#x27;transform&#x27;,`translate(${x(p.v)},66)`).attr(&#x27;fill&#x27;,i===2?&#x27;var(--viz-series-2)&#x27;:&#x27;var(--viz-series-1)&#x27;).attr(&#x27;data-tooltip&#x27;,`${p.name}: after alert ${p.v.toFixed(3)} ms`);
         const anchor=i===0?&#x27;start&#x27;:i===2?&#x27;end&#x27;:&#x27;middle&#x27;;
         chart.append(&#x27;text&#x27;).attr(&#x27;x&#x27;,x(p.v)+(i===0?4:0)).attr(&#x27;y&#x27;,p.y).attr(&#x27;text-anchor&#x27;,anchor).text(`${p.name} ${p.v.toFixed(0)} ms`);
       });
       chart.append(&#x27;g&#x27;).attr(&#x27;transform&#x27;,&#x27;translate(0,122)&#x27;).call(d3.axisBottom(x).tickValues(w&lt;480?[0,500,1000]:[0,250,500,750,1000]).tickSize(3)).call(g=&gt;g.select(&#x27;.domain&#x27;).remove());
-      chart.append(&#x27;text&#x27;).attr(&#x27;class&#x27;,&#x27;axis-title&#x27;).attr(&#x27;data-axis&#x27;,&#x27;x&#x27;).attr(&#x27;x&#x27;,w-right).attr(&#x27;y&#x27;,163).attr(&#x27;text-anchor&#x27;,&#x27;end&#x27;).text(&#x27;告警后经过的时间（ms）&#x27;);
+      chart.append(&#x27;text&#x27;).attr(&#x27;class&#x27;,&#x27;axis-title&#x27;).attr(&#x27;data-axis&#x27;,&#x27;x&#x27;).attr(&#x27;x&#x27;,w-right).attr(&#x27;y&#x27;,163).attr(&#x27;text-anchor&#x27;,&#x27;end&#x27;).text(&#x27;Time after alert (ms)&#x27;);
     });
   }
   update();drawTimes();

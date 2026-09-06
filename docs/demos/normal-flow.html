@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +10,7 @@
 </head>
 <body>
 <iframe id="codex-visualization" sandbox="allow-scripts" scrolling="no" referrerpolicy="no-referrer" title="limer-normal-flow.html" data-srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
@@ -1245,23 +1245,23 @@ html&gt;body{padding:0}&lt;/style&gt;
 
 &lt;div id=&quot;limer-normal-flow&quot;&gt;
   &lt;div class=&quot;viz-controls&quot;&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;nf-prev&quot;&gt;上一步&lt;/button&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;nf-next&quot;&gt;下一步&lt;/button&gt;
-    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;nf-play&quot;&gt;播放完整过程&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;nf-prev&quot;&gt;Previous&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;nf-next&quot;&gt;Next&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;nf-play&quot;&gt;Play all steps&lt;/button&gt;
   &lt;/div&gt;
-  &lt;div class=&quot;nf-heading&quot; aria-live=&quot;polite&quot;&gt;&lt;span id=&quot;nf-stage&quot;&gt;&lt;/span&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;正常运行 · 放慢示意&lt;/span&gt;&lt;/div&gt;
-  &lt;div class=&quot;nf-scene&quot; role=&quot;img&quot; aria-label=&quot;四个 worker 各连接两台交换机，共八条线；数据由发送 worker 经一台交换机抵达接收 worker。&quot;&gt;
+  &lt;div class=&quot;nf-heading&quot; aria-live=&quot;polite&quot;&gt;&lt;span id=&quot;nf-stage&quot;&gt;&lt;/span&gt;&lt;span class=&quot;text-small text-muted&quot;&gt;Healthy traffic · slowed illustration&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;nf-scene&quot; role=&quot;img&quot; aria-label=&quot;Each of four workers connects to both switches: eight links. Data travels from sender through one switch to receiver.&quot;&gt;
     &lt;svg class=&quot;nf-wires&quot; aria-hidden=&quot;true&quot;&gt;&lt;/svg&gt;
-    &lt;div class=&quot;nf-node nf-switch&quot; style=&quot;left:29%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;server&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;交换机 A&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;nf-a-state&quot;&gt;中转数据&lt;/span&gt;&lt;/div&gt;
-    &lt;div class=&quot;nf-node nf-switch&quot; style=&quot;left:71%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;server&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;交换机 B&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;nf-b-state&quot;&gt;中转数据&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;nf-node nf-switch&quot; style=&quot;left:29%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;server&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch A&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;nf-a-state&quot;&gt;Forward data&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;nf-node nf-switch&quot; style=&quot;left:71%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;server&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;Switch B&lt;/span&gt;&lt;span class=&quot;text-small&quot; id=&quot;nf-b-state&quot;&gt;Forward data&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;nf-node nf-worker&quot; style=&quot;left:10%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;monitor&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W0&lt;/span&gt;&lt;span class=&quot;text-small nf-role&quot;&gt;&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;nf-node nf-worker&quot; style=&quot;left:36.67%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;monitor&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W1&lt;/span&gt;&lt;span class=&quot;text-small nf-role&quot;&gt;&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;nf-node nf-worker&quot; style=&quot;left:63.33%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;monitor&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W2&lt;/span&gt;&lt;span class=&quot;text-small nf-role&quot;&gt;&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;nf-node nf-worker&quot; style=&quot;left:90%&quot;&gt;&lt;span class=&quot;nf-icon&quot;&gt;&lt;i data-lucide=&quot;monitor&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span&gt;W3&lt;/span&gt;&lt;span class=&quot;text-small nf-role&quot;&gt;&lt;/span&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;div id=&quot;nf-detail&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;nf-routes&quot; id=&quot;nf-routes&quot; aria-label=&quot;当前步骤的发送路径&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;nf-legend text-small text-muted&quot;&gt;&lt;span&gt;细线：已有连接，共 8 条&lt;/span&gt;&lt;span&gt;粗线＋移动块：本页展示的传输&lt;/span&gt;&lt;span&gt;线的交叉点不相连；A、B 不直连&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;nf-routes&quot; id=&quot;nf-routes&quot; aria-label=&quot;Send paths in the current step&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;nf-legend text-small text-muted&quot;&gt;&lt;span&gt;Thin lines: eight existing links&lt;/span&gt;&lt;span&gt;Thick lines and blocks: highlighted transfers&lt;/span&gt;&lt;span&gt;Crossings are not junctions; no A–B link&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;style&gt;
   #limer-normal-flow {color:var(--foreground);}
@@ -1288,12 +1288,12 @@ html&gt;body{padding:0}&lt;/style&gt;
   const q=s=&gt;root.querySelector(s), wires=q('.nf-wires'), scene=q('.nf-scene');
   const ns='http://www.w3.org/2000/svg';
   const colors=['var(--viz-series-1)','var(--viz-series-2)'];
-  const titles=['先看接线：每个 worker 都连接 A 和 B','先只看 W2：发给 W3，经 A 出发','数据抵达 A：转发给 W3','数据抵达 W3：这次交接完成','放大到全体：第 0 步，四路通信并行','下一步：第 1 步，收件人不变，A/B 轮换'];
-  const details=['每个 worker 有两条通道；这些线不是 worker 之间的直连。','目的地是 W3，不是 A；其余通信暂时淡出。','A 把数据从连接 W2 的端口，转到连接 W3 的端口。','W3 从 A 侧连接收数据；另一方向的任务仍可同时运行。','每人向下一位发送、从上一位接收；A、B 各承载两路。','这是正常的预定安排，不是故障切换；后续步骤继续轮换。'];
+  const titles=['Topology: every worker connects to A and B','Follow W2: send to W3 through A','At A: forward the data to W3','At W3: this transfer completes','Step 0: four concurrent transfers','Step 1: same receivers, alternate A/B'];
+  const details=['Each worker has two paths. The cables do not connect workers directly.','W3 is the destination, not A. Other transfers are temporarily faded.','A forwards data from its W2-facing port to its W3-facing port.','W3 receives on its A connection. Sending can run concurrently.','Each worker sends to its successor and receives from its predecessor. Two flows use each switch.','This is the normal schedule, not failover. Later steps keep alternating.'];
   let stage=0, timer=null, raf=null, width=0;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   function make(tag,attrs,parent=wires){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);parent.appendChild(e);return e;}
-  function stop(){clearTimeout(timer);cancelAnimationFrame(raf);timer=null;q('#nf-play').textContent='播放完整过程';}
+  function stop(){clearTimeout(timer);cancelAnimationFrame(raf);timer=null;q('#nf-play').textContent='Play all steps';}
   function routeFor(rank){return (rank+(stage===5?1:0))%2;}
   function draw(animate){
     cancelAnimationFrame(raf);wires.replaceChildren();
@@ -1331,19 +1331,19 @@ html&gt;body{padding:0}&lt;/style&gt;
     q('#nf-stage').textContent=`${stage+1} / 6 · ${titles[stage]}`;
     q('#nf-detail').textContent=details[stage];
     q('#nf-prev').disabled=stage===0;q('#nf-next').disabled=stage===5;
-    q('#nf-a-state').textContent=stage===2?'接收 → 转发':stage&gt;=4?'承载 2 路通信':'中转数据';
-    q('#nf-b-state').textContent=stage&gt;0&amp;&amp;stage&lt;4?'其他通信未展示':stage&gt;=4?'承载 2 路通信':'中转数据';
-    root.querySelectorAll('.nf-role').forEach((e,r)=&gt;{e.textContent=stage===0?'收发数据':stage&lt;4?(r===2?'发送方':r===3?'接收方':'暂时淡出'):`发给 W${(r+1)%4}`;});
+    q('#nf-a-state').textContent=stage===2?'Receive → forward':stage&gt;=4?'Two active flows':'Forward data';
+    q('#nf-b-state').textContent=stage&gt;0&amp;&amp;stage&lt;4?'Other flows hidden':stage&gt;=4?'Two active flows':'Forward data';
+    root.querySelectorAll('.nf-role').forEach((e,r)=&gt;{e.textContent=stage===0?'Send / receive':stage&lt;4?(r===2?'Sender':r===3?'Receiver':'Faded'):`Send to W${(r+1)%4}`;});
     const box=q('#nf-routes');box.replaceChildren();
     const ranks=stage===0?[]:stage&lt;4?[2]:[0,1,2,3];
     for(const r of ranks){const f=stage&lt;4?0:routeFor(r),row=document.createElement('div'),swatch=document.createElement('span'),label=document.createElement('span');row.className='nf-route';swatch.className='nf-swatch';swatch.style.background=colors[f];label.textContent=`W${r} → ${f===0?'A':'B'} → W${(r+1)%4}`;row.append(swatch,label);box.append(row);}
-    scene.setAttribute('aria-label',`${titles[stage]}。${details[stage]} ${box.textContent}`);
+    scene.setAttribute('aria-label',`${titles[stage]}. ${details[stage]} ${box.textContent}`);
     draw(animate);
   }
   q('#nf-prev').addEventListener('click',()=&gt;{stop();stage=Math.max(0,stage-1);update();});
   q('#nf-next').addEventListener('click',()=&gt;{stop();stage=Math.min(5,stage+1);update();});
   function advance(){if(stage===5){stop();return;}stage++;update();timer=setTimeout(advance,stage&gt;=4?5800:3400);}
-  q('#nf-play').addEventListener('click',()=&gt;{if(timer){stop();return;}if(stage===5)stage=0;update();q('#nf-play').textContent='暂停';timer=setTimeout(advance,stage===0?1600:3400);});
+  q('#nf-play').addEventListener('click',()=&gt;{if(timer){stop();return;}if(stage===5)stage=0;update();q('#nf-play').textContent='Pause';timer=setTimeout(advance,stage===0?1600:3400);});
   new ResizeObserver(()=&gt;{if(scene.clientWidth!==width)draw(false);}).observe(scene);
   update(false);
 })();

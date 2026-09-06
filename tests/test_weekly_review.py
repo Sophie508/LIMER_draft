@@ -1,6 +1,8 @@
 """Keep the weekly explanation linked to the selected raw campaigns."""
 from pathlib import Path
+from html import unescape
 import json
+import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,6 +40,22 @@ class WeeklyReviewTests(unittest.TestCase):
             self.assertIn("sandbox=", demo)
             self.assertIn(relative, page)
         self.assertIn("weekly-demo.html", (ROOT / "docs/index.html").read_text())
+
+    def test_weekly_page_and_all_demo_states_are_english_only(self):
+        files = (
+            "weekly-demo.html", "demos/normal-flow.html", "demos/recovery-flow.html",
+            "assets/js/weekly-review.js", "assets/css/weekly-review.css",
+            "assets/weekly/evidence.json",
+        )
+        for relative in files:
+            with self.subTest(file=relative):
+                text = (ROOT / "docs" / relative).read_text()
+                for _ in range(3):
+                    text = unescape(text)
+                self.assertIsNone(re.search(r"[\u3400-\u9fff\uf900-\ufaff\U00020000-\U000323af]", text))
+                if relative.endswith(".html"):
+                    self.assertIn('lang="en"', text)
+                    self.assertNotIn('lang="zh', text)
 
 
 if __name__ == "__main__":
