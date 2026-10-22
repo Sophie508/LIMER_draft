@@ -1,0 +1,22 @@
+[
+  [
+    "m7_stress_v3_reorder40_rep01",
+    "configs/m7_stress_v3/reorder40_rep01.json"
+  ],
+  [
+    "m7_stress_v3_reorder40_rep02",
+    "configs/m7_stress_v3/reorder40_rep02.json"
+  ],
+  [
+    "m7_stress_v3_reorder40_rep03",
+    "configs/m7_stress_v3/reorder40_rep03.json"
+  ],
+  [
+    "m7_stress_v3_reorder40_rep04",
+    "configs/m7_stress_v3/reorder40_rep04.json"
+  ],
+  [
+    "m7_stress_v3_reorder40_rep05",
+    "configs/m7_stress_v3/reorder40_rep05.json"
+  ]
+]

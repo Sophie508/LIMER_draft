@@ -1,0 +1,17 @@
+condition	registered	capacityMbps	kind	lossRate	offeredMbps	reportLoss	runId_max	runId_min	scenario
+high_loss_0.05	20	10000	fault	0.05	1000	0	10179	10160	loss
+high_loss_0.01	20	10000	fault	0.01	1000	0	10139	10120	loss
+low_loss_0.02	20	100	fault	0.02	80	0	10059	10040	loss
+high_loss_0.02	20	10000	fault	0.02	1000	0	10159	10140	loss
+low_reorder40	5	100	control	0.005	80	0	10099	10095	reorder40
+low_pause	5	100	control	0.005	80	0	10094	10090	pause
+low_loss_0.005	20	100	fault	0.005	80	0	10019	10000	loss
+low_loss_0.05	20	100	fault	0.05	80	0	10079	10060	loss
+high_pause	5	10000	control	0.005	1000	0	10194	10190	pause
+low_loss_0.01	20	100	fault	0.01	80	0	10039	10020	loss
+high_loss_0.005	20	10000	fault	0.005	1000	0	10119	10100	loss
+high_nominal	5	10000	control	0.005	1000	0	10184	10180	nominal
+high_reorder40	5	10000	control	0.005	1000	0	10199	10195	reorder40
+high_congestion	5	10000	control	0.005	1000	0	10189	10185	congestion
+low_congestion	5	100	control	0.005	80	0	10089	10085	congestion
+low_nominal	5	100	control	0.005	80	0	10084	10080	nominal

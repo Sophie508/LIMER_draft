@@ -1,0 +1,122 @@
+{
+  "campaign": "development",
+  "rule": "batch-loss-v1",
+  "registration_unix": 1791641865.6056848,
+  "trials": [
+    {
+      "id": "low_loss_0.01_r01",
+      "condition": "low_loss_0.01",
+      "kind": "fault",
+      "scenario": "loss",
+      "capacityMbps": 100,
+      "offeredMbps": 80,
+      "lossRate": 0.01,
+      "reportLoss": 0,
+      "runId": 1004,
+      "faultTimeMs": 50
+    },
+    {
+      "id": "high_loss_0.005_r01",
+      "condition": "high_loss_0.005",
+      "kind": "fault",
+      "scenario": "loss",
+      "capacityMbps": 10000,
+      "offeredMbps": 1000,
+      "lossRate": 0.005,
+      "reportLoss": 0,
+      "runId": 1003,
+      "faultTimeMs": 50
+    },
+    {
+      "id": "low_pause_r01",
+      "condition": "low_pause",
+      "kind": "control",
+      "scenario": "pause",
+      "capacityMbps": 100,
+      "offeredMbps": 80,
+      "lossRate": 0.005,
+      "reportLoss": 0,
+      "runId": 1006,
+      "faultTimeMs": 50
+    },
+    {
+      "id": "high_nominal_r01",
+      "condition": "high_nominal",
+      "kind": "control",
+      "scenario": "nominal",
+      "capacityMbps": 10000,
+      "offeredMbps": 1000,
+      "lossRate": 0.005,
+      "reportLoss": 0,
+      "runId": 1002,
+      "faultTimeMs": 50
+    },
+    {
+      "id": "low_nominal_r01",
+      "condition": "low_nominal",
+      "kind": "control",
+      "scenario": "nominal",
+      "capacityMbps": 100,
+      "offeredMbps": 80,
+      "lossRate": 0.005,
+      "reportLoss": 0,
+      "runId": 1000,
+      "faultTimeMs": 50
+    },
+    {
+      "id": "low_reportloss_r01",
+      "condition": "low_reportloss",
+      "kind": "control",
+      "scenario": "reportloss",
+      "capacityMbps": 100,
+      "offeredMbps": 80,
+      "lossRate": 0.005,
+      "reportLoss": 0.1,
+      "runId": 1007,
+      "faultTimeMs": 50
+    },
+    {
+      "id": "low_loss_0.005_r01",
+      "condition": "low_loss_0.005",
+      "kind": "fault",
+      "scenario": "loss",
+      "capacityMbps": 100,
+      "offeredMbps": 80,
+      "lossRate": 0.005,
+      "reportLoss": 0,
+      "runId": 1001,
+      "faultTimeMs": 50
+    },
+    {
+      "id": "low_reorder40_r01",
+      "condition": "low_reorder40",
+      "kind": "control",
+      "scenario": "reorder40",
+      "capacityMbps": 100,
+      "offeredMbps": 80,
+      "lossRate": 0.005,
+      "reportLoss": 0,
+      "runId": 1005,
+      "faultTimeMs": 50
+    }
+  ],
+  "parameters": {
+    "batch_ms": 10,
+    "guard_ms": 50,
+    "window_ms": 100,
+    "report_ttl_ms": 200,
+    "report_rate_Mbps": 1,
+    "report_bytes": 64,
+    "report_delay_ms": 5,
+    "data_wire_bytes": 1500,
+    "mark_bytes": 12,
+    "observation_end_ms": 600
+  },
+  "hashes": {
+    "binary": "279f7e031c5f100152e1ac10021a9b4da051536d02ffee0b304c4f5551e6d2d0",
+    "detector": "d7166b6d3ef246103c4b9c9e7a034e9f7e50c9acd502bf4b546dfec7a5562678",
+    "runner": "b86faf390d5ee604b37f43265277060c3720ed18c807ba44904b787f17e8a837",
+    "cpp": "376173d8e54ecfbaa56bafd62521e9b0c83bbf42cc8fc73992ddf94c3ebe7acd"
+  },
+  "image_id": "sha256:8bfe92debebdaf57e55440f17e08d092fbff9d233ed61ea08348f002cc24464a"
+}

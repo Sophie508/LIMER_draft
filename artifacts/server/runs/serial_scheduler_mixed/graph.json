@@ -1,0 +1,60 @@
+{
+  "p": 3,
+  "mode": "scheduler_gate",
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "bytes": 18001,
+      "deps": []
+    },
+    {
+      "id": 2,
+      "src": 0,
+      "dst": 2,
+      "bytes": 9000,
+      "deps": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "src": 1,
+      "dst": 2,
+      "bytes": 20,
+      "deps": [
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "src": 2,
+      "dst": 0,
+      "bytes": 8999,
+      "deps": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": 5,
+      "src": 0,
+      "dst": 1,
+      "bytes": 20001,
+      "deps": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": 6,
+      "src": 0,
+      "dst": 1,
+      "bytes": 1001,
+      "deps": [
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "checksum_errors": 0,
+  "expected_collective_rounds": 7,
+  "limitation": "This checks framed byte transport and route-version agreement; it is not the deferred true-reduction correctness mode.",
+  "mode": "framed-transport-integrity",
+  "observed_collective_rounds": 7,
+  "observed_worker_rounds": 28,
+  "route_version_cardinality": {
+    "0": 1,
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1,
+    "6": 1
+  },
+  "status": "pass",
+  "version_errors": 0,
+  "worker_error_count": 0,
+  "worker_errors": []
+}

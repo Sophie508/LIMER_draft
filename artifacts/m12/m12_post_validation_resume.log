@@ -1,0 +1,24 @@
+waiting_for_frozen_validation
+independent_primary_audit
+{"passed": true, "campaign": "m12_validation_v1", "registrations": 740, "report_rows": 3523122, "probe_packets": 51592800, "verdict": "FAIL"}
+registered_boundary_trials
+low_selective_0.005_r002 PASS None 0 
+low_selective_0.005_r004 PASS None 0 
+low_selective_0.005_r003 PASS None 0 
+low_selective_0.005_r005 PASS None 0 
+low_loss_0.005_r001 PASS 179.966935 0 
+low_idle_0.005_r004 PASS None 0 
+low_idle_0.005_r002 PASS 238.229397 0 
+low_selective_0.005_r001 PASS None 0 
+low_loss_0.005_r004 PASS 180.817033 0 
+low_idle_0.005_r005 PASS None 0 
+low_loss_0.005_r005 PASS 182.092577 0 
+low_loss_0.005_r002 PASS 180.499699 0 
+low_idle_0.005_r003 PASS 218.633013 0 
+low_idle_0.005_r001 PASS None 0 
+low_loss_0.005_r003 PASS 179.942275 0 
+independent_boundary_audit
+{"passed": true, "campaign": "m12_boundary_v1", "registrations": 15, "report_rows": 72000, "probe_packets": 697200, "verdict": "FAIL"}
+supplementary_counter_audit
+{"passed": true, "path_lifecycles": 7536, "trials": 942}
+complete

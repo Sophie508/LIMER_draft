@@ -1,0 +1,28 @@
+{
+    "condition": "C2",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 8,
+    "fault_rate_mbit": 100.0,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "routing_policy": "balanced_active_active",
+    "detector": true,
+    "recovery": false,
+    "oracle": false,
+    "recovery_policy": "none",
+    "detector_rule": "burst",
+    "deep_stall_fraction": 0.3,
+    "step_timeout_s": 300.0,
+    "scenario_id": "AA13_LOSSFAST",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "fault_loss_pct": 25.0,
+    "what_changes": "The same 25.0% loss fault, but the burst detector runs with a single-deep-stall fast path (a lone burst window below 30% of baseline triggers immediately): the measured quantity is how much faster loss is detected than with the consecutive-evidence rule.",
+    "expected": "Preregistered prediction from offline replay: loss at or above ~5% detects within ~100 ms (deep stalls are dense enough), 1% and below remain slower because loss events are too sparse to guarantee a deep stall inside the window; zero false positives on the pre-fault healthy region. No latency bound is asserted as a gate."
+}

@@ -1,0 +1,965 @@
+{
+  "changes": "Root path, Docker socket and image strings only in staged infrastructure scripts",
+  "files": {
+    "limer_v0/worker.py": {
+      "original_sha256": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+      "staged_sha256": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+      "adapted": false
+    },
+    "limer_v0/report.py": {
+      "original_sha256": "e15ba2a73f60f20c007c2ba36e26ec67c3df2a925a74ff1a01864e6029cf56a0",
+      "staged_sha256": "e15ba2a73f60f20c007c2ba36e26ec67c3df2a925a74ff1a01864e6029cf56a0",
+      "adapted": false
+    },
+    "limer_v0/__init__.py": {
+      "original_sha256": "830f95489ad28113280f7086bb3aa24ee301abedb3139bee5d6eb0d442a96608",
+      "staged_sha256": "830f95489ad28113280f7086bb3aa24ee301abedb3139bee5d6eb0d442a96608",
+      "adapted": false
+    },
+    "limer_v0/ack_progress.py": {
+      "original_sha256": "987e52ea29bf10d3052230f315fe1804245dd5f18c2af8da78e622fae0ed5b30",
+      "staged_sha256": "987e52ea29bf10d3052230f315fe1804245dd5f18c2af8da78e622fae0ed5b30",
+      "adapted": false
+    },
+    "limer_v0/metrics.py": {
+      "original_sha256": "ff6a7f82c0d7d9a8df8b05ad92c0aacb2ac58e852c2212f15998b9e7de7b03d5",
+      "staged_sha256": "ff6a7f82c0d7d9a8df8b05ad92c0aacb2ac58e852c2212f15998b9e7de7b03d5",
+      "adapted": false
+    },
+    "limer_v0/topology.py": {
+      "original_sha256": "b2259c8f1dfc2ec3e3a76edbb8c187ad200986099e22dc05c1b609b892c52f11",
+      "staged_sha256": "b2259c8f1dfc2ec3e3a76edbb8c187ad200986099e22dc05c1b609b892c52f11",
+      "adapted": false
+    },
+    "limer_v0/route_plan.py": {
+      "original_sha256": "c178e53d65f7a55b12ac40b09f5f7732eed705f941562f6cba50a2eacff20081",
+      "staged_sha256": "c178e53d65f7a55b12ac40b09f5f7732eed705f941562f6cba50a2eacff20081",
+      "adapted": false
+    },
+    "limer_v0/refiner.py": {
+      "original_sha256": "4f524b26be9c1f595ea801f35b92c688aa87a5f28c2063e8a7617ab1c5b4c604",
+      "staged_sha256": "4f524b26be9c1f595ea801f35b92c688aa87a5f28c2063e8a7617ab1c5b4c604",
+      "adapted": false
+    },
+    "limer_v0/tcp_loss.py": {
+      "original_sha256": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a",
+      "staged_sha256": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a",
+      "adapted": false
+    },
+    "limer_v0/faults.py": {
+      "original_sha256": "20a145e6d74eaf3de52cfe8b47fd3d9842d91262a5ff27ff6fbb39f93b8d33f0",
+      "staged_sha256": "20a145e6d74eaf3de52cfe8b47fd3d9842d91262a5ff27ff6fbb39f93b8d33f0",
+      "adapted": false
+    },
+    "limer_v0/sentinel.py": {
+      "original_sha256": "bafa1bf81cb684f2a760cff6e10d72db09d8445b700682bb2e0f5167a14b0dd1",
+      "staged_sha256": "bafa1bf81cb684f2a760cff6e10d72db09d8445b700682bb2e0f5167a14b0dd1",
+      "adapted": false
+    },
+    "limer_v0/hybrid_delivery.py": {
+      "original_sha256": "cef319ca2f069a508602023bc6c410685802c74d249ff1468338456460eb739c",
+      "staged_sha256": "cef319ca2f069a508602023bc6c410685802c74d249ff1468338456460eb739c",
+      "adapted": false
+    },
+    "limer_v0/qdisc.py": {
+      "original_sha256": "951aee83d67bafbb7027af86b237f94c49413caa0318029ffa62e303242245d3",
+      "staged_sha256": "951aee83d67bafbb7027af86b237f94c49413caa0318029ffa62e303242245d3",
+      "adapted": false
+    },
+    "limer_v0/pending_route_cost.py": {
+      "original_sha256": "ebf4d41acf28c57779cd379395683c522177799ccc59e937f300ed922ad5aaf7",
+      "staged_sha256": "ebf4d41acf28c57779cd379395683c522177799ccc59e937f300ed922ad5aaf7",
+      "adapted": false
+    },
+    "limer_v0/early_delivery.py": {
+      "original_sha256": "96adb8ca044916d5b0d76dffb7326f59ba322a553447c02545f29b9013710297",
+      "staged_sha256": "96adb8ca044916d5b0d76dffb7326f59ba322a553447c02545f29b9013710297",
+      "adapted": false
+    },
+    "limer_v0/linkwatch.py": {
+      "original_sha256": "3c71c7f49a00bcd785d234b6116f253a807078c014d2d481efcd0de1f63db6e8",
+      "staged_sha256": "3c71c7f49a00bcd785d234b6116f253a807078c014d2d481efcd0de1f63db6e8",
+      "adapted": false
+    },
+    "limer_v0/orchestrator.py": {
+      "original_sha256": "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f",
+      "staged_sha256": "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f",
+      "adapted": false
+    },
+    "limer_v0/batch_loss.py": {
+      "original_sha256": "d7166b6d3ef246103c4b9c9e7a034e9f7e50c9acd502bf4b546dfec7a5562678",
+      "staged_sha256": "d7166b6d3ef246103c4b9c9e7a034e9f7e50c9acd502bf4b546dfec7a5562678",
+      "adapted": false
+    },
+    "limer_v0/state.py": {
+      "original_sha256": "c0d04ce8d27e182c87365ed46d8c6d5e87fa324db1e08038f786e3fae59ba50e",
+      "staged_sha256": "c0d04ce8d27e182c87365ed46d8c6d5e87fa324db1e08038f786e3fae59ba50e",
+      "adapted": false
+    },
+    "limer_v0/protocol.py": {
+      "original_sha256": "4f91737c940c58d3aad67c17a962c65b98d5f339edcccd9b41e09823a2bcc2f7",
+      "staged_sha256": "4f91737c940c58d3aad67c17a962c65b98d5f339edcccd9b41e09823a2bcc2f7",
+      "adapted": false
+    },
+    "limer_v0/business_delivery.py": {
+      "original_sha256": "0be57ebecb842e3eec6ec0d525ad2a87c7556ae1d156044414b1dabb2012fa5b",
+      "staged_sha256": "0be57ebecb842e3eec6ec0d525ad2a87c7556ae1d156044414b1dabb2012fa5b",
+      "adapted": false
+    },
+    "limer_v0/coordinator.py": {
+      "original_sha256": "4d8092f9f55423d3b508e6d95eaad2ccd8c621a85d5773cee122e674809c240d",
+      "staged_sha256": "4d8092f9f55423d3b508e6d95eaad2ccd8c621a85d5773cee122e674809c240d",
+      "adapted": false
+    },
+    "limer_v0/tcp_retrans.py": {
+      "original_sha256": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7",
+      "staged_sha256": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7",
+      "adapted": false
+    },
+    "simulation/run_hybrid_observation.py": {
+      "original_sha256": "ce8649c50509e8e6ae3f4ee648e096aec6de04bd698eb8fd2bd8a6975e7729f8",
+      "staged_sha256": "ce8649c50509e8e6ae3f4ee648e096aec6de04bd698eb8fd2bd8a6975e7729f8",
+      "adapted": false
+    },
+    "simulation/LimerBatchObservation.cc": {
+      "original_sha256": "3ef32e211637e0fd02ea4ca2ab41f9cfb8f1a8126f4ae79fd6764491f492df50",
+      "staged_sha256": "3ef32e211637e0fd02ea4ca2ab41f9cfb8f1a8126f4ae79fd6764491f492df50",
+      "adapted": false
+    },
+    "simulation/LimerBusinessObservation.cc": {
+      "original_sha256": "1ad1b00fe542db4d688ae4de597c6893662337d45c42d888fcfaa75ddd9bb1b5",
+      "staged_sha256": "1ad1b00fe542db4d688ae4de597c6893662337d45c42d888fcfaa75ddd9bb1b5",
+      "adapted": false
+    },
+    "simulation/ack_progress_policy_observer.h": {
+      "original_sha256": "4b73adf9f3a56b570fc9c541b423f0b1737bd486a284369044251d5c164a3ba7",
+      "staged_sha256": "4b73adf9f3a56b570fc9c541b423f0b1737bd486a284369044251d5c164a3ba7",
+      "adapted": false
+    },
+    "simulation/build_business_observation.py": {
+      "original_sha256": "9a36443ccc9955dd124dd248f55f21d9ad94cceb1a37c7a4e5921811000ae717",
+      "staged_sha256": "9a36443ccc9955dd124dd248f55f21d9ad94cceb1a37c7a4e5921811000ae717",
+      "adapted": false
+    },
+    "simulation/m13_batch_deficit_observer.h": {
+      "original_sha256": "f3f038dfecaf50b1c36ce65964e8a31b8501707639d5f4611075e4ed196a7aa4",
+      "staged_sha256": "f3f038dfecaf50b1c36ce65964e8a31b8501707639d5f4611075e4ed196a7aa4",
+      "adapted": false
+    },
+    "simulation/audit_progress_reports.py": {
+      "original_sha256": "567a84f54fa238409b8a7bb68823343a02706f18722050cc2146bea3b9aec734",
+      "staged_sha256": "567a84f54fa238409b8a7bb68823343a02706f18722050cc2146bea3b9aec734",
+      "adapted": false
+    },
+    "simulation/run_progress_development.py": {
+      "original_sha256": "4f8bd1841b3134dc9eb985776f581b4140442e0bb2678324b649a662c2d90037",
+      "staged_sha256": "4f8bd1841b3134dc9eb985776f581b4140442e0bb2678324b649a662c2d90037",
+      "adapted": false
+    },
+    "simulation/build_hybrid_observation.py": {
+      "original_sha256": "621a3167b11e76b7e2e672f0880dbd6a91f4be242eab9fbeb737a70f834f6d11",
+      "staged_sha256": "621a3167b11e76b7e2e672f0880dbd6a91f4be242eab9fbeb737a70f834f6d11",
+      "adapted": false
+    },
+    "simulation/audit_hybrid_campaign.py": {
+      "original_sha256": "40841e9c9cf72f1b25262297d76a513fe2a9f19afa1a03b0bffd9b44f7861134",
+      "staged_sha256": "40841e9c9cf72f1b25262297d76a513fe2a9f19afa1a03b0bffd9b44f7861134",
+      "adapted": false
+    },
+    "simulation/audit_closed_loop.py": {
+      "original_sha256": "8cb86f19014c4d32192089cea896db488b114c5beb7b5413af257b7e08a289f9",
+      "staged_sha256": "8cb86f19014c4d32192089cea896db488b114c5beb7b5413af257b7e08a289f9",
+      "adapted": false
+    },
+    "simulation/run_batch_observation.py": {
+      "original_sha256": "d60411eea9f48ed491618f803fcadc7d9c10720768bcce1ab473e2c98773292c",
+      "staged_sha256": "d60411eea9f48ed491618f803fcadc7d9c10720768bcce1ab473e2c98773292c",
+      "adapted": false
+    },
+    "simulation/audit_dynamic_dag.py": {
+      "original_sha256": "9bf2f6c511530df3506d09ee452106573fee4c056c4e0c6a157cbd8511d672ec",
+      "staged_sha256": "9bf2f6c511530df3506d09ee452106573fee4c056c4e0c6a157cbd8511d672ec",
+      "adapted": false
+    },
+    "simulation/build_closed_loop.py": {
+      "original_sha256": "81ad5f8270e11d86513792ef67c5630267c767e442adf82eb01e64f76c733fd5",
+      "staged_sha256": "81ad5f8270e11d86513792ef67c5630267c767e442adf82eb01e64f76c733fd5",
+      "adapted": false
+    },
+    "simulation/LimerProgressDagReplay.cc": {
+      "original_sha256": "e09b0e96c64e5daba5251668220c81f1b172ec1dfa7367a67854da3dbddcf402",
+      "staged_sha256": "e09b0e96c64e5daba5251668220c81f1b172ec1dfa7367a67854da3dbddcf402",
+      "adapted": false
+    },
+    "simulation/run_dynamic_dag_gates.py": {
+      "original_sha256": "96c2ad27fe96597364a4d1529e0a6d327356e224e9918bc4232187371f22e8ca",
+      "staged_sha256": "96c2ad27fe96597364a4d1529e0a6d327356e224e9918bc4232187371f22e8ca",
+      "adapted": false
+    },
+    "simulation/audit_business_campaign.py": {
+      "original_sha256": "1e0d2be42be80f89bd89dfe3a26e2408bf03597aadf0dcb4bb87aae07090dd19",
+      "staged_sha256": "1e0d2be42be80f89bd89dfe3a26e2408bf03597aadf0dcb4bb87aae07090dd19",
+      "adapted": false
+    },
+    "simulation/build_batch_observation.py": {
+      "original_sha256": "61ebe8667c7d685ecd68044d69401d8ecf52a1e0e4b55f2ac74ab1556ab86467",
+      "staged_sha256": "61ebe8667c7d685ecd68044d69401d8ecf52a1e0e4b55f2ac74ab1556ab86467",
+      "adapted": false
+    },
+    "simulation/ack_progress_observer.h": {
+      "original_sha256": "9f5d0bb618417814a94ae41de8af5a6cf7ded7a9f779a399e82d761b61eeb5b3",
+      "staged_sha256": "9f5d0bb618417814a94ae41de8af5a6cf7ded7a9f779a399e82d761b61eeb5b3",
+      "adapted": false
+    },
+    "simulation/audit_batch_campaign.py": {
+      "original_sha256": "ee75c344b727ec694e655de34b79f42fabcae4ebe46c5e7c886fdaa9f7f1f681",
+      "staged_sha256": "ee75c344b727ec694e655de34b79f42fabcae4ebe46c5e7c886fdaa9f7f1f681",
+      "adapted": false
+    },
+    "simulation/build_dynamic_dag.py": {
+      "original_sha256": "627163f070206333537ebb9df7baf29bec119d7b8f83c0b7d55aacae256eecbc",
+      "staged_sha256": "627163f070206333537ebb9df7baf29bec119d7b8f83c0b7d55aacae256eecbc",
+      "adapted": false
+    },
+    "simulation/run_closed_loop.py": {
+      "original_sha256": "29814452df348bc576f98c47e02c7b7e08d70986a135332c3b2b698f48ab6e20",
+      "staged_sha256": "29814452df348bc576f98c47e02c7b7e08d70986a135332c3b2b698f48ab6e20",
+      "adapted": false
+    },
+    "simulation/probe_budget.h": {
+      "original_sha256": "abf1bc76bef3540fc42e009cdcf33671dc12aed8599b5413628f4555c1a0de00",
+      "staged_sha256": "abf1bc76bef3540fc42e009cdcf33671dc12aed8599b5413628f4555c1a0de00",
+      "adapted": false
+    },
+    "simulation/business_observer.h": {
+      "original_sha256": "208fd516805d356d8f129301aa7c434d5808389d46e5afe3384c8e39423f7169",
+      "staged_sha256": "208fd516805d356d8f129301aa7c434d5808389d46e5afe3384c8e39423f7169",
+      "adapted": false
+    },
+    "simulation/README.md": {
+      "original_sha256": "73fd16355ab13d715fe09dd05330b0e4ef043a85e48e78c83d3eea5d3a9aca08",
+      "staged_sha256": "73fd16355ab13d715fe09dd05330b0e4ef043a85e48e78c83d3eea5d3a9aca08",
+      "adapted": false
+    },
+    "simulation/run_business_observation.py": {
+      "original_sha256": "302f06adbe1c0f5788557d90af3fe47ec6cb8abb42c0b56e169412f8a4a23835",
+      "staged_sha256": "302f06adbe1c0f5788557d90af3fe47ec6cb8abb42c0b56e169412f8a4a23835",
+      "adapted": false
+    },
+    "simulation/LimerHybridObservation.cc": {
+      "original_sha256": "07267875d944e0da6c9f4834078dfdbe67e415c5a13b8e7e21501c4831dddf50",
+      "staged_sha256": "07267875d944e0da6c9f4834078dfdbe67e415c5a13b8e7e21501c4831dddf50",
+      "adapted": false
+    },
+    "simulation/LimerDynamicDagReplay.cc": {
+      "original_sha256": "2ab5b3431a6ab831fd934c0b38897dafdddc384d432c51147e2a68014c3625df",
+      "staged_sha256": "2ab5b3431a6ab831fd934c0b38897dafdddc384d432c51147e2a68014c3625df",
+      "adapted": false
+    },
+    "simulation/batch_deficit_observer.h": {
+      "original_sha256": "d1f89384a16813f6459ae2863705dbf42ecd51b3834769aeb06c0964ce4e43ca",
+      "staged_sha256": "d1f89384a16813f6459ae2863705dbf42ecd51b3834769aeb06c0964ce4e43ca",
+      "adapted": false
+    },
+    "simulation/LimerClosedLoopReplay.cc": {
+      "original_sha256": "37c183f1ed0a1ea90e6442c518668d17e2dbde014f24755f82573aa5bed72ce4",
+      "staged_sha256": "37c183f1ed0a1ea90e6442c518668d17e2dbde014f24755f82573aa5bed72ce4",
+      "adapted": false
+    },
+    "simulation/build_progress_dag.py": {
+      "original_sha256": "c14aa4e4a73cbe4ed5ca46e479f7446bbdeb47fc387f93641ae1d86313a57e1d",
+      "staged_sha256": "c14aa4e4a73cbe4ed5ca46e479f7446bbdeb47fc387f93641ae1d86313a57e1d",
+      "adapted": false
+    },
+    "configs/c4_oracle.json": {
+      "original_sha256": "b381f1b73c0a7946141fe30306877a1e672e6db7623a62501889d9601abf16df",
+      "staged_sha256": "b381f1b73c0a7946141fe30306877a1e672e6db7623a62501889d9601abf16df",
+      "adapted": false
+    },
+    "configs/c5_transient.json": {
+      "original_sha256": "5ada99e99e0fb0bcf589fa99f9efd5a0cf744e9c0acff804bacac66711fdc900",
+      "staged_sha256": "5ada99e99e0fb0bcf589fa99f9efd5a0cf744e9c0acff804bacac66711fdc900",
+      "adapted": false
+    },
+    "configs/c1_rate20.json": {
+      "original_sha256": "618f92840c167d419a0103041dddf3ad5e3e75e5f21faeec2c41adfc76829a3f",
+      "staged_sha256": "618f92840c167d419a0103041dddf3ad5e3e75e5f21faeec2c41adfc76829a3f",
+      "adapted": false
+    },
+    "configs/c2_detect_only.json": {
+      "original_sha256": "9bce3bb0ae37aa7763a5c7afbe247e87deef61b034f66bc30895a152688ea90b",
+      "staged_sha256": "9bce3bb0ae37aa7763a5c7afbe247e87deef61b034f66bc30895a152688ea90b",
+      "adapted": false
+    },
+    "configs/c3_full.json": {
+      "original_sha256": "f64ff812e8b691cfe69dbd881a77c9291b6a3b05e79f6d279bf1a1c681266921",
+      "staged_sha256": "f64ff812e8b691cfe69dbd881a77c9291b6a3b05e79f6d279bf1a1c681266921",
+      "adapted": false
+    },
+    "configs/c0_fault_free.json": {
+      "original_sha256": "908d242568e0e66f7e8057cd740cef781c28bd728b532c0d6274c4621dd90e8d",
+      "staged_sha256": "908d242568e0e66f7e8057cd740cef781c28bd728b532c0d6274c4621dd90e8d",
+      "adapted": false
+    },
+    "configs/m4b_policy/aa12_policy_stay.json": {
+      "original_sha256": "cf41930c0b44bacf331e7389c51d0d0f95047e457d416405aac54beaa73b6175",
+      "staged_sha256": "cf41930c0b44bacf331e7389c51d0d0f95047e457d416405aac54beaa73b6175",
+      "adapted": false
+    },
+    "configs/m4b_policy/aa12_policy_switch.json": {
+      "original_sha256": "c876a05bd870271b1a13e9e855cc9b22c4ebe698b15e3d53084e7f69647c2169",
+      "staged_sha256": "c876a05bd870271b1a13e9e855cc9b22c4ebe698b15e3d53084e7f69647c2169",
+      "adapted": false
+    },
+    "configs/active_active_v1/aa3_global.json": {
+      "original_sha256": "5ba6ffed0a8fb1d4a66a1e6ad96e6bf94929305578f9d98df4c841ca2574774b",
+      "staged_sha256": "5ba6ffed0a8fb1d4a66a1e6ad96e6bf94929305578f9d98df4c841ca2574774b",
+      "adapted": false
+    },
+    "configs/active_active_v1/aa5_transient.json": {
+      "original_sha256": "eb1075fcd691a7ad8d3d9f4edba666c975ac8e5e99538a9e285b4408ffbe2bcb",
+      "staged_sha256": "eb1075fcd691a7ad8d3d9f4edba666c975ac8e5e99538a9e285b4408ffbe2bcb",
+      "adapted": false
+    },
+    "configs/active_active_v1/aa2_detect.json": {
+      "original_sha256": "3ed547346c608ab2eaf5de90356c06f7081add0c5228f68f805ad06f6c06ea40",
+      "staged_sha256": "3ed547346c608ab2eaf5de90356c06f7081add0c5228f68f805ad06f6c06ea40",
+      "adapted": false
+    },
+    "configs/active_active_v1/aa4_oracle.json": {
+      "original_sha256": "91a6bebd11eaf2962d896cc38abed3333e44fa91cfa489817dac368aabb3ff65",
+      "staged_sha256": "91a6bebd11eaf2962d896cc38abed3333e44fa91cfa489817dac368aabb3ff65",
+      "adapted": false
+    },
+    "configs/active_active_v1/aa0_healthy.json": {
+      "original_sha256": "a725de93236e72d2ac815bac5933ea9c2985e26d6c2d518924b65ff2d80f8486",
+      "staged_sha256": "a725de93236e72d2ac815bac5933ea9c2985e26d6c2d518924b65ff2d80f8486",
+      "adapted": false
+    },
+    "configs/active_active_v1/aa1_fault.json": {
+      "original_sha256": "4695d8b4384449e12a433d942f61ebd29b33a02263b4f1f1a26d2e42520644b5",
+      "staged_sha256": "4695d8b4384449e12a433d942f61ebd29b33a02263b4f1f1a26d2e42520644b5",
+      "adapted": false
+    },
+    "configs/active_active_v1/aa3_local.json": {
+      "original_sha256": "baa28be21efe89e8b3e32a371adf0e71d190c687998a9e62876cf8ecc0ac77ca",
+      "staged_sha256": "baa28be21efe89e8b3e32a371adf0e71d190c687998a9e62876cf8ecc0ac77ca",
+      "adapted": false
+    },
+    "configs/active_active_v2/aa3_local_longwindow.json": {
+      "original_sha256": "2e6bd3c775906180024cf784aaef6d98da320089e93ba1b8abc56f3300951d4b",
+      "staged_sha256": "2e6bd3c775906180024cf784aaef6d98da320089e93ba1b8abc56f3300951d4b",
+      "adapted": false
+    },
+    "configs/active_active_v2/aa6_stepdetect.json": {
+      "original_sha256": "4cb8e0c520568e0eeafc276d6e053beac431b265303dc04c41b540c01dde3247",
+      "staged_sha256": "4cb8e0c520568e0eeafc276d6e053beac431b265303dc04c41b540c01dde3247",
+      "adapted": false
+    },
+    "configs/active_active_v2/aa5_transient_stepstack.json": {
+      "original_sha256": "10e4e4879a0697d010dd8cb7a10ddb1ec4ab21cda25a769726a57027d280b49e",
+      "staged_sha256": "10e4e4879a0697d010dd8cb7a10ddb1ec4ab21cda25a769726a57027d280b49e",
+      "adapted": false
+    },
+    "configs/active_active_v3/aa8_grayfast.json": {
+      "original_sha256": "119e6d0c187516d2e830d9eec799eed931e72b9e4b9b7136d22821097db39746",
+      "staged_sha256": "119e6d0c187516d2e830d9eec799eed931e72b9e4b9b7136d22821097db39746",
+      "adapted": false
+    },
+    "configs/active_active_v3/aa5_transient_stepcutover.json": {
+      "original_sha256": "9f142975bfec8d97de7faf44f4dd50c0c8be794bc9d63968d7a52ff0acfd60a1",
+      "staged_sha256": "9f142975bfec8d97de7faf44f4dd50c0c8be794bc9d63968d7a52ff0acfd60a1",
+      "adapted": false
+    },
+    "configs/active_active_v3/aa7_hard.json": {
+      "original_sha256": "40b5825cf4fe7a146c258015a2a1787291f45dd31b1e0a33cd7edf5b21be12f9",
+      "staged_sha256": "40b5825cf4fe7a146c258015a2a1787291f45dd31b1e0a33cd7edf5b21be12f9",
+      "adapted": false
+    },
+    "configs/m5_retrans_observation/healthy.json": {
+      "original_sha256": "464ab0a4f3d795c4ae3508baff4cdec5cd7997c72b9f6bd99ee8471e07d1e4b5",
+      "staged_sha256": "464ab0a4f3d795c4ae3508baff4cdec5cd7997c72b9f6bd99ee8471e07d1e4b5",
+      "adapted": false
+    },
+    "configs/m5_retrans_observation/l5.json": {
+      "original_sha256": "525bc9c32de091e162988e1ba5e07d24d1edb0d788fae531d82da71e4a6ff74d",
+      "staged_sha256": "525bc9c32de091e162988e1ba5e07d24d1edb0d788fae531d82da71e4a6ff74d",
+      "adapted": false
+    },
+    "configs/m5_retrans_observation/l2.json": {
+      "original_sha256": "ba4563f57da941bcce1eea5f90345d023a9ddb32d2599412e1bf3d277a8cf73e",
+      "staged_sha256": "ba4563f57da941bcce1eea5f90345d023a9ddb32d2599412e1bf3d277a8cf73e",
+      "adapted": false
+    },
+    "configs/m5_retrans_observation/l0p5.json": {
+      "original_sha256": "19571d86a05238b37b3b8e282b16020ac775604e5d000b7a59e74eab8281869e",
+      "staged_sha256": "19571d86a05238b37b3b8e282b16020ac775604e5d000b7a59e74eab8281869e",
+      "adapted": false
+    },
+    "configs/m5_retrans_observation/l10.json": {
+      "original_sha256": "57cc25c9fa2638c14ab10092df85d46501b52bb06bfb0477e08739276b883457",
+      "staged_sha256": "57cc25c9fa2638c14ab10092df85d46501b52bb06bfb0477e08739276b883457",
+      "adapted": false
+    },
+    "configs/m5_retrans_observation/l1.json": {
+      "original_sha256": "e6cceac4b64884b178c69743100493f521cccf10b6edc7ed2be6b2bffca33153",
+      "staged_sha256": "e6cceac4b64884b178c69743100493f521cccf10b6edc7ed2be6b2bffca33153",
+      "adapted": false
+    },
+    "configs/m5_retrans_observation/l25.json": {
+      "original_sha256": "96ecc5c5449f9f25afbf1469a4c0e37cd868d5b3814155dc9691488960624f84",
+      "staged_sha256": "96ecc5c5449f9f25afbf1469a4c0e37cd868d5b3814155dc9691488960624f84",
+      "adapted": false
+    },
+    "configs/fault_profiles_v1/fp_l1_impact.json": {
+      "original_sha256": "e5692ae7684e7911333052dfc324c573584d46c18c15a421fc16624b6f44744f",
+      "staged_sha256": "e5692ae7684e7911333052dfc324c573584d46c18c15a421fc16624b6f44744f",
+      "adapted": false
+    },
+    "configs/fault_profiles_v1/fp_r5_impact.json": {
+      "original_sha256": "64302d1be0db835dce7618ea8079cb6d38bb69751c4ca4ba84a3997191673be6",
+      "staged_sha256": "64302d1be0db835dce7618ea8079cb6d38bb69751c4ca4ba84a3997191673be6",
+      "adapted": false
+    },
+    "configs/fault_profiles_v1/fp_d10_impact.json": {
+      "original_sha256": "e8aa051afbb86ba5afc8028d99d8862f96f077bb5d361be8eb8592885826307a",
+      "staged_sha256": "e8aa051afbb86ba5afc8028d99d8862f96f077bb5d361be8eb8592885826307a",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l1/aa9_stay.json": {
+      "original_sha256": "7c515137b578d703765328c0e8612f9644c57abecd1190a24b75a77113222374",
+      "staged_sha256": "7c515137b578d703765328c0e8612f9644c57abecd1190a24b75a77113222374",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l1/aa11_lossdetect.json": {
+      "original_sha256": "f1effa4f322c38f37411234ef8cecdb0651e7403d92f23df5dee336f14544322",
+      "staged_sha256": "f1effa4f322c38f37411234ef8cecdb0651e7403d92f23df5dee336f14544322",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l1/aa10_switch.json": {
+      "original_sha256": "a0f327c57e7202065f26944dafb6f127c6a558207d8e1a52d22396367bfb9308",
+      "staged_sha256": "a0f327c57e7202065f26944dafb6f127c6a558207d8e1a52d22396367bfb9308",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l2/aa9_stay.json": {
+      "original_sha256": "eb2dd251c7379fc3b398d9196918304bca37328d309e89f419803f1082348129",
+      "staged_sha256": "eb2dd251c7379fc3b398d9196918304bca37328d309e89f419803f1082348129",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l2/aa11_lossdetect.json": {
+      "original_sha256": "3c91b6714802b59425d931aea89647f89b47557da056225e41e5fa412774fc62",
+      "staged_sha256": "3c91b6714802b59425d931aea89647f89b47557da056225e41e5fa412774fc62",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l2/aa10_switch.json": {
+      "original_sha256": "2422d8e78e18fec30a723b5d744c470f64692c986dccc76fb0d1fbedd58814b4",
+      "staged_sha256": "2422d8e78e18fec30a723b5d744c470f64692c986dccc76fb0d1fbedd58814b4",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l10/aa9_stay.json": {
+      "original_sha256": "ccee2902bbd0e31c39ce744c158e06c49c80e9258cbe842e35931dfd54a4fa04",
+      "staged_sha256": "ccee2902bbd0e31c39ce744c158e06c49c80e9258cbe842e35931dfd54a4fa04",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l10/aa11_lossdetect.json": {
+      "original_sha256": "8568d8d47140f974f18913abe90a69b44fca5fa7a988e16d0f748c9280b28a5e",
+      "staged_sha256": "8568d8d47140f974f18913abe90a69b44fca5fa7a988e16d0f748c9280b28a5e",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l10/aa10_switch.json": {
+      "original_sha256": "f87a6852d19b70cdc6b2fe2c1419a73593cbecda38cd5905e0b38afefc9eac4a",
+      "staged_sha256": "f87a6852d19b70cdc6b2fe2c1419a73593cbecda38cd5905e0b38afefc9eac4a",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/cb50_l5/aa9_stay.json": {
+      "original_sha256": "540be13460c8bcf3b18f2545a11dc8b7b88d09d226d2295f29b7cc9034bc7817",
+      "staged_sha256": "540be13460c8bcf3b18f2545a11dc8b7b88d09d226d2295f29b7cc9034bc7817",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/cb50_l5/aa10_switch.json": {
+      "original_sha256": "658657f0370af8f3ae3b83e0db919e2b2402c9f8d13458b2f8c57de9755de188",
+      "staged_sha256": "658657f0370af8f3ae3b83e0db919e2b2402c9f8d13458b2f8c57de9755de188",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l25/aa9_stay.json": {
+      "original_sha256": "ff6a6505a5607f9a67ac3765b7a0880f96949f5b96b362a737738a3348225ebc",
+      "staged_sha256": "ff6a6505a5607f9a67ac3765b7a0880f96949f5b96b362a737738a3348225ebc",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l25/aa11_lossdetect.json": {
+      "original_sha256": "d9f6feb3f70d75bc63104355c943bd9d69e4a44971f1ea1a8b2b21d36cd6d4ca",
+      "staged_sha256": "d9f6feb3f70d75bc63104355c943bd9d69e4a44971f1ea1a8b2b21d36cd6d4ca",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l25/aa10_switch.json": {
+      "original_sha256": "227a48109b1b166852933e27c898d17e32de9a281c1dd6d5cc3f28f219ff0c9e",
+      "staged_sha256": "227a48109b1b166852933e27c898d17e32de9a281c1dd6d5cc3f28f219ff0c9e",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l5/aa9_stay.json": {
+      "original_sha256": "f873e9ae73023a3b8865cd38cac04faad524d77326fb0736d4af9636f160380d",
+      "staged_sha256": "f873e9ae73023a3b8865cd38cac04faad524d77326fb0736d4af9636f160380d",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l5/aa11_lossdetect.json": {
+      "original_sha256": "ae82f7c8dbff00a8dc980518799102b4b1f462b80753bb61bebdd626f7ebbdef",
+      "staged_sha256": "ae82f7c8dbff00a8dc980518799102b4b1f462b80753bb61bebdd626f7ebbdef",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l5/aa10_switch.json": {
+      "original_sha256": "87959b92a5f68d59277d467daf663962aa3eba0d6f76f5c463825d7b0fe424b6",
+      "staged_sha256": "87959b92a5f68d59277d467daf663962aa3eba0d6f76f5c463825d7b0fe424b6",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l0p5/aa9_stay.json": {
+      "original_sha256": "88ef168b8927b6f913d6aed731241e1c95d72f8b4b9b5428ad5d8bed6068298a",
+      "staged_sha256": "88ef168b8927b6f913d6aed731241e1c95d72f8b4b9b5428ad5d8bed6068298a",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l0p5/aa11_lossdetect.json": {
+      "original_sha256": "4d1fdefc64e14641e6f0141791ac5a36a272d3adcd160fedbb4852f3edbb64e3",
+      "staged_sha256": "4d1fdefc64e14641e6f0141791ac5a36a272d3adcd160fedbb4852f3edbb64e3",
+      "adapted": false
+    },
+    "configs/m3a_loss_sweep/l0p5/aa10_switch.json": {
+      "original_sha256": "a78438beaf8c11d5b865331a824f9ad7b0d2f65002ac658b0a8e4f165a9ac92d",
+      "staged_sha256": "a78438beaf8c11d5b865331a824f9ad7b0d2f65002ac658b0a8e4f165a9ac92d",
+      "adapted": false
+    },
+    "configs/m4c_lossfast/l1/aa13_lossfast.json": {
+      "original_sha256": "3541fcbaca9940edc7b8ab8bea2882427911a57ddc737900f2343d88200f90c1",
+      "staged_sha256": "3541fcbaca9940edc7b8ab8bea2882427911a57ddc737900f2343d88200f90c1",
+      "adapted": false
+    },
+    "configs/m4c_lossfast/l2/aa13_lossfast.json": {
+      "original_sha256": "528652c828412c19ca035ec0bbcee536012bd95d71f714590ca6f28105da5fdb",
+      "staged_sha256": "528652c828412c19ca035ec0bbcee536012bd95d71f714590ca6f28105da5fdb",
+      "adapted": false
+    },
+    "configs/m4c_lossfast/l10/aa13_lossfast.json": {
+      "original_sha256": "b9fb6e45257d48ac95c96d91e00ff4c84bca12daa2efca3ef654713debd2d4a7",
+      "staged_sha256": "b9fb6e45257d48ac95c96d91e00ff4c84bca12daa2efca3ef654713debd2d4a7",
+      "adapted": false
+    },
+    "configs/m4c_lossfast/l25/aa13_lossfast.json": {
+      "original_sha256": "e3060fd0c78656c235ffa2350de72fd0ed8642c6f146a77e51db4964738c7969",
+      "staged_sha256": "e3060fd0c78656c235ffa2350de72fd0ed8642c6f146a77e51db4964738c7969",
+      "adapted": false
+    },
+    "configs/m4c_lossfast/l5/aa13_lossfast.json": {
+      "original_sha256": "c891be1b4b9893f7ba10d8fe57fd4948c2fde91f4bb6e35e34c892f9d0445144",
+      "staged_sha256": "c891be1b4b9893f7ba10d8fe57fd4948c2fde91f4bb6e35e34c892f9d0445144",
+      "adapted": false
+    },
+    "configs/m4c_lossfast/l0p5/aa13_lossfast.json": {
+      "original_sha256": "2b7a71536dda595ac046d34eb3d855eea4b46d9912c11f3b5d4e66147cb72a25",
+      "staged_sha256": "2b7a71536dda595ac046d34eb3d855eea4b46d9912c11f3b5d4e66147cb72a25",
+      "adapted": false
+    },
+    "baselines/simai_runtime/reconstruction_prereg.md": {
+      "original_sha256": "5fb656cb3a6be1bd1ffcc646afc02633d0316a94da0c323e58391f68c95937df",
+      "staged_sha256": "5fb656cb3a6be1bd1ffcc646afc02633d0316a94da0c323e58391f68c95937df",
+      "adapted": false
+    },
+    "baselines/simai_runtime/mininet_execution_amendment.md": {
+      "original_sha256": "78cfc61c83f0ba0e20467af612f82297ab1fd7fca99a12aebdf70a54867a3a88",
+      "staged_sha256": "78cfc61c83f0ba0e20467af612f82297ab1fd7fca99a12aebdf70a54867a3a88",
+      "adapted": false
+    },
+    "baselines/simai_runtime/signal_control_wrapper.py": {
+      "original_sha256": "93c5ce0603b493144a0d953f0f88baa438c7c15a5970d0c609eeb507f66807be",
+      "staged_sha256": "93c5ce0603b493144a0d953f0f88baa438c7c15a5970d0c609eeb507f66807be",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_dual_calibration_ecn_v1.py": {
+      "original_sha256": "8cbf74096233c7e47b72900d3c1027bee7f383d864c6f3070ad9f0ba452a3a30",
+      "staged_sha256": "8cbf74096233c7e47b72900d3c1027bee7f383d864c6f3070ad9f0ba452a3a30",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m6_packet_diagnostics_v3.py": {
+      "original_sha256": "531283121aaa342429fb6c7b3c84cf91cc146e1f4091c45f2294b691f2129e3e",
+      "staged_sha256": "0a2ca1bdcfe5e95a170d43c8c7d3932aedb82c83164e1781819cb6dceaf0755e",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_m7_validation_v2.py": {
+      "original_sha256": "7ab844839c4d9e52d7b143c681f64114de81cf4e3fd635760eabb3fdbd03c03b",
+      "staged_sha256": "415825379061db226a3f474134ebde2f3bb53dc8b086fd0e8ea44771a18d54e3",
+      "adapted": true
+    },
+    "baselines/simai_runtime/m7_tcp_wrapper_ingress_v2.py": {
+      "original_sha256": "4ffc6dc50841b49ce0ee36b918abf8c756260ee3bcc4321206425313e5d4b7e8",
+      "staged_sha256": "4ffc6dc50841b49ce0ee36b918abf8c756260ee3bcc4321206425313e5d4b7e8",
+      "adapted": false
+    },
+    "baselines/simai_runtime/mininet_entry.sh": {
+      "original_sha256": "04bb45321d7097265006108ae3715c17a1a73a47c89597b8c212e8f8d25ef07f",
+      "staged_sha256": "04bb45321d7097265006108ae3715c17a1a73a47c89597b8c212e8f8d25ef07f",
+      "adapted": false
+    },
+    "baselines/simai_runtime/analyze_m6_packets.py": {
+      "original_sha256": "53f3d08233b3290bc3e30d95d09d547db4034acfff0473a17810d025492a0965",
+      "staged_sha256": "8f3abd58bac80ffb27289b647b9c6f48acf58125860b49b79ec03f71c3fb08a1",
+      "adapted": true
+    },
+    "baselines/simai_runtime/analyze_m6_pcap_v4.py": {
+      "original_sha256": "15c3feb63864ecb4f91f40db6a5e561dfd392de93eeb99966a93370f9517bd6e",
+      "staged_sha256": "25186b607c5a2ac43f82adf209ccbc60caab00901902fe0c44b36f74af561665",
+      "adapted": true
+    },
+    "baselines/simai_runtime/transport_repair.diff": {
+      "original_sha256": "1236ba53356d61e596f60e7ad278e8c837cee994833afd018bac4103fd876e6f",
+      "staged_sha256": "1236ba53356d61e596f60e7ad278e8c837cee994833afd018bac4103fd876e6f",
+      "adapted": false
+    },
+    "baselines/simai_runtime/analyze_signal_timing.py": {
+      "original_sha256": "73b28ee7453ca873967e8e58df7047856f4844a86ac1c2d66220ffa309fc756e",
+      "staged_sha256": "4b9faca7e8d9f0fa6a4d4433276699bd99272d5a729cccf60a1f45ccbb265319",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_m6_packet_diagnostics_v2.py": {
+      "original_sha256": "f5a0f573c6e2f562b6ec5efc17cfb3f9e8f83aac603c4dc70a7a2c27467dc443",
+      "staged_sha256": "c68ec144b26dbf457f54e09c1679866323e1cc461c474e03df0befffb173062a",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_replay.py": {
+      "original_sha256": "a1e48c5ae0a0b9cecb9840063e615e6f2bab239bbe468fa349301e0e8ad6327e",
+      "staged_sha256": "176f09b52b748e0b6fec0e6354b9b5e91e3afa30ce0fa8a395f3ef170611e3b7",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_gates_and_measurements.py": {
+      "original_sha256": "a587f3402e9dce228b8ffc71255d4130db4537c08a60a2236cde50b99c08d7d0",
+      "staged_sha256": "a587f3402e9dce228b8ffc71255d4130db4537c08a60a2236cde50b99c08d7d0",
+      "adapted": false
+    },
+    "baselines/simai_runtime/continue_campaign.py": {
+      "original_sha256": "0e472fe640752d5bca2a3aa38d3f89256ca022c9629cddcc93ba61a0ba8cb12f",
+      "staged_sha256": "6aca35494c76cf519496c2680700092054c21df3c94515550b6394f59246c32e",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_mininet_campaign.py": {
+      "original_sha256": "25194769fa2b3870143dc7d09aac110417a87e264fb083bd375496a02d83f296",
+      "staged_sha256": "a4cec1549e8882ca033a7b9ff3166164354e2a532e4ee0843494448b7745d340",
+      "adapted": true
+    },
+    "baselines/simai_runtime/Dockerfile.debug": {
+      "original_sha256": "ddb257fe56c0364f400d1b8737f97b712ce09f092a3a6947b4ca156f70b49b5b",
+      "staged_sha256": "ddb257fe56c0364f400d1b8737f97b712ce09f092a3a6947b4ca156f70b49b5b",
+      "adapted": false
+    },
+    "baselines/simai_runtime/m5_headroom_amendment.md": {
+      "original_sha256": "b8a72adc10fcb2243d5da4b3c08a6f55390624f0c96deec08b536c0b02a4cf91",
+      "staged_sha256": "b8a72adc10fcb2243d5da4b3c08a6f55390624f0c96deec08b536c0b02a4cf91",
+      "adapted": false
+    },
+    "baselines/simai_runtime/Dockerfile": {
+      "original_sha256": "d450b3eddba452244f1b9d19f7bee453fa1c9acf62474407f6c0a2857e5f8782",
+      "staged_sha256": "d450b3eddba452244f1b9d19f7bee453fa1c9acf62474407f6c0a2857e5f8782",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m7_stress_v3.py": {
+      "original_sha256": "91ffd9e2ce3d3a19fd79f15832b9a2c4793f6af9fc13ca5b0982bd07e53d665e",
+      "staged_sha256": "0a185620295cf7aec8bf51b95679bab45d84e3159b96802ca710bc5587f29a16",
+      "adapted": true
+    },
+    "baselines/simai_runtime/replay_m7_decisions.py": {
+      "original_sha256": "ed4159a3ba030b337b1a70a271a21b3e3e089f310d2237e57c0013ac373e4412",
+      "staged_sha256": "919aae13533b834a34f397016d8b00d108d280badc3feee302677684e77069a6",
+      "adapted": true
+    },
+    "baselines/simai_runtime/measurement_prereg.md": {
+      "original_sha256": "12ae739c535286cbdb8f0b5141194ad3ad2ee2dd5aaf8bbbb2178812111f5d35",
+      "staged_sha256": "12ae739c535286cbdb8f0b5141194ad3ad2ee2dd5aaf8bbbb2178812111f5d35",
+      "adapted": false
+    },
+    "baselines/simai_runtime/make_inputs.py": {
+      "original_sha256": "2f789d3cc1171fba4d7e326055462e8f6396b21222eeb01b4c98d963fc3fc6e1",
+      "staged_sha256": "2f789d3cc1171fba4d7e326055462e8f6396b21222eeb01b4c98d963fc3fc6e1",
+      "adapted": false
+    },
+    "baselines/simai_runtime/analyze_signal_pilot.py": {
+      "original_sha256": "11d33048a800fa77f1740d820bec1086525849b3291eff6321e620b5b142a70f",
+      "staged_sha256": "562f584a118a82f7913b00121452040450b42d5158365b0644aed536ee0b9fc8",
+      "adapted": true
+    },
+    "baselines/simai_runtime/analyze_m6_ingress_v5.py": {
+      "original_sha256": "099e7dce88ff6c47a28885e8728fd1ab2dd4bf27f6ce3d7da2e3a95cd9a44556",
+      "staged_sha256": "59ed78ecb4c8001961291ad289d6c3ff8fb21bf9595809d63876d11a2f12ed72",
+      "adapted": true
+    },
+    "baselines/simai_runtime/m7_tcp_abi_check.c": {
+      "original_sha256": "4a26f8f0c4eae589a6daaae6644819e6b1f7853d31f73a4d96bec38d2e2f3cad",
+      "staged_sha256": "4a26f8f0c4eae589a6daaae6644819e6b1f7853d31f73a4d96bec38d2e2f3cad",
+      "adapted": false
+    },
+    "baselines/simai_runtime/mininet_topology_probe.py": {
+      "original_sha256": "f1006aedfe9074a4df18bc3315af1d1034722b82a05d343001ac764c2b62e16c",
+      "staged_sha256": "f1006aedfe9074a4df18bc3315af1d1034722b82a05d343001ac764c2b62e16c",
+      "adapted": false
+    },
+    "baselines/simai_runtime/dag_tools.py": {
+      "original_sha256": "3bedfd944559b093c2002b69a4c04c6bc3ba385513e81537ee2ed63f6f58553c",
+      "staged_sha256": "3bedfd944559b093c2002b69a4c04c6bc3ba385513e81537ee2ed63f6f58553c",
+      "adapted": false
+    },
+    "baselines/simai_runtime/summarize_m7_validation.py": {
+      "original_sha256": "edbac447643a4812e8ed4e193a6926f85b4c64ae21b0ea3e441e091e0a86dd1d",
+      "staged_sha256": "1abe8c1996b7818e6d06731048e55413f0a8005969c2f0254e53a08a94ebf9ff",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_m6_packet_diagnostics.py": {
+      "original_sha256": "c3a82452438fd7a1b6ae2de401fa5587d9c8804461f02876b85ec506369e65bc",
+      "staged_sha256": "5136199aba861b30e3649eb36691499dd658ba0defdc67520181971fac028a24",
+      "adapted": true
+    },
+    "baselines/simai_runtime/analyze_b10_counterfactual.py": {
+      "original_sha256": "bdaa2b2157a41b711a95d9ef200dc276d83318e98140057e2a6de0fa0ccf2393",
+      "staged_sha256": "802af3bc0e54ffad1815a57f68db39ef79e5d4160ae5e538b763fa15d72eb7ee",
+      "adapted": true
+    },
+    "baselines/simai_runtime/m6_packet_diagnostic_wrapper_v5.py": {
+      "original_sha256": "dd6d5d1bcd416c144a832eebd5f47390ff51e686b691f379755beb46095c8bc6",
+      "staged_sha256": "dd6d5d1bcd416c144a832eebd5f47390ff51e686b691f379755beb46095c8bc6",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m7_sensor_off_v3.py": {
+      "original_sha256": "cd3aff8b3882fc39610c6220d55e0f1ff23192a10143a7f552aca359df5a7f0a",
+      "staged_sha256": "efb7617d8840ad65908965ddc877427acaed1028b4acd4c4545debb933f95c97",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_m7_followup_chain.py": {
+      "original_sha256": "c35c1908c01db403a814c316637bd8769ea544613260e05aef1999eb65e57829",
+      "staged_sha256": "73c5d98a80ab0f5cd7b36cc9bb50e16579167212c70d1109c676f5cf0a45e9ea",
+      "adapted": true
+    },
+    "baselines/simai_runtime/analyze_m6_metadata.py": {
+      "original_sha256": "17bc0d8c138cb5ff48eee000ba22b84576e581f989935be3d7633d455622b70f",
+      "staged_sha256": "15fde4424fe2a9cdf336a140c8f56d1c6aafab977675800bb322120d59b56f70",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_constrained_b_counterfactual.py": {
+      "original_sha256": "c9098d75b4e64702e61d09bfa6843f96c7f973e4b8a3ed137b196775fcb33a42",
+      "staged_sha256": "c9098d75b4e64702e61d09bfa6843f96c7f973e4b8a3ed137b196775fcb33a42",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m6_packet_diagnostics_v5.py": {
+      "original_sha256": "a015f67827d129941851096672ef9b973bd361803797b415c2eda7298550de71",
+      "staged_sha256": "e81a7844fbca8e0f247da61a2f2c6e0538c0662fd2d9ee6b02fc09842fb155d6",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_dual_calibration_extra.py": {
+      "original_sha256": "f2287b72f6a762ed48f137fcd34d8638f5f335df57fe422e637d4150142e17b8",
+      "staged_sha256": "f2287b72f6a762ed48f137fcd34d8638f5f335df57fe422e637d4150142e17b8",
+      "adapted": false
+    },
+    "baselines/simai_runtime/dual_plane_calibration_prereg.md": {
+      "original_sha256": "b757c9ccaecb0e2a636d3fb88afb168f46280933bfd60ff1b8f6a88bf0708241",
+      "staged_sha256": "b757c9ccaecb0e2a636d3fb88afb168f46280933bfd60ff1b8f6a88bf0708241",
+      "adapted": false
+    },
+    "baselines/simai_runtime/analyze_m7_tcp.py": {
+      "original_sha256": "3c91a4e09b88d9de9ff9e56a28dee28a9a5714a1cf60e39983d942aa27059fcd",
+      "staged_sha256": "97967e988b90bac7139fa93e529110654adfb1a5905c510283f7c67ffdac1b7b",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_m7_development_ingress_v2.py": {
+      "original_sha256": "3eafde244060dee00859e1a6cf11a92f9cca8a614beece44dc25347b5afde778",
+      "staged_sha256": "b12c48fdcd7bfa7adecf239ed993792ca990013b91c495e7bfb5fde0161c69a7",
+      "adapted": true
+    },
+    "baselines/simai_runtime/repair_transport.py": {
+      "original_sha256": "de412a61ffdd376bb98f87d2de38a97867629fc1f7fa1e3b94c5f315eb4806b0",
+      "staged_sha256": "de412a61ffdd376bb98f87d2de38a97867629fc1f7fa1e3b94c5f315eb4806b0",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m7_development_v1.py": {
+      "original_sha256": "4c254412a49caf9af555cfcace77712be45697a3f95278838ef21205402ecefa",
+      "staged_sha256": "1bdb42c4c29c3f92d0b241a802263f8826a3a00ae699bb3bf4cff91c80f37ee8",
+      "adapted": true
+    },
+    "baselines/simai_runtime/verify_m6_native_decode.py": {
+      "original_sha256": "ecd78b0075088cab6260ab9dd1129875364abf800ccb5af164f67343bb4fe04b",
+      "staged_sha256": "7087ad6e101695a0505c727d36a196b0a7f7bb53d23f7a9c7e0420c2922c6695",
+      "adapted": true
+    },
+    "baselines/simai_runtime/m6_packet_diagnostic_wrapper.py": {
+      "original_sha256": "57e3255b4b1a1af79acfa365519729e51188b22ff941d2992484674ff099d49b",
+      "staged_sha256": "57e3255b4b1a1af79acfa365519729e51188b22ff941d2992484674ff099d49b",
+      "adapted": false
+    },
+    "baselines/simai_runtime/m6_capture_metadata.py": {
+      "original_sha256": "c4c0713f6756ff5a04b5e04d000651b19ce0410af67f33c1bbe573d0dbb3ecf6",
+      "staged_sha256": "c4c0713f6756ff5a04b5e04d000651b19ce0410af67f33c1bbe573d0dbb3ecf6",
+      "adapted": false
+    },
+    "baselines/simai_runtime/test_dag_tools.py": {
+      "original_sha256": "422d136aec8afc25ff269ab923ac8864291eeaa2b674b280519a122ba2bf18e0",
+      "staged_sha256": "422d136aec8afc25ff269ab923ac8864291eeaa2b674b280519a122ba2bf18e0",
+      "adapted": false
+    },
+    "baselines/simai_runtime/prepare_replay.py": {
+      "original_sha256": "ea9a62fcab154ff6e1cee71b685f9ac1964017a18d1a0c8c410ff26c56cd1933",
+      "staged_sha256": "ea9a62fcab154ff6e1cee71b685f9ac1964017a18d1a0c8c410ff26c56cd1933",
+      "adapted": false
+    },
+    "baselines/simai_runtime/LimerDagReplay.cc": {
+      "original_sha256": "0c040ec9f7dbf43da6c354e041988121ec0e5b21717958788c440ceeb0cfcf84",
+      "staged_sha256": "0c040ec9f7dbf43da6c354e041988121ec0e5b21717958788c440ceeb0cfcf84",
+      "adapted": false
+    },
+    "baselines/simai_runtime/m7_tcp_wrapper_ingress_v3.py": {
+      "original_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+      "staged_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+      "adapted": false
+    },
+    "baselines/simai_runtime/m7_tcp_wrapper_v1.py": {
+      "original_sha256": "39fecdd5f73a64cd15a4f2eafeaafcfe8e54d2c085241faac2729763ef30173a",
+      "staged_sha256": "39fecdd5f73a64cd15a4f2eafeaafcfe8e54d2c085241faac2729763ef30173a",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m6_packet_diagnostics_v4.py": {
+      "original_sha256": "0ec7879f3ee4c5716f7923f8a4d2a7bd5afaa700c8e134a04e259fae17a4cc3b",
+      "staged_sha256": "3f679f0d5f12398660843d2c0d322f026148f6bdbbe27928bf51c14368f5f20e",
+      "adapted": true
+    },
+    "baselines/simai_runtime/replay_adapter.diff": {
+      "original_sha256": "f8022e6c55d7cd417a67675b5f33dd3a3100c8d314530ce0e8d50be9c199f1e5",
+      "staged_sha256": "f8022e6c55d7cd417a67675b5f33dd3a3100c8d314530ce0e8d50be9c199f1e5",
+      "adapted": false
+    },
+    "baselines/simai_runtime/udp_control.py": {
+      "original_sha256": "74c807a80e2568793763f5a1b01c831e2f049fc82da17e005e5d5311fbfdc017",
+      "staged_sha256": "74c807a80e2568793763f5a1b01c831e2f049fc82da17e005e5d5311fbfdc017",
+      "adapted": false
+    },
+    "baselines/simai_runtime/dual_calibration_library.py": {
+      "original_sha256": "ffd6a8f6879d6a3bc20ddb94477dfe4dccc2df44d2cad450bb47a00e033830ee",
+      "staged_sha256": "ffd6a8f6879d6a3bc20ddb94477dfe4dccc2df44d2cad450bb47a00e033830ee",
+      "adapted": false
+    },
+    "baselines/simai_runtime/analyze_m6_packet_audit_v6.py": {
+      "original_sha256": "fd55c40680272901a2189d0a70c57f52fd8280f7e8a0a34719ef0067a28b11bc",
+      "staged_sha256": "00d6618a1511387929dd966d467e436bc5641f79f28bab9981a16204d38defc2",
+      "adapted": true
+    },
+    "baselines/simai_runtime/LimerDualPlaneReplay.cc": {
+      "original_sha256": "d4f000fe91adae984eabc9d4e763005490be245806d15e38a3260a6dd88c904e",
+      "staged_sha256": "d4f000fe91adae984eabc9d4e763005490be245806d15e38a3260a6dd88c904e",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m7_development_rule_v2.py": {
+      "original_sha256": "269499a20a16704aa3d8fd189159595a07fb13283a176dad5b5ac202292b0951",
+      "staged_sha256": "bb64edf1ea0c1a3747753058cf97ca0fff046bda3b576f2b642c3c40e267a823",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_m7_validation_v3.py": {
+      "original_sha256": "7b7138764b62cfa3efe8391a8343437fe61d02cc850e06f0107b5be1237e380c",
+      "staged_sha256": "59f2c7208cb993ced02943fa240c94f4a63539ef21d4a52b7fc2ec288eccad91",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_dual_calibration.py": {
+      "original_sha256": "fef35230a8331f269ce37d53440dca46042a8ee922a7ff9725335fc2ed38f337",
+      "staged_sha256": "fef35230a8331f269ce37d53440dca46042a8ee922a7ff9725335fc2ed38f337",
+      "adapted": false
+    },
+    "baselines/simai_runtime/Dockerfile.mininet": {
+      "original_sha256": "21e58766b77af76fc7cb2150a65e1d9d2853c3048100fd00210995d8fae0ced0",
+      "staged_sha256": "21e58766b77af76fc7cb2150a65e1d9d2853c3048100fd00210995d8fae0ced0",
+      "adapted": false
+    },
+    "baselines/simai_runtime/Dockerfile.mininet312": {
+      "original_sha256": "dfd47f29c840bccf995b05596d0964476c3328555e46aa392ade5975e52d24a8",
+      "staged_sha256": "dfd47f29c840bccf995b05596d0964476c3328555e46aa392ade5975e52d24a8",
+      "adapted": false
+    },
+    "baselines/simai_runtime/signal_pilot_amendment.md": {
+      "original_sha256": "56eca3cf8066b11fbb9e90f3ae2486fa0d229347bd441420d935b5b71502ec0b",
+      "staged_sha256": "56eca3cf8066b11fbb9e90f3ae2486fa0d229347bd441420d935b5b71502ec0b",
+      "adapted": false
+    },
+    "baselines/simai_runtime/Dockerfile.mininet-diagnostic": {
+      "original_sha256": "23d795c9bf668c450146e20cd07cdc1df0178eeb6a39f64fd9d1c3d75c19440e",
+      "staged_sha256": "23d795c9bf668c450146e20cd07cdc1df0178eeb6a39f64fd9d1c3d75c19440e",
+      "adapted": false
+    },
+    "baselines/simai_runtime/diagnose_m7_tails.py": {
+      "original_sha256": "bb14fe95d553b3ad4f5995a2eaa7c0b302f7c372e52d274d49259c811b07ffa1",
+      "staged_sha256": "622b28791f572334bfb4dfa56b5cb75518cf37b4e72c795b63a382fcf8fb7a74",
+      "adapted": true
+    },
+    "baselines/simai_runtime/build_native.sh": {
+      "original_sha256": "6db5375307dcc5a209d7d47b10e4f2993ff3e8cff75270fc346dcface46fb0fe",
+      "staged_sha256": "6db5375307dcc5a209d7d47b10e4f2993ff3e8cff75270fc346dcface46fb0fe",
+      "adapted": false
+    },
+    "baselines/simai_runtime/m6_packet_diagnostic_wrapper_v3.py": {
+      "original_sha256": "a8c72724ee8ab017aaf3582f45b962f5bf8c80234dda6cc59ccb5147a9b2ed6f",
+      "staged_sha256": "a8c72724ee8ab017aaf3582f45b962f5bf8c80234dda6cc59ccb5147a9b2ed6f",
+      "adapted": false
+    },
+    "baselines/simai_runtime/collect_m7_reference_cost.py": {
+      "original_sha256": "267c97f59fae693cc30d511c45803f5e5be6b5a13a3902dc8d3304b4168fd363",
+      "staged_sha256": "53e24e3752111d721ed1652910df5cfc16a25016f4a8cf1106a163df705d92b2",
+      "adapted": true
+    },
+    "baselines/simai_runtime/inventory_mininet_offloads.py": {
+      "original_sha256": "4db35d0e421998e26c689dd7926c9cd5cc0abe39298953e0e7c4b83518520691",
+      "staged_sha256": "4db35d0e421998e26c689dd7926c9cd5cc0abe39298953e0e7c4b83518520691",
+      "adapted": false
+    },
+    "baselines/simai_runtime/constrained_b_counterfactual_prereg.md": {
+      "original_sha256": "3ca379a3aaac06d1ac22d898155ed3d204daeb00307feafd1d29ba8fae50f611",
+      "staged_sha256": "3ca379a3aaac06d1ac22d898155ed3d204daeb00307feafd1d29ba8fae50f611",
+      "adapted": false
+    },
+    "baselines/simai_runtime/m6_packet_diagnostic_wrapper_v4.py": {
+      "original_sha256": "7469e28ad2a59df1a21f48dcd239a70a1e1b11964067177fd8db13520980b35d",
+      "staged_sha256": "7469e28ad2a59df1a21f48dcd239a70a1e1b11964067177fd8db13520980b35d",
+      "adapted": false
+    },
+    "baselines/simai_runtime/setup_prereg.md": {
+      "original_sha256": "40bba3e422d3eb63be20ee963926c0197378be9aa02085fe02bd667380e7c503",
+      "staged_sha256": "40bba3e422d3eb63be20ee963926c0197378be9aa02085fe02bd667380e7c503",
+      "adapted": false
+    },
+    "baselines/simai_runtime/m6_packet_diagnostic_wrapper_v2.py": {
+      "original_sha256": "c1a6c25e149ad2d482c49a082ed19bac8864f5614d37ecfaade64f1ea8ee667d",
+      "staged_sha256": "c1a6c25e149ad2d482c49a082ed19bac8864f5614d37ecfaade64f1ea8ee667d",
+      "adapted": false
+    },
+    "baselines/simai_runtime/run_m7_development_rule_v3.py": {
+      "original_sha256": "61b94d9d09c9d689aad0da2a3c38745602184495784d0f441986ebc1203e1796",
+      "staged_sha256": "d43184f430a1160b1fbc725869aecc1d1f5eb7fef214549df94e02af0252320d",
+      "adapted": true
+    },
+    "baselines/simai_runtime/run_m7_development_ingress_v3.py": {
+      "original_sha256": "e9a38efbdac3fa99e48a37ac5cdcd2a6232d2ede534a9307d7ff0a9cd1a17ed4",
+      "staged_sha256": "1538e1b75c6e127b24a447428866bee134d935e2a6cc10e6cb132044c5ab1a3e",
+      "adapted": true
+    },
+    "baselines/optcc_checks/manifest.json": {
+      "original_sha256": "616ee4a851bf2fdc34cdeec644a7d6ba5b3761142f630a8e360afc75ebe13588",
+      "staged_sha256": "616ee4a851bf2fdc34cdeec644a7d6ba5b3761142f630a8e360afc75ebe13588",
+      "adapted": false
+    },
+    "baselines/optcc_checks/multi/multi_bad_dag.json": {
+      "original_sha256": "f4e7b9dbb8ee3131f83b32f46645722b0343255532bb54a6600e1959cb6dcb2d",
+      "staged_sha256": "f4e7b9dbb8ee3131f83b32f46645722b0343255532bb54a6600e1959cb6dcb2d",
+      "adapted": false
+    },
+    "baselines/optcc_checks/mgs/multi_gpu_dag.json": {
+      "original_sha256": "ee04cc22de12c00af81cb9a7d86b6c97f44904be8cf7fb0e95e2cf773047df94",
+      "staged_sha256": "ee04cc22de12c00af81cb9a7d86b6c97f44904be8cf7fb0e95e2cf773047df94",
+      "adapted": false
+    },
+    "baselines/optcc_checks/single_L2/dag.json": {
+      "original_sha256": "ebb5e4c41dee52ee8fb8f13a2a9885a454338f477416e18b76674d9e4a524b06",
+      "staged_sha256": "ebb5e4c41dee52ee8fb8f13a2a9885a454338f477416e18b76674d9e4a524b06",
+      "adapted": false
+    },
+    "baselines/optcc_checks/single_L1p5/dag.json": {
+      "original_sha256": "78ec4ded391082b8fb423dfa098e8f745f82dcc61257248626bf545d7294370c",
+      "staged_sha256": "78ec4ded391082b8fb423dfa098e8f745f82dcc61257248626bf545d7294370c",
+      "adapted": false
+    }
+  }
+}

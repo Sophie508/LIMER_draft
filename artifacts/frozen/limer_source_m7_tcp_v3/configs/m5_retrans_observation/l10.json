@@ -1,0 +1,29 @@
+{
+  "condition": "C2",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 8,
+  "fault_rate_mbit": 100.0,
+  "transient_ms": 0,
+  "experiment_family": "active_active_v1",
+  "routing_policy": "balanced_active_active",
+  "detector": true,
+  "recovery": false,
+  "oracle": false,
+  "recovery_policy": "none",
+  "detector_rule": "burst",
+  "deep_stall_fraction": 0.3,
+  "step_timeout_s": 300.0,
+  "scenario_id": "AA13_LOSSFAST",
+  "fault_scope": {
+    "rank": 2,
+    "fabric": "A",
+    "direction": "egress"
+  },
+  "fault_loss_pct": 10.0,
+  "what_changes": "Observation-only Linux TCP retransmission telemetry at 20 ms, aligned with step events; underlying fault scene remains unchanged.",
+  "expected": "Telemetry reads and connection-scoped deltas are recorded independently of the existing detector and policy. A Linux TCP_INFO read failure is logged as unavailable. No <100 ms improvement is presumed.",
+  "tcp_retrans_interval_s": 0.02
+}

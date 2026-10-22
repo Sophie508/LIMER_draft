@@ -1,0 +1,62 @@
+{
+  "id": "low_loss_0.05_r17",
+  "start_unix": 1791643534.9197302,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m8-10076",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m8_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m8_backend/simulation/build/scratch/ns3.36.1-LimerBatchObservation-debug",
+    "--out=/work/runs/m8_validation_v1/low_loss_0.05_r17",
+    "--scenario=loss",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.05",
+    "--reportLoss=0",
+    "--runId=10076",
+    "--faultTimeMs=52.111171"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": 67.496829,
+  "timely": true,
+  "missed": false,
+  "late": false,
+  "false_alarm_events": 0,
+  "alarms": [
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 119608000,
+      "missing_packets": 2,
+      "evidence_batches": [
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "input_rows": 800,
+  "completed_batches": 400,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 88,
+  "packet_audit": true,
+  "input_sha256": "8db31b649e97e77adfac3e4df360104fcd2d0b288fa2b8c7bc7dd70c75abc921",
+  "truth_sha256": "0cba2adc802ef12baa7f5b8186e2d15a33d0955a37743e6ec3d510d7f1de3da2",
+  "report_bytes": 51200,
+  "reports_dropped": 0,
+  "sent_packets": 13280,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 2.0652809143066406
+}

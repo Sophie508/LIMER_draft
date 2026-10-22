@@ -1,0 +1,32 @@
+{
+  "p": 2,
+  "mode": "scheduler_gate",
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "bytes": 20,
+      "deps": []
+    },
+    {
+      "id": 2,
+      "src": 1,
+      "dst": 0,
+      "bytes": 20,
+      "deps": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "src": 0,
+      "dst": 1,
+      "bytes": 20,
+      "deps": [
+        1,
+        2
+      ]
+    }
+  ]
+}

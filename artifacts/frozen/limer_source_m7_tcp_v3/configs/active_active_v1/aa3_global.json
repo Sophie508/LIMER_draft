@@ -1,0 +1,25 @@
+{
+  "condition": "C3",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 4,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": true,
+  "recovery": true,
+  "oracle": false,
+  "transient_ms": 0,
+  "experiment_family": "active_active_v1",
+  "scenario_id": "AA3_GLOBAL",
+  "routing_policy": "balanced_active_active",
+  "recovery_policy": "global_failover",
+  "fault_scope": {
+    "rank": 2,
+    "fabric": "A",
+    "direction": "egress"
+  },
+  "what_changes": "The detector and host gate match AA3_LOCAL, but the recovery policy deliberately maps every baseline-A slot across all workers to Fabric B as a global-failover comparison.",
+  "expected": "All ranks safely commit the global plan, every recovered send slot uses B, and its latency and throughput quantify the cost of moving unaffected traffic compared with localized recovery."
+}

@@ -1,0 +1,26 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m12-build-script",
+    "--cpus=1",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m12c_backend/simulation:/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation",
+    "-w",
+    "/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation",
+    "limer-simai-cpu:2026-10-10",
+    "bash",
+    "-c",
+    "./ns3 build LimerHybridObservation -j 1"
+  ],
+  "cpp_sha256": "3f7086e22daed35ac2ea46bcd3b4810f55a0e6705870ea3e441f332f2c2c1d13",
+  "cmake_sha256": "c45b79e9f479c6c30952cf99fcecce83022804678f6d0449f601f81b2b7a3fe0"
+}

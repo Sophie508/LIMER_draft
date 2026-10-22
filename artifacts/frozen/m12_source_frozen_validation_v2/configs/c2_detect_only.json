@@ -1,0 +1,16 @@
+{
+  "condition": "C2",
+  "topology": "single",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": true,
+  "recovery": false,
+  "oracle": false,
+  "transient_ms": 0,
+  "what_changes": "After two baseline rounds, rank 2's worker-side egress qdisc changes to 20 Mbit/s while remaining UP; the detector reads only RX counters on the distinct switch-facing peer interface and recovery is disabled.",
+  "expected": "The switch-counter management-plane proxy emits SWITCH_SUSPECT after three consecutive low-rate samples without reading the injector qdisc, performance remains degraded below 60% of baseline, and no checksum or version error occurs."
+}

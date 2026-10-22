@@ -1,0 +1,113 @@
+{
+  "m13_adaptive_validation": {
+    "registration": "artifacts/m13/runs/m13_adaptive_validation_v1/registration.json",
+    "sha256": "1efea39b69370d0cfd401e1c238477c69b8b6f49656489cfd6f63493720a06ad",
+    "registered": 460,
+    "groups": 14,
+    "kinds": {
+      "fault": 400,
+      "control": 60
+    }
+  },
+  "m13_high_controls": {
+    "registration": "artifacts/m13/runs/m13_adaptive_high_controls_v1/registration.json",
+    "sha256": "72aa7ba384d21af1ebdf2515aa6dfd8f5ac187aae554c383194822bce6095ce9",
+    "registered": 60,
+    "groups": 6,
+    "kinds": {
+      "control": 60
+    }
+  },
+  "m13_constant_validation": {
+    "registration": "artifacts/m13/runs/m13_coverage_validation_v1/registration.json",
+    "sha256": "1887be29a026b1b5240bf0ad3006dc1e523640bcc1598cb46769afe2967308b2",
+    "registered": 460,
+    "groups": 14,
+    "kinds": {
+      "fault": 400,
+      "control": 60
+    }
+  },
+  "m13_original_budget_development": {
+    "registration": "artifacts/m13/runs/m13_development_v2/registration.json",
+    "sha256": "30b555f26d653bd736b65411891c5ef749326e0f210b45a48186ba5e5d7e59fe",
+    "registered": 149,
+    "groups": 16,
+    "kinds": {
+      "control": 65,
+      "fault": 84
+    }
+  },
+  "m13_equal_budget_representative": {
+    "registration": "artifacts/m13/runs/m13_representative_v1/registration.json",
+    "sha256": "9b1955defbd0fa52076e6ae829e4ebbf8b634393c99ed23e9debb192d9845a82",
+    "registered": 150,
+    "groups": 18,
+    "kinds": {
+      "fault": 90,
+      "control": 60
+    }
+  },
+  "m12_validation": {
+    "registration": "artifacts/m12/m12_validation_v2/registration.json",
+    "sha256": "246362e6c9e886bd2f776a14c1df90075eddd96d0fc7aea567fc84729cce2b14",
+    "registered": 740,
+    "groups": 21,
+    "kinds": {
+      "fault": 700,
+      "control": 40
+    }
+  },
+  "m12_boundary": {
+    "registration": "artifacts/m12/m12_boundary_v2/registration.json",
+    "sha256": "61b47c210bdc0a0a0e1845705199aeee052d7dd06579dfc7879c3fcdafb0aaeb",
+    "registered": 15,
+    "groups": 3,
+    "kinds": {
+      "fault": 15
+    }
+  },
+  "m8_validation": {
+    "registration": "artifacts/server/runs/m8_validation_v1/registration.json",
+    "sha256": "edf1af232fce914404a0504e1e3ac5da81938240afc569dad324b0a9ccce885d",
+    "registered": 200,
+    "groups": 16,
+    "kinds": {
+      "fault": 160,
+      "control": 40
+    }
+  },
+  "m8_stress": {
+    "registration": "artifacts/server/runs/m8_stress_v1/registration.json",
+    "sha256": "44d4972749082ba3fbea5790de7e7a9e8b10e3e783d7b6190b66bdb3ba0bb7a8",
+    "registered": 25,
+    "groups": 5,
+    "kinds": {
+      "fault": 15,
+      "control": 10
+    }
+  },
+  "m9_execution": {
+    "registration": "artifacts/server/runs/m9_execution_v1/registration.json",
+    "sha256": "2332f83f7813b867803605de82febe0a81361e520abaecdbb9cdfc69a4f21b13",
+    "registered": 9,
+    "groups": 9,
+    "kinds": {
+      "engineering_case": 9
+    }
+  },
+  "m11_closed_loop": {
+    "registration": "artifacts/server/runs/m11_closed_loop_v1/registration.json",
+    "sha256": "d99c853a73ce48d1bf6913625615b44ac3bf33a152b93f0699e61e2dbf57736a",
+    "registered": 8,
+    "groups": 2,
+    "kinds": {
+      "engineering_case": 8
+    }
+  },
+  "m7_validation_configs": {
+    "source": "artifacts/frozen/limer_source_m7_tcp_v3/configs/m7_validation_v3",
+    "configs": 100,
+    "note": "Generated input configurations, not a new outcome denominator. See original validation registration and stress ledgers."
+  }
+}

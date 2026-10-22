@@ -1,0 +1,23 @@
+--- frozen-primary-runner
++++ current-control-supplement-runner
+@@ -320,6 +320,11 @@
+             add("adaptive_"+scenario+"_"+str(rate),scenario,"control" if scenario=="nominal" else "fault",1,
+                 capacityMbps=10000,offeredMbps=rate,probeWireBytes=1500,probePps=0,probeTargetPps=25000)
+         base=69900
++    elif campaign=="adaptive_high_controls":
++        for scenario in ("nominal","pause","congestion","reorder40","sparse_reorder40","processing40"):
++            add("high",scenario,"control",10,capacityMbps=10000,offeredMbps=1000,
++                probeWireBytes=1500,probePps=0,probeTargetPps=25000)
++        base=72000
+     elif campaign in ("coverage_development","coverage_validation","adaptive_development","adaptive_validation"):
+         validation=campaign in ("coverage_validation","adaptive_validation")
+         adaptive=campaign.startswith("adaptive")
+@@ -387,7 +392,7 @@
+ def main():
+     parser=argparse.ArgumentParser()
+     parser.add_argument("--root",type=Path,required=True)
+-    parser.add_argument("--campaign",choices=("smoke","development","validation","representative","probe_smoke","coverage_development","coverage_validation","adaptive_development","adaptive_validation","adaptive_smoke"),required=True)
++    parser.add_argument("--campaign",choices=("smoke","development","validation","representative","probe_smoke","coverage_development","coverage_validation","adaptive_development","adaptive_validation","adaptive_smoke","adaptive_high_controls"),required=True)
+     parser.add_argument("--tag",default="v1")
+     parser.add_argument("--workers",type=int,default=4,choices=range(1,9))
+     args=parser.parse_args()

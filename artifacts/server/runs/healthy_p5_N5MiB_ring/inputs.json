@@ -1,0 +1,22 @@
+{
+  "name": "healthy_p5_N5MiB_ring",
+  "ranks": 5,
+  "GPUs_per_server": 1,
+  "switches": 1,
+  "healthy_Gbps": 200,
+  "last_rank_Gbps": 200,
+  "propagation_ns": 500,
+  "slowdown": 1,
+  "MTU": 9000,
+  "CC_MODE": 1,
+  "AS_SEND_LAT_us": 3,
+  "AS_PXN_ENABLE": 0,
+  "AS_NVLS_ENABLE": 0,
+  "packet_loss": 0,
+  "hashes": {
+    "flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "SimAI.conf": "a4cf7069517b55c8d4317f13c138b376c04f44b83c92dc866727c649e268bd76",
+    "trace_nodes.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "topology.txt": "d2b7b76b726372e9a3b770f9ee7be16420a756a57ca0f8fcab58e535e8ffe1cd"
+  }
+}

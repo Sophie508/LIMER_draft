@@ -1,0 +1,76 @@
+// Native counterpart of the frozen M8 report-only decision rule.
+#include <deque>
+#include <tuple>
+#include <algorithm>
+struct CounterObservation {
+  int path; uint32_t batch; bool rx; uint64_t count; int64_t sample, arrival;
+};
+struct CounterPair { bool tx=false, rx=false; uint64_t sent=0, received=0; };
+struct DeficitState {
+  std::deque<std::tuple<int64_t,uint64_t,uint32_t>> history;
+  bool armed=true; int clean=0; int64_t latest=-1;
+};
+class NativeDeficitObserver {
+  std::map<std::pair<int,uint32_t>,CounterPair> pending, done;
+  std::map<int,DeficitState> states;
+  std::ofstream alarms;
+  int64_t now=-1;
+  static constexpr int64_t period=10'000'000, guard=50'000'000;
+  static constexpr int64_t ttl=200'000'000, window=100'000'000;
+  void interrupt(int path) { states[path].history.clear(); states[path].clean=0; }
+public:
+  void open(const std::string& file) {
+    alarms.open(file); if(!alarms) throw std::runtime_error("Cannot open native alarms");
+  }
+  void advance(int64_t arrival) {
+    if (arrival<now) throw std::runtime_error("Regressing observer time"); now=arrival;
+    for (auto it=pending.begin();it!=pending.end();) {
+      if(now > (it->first.second+1)*period+ttl) {
+        interrupt(it->first.first); it=pending.erase(it);
+      } else ++it;
+    }
+    for(auto it=done.begin();it!=done.end();) {
+      if(now > (it->first.second+1)*period+ttl) it=done.erase(it); else ++it;
+    }
+    for(auto& entry:states) {
+      auto& h=entry.second.history;
+      while(!h.empty() && std::get<0>(h.front())<now-window) h.pop_front();
+    }
+  }
+  void observe(CounterObservation r) {
+    int64_t end=(r.batch+1)*period;
+    if(r.sample<end+(r.rx?guard:0) || r.arrival<r.sample)
+      throw std::runtime_error("Counter observed before batch/guard");
+    advance(r.arrival); if(now>end+ttl) return;
+    auto key=std::make_pair(r.path,r.batch);
+    auto completed=done.find(key);
+    CounterPair& p=completed==done.end()?pending[key]:completed->second;
+    bool present=r.rx?p.rx:p.tx;
+    uint64_t old=r.rx?p.received:p.sent;
+    if(present) { if(old!=r.count) throw std::runtime_error("Conflicting counter duplicate"); return; }
+    if(r.rx) {p.rx=true;p.received=r.count;} else {p.tx=true;p.sent=r.count;}
+    if(!p.rx || !p.tx) return;
+    CounterPair pair=p; pending.erase(key); done[key]=pair;
+    auto& state=states[r.path];
+    if(pair.received>pair.sent) {interrupt(r.path);return;}
+    if(int64_t(r.batch)<=state.latest) return;
+    if(int64_t(r.batch)>state.latest+1) interrupt(r.path);
+    state.latest=r.batch;
+    uint64_t missing=pair.sent-pair.received;
+    state.history.emplace_back(now,missing,r.batch);
+    if(pair.sent>0 && missing==0) {
+      if(++state.clean>=2) {state.armed=true;state.history.clear();}
+    } else state.clean=0;
+    uint64_t total=0;for(auto h:state.history) total+=std::get<1>(h);
+    if(!state.armed || total<2) return;
+    state.armed=false;
+    alarms << "{\"rule_version\":\"hybrid-delivery-v1\",\"path\":\"" << r.path/2
+      << '/' << (r.path%2?'B':'A') << "\",\"decision_t_ns\":" << now
+      << ",\"missing_packets\":" << total << ",\"evidence_batches\":[";
+    bool first=true; for(auto h:state.history) if(std::get<1>(h)) {
+      alarms << (first?"":",") << std::get<2>(h); first=false;
+    }
+    alarms << "],\"claim\":\"Observed delivery deficit under the declared guard; cause unresolved\"}\n";
+    alarms.flush();
+  }
+};

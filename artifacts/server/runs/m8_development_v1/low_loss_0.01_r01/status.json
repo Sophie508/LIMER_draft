@@ -1,0 +1,33 @@
+{
+  "id": "low_loss_0.01_r01",
+  "start_unix": 1791641865.6583867,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m8-1004",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m8_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m8_backend/simulation/build/scratch/ns3.36.1-LimerBatchObservation-debug",
+    "--out=/work/runs/m8_development_v1/low_loss_0.01_r01",
+    "--scenario=loss",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.01",
+    "--reportLoss=0",
+    "--runId=1004",
+    "--faultTimeMs=50"
+  ],
+  "status": "FAILED",
+  "exit_code": 0,
+  "failure": "wire packet size does not match the declared mark budget",
+  "wall_seconds": 1.6029772758483887
+}

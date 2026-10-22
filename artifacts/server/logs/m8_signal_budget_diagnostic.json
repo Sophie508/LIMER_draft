@@ -1,0 +1,1349 @@
+{
+  "groups": {
+    "high_loss_0.05": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 0,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "high_loss_0.05_r13",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 145,
+          "all_reported_deficits": 813,
+          "first_two_deficits_ms": 63.758055
+        },
+        {
+          "id": "high_loss_0.05_r20",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 128,
+          "all_reported_deficits": 761,
+          "first_two_deficits_ms": 62.36313
+        },
+        {
+          "id": "high_loss_0.05_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 184,
+          "all_reported_deficits": 792,
+          "first_two_deficits_ms": 59.148083
+        },
+        {
+          "id": "high_loss_0.05_r17",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 170,
+          "all_reported_deficits": 800,
+          "first_two_deficits_ms": 66.884204
+        },
+        {
+          "id": "high_loss_0.05_r03",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 149,
+          "all_reported_deficits": 780,
+          "first_two_deficits_ms": 68.070299
+        },
+        {
+          "id": "high_loss_0.05_r06",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 147,
+          "all_reported_deficits": 782,
+          "first_two_deficits_ms": 61.447432
+        },
+        {
+          "id": "high_loss_0.05_r02",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 147,
+          "all_reported_deficits": 801,
+          "first_two_deficits_ms": 63.065667
+        },
+        {
+          "id": "high_loss_0.05_r09",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 143,
+          "all_reported_deficits": 854,
+          "first_two_deficits_ms": 65.740004
+        },
+        {
+          "id": "high_loss_0.05_r16",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 135,
+          "all_reported_deficits": 768,
+          "first_two_deficits_ms": 60.736306
+        },
+        {
+          "id": "high_loss_0.05_r18",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 151,
+          "all_reported_deficits": 808,
+          "first_two_deficits_ms": 61.800859
+        },
+        {
+          "id": "high_loss_0.05_r19",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 136,
+          "all_reported_deficits": 775,
+          "first_two_deficits_ms": 65.270554
+        },
+        {
+          "id": "high_loss_0.05_r04",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 145,
+          "all_reported_deficits": 803,
+          "first_two_deficits_ms": 62.178189
+        },
+        {
+          "id": "high_loss_0.05_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 147,
+          "all_reported_deficits": 805,
+          "first_two_deficits_ms": 67.032102
+        },
+        {
+          "id": "high_loss_0.05_r12",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 132,
+          "all_reported_deficits": 791,
+          "first_two_deficits_ms": 60.605288
+        },
+        {
+          "id": "high_loss_0.05_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 129,
+          "all_reported_deficits": 768,
+          "first_two_deficits_ms": 61.770501
+        },
+        {
+          "id": "high_loss_0.05_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 167,
+          "all_reported_deficits": 827,
+          "first_two_deficits_ms": 68.852313
+        },
+        {
+          "id": "high_loss_0.05_r05",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 150,
+          "all_reported_deficits": 791,
+          "first_two_deficits_ms": 62.463698
+        },
+        {
+          "id": "high_loss_0.05_r08",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 163,
+          "all_reported_deficits": 800,
+          "first_two_deficits_ms": 67.739765
+        },
+        {
+          "id": "high_loss_0.05_r01",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 145,
+          "all_reported_deficits": 795,
+          "first_two_deficits_ms": 66.246334
+        },
+        {
+          "id": "high_loss_0.05_r10",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 153,
+          "all_reported_deficits": 843,
+          "first_two_deficits_ms": 66.663525
+        }
+      ]
+    },
+    "high_loss_0.01": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 0,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "high_loss_0.01_r13",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 33,
+          "all_reported_deficits": 163,
+          "first_two_deficits_ms": 63.306174
+        },
+        {
+          "id": "high_loss_0.01_r03",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 27,
+          "all_reported_deficits": 145,
+          "first_two_deficits_ms": 65.034716
+        },
+        {
+          "id": "high_loss_0.01_r09",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 25,
+          "all_reported_deficits": 152,
+          "first_two_deficits_ms": 62.474758
+        },
+        {
+          "id": "high_loss_0.01_r08",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 36,
+          "all_reported_deficits": 157,
+          "first_two_deficits_ms": 67.959985
+        },
+        {
+          "id": "high_loss_0.01_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 26,
+          "all_reported_deficits": 148,
+          "first_two_deficits_ms": 60.14834
+        },
+        {
+          "id": "high_loss_0.01_r16",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 43,
+          "all_reported_deficits": 167,
+          "first_two_deficits_ms": 66.889356
+        },
+        {
+          "id": "high_loss_0.01_r04",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 41,
+          "all_reported_deficits": 152,
+          "first_two_deficits_ms": 66.792957
+        },
+        {
+          "id": "high_loss_0.01_r02",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 28,
+          "all_reported_deficits": 143,
+          "first_two_deficits_ms": 63.96509
+        },
+        {
+          "id": "high_loss_0.01_r17",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 30,
+          "all_reported_deficits": 150,
+          "first_two_deficits_ms": 60.770762
+        },
+        {
+          "id": "high_loss_0.01_r01",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 29,
+          "all_reported_deficits": 163,
+          "first_two_deficits_ms": 64.883797
+        },
+        {
+          "id": "high_loss_0.01_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 29,
+          "all_reported_deficits": 154,
+          "first_two_deficits_ms": 65.426678
+        },
+        {
+          "id": "high_loss_0.01_r10",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 31,
+          "all_reported_deficits": 143,
+          "first_two_deficits_ms": 65.189295
+        },
+        {
+          "id": "high_loss_0.01_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 20,
+          "all_reported_deficits": 157,
+          "first_two_deficits_ms": 61.472311
+        },
+        {
+          "id": "high_loss_0.01_r06",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 42,
+          "all_reported_deficits": 173,
+          "first_two_deficits_ms": 67.652332
+        },
+        {
+          "id": "high_loss_0.01_r19",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 35,
+          "all_reported_deficits": 177,
+          "first_two_deficits_ms": 64.290562
+        },
+        {
+          "id": "high_loss_0.01_r05",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 39,
+          "all_reported_deficits": 170,
+          "first_two_deficits_ms": 68.555153
+        },
+        {
+          "id": "high_loss_0.01_r18",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 27,
+          "all_reported_deficits": 153,
+          "first_two_deficits_ms": 60.732645
+        },
+        {
+          "id": "high_loss_0.01_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 33,
+          "all_reported_deficits": 189,
+          "first_two_deficits_ms": 60.212411
+        },
+        {
+          "id": "high_loss_0.01_r20",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 35,
+          "all_reported_deficits": 162,
+          "first_two_deficits_ms": 65.886473
+        },
+        {
+          "id": "high_loss_0.01_r12",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 26,
+          "all_reported_deficits": 147,
+          "first_two_deficits_ms": 67.28988
+        }
+      ]
+    },
+    "low_loss_0.02": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 0,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "low_loss_0.02_r17",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 31,
+          "first_two_deficits_ms": 70.690395
+        },
+        {
+          "id": "low_loss_0.02_r01",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 6,
+          "all_reported_deficits": 26,
+          "first_two_deficits_ms": 69.4512
+        },
+        {
+          "id": "low_loss_0.02_r18",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 22,
+          "first_two_deficits_ms": 74.810186
+        },
+        {
+          "id": "low_loss_0.02_r09",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 4,
+          "all_reported_deficits": 25,
+          "first_two_deficits_ms": 62.678115
+        },
+        {
+          "id": "low_loss_0.02_r06",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 7,
+          "all_reported_deficits": 20,
+          "first_two_deficits_ms": 69.317585
+        },
+        {
+          "id": "low_loss_0.02_r08",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 7,
+          "all_reported_deficits": 31,
+          "first_two_deficits_ms": 79.422667
+        },
+        {
+          "id": "low_loss_0.02_r19",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 6,
+          "all_reported_deficits": 28,
+          "first_two_deficits_ms": 82.663553
+        },
+        {
+          "id": "low_loss_0.02_r12",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 22,
+          "first_two_deficits_ms": 69.160068
+        },
+        {
+          "id": "low_loss_0.02_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 6,
+          "all_reported_deficits": 29,
+          "first_two_deficits_ms": 71.364122
+        },
+        {
+          "id": "low_loss_0.02_r13",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 25,
+          "first_two_deficits_ms": 82.866648
+        },
+        {
+          "id": "low_loss_0.02_r16",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 8,
+          "all_reported_deficits": 28,
+          "first_two_deficits_ms": 64.562672
+        },
+        {
+          "id": "low_loss_0.02_r02",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 6,
+          "all_reported_deficits": 30,
+          "first_two_deficits_ms": 84.23571
+        },
+        {
+          "id": "low_loss_0.02_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 31,
+          "first_two_deficits_ms": 71.806952
+        },
+        {
+          "id": "low_loss_0.02_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 27,
+          "first_two_deficits_ms": 77.318579
+        },
+        {
+          "id": "low_loss_0.02_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 29,
+          "first_two_deficits_ms": 88.028693
+        },
+        {
+          "id": "low_loss_0.02_r10",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 19,
+          "first_two_deficits_ms": 86.131016
+        },
+        {
+          "id": "low_loss_0.02_r04",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 24,
+          "first_two_deficits_ms": 93.413876
+        },
+        {
+          "id": "low_loss_0.02_r03",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 35,
+          "first_two_deficits_ms": 72.445775
+        },
+        {
+          "id": "low_loss_0.02_r05",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 29,
+          "first_two_deficits_ms": 75.136603
+        },
+        {
+          "id": "low_loss_0.02_r20",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 8,
+          "all_reported_deficits": 36,
+          "first_two_deficits_ms": 78.678423
+        }
+      ]
+    },
+    "high_loss_0.02": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 0,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "high_loss_0.02_r09",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 67,
+          "all_reported_deficits": 372,
+          "first_two_deficits_ms": 69.225013
+        },
+        {
+          "id": "high_loss_0.02_r17",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 52,
+          "all_reported_deficits": 294,
+          "first_two_deficits_ms": 60.486177
+        },
+        {
+          "id": "high_loss_0.02_r13",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 61,
+          "all_reported_deficits": 299,
+          "first_two_deficits_ms": 68.31623
+        },
+        {
+          "id": "high_loss_0.02_r06",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 69,
+          "all_reported_deficits": 354,
+          "first_two_deficits_ms": 60.551331
+        },
+        {
+          "id": "high_loss_0.02_r02",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 64,
+          "all_reported_deficits": 317,
+          "first_two_deficits_ms": 64.170059
+        },
+        {
+          "id": "high_loss_0.02_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 45,
+          "all_reported_deficits": 268,
+          "first_two_deficits_ms": 60.469955
+        },
+        {
+          "id": "high_loss_0.02_r08",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 75,
+          "all_reported_deficits": 343,
+          "first_two_deficits_ms": 65.331642
+        },
+        {
+          "id": "high_loss_0.02_r01",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 71,
+          "all_reported_deficits": 332,
+          "first_two_deficits_ms": 66.092942
+        },
+        {
+          "id": "high_loss_0.02_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 75,
+          "all_reported_deficits": 321,
+          "first_two_deficits_ms": 69.754496
+        },
+        {
+          "id": "high_loss_0.02_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 60,
+          "all_reported_deficits": 324,
+          "first_two_deficits_ms": 68.801686
+        },
+        {
+          "id": "high_loss_0.02_r12",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 67,
+          "all_reported_deficits": 327,
+          "first_two_deficits_ms": 64.402888
+        },
+        {
+          "id": "high_loss_0.02_r16",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 50,
+          "all_reported_deficits": 326,
+          "first_two_deficits_ms": 61.841578
+        },
+        {
+          "id": "high_loss_0.02_r03",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 56,
+          "all_reported_deficits": 345,
+          "first_two_deficits_ms": 65.894584
+        },
+        {
+          "id": "high_loss_0.02_r20",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 75,
+          "all_reported_deficits": 335,
+          "first_two_deficits_ms": 65.546544
+        },
+        {
+          "id": "high_loss_0.02_r10",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 67,
+          "all_reported_deficits": 332,
+          "first_two_deficits_ms": 67.081878
+        },
+        {
+          "id": "high_loss_0.02_r19",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 57,
+          "all_reported_deficits": 302,
+          "first_two_deficits_ms": 62.205814
+        },
+        {
+          "id": "high_loss_0.02_r18",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 53,
+          "all_reported_deficits": 287,
+          "first_two_deficits_ms": 66.894398
+        },
+        {
+          "id": "high_loss_0.02_r04",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 64,
+          "all_reported_deficits": 325,
+          "first_two_deficits_ms": 67.30658
+        },
+        {
+          "id": "high_loss_0.02_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 69,
+          "all_reported_deficits": 339,
+          "first_two_deficits_ms": 68.682872
+        },
+        {
+          "id": "high_loss_0.02_r05",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 79,
+          "all_reported_deficits": 337,
+          "first_two_deficits_ms": 69.161686
+        }
+      ]
+    },
+    "low_loss_0.005": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 13,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "low_loss_0.005_r09",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 9,
+          "first_two_deficits_ms": 74.826459
+        },
+        {
+          "id": "low_loss_0.005_r12",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 3,
+          "first_two_deficits_ms": 182.307397
+        },
+        {
+          "id": "low_loss_0.005_r13",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 5,
+          "all_reported_deficits": 11,
+          "first_two_deficits_ms": 75.888735
+        },
+        {
+          "id": "low_loss_0.005_r08",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 7,
+          "first_two_deficits_ms": 147.96182
+        },
+        {
+          "id": "low_loss_0.005_r02",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 7,
+          "first_two_deficits_ms": 148.279355
+        },
+        {
+          "id": "low_loss_0.005_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 7,
+          "first_two_deficits_ms": 94.966468
+        },
+        {
+          "id": "low_loss_0.005_r17",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 6,
+          "first_two_deficits_ms": 124.519903
+        },
+        {
+          "id": "low_loss_0.005_r05",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 5,
+          "first_two_deficits_ms": 162.015826
+        },
+        {
+          "id": "low_loss_0.005_r19",
+          "timely": false,
+          "missed": true,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 3,
+          "first_two_deficits_ms": 165.946594
+        },
+        {
+          "id": "low_loss_0.005_r06",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 4,
+          "first_two_deficits_ms": 214.903673
+        },
+        {
+          "id": "low_loss_0.005_r20",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 6,
+          "first_two_deficits_ms": 118.136747
+        },
+        {
+          "id": "low_loss_0.005_r04",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 8,
+          "first_two_deficits_ms": 121.06298
+        },
+        {
+          "id": "low_loss_0.005_r10",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 4,
+          "first_two_deficits_ms": 198.174864
+        },
+        {
+          "id": "low_loss_0.005_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 7,
+          "first_two_deficits_ms": 69.759073
+        },
+        {
+          "id": "low_loss_0.005_r03",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 7,
+          "first_two_deficits_ms": 110.048335
+        },
+        {
+          "id": "low_loss_0.005_r18",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 4,
+          "first_two_deficits_ms": 128.860577
+        },
+        {
+          "id": "low_loss_0.005_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 9,
+          "first_two_deficits_ms": 86.290476
+        },
+        {
+          "id": "low_loss_0.005_r16",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 8,
+          "first_two_deficits_ms": 156.181667
+        },
+        {
+          "id": "low_loss_0.005_r01",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 5,
+          "first_two_deficits_ms": 77.768862
+        },
+        {
+          "id": "low_loss_0.005_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 10,
+          "first_two_deficits_ms": 71.5389
+        }
+      ]
+    },
+    "low_loss_0.05": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 0,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "low_loss_0.05_r03",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 15,
+          "all_reported_deficits": 68,
+          "first_two_deficits_ms": 68.339543
+        },
+        {
+          "id": "low_loss_0.05_r18",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 13,
+          "all_reported_deficits": 64,
+          "first_two_deficits_ms": 64.724305
+        },
+        {
+          "id": "low_loss_0.05_r10",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 7,
+          "all_reported_deficits": 60,
+          "first_two_deficits_ms": 70.50529
+        },
+        {
+          "id": "low_loss_0.05_r04",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 12,
+          "all_reported_deficits": 59,
+          "first_two_deficits_ms": 62.946387
+        },
+        {
+          "id": "low_loss_0.05_r02",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 17,
+          "all_reported_deficits": 72,
+          "first_two_deficits_ms": 69.821172
+        },
+        {
+          "id": "low_loss_0.05_r01",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 13,
+          "all_reported_deficits": 69,
+          "first_two_deficits_ms": 76.735553
+        },
+        {
+          "id": "low_loss_0.05_r13",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 10,
+          "all_reported_deficits": 69,
+          "first_two_deficits_ms": 85.456293
+        },
+        {
+          "id": "low_loss_0.05_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 18,
+          "all_reported_deficits": 78,
+          "first_two_deficits_ms": 67.720177
+        },
+        {
+          "id": "low_loss_0.05_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 10,
+          "all_reported_deficits": 61,
+          "first_two_deficits_ms": 69.317615
+        },
+        {
+          "id": "low_loss_0.05_r20",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 12,
+          "all_reported_deficits": 70,
+          "first_two_deficits_ms": 66.076379
+        },
+        {
+          "id": "low_loss_0.05_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 12,
+          "all_reported_deficits": 56,
+          "first_two_deficits_ms": 69.701914
+        },
+        {
+          "id": "low_loss_0.05_r08",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 18,
+          "all_reported_deficits": 64,
+          "first_two_deficits_ms": 68.312485
+        },
+        {
+          "id": "low_loss_0.05_r12",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 11,
+          "all_reported_deficits": 76,
+          "first_two_deficits_ms": 78.552379
+        },
+        {
+          "id": "low_loss_0.05_r19",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 10,
+          "all_reported_deficits": 60,
+          "first_two_deficits_ms": 76.039753
+        },
+        {
+          "id": "low_loss_0.05_r09",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 17,
+          "all_reported_deficits": 76,
+          "first_two_deficits_ms": 68.278991
+        },
+        {
+          "id": "low_loss_0.05_r17",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 9,
+          "all_reported_deficits": 58,
+          "first_two_deficits_ms": 67.496829
+        },
+        {
+          "id": "low_loss_0.05_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 13,
+          "all_reported_deficits": 70,
+          "first_two_deficits_ms": 65.380239
+        },
+        {
+          "id": "low_loss_0.05_r16",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 12,
+          "all_reported_deficits": 81,
+          "first_two_deficits_ms": 71.390187
+        },
+        {
+          "id": "low_loss_0.05_r05",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 13,
+          "all_reported_deficits": 70,
+          "first_two_deficits_ms": 70.044524
+        },
+        {
+          "id": "low_loss_0.05_r06",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 20,
+          "all_reported_deficits": 64,
+          "first_two_deficits_ms": 69.051022
+        }
+      ]
+    },
+    "low_loss_0.01": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 8,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "low_loss_0.01_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 11,
+          "first_two_deficits_ms": 78.678706
+        },
+        {
+          "id": "low_loss_0.01_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 16,
+          "first_two_deficits_ms": 76.178362
+        },
+        {
+          "id": "low_loss_0.01_r17",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 12,
+          "first_two_deficits_ms": 109.23336
+        },
+        {
+          "id": "low_loss_0.01_r16",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 12,
+          "first_two_deficits_ms": 115.072846
+        },
+        {
+          "id": "low_loss_0.01_r03",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 9,
+          "first_two_deficits_ms": 87.773762
+        },
+        {
+          "id": "low_loss_0.01_r13",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 13,
+          "first_two_deficits_ms": 104.547749
+        },
+        {
+          "id": "low_loss_0.01_r05",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 16,
+          "first_two_deficits_ms": 116.064676
+        },
+        {
+          "id": "low_loss_0.01_r10",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 10,
+          "first_two_deficits_ms": 99.022978
+        },
+        {
+          "id": "low_loss_0.01_r09",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 10,
+          "first_two_deficits_ms": 138.194517
+        },
+        {
+          "id": "low_loss_0.01_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 12,
+          "first_two_deficits_ms": 99.284255
+        },
+        {
+          "id": "low_loss_0.01_r18",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 0,
+          "all_reported_deficits": 11,
+          "first_two_deficits_ms": 133.974918
+        },
+        {
+          "id": "low_loss_0.01_r12",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 12,
+          "first_two_deficits_ms": 65.492314
+        },
+        {
+          "id": "low_loss_0.01_r19",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 11,
+          "first_two_deficits_ms": 81.492592
+        },
+        {
+          "id": "low_loss_0.01_r20",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 11,
+          "first_two_deficits_ms": 94.866132
+        },
+        {
+          "id": "low_loss_0.01_r01",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 11,
+          "first_two_deficits_ms": 100.943092
+        },
+        {
+          "id": "low_loss_0.01_r06",
+          "timely": false,
+          "missed": false,
+          "deadline_deficits": 1,
+          "all_reported_deficits": 10,
+          "first_two_deficits_ms": 105.025088
+        },
+        {
+          "id": "low_loss_0.01_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 13,
+          "first_two_deficits_ms": 85.842177
+        },
+        {
+          "id": "low_loss_0.01_r02",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 12,
+          "first_two_deficits_ms": 83.136724
+        },
+        {
+          "id": "low_loss_0.01_r04",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 3,
+          "all_reported_deficits": 14,
+          "first_two_deficits_ms": 78.063518
+        },
+        {
+          "id": "low_loss_0.01_r08",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 2,
+          "all_reported_deficits": 6,
+          "first_two_deficits_ms": 74.446516
+        }
+      ]
+    },
+    "high_loss_0.005": {
+      "trials": 20,
+      "fewer_than_two_reported_deficits_by_deadline": 0,
+      "at_least_two_by_deadline_but_rule_not_timely": 0,
+      "fewer_than_two_over_whole_observation": 0,
+      "rows": [
+        {
+          "id": "high_loss_0.005_r14",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 15,
+          "all_reported_deficits": 82,
+          "first_two_deficits_ms": 64.11449
+        },
+        {
+          "id": "high_loss_0.005_r18",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 19,
+          "all_reported_deficits": 74,
+          "first_two_deficits_ms": 63.268081
+        },
+        {
+          "id": "high_loss_0.005_r19",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 18,
+          "all_reported_deficits": 92,
+          "first_two_deficits_ms": 65.727114
+        },
+        {
+          "id": "high_loss_0.005_r10",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 19,
+          "all_reported_deficits": 90,
+          "first_two_deficits_ms": 72.461134
+        },
+        {
+          "id": "high_loss_0.005_r20",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 16,
+          "all_reported_deficits": 94,
+          "first_two_deficits_ms": 65.742525
+        },
+        {
+          "id": "high_loss_0.005_r12",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 16,
+          "all_reported_deficits": 78,
+          "first_two_deficits_ms": 65.174917
+        },
+        {
+          "id": "high_loss_0.005_r16",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 20,
+          "all_reported_deficits": 77,
+          "first_two_deficits_ms": 69.288434
+        },
+        {
+          "id": "high_loss_0.005_r15",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 16,
+          "all_reported_deficits": 64,
+          "first_two_deficits_ms": 67.940387
+        },
+        {
+          "id": "high_loss_0.005_r05",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 16,
+          "all_reported_deficits": 79,
+          "first_two_deficits_ms": 68.301185
+        },
+        {
+          "id": "high_loss_0.005_r09",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 15,
+          "all_reported_deficits": 87,
+          "first_two_deficits_ms": 70.827216
+        },
+        {
+          "id": "high_loss_0.005_r06",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 14,
+          "all_reported_deficits": 71,
+          "first_two_deficits_ms": 64.110375
+        },
+        {
+          "id": "high_loss_0.005_r11",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 15,
+          "all_reported_deficits": 83,
+          "first_two_deficits_ms": 70.508611
+        },
+        {
+          "id": "high_loss_0.005_r04",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 14,
+          "all_reported_deficits": 72,
+          "first_two_deficits_ms": 67.665802
+        },
+        {
+          "id": "high_loss_0.005_r07",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 20,
+          "all_reported_deficits": 90,
+          "first_two_deficits_ms": 62.929661
+        },
+        {
+          "id": "high_loss_0.005_r08",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 8,
+          "all_reported_deficits": 72,
+          "first_two_deficits_ms": 72.578348
+        },
+        {
+          "id": "high_loss_0.005_r02",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 12,
+          "all_reported_deficits": 74,
+          "first_two_deficits_ms": 62.49641
+        },
+        {
+          "id": "high_loss_0.005_r13",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 10,
+          "all_reported_deficits": 74,
+          "first_two_deficits_ms": 72.022144
+        },
+        {
+          "id": "high_loss_0.005_r17",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 16,
+          "all_reported_deficits": 75,
+          "first_two_deficits_ms": 64.491833
+        },
+        {
+          "id": "high_loss_0.005_r01",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 21,
+          "all_reported_deficits": 93,
+          "first_two_deficits_ms": 64.106478
+        },
+        {
+          "id": "high_loss_0.005_r03",
+          "timely": true,
+          "missed": false,
+          "deadline_deficits": 15,
+          "all_reported_deficits": 72,
+          "first_two_deficits_ms": 62.49119
+        }
+      ]
+    }
+  },
+  "claim": "Retrospective scorer-assisted count of available deficits; cumulative counts omit the registered reset, acceptance window, interruption and episode rules. This is not an evaluated alternative detector or evidence of its false-alarm rate."
+}

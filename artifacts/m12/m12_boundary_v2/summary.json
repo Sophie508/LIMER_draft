@@ -1,0 +1,84 @@
+{
+  "groups": {
+    "low_loss_0.005": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 5,
+      "timely": 0,
+      "late": 5,
+      "missed_or_unverified": 0,
+      "p95_ms": 190.167094,
+      "timely_wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        177.211232,
+        179.437137,
+        182.655754,
+        184.371185,
+        190.167094
+      ]
+    },
+    "low_idle_0.005": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 5,
+      "timely": 0,
+      "late": 4,
+      "missed_or_unverified": 1,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        217.647371,
+        229.421714,
+        239.856986,
+        250.572262,
+        null
+      ]
+    },
+    "low_selective_0.005": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 5,
+      "timely": 0,
+      "late": 0,
+      "missed_or_unverified": 5,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  "registered": 15,
+  "terminal": 15,
+  "strict_verdict": "FAIL",
+  "primary_faults": 15,
+  "timely_faults": 0,
+  "verified_control_trials": 0,
+  "claim": "Costed same-path UDP probes and native delivery impairment decisions; not collective recovery",
+  "per_condition_95_verdict": "FAIL"
+}

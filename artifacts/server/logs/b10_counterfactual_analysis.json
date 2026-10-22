@@ -1,0 +1,515 @@
+[
+  {
+    "name": "m5_b10_fixed_stay_r01",
+    "status": "failed",
+    "error": "worker 0 did not emit ['ROUND_DONE'] within 120.0s",
+    "exit_code": 1,
+    "post_rounds": 0,
+    "expected_post_rounds": 8,
+    "post_bytes": 0,
+    "episode_completion_s": null,
+    "last_observed_after_fault_s": 142.86972382757813,
+    "correctness": {
+      "status": "not_completed"
+    },
+    "latency": null,
+    "changed_slots": null,
+    "source_hashes": {
+      "configs/m5_constrained_counterfactual/stay.json": "408ab3b8d2fe8a286882caf038cf3e975509ae7794f4a50578d827d60d52438e",
+      "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+      "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+      "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+    },
+    "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3"
+  },
+  {
+    "name": "m5_b10_fixed_stay_r02",
+    "status": "failed",
+    "error": "worker 0 did not emit ['ROUND_DONE'] within 120.0s",
+    "exit_code": 1,
+    "post_rounds": 1,
+    "expected_post_rounds": 8,
+    "post_bytes": 50331648,
+    "episode_completion_s": null,
+    "last_observed_after_fault_s": 247.52001381944865,
+    "correctness": {
+      "status": "not_completed"
+    },
+    "latency": null,
+    "changed_slots": null,
+    "source_hashes": {
+      "configs/m5_constrained_counterfactual/stay.json": "408ab3b8d2fe8a286882caf038cf3e975509ae7794f4a50578d827d60d52438e",
+      "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+      "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+      "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+    },
+    "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3"
+  },
+  {
+    "name": "m5_b10_fixed_stay_r03",
+    "status": "failed",
+    "error": "worker 0 did not emit ['ROUND_DONE'] within 120.0s",
+    "exit_code": 1,
+    "post_rounds": 0,
+    "expected_post_rounds": 8,
+    "post_bytes": 0,
+    "episode_completion_s": null,
+    "last_observed_after_fault_s": 122.11294363345951,
+    "correctness": {
+      "status": "not_completed"
+    },
+    "latency": null,
+    "changed_slots": null,
+    "source_hashes": {
+      "configs/m5_constrained_counterfactual/stay.json": "408ab3b8d2fe8a286882caf038cf3e975509ae7794f4a50578d827d60d52438e",
+      "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+      "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+      "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+    },
+    "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3"
+  },
+  {
+    "name": "m5_b10_fixed_switch_r01",
+    "status": "complete",
+    "error": null,
+    "exit_code": 0,
+    "post_rounds": 8,
+    "expected_post_rounds": 8,
+    "post_bytes": 402653184,
+    "episode_completion_s": 85.029435997,
+    "last_observed_after_fault_s": 85.18832256644964,
+    "correctness": {
+      "active_active_use": {
+        "baseline_send_bytes": {
+          "A": 50331648,
+          "B": 50331648
+        },
+        "baseline_send_steps": {
+          "A": 24,
+          "B": 24
+        },
+        "passed": true,
+        "required": true
+      },
+      "checksum_errors": 0,
+      "expected_collective_rounds": 11,
+      "limitation": "This checks framed byte transport and route-version agreement; it is not the deferred true-reduction correctness mode.",
+      "locality": {
+        "changed_sender_ranks": [
+          2
+        ],
+        "changed_slot_count": 3,
+        "changed_slots": [
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 0
+          },
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 2
+          },
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 4
+          }
+        ],
+        "mode": "localized",
+        "passed": true,
+        "required": true,
+        "unchanged_sender_ranks": [
+          0,
+          1,
+          3
+        ]
+      },
+      "mode": "framed-transport-integrity",
+      "observed_collective_rounds": 11,
+      "observed_worker_rounds": 44,
+      "plan_consistency": {
+        "passed": true,
+        "worker_round_cardinality": {
+          "0": 1,
+          "1": 1,
+          "10": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1
+        }
+      },
+      "route_version_cardinality": {
+        "0": 1,
+        "1": 1,
+        "10": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "schedule_conformance": {
+        "failure_count": 0,
+        "failures": [],
+        "passed": true
+      },
+      "status": "pass",
+      "version_errors": 0,
+      "worker_error_count": 0,
+      "worker_errors": []
+    },
+    "latency": {
+      "l_commit_to_recovered_round_ms": 10723.944473,
+      "l_coordination_ms": 1.358928,
+      "l_detection_ms": null,
+      "l_fault_to_commit_ms": 17.534568,
+      "l_fault_to_first_recovered_step_ms": null,
+      "l_fault_to_recovered_round_complete_ms": 10741.479041,
+      "l_host_ms": null,
+      "l_suspect_to_commit_ms": null,
+      "l_suspect_to_first_recovered_step_ms": null,
+      "l_switch_ms": null,
+      "latency_target": {
+        "numeric_target_ms": null,
+        "source": "Review feedback requests millisecond-level detection and recovery without a numeric threshold.",
+        "status": "not_formally_specified",
+        "unit": "ms"
+      }
+    },
+    "changed_slots": [
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 0
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 2
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 4
+      }
+    ],
+    "source_hashes": {
+      "configs/m5_constrained_counterfactual/switch.json": "ae987a92199e15960cfda4f319eec55748b1a3a25791231dc8e1fbb1365c2a36",
+      "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+      "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+      "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+    },
+    "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3"
+  },
+  {
+    "name": "m5_b10_fixed_switch_r02",
+    "status": "complete",
+    "error": null,
+    "exit_code": 0,
+    "post_rounds": 8,
+    "expected_post_rounds": 8,
+    "post_bytes": 402653184,
+    "episode_completion_s": 84.809261469,
+    "last_observed_after_fault_s": 84.91964752972126,
+    "correctness": {
+      "active_active_use": {
+        "baseline_send_bytes": {
+          "A": 50331648,
+          "B": 50331648
+        },
+        "baseline_send_steps": {
+          "A": 24,
+          "B": 24
+        },
+        "passed": true,
+        "required": true
+      },
+      "checksum_errors": 0,
+      "expected_collective_rounds": 11,
+      "limitation": "This checks framed byte transport and route-version agreement; it is not the deferred true-reduction correctness mode.",
+      "locality": {
+        "changed_sender_ranks": [
+          2
+        ],
+        "changed_slot_count": 3,
+        "changed_slots": [
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 0
+          },
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 2
+          },
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 4
+          }
+        ],
+        "mode": "localized",
+        "passed": true,
+        "required": true,
+        "unchanged_sender_ranks": [
+          0,
+          1,
+          3
+        ]
+      },
+      "mode": "framed-transport-integrity",
+      "observed_collective_rounds": 11,
+      "observed_worker_rounds": 44,
+      "plan_consistency": {
+        "passed": true,
+        "worker_round_cardinality": {
+          "0": 1,
+          "1": 1,
+          "10": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1
+        }
+      },
+      "route_version_cardinality": {
+        "0": 1,
+        "1": 1,
+        "10": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "schedule_conformance": {
+        "failure_count": 0,
+        "failures": [],
+        "passed": true
+      },
+      "status": "pass",
+      "version_errors": 0,
+      "worker_error_count": 0,
+      "worker_errors": []
+    },
+    "latency": {
+      "l_commit_to_recovered_round_ms": 10692.845581,
+      "l_coordination_ms": 2.054682,
+      "l_detection_ms": null,
+      "l_fault_to_commit_ms": 18.671159,
+      "l_fault_to_first_recovered_step_ms": null,
+      "l_fault_to_recovered_round_complete_ms": 10711.51674,
+      "l_host_ms": null,
+      "l_suspect_to_commit_ms": null,
+      "l_suspect_to_first_recovered_step_ms": null,
+      "l_switch_ms": null,
+      "latency_target": {
+        "numeric_target_ms": null,
+        "source": "Review feedback requests millisecond-level detection and recovery without a numeric threshold.",
+        "status": "not_formally_specified",
+        "unit": "ms"
+      }
+    },
+    "changed_slots": [
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 0
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 2
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 4
+      }
+    ],
+    "source_hashes": {
+      "configs/m5_constrained_counterfactual/switch.json": "ae987a92199e15960cfda4f319eec55748b1a3a25791231dc8e1fbb1365c2a36",
+      "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+      "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+      "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+    },
+    "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3"
+  },
+  {
+    "name": "m5_b10_fixed_switch_r03",
+    "status": "complete",
+    "error": null,
+    "exit_code": 0,
+    "post_rounds": 8,
+    "expected_post_rounds": 8,
+    "post_bytes": 402653184,
+    "episode_completion_s": 84.803559237,
+    "last_observed_after_fault_s": 84.89439103100449,
+    "correctness": {
+      "active_active_use": {
+        "baseline_send_bytes": {
+          "A": 50331648,
+          "B": 50331648
+        },
+        "baseline_send_steps": {
+          "A": 24,
+          "B": 24
+        },
+        "passed": true,
+        "required": true
+      },
+      "checksum_errors": 0,
+      "expected_collective_rounds": 11,
+      "limitation": "This checks framed byte transport and route-version agreement; it is not the deferred true-reduction correctness mode.",
+      "locality": {
+        "changed_sender_ranks": [
+          2
+        ],
+        "changed_slot_count": 3,
+        "changed_slots": [
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 0
+          },
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 2
+          },
+          {
+            "new_route": "B",
+            "old_route": "A",
+            "sender_rank": 2,
+            "step_id": 4
+          }
+        ],
+        "mode": "localized",
+        "passed": true,
+        "required": true,
+        "unchanged_sender_ranks": [
+          0,
+          1,
+          3
+        ]
+      },
+      "mode": "framed-transport-integrity",
+      "observed_collective_rounds": 11,
+      "observed_worker_rounds": 44,
+      "plan_consistency": {
+        "passed": true,
+        "worker_round_cardinality": {
+          "0": 1,
+          "1": 1,
+          "10": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1
+        }
+      },
+      "route_version_cardinality": {
+        "0": 1,
+        "1": 1,
+        "10": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1
+      },
+      "schedule_conformance": {
+        "failure_count": 0,
+        "failures": [],
+        "passed": true
+      },
+      "status": "pass",
+      "version_errors": 0,
+      "worker_error_count": 0,
+      "worker_errors": []
+    },
+    "latency": {
+      "l_commit_to_recovered_round_ms": 10692.63185,
+      "l_coordination_ms": 1.427767,
+      "l_detection_ms": null,
+      "l_fault_to_commit_ms": 19.971838,
+      "l_fault_to_first_recovered_step_ms": null,
+      "l_fault_to_recovered_round_complete_ms": 10712.603688,
+      "l_host_ms": null,
+      "l_suspect_to_commit_ms": null,
+      "l_suspect_to_first_recovered_step_ms": null,
+      "l_switch_ms": null,
+      "latency_target": {
+        "numeric_target_ms": null,
+        "source": "Review feedback requests millisecond-level detection and recovery without a numeric threshold.",
+        "status": "not_formally_specified",
+        "unit": "ms"
+      }
+    },
+    "changed_slots": [
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 0
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 2
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 4
+      }
+    ],
+    "source_hashes": {
+      "configs/m5_constrained_counterfactual/switch.json": "ae987a92199e15960cfda4f319eec55748b1a3a25791231dc8e1fbb1365c2a36",
+      "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+      "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+      "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+    },
+    "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3"
+  }
+]

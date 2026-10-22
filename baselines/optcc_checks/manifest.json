@@ -1,0 +1,114 @@
+{
+  "timestamp_utc": "2026-10-10T03:46:36.405513+00:00",
+  "scope": "standalone DAG generation only",
+  "source_hashes": {
+    "multi_gpu_per_server.hh": "51dc351a0f796e49766b98484eb52ef8783cebdc3eb84fcfa565a730daced3b7",
+    "single_straggler.cpp": "a3b82770435e9b5dc4d217b11414b8c0341975a9f9870fc6468bf86b500786d5",
+    "README.md": "998c2b7f13529d09668f723f6c16bf5b598cb86e1fd0ce1ae86da49df75225d4",
+    ".gitignore": "4031496dd9e46e91d4e80dc57544fa4cedb00e5e0df689af727f352b13cc273d",
+    "multi_straggler.cpp": "feb89a620f073aa8809af3bd44568c98a78d1d3e8b5c5423bc1148a6c59fb0b2",
+    "multi_gpu_per_server.cpp": "ec7037f52366db5348bd4226f21050a05632e956229407979006ea866103b0fd"
+  },
+  "zip_sha256": "b8cd67a4d42a6436b5908d3a6227400239ce429f53b749db03c32c38621e1079",
+  "runs": [
+    {
+      "kind": "build",
+      "name": "single_straggler",
+      "exit_code": 0
+    },
+    {
+      "kind": "dag",
+      "name": "single_L2",
+      "argv": [
+        "single_straggler",
+        "5",
+        "4",
+        "9000",
+        "1000",
+        "2"
+      ],
+      "exit_code": 0,
+      "json_files": [
+        {
+          "name": "dag.json",
+          "bytes": 12336,
+          "sha256": "ebb5e4c41dee52ee8fb8f13a2a9885a454338f477416e18b76674d9e4a524b06",
+          "json_type": "dict"
+        }
+      ]
+    },
+    {
+      "kind": "dag",
+      "name": "single_L1p5",
+      "argv": [
+        "single_straggler",
+        "5",
+        "4",
+        "9000",
+        "1000",
+        "1.5"
+      ],
+      "exit_code": 0,
+      "json_files": [
+        {
+          "name": "dag.json",
+          "bytes": 14727,
+          "sha256": "78ec4ded391082b8fb423dfa098e8f745f82dcc61257248626bf545d7294370c",
+          "json_type": "dict"
+        }
+      ]
+    },
+    {
+      "kind": "build",
+      "name": "multi_straggler",
+      "exit_code": 0
+    },
+    {
+      "kind": "dag",
+      "name": "multi",
+      "argv": [
+        "multi_straggler",
+        "5",
+        "4",
+        "2",
+        "9000",
+        "1000",
+        "2,1.5"
+      ],
+      "exit_code": 0,
+      "json_files": [
+        {
+          "name": "multi_bad_dag.json",
+          "bytes": 23081,
+          "sha256": "f4e7b9dbb8ee3131f83b32f46645722b0343255532bb54a6600e1959cb6dcb2d",
+          "json_type": "dict"
+        }
+      ]
+    },
+    {
+      "kind": "build",
+      "name": "multi_gpu_per_server",
+      "exit_code": 0
+    },
+    {
+      "kind": "dag",
+      "name": "mgs",
+      "argv": [
+        "multi_gpu_per_server",
+        "4",
+        "4",
+        "2.0",
+        "4"
+      ],
+      "exit_code": 0,
+      "json_files": [
+        {
+          "name": "multi_gpu_dag.json",
+          "bytes": 19581,
+          "sha256": "ee04cc22de12c00af81cb9a7d86b6c97f44904be8cf7fb0e95e2cf773047df94",
+          "json_type": "dict"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "passed": true,
+  "campaign": "m13_adaptive_smoke_v1",
+  "source": "m13_source_frozen_adaptive_dev_v1",
+  "registrations": 4,
+  "report_rows": 19200,
+  "probe_packets": 77696,
+  "wire_bytes": 654384000,
+  "source_hashes": {
+    "binary": "7beea34fc5a98870dd90150f8628142b19c4a9f7ae208dfd97f85834e8df78d8",
+    "detector": "0be57ebecb842e3eec6ec0d525ad2a87c7556ae1d156044414b1dabb2012fa5b",
+    "runner": "d7cff093ad611fd5b4519b7cbce462a7738250f4c0bc129a43b38549fdcdf970",
+    "cpp": "1ad1b00fe542db4d688ae4de597c6893662337d45c42d888fcfaa75ddd9bb1b5",
+    "header": "208fd516805d356d8f129301aa7c434d5808389d46e5afe3384c8e39423f7169",
+    "native_base": "f3f038dfecaf50b1c36ce65964e8a31b8501707639d5f4611075e4ed196a7aa4",
+    "probe_budget_header": "abf1bc76bef3540fc42e009cdcf33671dc12aed8599b5413628f4555c1a0de00",
+    "hybrid_base": "cef319ca2f069a508602023bc6c410685802c74d249ff1468338456460eb739c",
+    "early_detector": "96adb8ca044916d5b0d76dffb7326f59ba322a553447c02545f29b9013710297",
+    "base_detector": "d7166b6d3ef246103c4b9c9e7a034e9f7e50c9acd502bf4b546dfec7a5562678"
+  },
+  "artifacts": {
+    "adaptive_businessloss_80_businessloss_r001": {
+      "reports.jsonl": "cdf8ce32e45f652b3e6da25e3d3bc85b8596851441b99cbc1d65ff2fc9d65490",
+      "offers.jsonl": "830a243a7a7ccd430bde77cee52e0f8c48f09208dd57af09fd5c4706f52cecfd",
+      "alarms.jsonl": "8945a28ffbda4992de80bfaefce9be4c87a2edaadaf5fd68a48f8274ced28aa6",
+      "baseline_alarms.jsonl": "ce3776231d51a6130a71699735dda6db714a9f9d90de43e9178215477f53f428",
+      "samples.jsonl": "3bac48a7feb40e22d2e900c1148187dae90aba5fde0b7a1f4aaa45135b34d4a1",
+      "packet_events.csv": "aee245ed8556f7c214da274ce4f4f0bedabc5f8d6103514987142e69ddf8ed1c",
+      "probe_waves.csv": "bcadf8117c91de9a8392ad030fe70ddbc15588c1ef3dff44210213d0dd2292f8"
+    },
+    "adaptive_nominal_80_nominal_r001": {
+      "reports.jsonl": "744ec9b2550bc2bb5f1ff53bfbc46de6e0b158285b46bb51861b2a4f36903cd9",
+      "offers.jsonl": "b5872fa2aec2830855bbe364bfd7f551619bfe8a185a36e97fcd1ce5dff74134",
+      "alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baseline_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "samples.jsonl": "2c09a66a9c60f15c0cd650927235978ee1f5734407161b97547116d97c9e6bd0",
+      "packet_events.csv": "3379301f1211a09ea3d2f92106e0dd5abffa075657b9ac49c7ecaacf0e421d0d",
+      "probe_waves.csv": "bcadf8117c91de9a8392ad030fe70ddbc15588c1ef3dff44210213d0dd2292f8"
+    },
+    "adaptive_businessloss_1000_businessloss_r001": {
+      "reports.jsonl": "7dc370f4b286abe3899acd2008514c57f372f9693451afd65785f215d6105054",
+      "offers.jsonl": "17e487fe220becfac195e63957c51a58f610fe9643b8b83213ef58c08a58957a",
+      "alarms.jsonl": "cd9095ced335fef5645712d0fac3b8b08cdd253cff285ccb48e079451a50f41a",
+      "baseline_alarms.jsonl": "809837462db93fa0bfbe85574516c91f514040d1b17ae4d41a6b4e4c6bd68234",
+      "samples.jsonl": "0fa8501697747f9e1e7660d1fad2be56887976e32498a5c38f445df0839e0b08",
+      "packet_events.csv": "4d3f5edba93c7abc5620d7f4b8d4db866c33fde49c8c49ce8a3debf887741f14",
+      "probe_waves.csv": "60ecb9ba73c6a9ab067b0b5afec164df2d4267d2943a6bbf1b246573321215f7"
+    },
+    "adaptive_nominal_1000_nominal_r001": {
+      "reports.jsonl": "93499355f36223b5d21671f30ece4a31d66907c2a45fdd35edac8cc1e531fe5b",
+      "offers.jsonl": "5368f559e0819fad71a2ee6067e1437e902bc5b3306bc703afbf09bdc06c5439",
+      "alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baseline_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "samples.jsonl": "8349011f655089bad3436323ae59bb7557cec47e3afa516a9a98b74fba06097a",
+      "packet_events.csv": "9ef91af7194225d89a821c15666287e39d26dcd378ad58336bed4a1ec93d8bf6",
+      "probe_waves.csv": "60ecb9ba73c6a9ab067b0b5afec164df2d4267d2943a6bbf1b246573321215f7"
+    }
+  },
+  "summary": {
+    "groups": {
+      "adaptive_businessloss_80_businessloss": {
+        "kind": "fault",
+        "registered": 1,
+        "verified": 1,
+        "timely": 1,
+        "late": 0,
+        "missed_or_unverified": 0,
+        "p95_ms": 59.162201,
+        "timely_wilson95": [
+          0.20654931437723745,
+          1
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          59.162201
+        ]
+      },
+      "adaptive_nominal_80_nominal": {
+        "kind": "control",
+        "registered": 1,
+        "verified": 1,
+        "timely": null,
+        "late": null,
+        "missed_or_unverified": null,
+        "p95_ms": null,
+        "timely_wilson95": null,
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": []
+      },
+      "adaptive_businessloss_1000_businessloss": {
+        "kind": "fault",
+        "registered": 1,
+        "verified": 1,
+        "timely": 1,
+        "late": 0,
+        "missed_or_unverified": 0,
+        "p95_ms": 48.701337,
+        "timely_wilson95": [
+          0.20654931437723745,
+          1
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          48.701337
+        ]
+      },
+      "adaptive_nominal_1000_nominal": {
+        "kind": "control",
+        "registered": 1,
+        "verified": 1,
+        "timely": null,
+        "late": null,
+        "missed_or_unverified": null,
+        "p95_ms": null,
+        "timely_wilson95": null,
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": []
+      }
+    },
+    "registered": 4,
+    "terminal": 4,
+    "strict_verdict": "PASS",
+    "primary_faults": 2,
+    "timely_faults": 2,
+    "verified_control_trials": 2,
+    "claim": "Class-separated causal UDP/application observations and charged probes/reports; not collective recovery",
+    "per_condition_95_verdict": "PASS"
+  },
+  "claim": "Exact native/Python replay, serialized payloads, actual packet observations and accounting; not physical deployment"
+}

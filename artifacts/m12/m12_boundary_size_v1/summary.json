@@ -1,0 +1,90 @@
+{
+  "groups": {
+    "iid_80mbps_0.005": {
+      "kind": "fault",
+      "registered": 20,
+      "verified": 20,
+      "timely": 20,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 72.079444,
+      "timely_wilson95": [
+        0.8388748419471806,
+        1
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        55.941016,
+        57.044451,
+        57.452513,
+        59.322673,
+        60.178986,
+        60.865448,
+        61.002267,
+        62.773003,
+        63.264622,
+        63.999212,
+        64.755806,
+        65.986355,
+        68.633847,
+        69.447189,
+        70.382644,
+        70.538028,
+        71.144148,
+        71.46991,
+        72.079444,
+        74.832667
+      ]
+    },
+    "selective_80mbps_0.005": {
+      "kind": "fault",
+      "registered": 20,
+      "verified": 20,
+      "timely": 5,
+      "late": 14,
+      "missed_or_unverified": 1,
+      "p95_ms": 231.144148,
+      "timely_wilson95": [
+        0.11186170140766569,
+        0.468700877618744
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        72.773003,
+        78.633847,
+        79.322673,
+        79.447189,
+        82.079444,
+        101.46991,
+        107.044451,
+        110.382644,
+        120.178986,
+        137.452513,
+        160.538028,
+        164.755806,
+        171.002267,
+        173.999212,
+        185.941016,
+        185.986355,
+        224.832667,
+        230.865448,
+        231.144148,
+        null
+      ]
+    }
+  },
+  "registered": 40,
+  "terminal": 40,
+  "strict_verdict": "FAIL",
+  "primary_faults": 40,
+  "timely_faults": 25,
+  "verified_control_trials": 0,
+  "claim": "Costed same-path UDP probes and native delivery impairment decisions; not collective recovery",
+  "per_condition_95_verdict": "FAIL"
+}

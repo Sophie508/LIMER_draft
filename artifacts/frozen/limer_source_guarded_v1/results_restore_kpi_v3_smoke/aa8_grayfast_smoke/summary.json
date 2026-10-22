@@ -1,0 +1,381 @@
+{
+  "baseline": {
+    "baseline_median_bps": 377422441.1011963,
+    "bytes_completed": [
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.066967188,
+      1.066733117
+    ],
+    "fault_period_retention": 1.0,
+    "iqr_throughput_bps": 41403.96287328005,
+    "median_throughput_bps": 377422441.1011963,
+    "post_recovery_retention": 1.0,
+    "round_count": 2,
+    "throughput_bps": [
+      377381037.13832295,
+      377463845.06406957
+    ]
+  },
+  "condition": "C3",
+  "correctness_status": "pass",
+  "detector_interface": "sA-eth3",
+  "detector_interface_operstate_after": "up",
+  "experiment_family": "active_active_v1",
+  "fault_applied": true,
+  "fault_interface": "w2-eth0",
+  "fault_interface_operstate_after": "up",
+  "fault_kind": "rate_cap",
+  "fault_observation_isolation": {
+    "detector_location": "switch-facing peer interface counters",
+    "detector_reads_injector_qdisc": false,
+    "injector_location": "worker-side egress qdisc",
+    "observed_counter": "rx_bytes",
+    "same_interface": false
+  },
+  "fault_period_retention": 0.9996853497318711,
+  "fault_to_restoration_window": {
+    "baseline_median_bps": 377422441.1011963,
+    "interval_retention": 0.4774988805804706,
+    "interval_throughput_bps": 180218793.1317698,
+    "round_count": 1,
+    "total_bytes_completed": 50331648,
+    "total_duration_s": 2.234246368
+  },
+  "fault_window": null,
+  "host_refinement": {
+    "action": "confirm",
+    "baseline_p95_s": 1.0669554844499998,
+    "confidence": null,
+    "decision_t_monotonic_ns": 3864244626793924,
+    "enabled": true,
+    "gate_mode": "step_cutover",
+    "l_host_ms": 843.822072,
+    "reasons": [
+      "Switch-side burst-rate degradation was active at each slow step.",
+      "2 steps exceeded 1.5x the fault-free step p95 (0.177968s): rank 3 round 3 step 0 (0.882s).",
+      "The alternate fabric health probe passed."
+    ]
+  },
+  "interpretation_boundary": "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, a real GPU cluster, or production switch hardware.",
+  "latency": {
+    "l_commit_to_recovered_round_ms": 1342.000405,
+    "l_coordination_ms": 0.798025,
+    "l_detection_ms": 895.914543,
+    "l_fault_to_commit_ms": 896.712568,
+    "l_fault_to_first_recovered_step_ms": 1120.355827,
+    "l_fault_to_recovered_round_complete_ms": 2238.712973,
+    "l_host_ms": 843.822072,
+    "l_suspect_to_commit_ms": 844.620097,
+    "l_suspect_to_first_recovered_step_ms": 1068.263356,
+    "l_switch_ms": 52.092471,
+    "latency_target": {
+      "numeric_target_ms": null,
+      "source": "Review feedback requests millisecond-level detection and recovery without a numeric threshold.",
+      "status": "not_formally_specified",
+      "unit": "ms"
+    }
+  },
+  "post_fault": {
+    "baseline_median_bps": 377422441.1011963,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      2.234246368,
+      1.140335235,
+      1.177135894,
+      1.145094261,
+      1.091746582,
+      1.067158719,
+      1.06718593,
+      1.067744383,
+      1.066916078,
+      1.066890808,
+      1.067124889,
+      1.067145929,
+      1.067622782,
+      1.06726468,
+      1.066635857,
+      1.067084199,
+      1.066927868,
+      1.067134599,
+      1.067520561,
+      1.06723577,
+      1.066909277
+    ],
+    "fault_period_retention": 0.9996853497318711,
+    "iqr_throughput_bps": 233308.2777751088,
+    "median_throughput_bps": 377303685.0289059,
+    "post_recovery_retention": 0.9996853497318711,
+    "round_count": 21,
+    "throughput_bps": [
+      180218793.1317698,
+      353100712.5286276,
+      342061767.0843023,
+      351633221.5728396,
+      368815612.1930501,
+      377313305.7257999,
+      377303685.0289059,
+      377106347.18459576,
+      377399115.3594744,
+      377408054.30202943,
+      377325267.3146114,
+      377317827.91629803,
+      377149299.16135865,
+      377275845.01344126,
+      377498263.6834418,
+      377339655.4623709,
+      377394944.9411138,
+      377321833.98169434,
+      377185413.29341197,
+      377286064.9151593,
+      377401521.0854709
+    ]
+  },
+  "post_recovery": {
+    "baseline_median_bps": 377422441.1011963,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      2.234246368,
+      1.140335235,
+      1.177135894,
+      1.145094261,
+      1.091746582,
+      1.067158719,
+      1.06718593,
+      1.067744383,
+      1.066916078,
+      1.066890808,
+      1.067124889,
+      1.067145929,
+      1.067622782,
+      1.06726468,
+      1.066635857,
+      1.067084199,
+      1.066927868,
+      1.067134599,
+      1.067520561,
+      1.06723577,
+      1.066909277
+    ],
+    "fault_period_retention": 0.9996853497318711,
+    "iqr_throughput_bps": 233308.2777751088,
+    "median_throughput_bps": 377303685.0289059,
+    "post_recovery_retention": 0.9996853497318711,
+    "round_count": 21,
+    "throughput_bps": [
+      180218793.1317698,
+      353100712.5286276,
+      342061767.0843023,
+      351633221.5728396,
+      368815612.1930501,
+      377313305.7257999,
+      377303685.0289059,
+      377106347.18459576,
+      377399115.3594744,
+      377408054.30202943,
+      377325267.3146114,
+      377317827.91629803,
+      377149299.16135865,
+      377275845.01344126,
+      377498263.6834418,
+      377339655.4623709,
+      377394944.9411138,
+      377321833.98169434,
+      377185413.29341197,
+      377286064.9151593,
+      377401521.0854709
+    ]
+  },
+  "post_recovery_retention": 0.9996853497318711,
+  "recovery": {
+    "commit_t_monotonic_ns": 3864244627591949,
+    "committed": true,
+    "decision": {
+      "action": "commit",
+      "changed_slots": [
+        {
+          "new_route": "B",
+          "old_route": "A",
+          "sender_rank": 2,
+          "step_id": 0
+        },
+        {
+          "new_route": "B",
+          "old_route": "A",
+          "sender_rank": 2,
+          "step_id": 2
+        },
+        {
+          "new_route": "B",
+          "old_route": "A",
+          "sender_rank": 2,
+          "step_id": 4
+        }
+      ],
+      "effective_round": 3,
+      "effective_step": 1,
+      "missing_ranks": [],
+      "plan": {
+        "policy": "localized_reroute",
+        "routes": [
+          [
+            "A",
+            "B",
+            "A",
+            "B",
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "A",
+            "B",
+            "A",
+            "B",
+            "A"
+          ],
+          [
+            "B",
+            "B",
+            "B",
+            "B",
+            "B",
+            "B"
+          ],
+          [
+            "B",
+            "A",
+            "B",
+            "A",
+            "B",
+            "A"
+          ]
+        ],
+        "world_size": 4
+      },
+      "plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "policy": "localized_reroute",
+      "ready_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "version": 1
+    },
+    "enabled": true,
+    "first_recovered_round_id": 3,
+    "l_commit_to_recovered_round_ms": 1342.000405,
+    "l_coordination_ms": 0.798025,
+    "l_fault_to_commit_ms": 896.712568,
+    "l_fault_to_recovered_round_complete_ms": 2238.712973,
+    "oracle": false
+  },
+  "routing": {
+    "changed_slots": [
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 0
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 2
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 4
+      }
+    ],
+    "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+    "initial_policy": "balanced_active_active",
+    "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+    "recovery_policy": "localized"
+  },
+  "run_id": "aa8_grayfast_smoke",
+  "scenario_id": "AA8_GRAYFAST",
+  "status": "complete",
+  "switch_detection": {
+    "baseline_median_bps": 101150295.1440732,
+    "detector_rule": "burst",
+    "enabled": true,
+    "execution_boundary": {
+      "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+      "data_source": "switch-facing Linux interface counters",
+      "process_placement": "orchestrator/root namespace management-plane proxy",
+      "resource_budget_enforced": false,
+      "switch_resident": false
+    },
+    "fault_t_monotonic_ns": 3864243730879381,
+    "first_suspect_t_monotonic_ns": 3864243782971852,
+    "interface": "sA-eth3",
+    "l_switch_ms": 52.092471,
+    "rule_version": "l1-v0.3-burst-aware-rx-rate",
+    "state_proxy": {
+      "calibration_rate_samples": 68,
+      "max_consecutive_evidence_samples": 2,
+      "monitored_ports": 1,
+      "rss_isolated_or_budgeted": false
+    },
+    "suspect_count": 1,
+    "triggered": true
+  },
+  "switch_sampling": {
+    "max_actual_interval_ms": 20.061298,
+    "median_actual_interval_ms": 20.000068499999998,
+    "sample_count": 1357,
+    "target_interval_ms": 20.0
+  },
+  "topology": "dual"
+}

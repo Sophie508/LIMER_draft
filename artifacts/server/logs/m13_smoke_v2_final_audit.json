@@ -1,0 +1,114 @@
+{
+  "passed": true,
+  "source": "m13_source_frozen_dev_v2",
+  "campaign": "m13_smoke_v2",
+  "registrations": 3,
+  "report_rows": 14400,
+  "probe_packets": 209160,
+  "wire_bytes": 73146240,
+  "source_hashes": {
+    "binary": "b0a4057eb6fa04c8e229aa65b446071a8569c044ae7f081bf7c961e408e18373",
+    "detector": "0be57ebecb842e3eec6ec0d525ad2a87c7556ae1d156044414b1dabb2012fa5b",
+    "runner": "60657bb442e8fdd4e60c58200e4aa496e3e58db8fc9b6cde569a9e037ea9deea",
+    "cpp": "2efb41106079265b5f0ed53a2c326fd81e0f4be65eed9c3387ffcf6042c044d6",
+    "header": "208fd516805d356d8f129301aa7c434d5808389d46e5afe3384c8e39423f7169",
+    "native_base": "f3f038dfecaf50b1c36ce65964e8a31b8501707639d5f4611075e4ed196a7aa4",
+    "hybrid_base": "cef319ca2f069a508602023bc6c410685802c74d249ff1468338456460eb739c",
+    "early_detector": "96adb8ca044916d5b0d76dffb7326f59ba322a553447c02545f29b9013710297",
+    "base_detector": "d7166b6d3ef246103c4b9c9e7a034e9f7e50c9acd502bf4b546dfec7a5562678"
+  },
+  "artifacts": {
+    "low_selective_r001": {
+      "reports.jsonl": "fe97d2479102e6ee8e04589bb113087584d22a0b51e8c1ad979183db2dd99532",
+      "offers.jsonl": "398e393072b1eed0236207547966ff88e4c5d76c2fa17cfcdb3cf2e3ddd68ce5",
+      "alarms.jsonl": "6f0afb2720794b214c753028081efeaba40f8b1a2af9cf8132d93579670d3a62",
+      "baseline_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "samples.jsonl": "3851cb5ea2cf341d3ac6ebd0ab30c4e25e4c3c16fca3bb2601d0cfa5cb1bd779",
+      "packet_events.csv": "d6203ff49c4da7bfa46ccae5c0f96289a2428da074d07f52235094d0928a93e4"
+    },
+    "low_nominal_r001": {
+      "reports.jsonl": "4b12ce73c787970b6c9c905296b4be86214b9f2edd7d3b33c68339307e73b95d",
+      "offers.jsonl": "aeaa5573f1dab0420dfe6abd2694fb859c14b5a53212aac88f268c0a50092802",
+      "alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baseline_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "samples.jsonl": "0093463568d9a44c28940e5b8d06dbcf790c246c21db1bd7483c5f9bcca45223",
+      "packet_events.csv": "2cab6438fae13d3a82039e423e394b904cc27f5a2279afbc4972f115cd9f66bb"
+    },
+    "low_processing80_r001": {
+      "reports.jsonl": "ad508e8fb3d346d4804994a952576ca5c1b822207e3aa21f2d26fcf943f07df2",
+      "offers.jsonl": "2d539b30cba64f5bd9ddf02f5dbae903073e0e84c726360ff730a0bef09bb29a",
+      "alarms.jsonl": "12d1fcb1d0629c1dad31e790df4f3bbf2be538765fec627aa68ca2e2d1c85075",
+      "baseline_alarms.jsonl": "809837462db93fa0bfbe85574516c91f514040d1b17ae4d41a6b4e4c6bd68234",
+      "samples.jsonl": "3a0a165c41d47577b151c333c2eea6af26a9e6d158a09474145241675ff6b6d3",
+      "packet_events.csv": "9fdb78c4e6e77fc8ed833ce1d67455e03a615f601298a4ec7c7b8736b93d3933"
+    }
+  },
+  "summary": {
+    "groups": {
+      "low_selective": {
+        "kind": "fault",
+        "registered": 1,
+        "verified": 1,
+        "timely": 0,
+        "late": 1,
+        "missed_or_unverified": 0,
+        "p95_ms": 138.246252,
+        "timely_wilson95": [
+          0,
+          0.7934506856227626
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          138.246252
+        ]
+      },
+      "low_nominal": {
+        "kind": "control",
+        "registered": 1,
+        "verified": 1,
+        "timely": null,
+        "late": null,
+        "missed_or_unverified": null,
+        "p95_ms": null,
+        "timely_wilson95": null,
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": []
+      },
+      "low_processing80": {
+        "kind": "fault",
+        "registered": 1,
+        "verified": 1,
+        "timely": 1,
+        "late": 0,
+        "missed_or_unverified": 0,
+        "p95_ms": 45.825045,
+        "timely_wilson95": [
+          0.20654931437723745,
+          1
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          45.825045
+        ]
+      }
+    },
+    "registered": 3,
+    "terminal": 3,
+    "strict_verdict": "FAIL",
+    "primary_faults": 2,
+    "timely_faults": 1,
+    "verified_control_trials": 1,
+    "claim": "Class-separated causal UDP/application observations and charged probes/reports; not collective recovery",
+    "per_condition_95_verdict": "FAIL"
+  },
+  "claim": "Native causal report replay and exact accounting, not independent physical-cause proof"
+}

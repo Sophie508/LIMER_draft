@@ -1,0 +1,83 @@
+{
+  "id": "low_loss_0.01_r13",
+  "start_unix": 1791642612.9055147,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m8-10032",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m8_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m8_backend/simulation/build/scratch/ns3.36.1-LimerBatchObservation-debug",
+    "--out=/work/runs/m8_validation_v1/low_loss_0.01_r13",
+    "--scenario=loss",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.01",
+    "--reportLoss=0",
+    "--runId=10032",
+    "--faultTimeMs=55.060251"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": 114.547749,
+  "timely": false,
+  "missed": false,
+  "late": true,
+  "false_alarm_events": 0,
+  "alarms": [
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 169608000,
+      "missing_packets": 2,
+      "evidence_batches": [
+        9,
+        10
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 219608000,
+      "missing_packets": 2,
+      "evidence_batches": [
+        15
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 289608000,
+      "missing_packets": 2,
+      "evidence_batches": [
+        22
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "input_rows": 800,
+  "completed_batches": 400,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 88,
+  "packet_audit": true,
+  "input_sha256": "f37e987aecb68e2c5ff192e1e0648bde208728fc43fb24ef137fcbcc40c53b4c",
+  "truth_sha256": "030730b0a32538e44a47f94e6a6d986d9fac2231cff62d62e9f3e0c6331a16ad",
+  "report_bytes": 51200,
+  "reports_dropped": 0,
+  "sent_packets": 13280,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 2.0866076946258545
+}

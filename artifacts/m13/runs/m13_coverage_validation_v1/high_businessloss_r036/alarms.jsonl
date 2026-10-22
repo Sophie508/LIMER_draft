@@ -1,0 +1,1 @@
+{"rule_version":"business-delivery-v1","path":"2/A","decision_t_ns":104763200,"signal":"data_gap","missing_packets":20,"evidence_batches":[4],"gap_age_ns":41190800,"claim":"Observed delivery impairment; cause unresolved"}

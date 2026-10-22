@@ -1,0 +1,27 @@
+{
+    "condition": "C5",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 3,
+    "fault_rate_mbit": 20.0,
+    "fault_loss_pct": 0.0,
+    "detector": true,
+    "recovery": true,
+    "oracle": false,
+    "transient_ms": 100,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA5_TRANSIENT",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "localized",
+    "detector_rule": "burst",
+    "host_gate": "step",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "The 100 ms transient rate cap now runs against the burst-aware switch rule and the step-level host gate instead of the completed-round gate; suspicion is expected early, but the switch-side symptom clears before enough slow steps complete while it is active.",
+    "expected": "The burst-aware rule may raise suspicion during the transient, the step gate refuses to confirm because the degraded-burst symptom clears, no recovery commits, and throughput retention stays near the fault-free baseline."
+}

@@ -1,0 +1,228 @@
+{
+  "Id": "eed5e77e5a2ddf7212b7c64f357725b1e04ca14e5cae55425827f3bac0518d8c",
+  "Created": "2026-10-10T05:50:19.856130796Z",
+  "Path": "bash",
+  "Args": [
+    "/runtime/mininet_entry.sh",
+    "python3",
+    "-m",
+    "limer_v0.orchestrator",
+    "--config",
+    "configs/m4b_policy/aa12_policy_switch.json",
+    "--results-dir",
+    "/results",
+    "--workdir",
+    "/work",
+    "--run-id",
+    "m5_aa12_switch_r01"
+  ],
+  "State": {
+    "Status": "running",
+    "Running": true,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 1312881,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-10-10T05:50:19.886018116Z",
+    "FinishedAt": "0001-01-01T00:00:00Z"
+  },
+  "Image": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3",
+  "ResolvConfPath": "/home/suliu/scratch/LIMER_WORK_2026-10-10/docker-data/containers/eed5e77e5a2ddf7212b7c64f357725b1e04ca14e5cae55425827f3bac0518d8c/resolv.conf",
+  "HostnamePath": "/home/suliu/scratch/LIMER_WORK_2026-10-10/docker-data/containers/eed5e77e5a2ddf7212b7c64f357725b1e04ca14e5cae55425827f3bac0518d8c/hostname",
+  "HostsPath": "/home/suliu/scratch/LIMER_WORK_2026-10-10/docker-data/containers/eed5e77e5a2ddf7212b7c64f357725b1e04ca14e5cae55425827f3bac0518d8c/hosts",
+  "LogPath": "/home/suliu/scratch/LIMER_WORK_2026-10-10/docker-data/containers/eed5e77e5a2ddf7212b7c64f357725b1e04ca14e5cae55425827f3bac0518d8c/eed5e77e5a2ddf7212b7c64f357725b1e04ca14e5cae55425827f3bac0518d8c-json.log",
+  "Name": "/limer-m5_aa12_switch_r01",
+  "RestartCount": 0,
+  "Driver": "overlayfs",
+  "Platform": "linux",
+  "MountLabel": "",
+  "ProcessLabel": "",
+  "AppArmorProfile": "",
+  "ExecIDs": null,
+  "HostConfig": {
+    "Binds": [
+      "/home/suliu/scratch/LIMER_WORK_2026-10-10/limer_source:/work",
+      "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime:/runtime",
+      "/home/suliu/scratch/LIMER_WORK_2026-10-10/mininet_results:/results"
+    ],
+    "ContainerIDFile": "",
+    "LogConfig": {
+      "Type": "json-file",
+      "Config": {}
+    },
+    "NetworkMode": "bridge",
+    "PortBindings": {},
+    "RestartPolicy": {
+      "Name": "no",
+      "MaximumRetryCount": 0
+    },
+    "AutoRemove": true,
+    "VolumeDriver": "",
+    "VolumesFrom": null,
+    "ConsoleSize": [
+      0,
+      0
+    ],
+    "CapAdd": null,
+    "CapDrop": null,
+    "CgroupnsMode": "private",
+    "Dns": null,
+    "DnsOptions": [],
+    "DnsSearch": [],
+    "ExtraHosts": null,
+    "GroupAdd": null,
+    "IpcMode": "private",
+    "Cgroup": "",
+    "Links": null,
+    "OomScoreAdj": 0,
+    "PidMode": "",
+    "Privileged": true,
+    "PublishAllPorts": false,
+    "ReadonlyRootfs": false,
+    "SecurityOpt": [
+      "label=disable"
+    ],
+    "UTSMode": "",
+    "UsernsMode": "",
+    "ShmSize": 67108864,
+    "Runtime": "runc",
+    "Isolation": "",
+    "CpuShares": 0,
+    "Memory": 4294967296,
+    "NanoCpus": 4000000000,
+    "CgroupParent": "",
+    "BlkioWeight": 0,
+    "BlkioWeightDevice": [],
+    "BlkioDeviceReadBps": [],
+    "BlkioDeviceWriteBps": [],
+    "BlkioDeviceReadIOps": [],
+    "BlkioDeviceWriteIOps": [],
+    "CpuPeriod": 0,
+    "CpuQuota": 0,
+    "CpuRealtimePeriod": 0,
+    "CpuRealtimeRuntime": 0,
+    "CpusetCpus": "",
+    "CpusetMems": "",
+    "Devices": [],
+    "DeviceCgroupRules": null,
+    "DeviceRequests": null,
+    "MemoryReservation": 0,
+    "MemorySwap": 8589934592,
+    "MemorySwappiness": null,
+    "OomKillDisable": null,
+    "PidsLimit": null,
+    "Ulimits": null,
+    "CpuCount": 0,
+    "CpuPercent": 0,
+    "IOMaximumIOps": 0,
+    "IOMaximumBandwidth": 0,
+    "MaskedPaths": null,
+    "ReadonlyPaths": null
+  },
+  "Storage": {
+    "RootFS": {
+      "Snapshot": {
+        "Name": "overlayfs"
+      }
+    }
+  },
+  "Mounts": [
+    {
+      "Type": "bind",
+      "Source": "/home/suliu/scratch/LIMER_WORK_2026-10-10/mininet_results",
+      "Destination": "/results",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime",
+      "Destination": "/runtime",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/suliu/scratch/LIMER_WORK_2026-10-10/limer_source",
+      "Destination": "/work",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    }
+  ],
+  "Config": {
+    "Hostname": "eed5e77e5a2d",
+    "Domainname": "",
+    "User": "",
+    "AttachStdin": false,
+    "AttachStdout": true,
+    "AttachStderr": true,
+    "Tty": false,
+    "OpenStdin": false,
+    "StdinOnce": false,
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "DEBIAN_FRONTEND=noninteractive"
+    ],
+    "Cmd": [
+      "bash",
+      "/runtime/mininet_entry.sh",
+      "python3",
+      "-m",
+      "limer_v0.orchestrator",
+      "--config",
+      "configs/m4b_policy/aa12_policy_switch.json",
+      "--results-dir",
+      "/results",
+      "--workdir",
+      "/work",
+      "--run-id",
+      "m5_aa12_switch_r01"
+    ],
+    "Image": "limer-mininet:2026-10-10-py312",
+    "Volumes": null,
+    "WorkingDir": "/work",
+    "Entrypoint": null,
+    "Labels": {
+      "org.opencontainers.image.version": "24.04"
+    }
+  },
+  "NetworkSettings": {
+    "SandboxID": "5e3bd2120479714dfff993a4ab3faba365c8e1c04ccbbc746ec8bfb433831549",
+    "SandboxKey": "/run/user/1005/limer-docker/exec/netns/5e3bd2120479",
+    "Ports": {},
+    "Networks": {
+      "bridge": {
+        "IPAMConfig": null,
+        "Links": null,
+        "Aliases": null,
+        "DriverOpts": null,
+        "GwPriority": 0,
+        "NetworkID": "79ed73eab6233144b264acf2668387bdebf32cefd70e3af8aa05eaa2bb37cf61",
+        "EndpointID": "e6d4d803bf69ee0ae8efaf73d2985cf1ca8311a13849530c1e342fd23c371f82",
+        "Gateway": "172.17.0.1",
+        "IPAddress": "172.17.0.3",
+        "MacAddress": "46:7c:b4:10:03:82",
+        "IPPrefixLen": 16,
+        "IPv6Gateway": "",
+        "GlobalIPv6Address": "",
+        "GlobalIPv6PrefixLen": 0,
+        "DNSNames": null
+      }
+    }
+  },
+  "ImageManifestDescriptor": {
+    "mediaType": "application/vnd.oci.image.manifest.v1+json",
+    "digest": "sha256:1c1879aafa00a0d72282b25e1349252bb31e96b98a008c749e97cfa960578654",
+    "size": 862,
+    "platform": {
+      "architecture": "amd64",
+      "os": "linux"
+    }
+  }
+}

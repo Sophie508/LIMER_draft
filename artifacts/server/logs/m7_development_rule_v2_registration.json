@@ -1,0 +1,26 @@
+[
+  [
+    "m7_dev_rule_v2_nominal",
+    "configs/m7_development_rule_v2/nominal.json"
+  ],
+  [
+    "m7_dev_rule_v2_loss0p5",
+    "configs/m7_development_rule_v2/loss0p5.json"
+  ],
+  [
+    "m7_dev_rule_v2_loss1",
+    "configs/m7_development_rule_v2/loss1.json"
+  ],
+  [
+    "m7_dev_rule_v2_congestion",
+    "configs/m7_development_rule_v2/congestion.json"
+  ],
+  [
+    "m7_dev_rule_v2_reorder10",
+    "configs/m7_development_rule_v2/reorder10.json"
+  ],
+  [
+    "m7_dev_rule_v2_reorder40",
+    "configs/m7_development_rule_v2/reorder40.json"
+  ]
+]

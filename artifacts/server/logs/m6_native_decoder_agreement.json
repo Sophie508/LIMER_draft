@@ -1,0 +1,58 @@
+[
+  {
+    "name": "m6_packet_v4_original_l0p5",
+    "side": "sender",
+    "all_captured_records_compared": 5691,
+    "absolute_sequence_fields_compared": 2891,
+    "pass_fields": [
+      "timestamp",
+      "IPv4 length",
+      "endpoints",
+      "TCP payload length",
+      "absolute TCP sequence when printed"
+    ],
+    "status": "pass"
+  },
+  {
+    "name": "m6_packet_v4_original_l0p5",
+    "side": "switch",
+    "all_captured_records_compared": 5691,
+    "absolute_sequence_fields_compared": 2891,
+    "pass_fields": [
+      "timestamp",
+      "IPv4 length",
+      "endpoints",
+      "TCP payload length",
+      "absolute TCP sequence when printed"
+    ],
+    "status": "pass"
+  },
+  {
+    "name": "m6_packet_v5_disabled_l0p5",
+    "side": "sender",
+    "all_captured_records_compared": 36464,
+    "absolute_sequence_fields_compared": 23562,
+    "pass_fields": [
+      "timestamp",
+      "IPv4 length",
+      "endpoints",
+      "TCP payload length",
+      "absolute TCP sequence when printed"
+    ],
+    "status": "pass"
+  },
+  {
+    "name": "m6_packet_v5_disabled_l0p5",
+    "side": "receiver",
+    "all_captured_records_compared": 36471,
+    "absolute_sequence_fields_compared": 23545,
+    "pass_fields": [
+      "timestamp",
+      "IPv4 length",
+      "endpoints",
+      "TCP payload length",
+      "absolute TCP sequence when printed"
+    ],
+    "status": "pass"
+  }
+]

@@ -1,0 +1,10 @@
+10 1 0 2 8 A100
+8 9
+0 8 200Gbps 500ns 0
+1 8 200Gbps 500ns 0
+2 8 200Gbps 500ns 0
+3 8 40Gbps 500ns 0
+4 9 200Gbps 500ns 0
+5 9 200Gbps 500ns 0
+6 9 200Gbps 500ns 0
+7 9 200Gbps 500ns 0

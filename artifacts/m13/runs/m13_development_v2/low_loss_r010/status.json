@@ -1,0 +1,88 @@
+{
+  "id": "low_loss_r010",
+  "start_unix": 1791699301.582287,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m13-62049",
+    "--cpus=1",
+    "--memory=1g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m13b_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m13b_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+    "--out=/work/runs/m13_development_v2/low_loss_r010",
+    "--scenario=loss",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.005",
+    "--reportLoss=0",
+    "--runId=62049",
+    "--faultTimeMs=52.511187",
+    "--probePps=35000",
+    "--reportCopies=3",
+    "--reportRateMbps=10",
+    "--reportDelayMs=1",
+    "--observationEndMs=600"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": 52.252013,
+  "timely": true,
+  "missed": false,
+  "late": false,
+  "false_alarm_events": 0,
+  "alarms": [
+    {
+      "rule_version": "business-delivery-v1",
+      "path": "2/A",
+      "decision_t_ns": 104763200,
+      "signal": "probe_gap",
+      "missing_packets": 10,
+      "evidence_batches": [
+        4
+      ],
+      "gap_age_ns": 44308800,
+      "claim": "Observed delivery impairment; cause unresolved"
+    }
+  ],
+  "input_rows": 4800,
+  "baseline_alarms": [
+    {
+      "rule_version": "hybrid-delivery-v4",
+      "path": "2/A",
+      "decision_t_ns": 124763200,
+      "missing_packets": 5,
+      "evidence_batches": [
+        5,
+        6
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "completed_batches": 800,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 176,
+  "native_alarm_replay": true,
+  "shadow_alarm_replay": true,
+  "fifo_audit": true,
+  "sample_audit": true,
+  "packet_audit": true,
+  "input_sha256": "6446fd51e71298f84cea14db55a46c781c4f2d19b78fda48cc00f063bbd35077",
+  "truth_sha256": "d5225e03388ae0839ada60d152dd89a471002206f9b62798b62edd0b8a19240a",
+  "report_bytes": 460800,
+  "probe_wire_bytes": 4462080,
+  "data_wire_bytes": 19920000,
+  "reports_dropped": 0,
+  "sent_packets": 83000,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 9.382834196090698
+}

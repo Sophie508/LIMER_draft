@@ -1,0 +1,82 @@
+{
+  "groups": {
+    "adaptive_businessloss_80_businessloss": {
+      "kind": "fault",
+      "registered": 1,
+      "verified": 1,
+      "timely": 1,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 59.162201,
+      "timely_wilson95": [
+        0.20654931437723745,
+        1
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        59.162201
+      ]
+    },
+    "adaptive_nominal_80_nominal": {
+      "kind": "control",
+      "registered": 1,
+      "verified": 1,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "adaptive_businessloss_1000_businessloss": {
+      "kind": "fault",
+      "registered": 1,
+      "verified": 1,
+      "timely": 1,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 48.701337,
+      "timely_wilson95": [
+        0.20654931437723745,
+        1
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        48.701337
+      ]
+    },
+    "adaptive_nominal_1000_nominal": {
+      "kind": "control",
+      "registered": 1,
+      "verified": 1,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    }
+  },
+  "registered": 4,
+  "terminal": 4,
+  "strict_verdict": "PASS",
+  "primary_faults": 2,
+  "timely_faults": 2,
+  "verified_control_trials": 2,
+  "claim": "Class-separated causal UDP/application observations and charged probes/reports; not collective recovery",
+  "per_condition_95_verdict": "PASS"
+}

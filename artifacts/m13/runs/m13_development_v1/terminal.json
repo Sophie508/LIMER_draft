@@ -1,0 +1,11 @@
+{
+  "complete": false,
+  "scientific_verdict": "FAIL",
+  "registered": 149,
+  "recorded_statuses": {
+    "PASS": 19,
+    "RUNNING": 5
+  },
+  "unrun": 125,
+  "reason": "Setup error: sparse_reorder40 actually deferred 80 ms; campaign interrupted and all registered attempts retained"
+}

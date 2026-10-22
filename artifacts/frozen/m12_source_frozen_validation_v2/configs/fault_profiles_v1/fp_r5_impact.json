@@ -1,0 +1,25 @@
+{
+    "condition": "C1",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 3,
+    "fault_rate_mbit": 5.0,
+    "fault_loss_pct": 0.0,
+    "detector": false,
+    "recovery": false,
+    "oracle": false,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA1_FAULT",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "none",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "Fault-profile FP-R5: worker 2's Fabric A egress is capped to 5 Mbit (5 percent of the 100 Mbit link) with no detector and no recovery, to measure the impact of a harsher rate-cap gray fault than the formal 20 Mbit point.",
+    "expected": "Throughput retention degrades well below 0.8 while both interfaces stay up; the run records impact only and makes no recovery claim."
+}

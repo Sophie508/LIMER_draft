@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "expected_sha256": "6c7e9eb285e6c7d36cf5cb12b592356f6380535b345bf96549193985deec032f",
+  "actual_sha256": "6c7e9eb285e6c7d36cf5cb12b592356f6380535b345bf96549193985deec032f",
+  "original_binary_recovered": true
+}

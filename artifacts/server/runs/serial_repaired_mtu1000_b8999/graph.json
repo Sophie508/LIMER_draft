@@ -1,0 +1,13 @@
+{
+  "p": 2,
+  "mode": "transport_gate",
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "bytes": 8999,
+      "deps": []
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:site": "node --test tests/test_replay_state.mjs"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "condition": "C4",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 8,
+  "fault_rate_mbit": 100.0,
+  "fault_loss_pct": 25.0,
+  "transient_ms": 0,
+  "experiment_family": "active_active_v1",
+  "scenario_id": "AA10_SWITCH",
+  "routing_policy": "balanced_active_active",
+  "recovery_policy": "localized",
+  "detector": false,
+  "recovery": true,
+  "oracle": true,
+  "step_timeout_s": 300.0,
+  "fault_scope": {
+    "rank": 2,
+    "fabric": "A",
+    "direction": "egress"
+  },
+  "b_access_rate_mbit": 10.0,
+  "what_changes": "Fixed switch under25% loss and10Mbit alternate access; no adaptive decision.",
+  "expected": "Measure episode completion with failures retained; branch optimality is a hypothesis."
+}

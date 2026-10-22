@@ -1,0 +1,2 @@
+FROM limer-simai-cpu:2026-10-10
+RUN apt-get update && apt-get install -y --no-install-recommends gdb && rm -rf /var/lib/apt/lists/*

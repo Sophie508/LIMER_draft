@@ -1,0 +1,58 @@
+...................................................................................................................................................................................................................................E....F.E..........................................E...........
+======================================================================
+ERROR: test_pages_workflow_uses_current_official_static_actions (test_site_structure.SiteStructureTests.test_pages_workflow_uses_current_official_static_actions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_test_source_v3/tests/test_site_structure.py", line 187, in test_pages_workflow_uses_current_official_static_actions
+    workflow = (ROOT / ".github/workflows/pages.yml").read_text(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_test_source_v3/.github/workflows/pages.yml'
+
+======================================================================
+ERROR: test_visual_companion_output_is_ignored (test_site_structure.SiteStructureTests.test_visual_companion_output_is_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_test_source_v3/tests/test_site_structure.py", line 113, in test_visual_companion_output_is_ignored
+    lines = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_test_source_v3/.gitignore'
+
+======================================================================
+ERROR: test_selected_campaign_counts_preserve_failure (test_weekly_review.WeeklyReviewTests.test_selected_campaign_counts_preserve_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_test_source_v3/tests/test_weekly_review.py", line 22, in test_selected_campaign_counts_preserve_failure
+    raw = json.loads((ROOT / record["path"] / "summary.json").read_text())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_test_source_v3/results_restore_kpi_v3/aa5_transient_rep01/summary.json'
+
+======================================================================
+FAIL: test_repository_link_targets_exist (test_site_structure.SiteStructureTests.test_repository_link_targets_exist)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_test_source_v3/tests/test_site_structure.py", line 102, in test_repository_link_targets_exist
+    self.assertTrue((ROOT / relative_path).exists(), relative_path)
+AssertionError: False is not true : results_restore_kpi_v3/aa7_hard_rep01/summary.json
+
+----------------------------------------------------------------------
+Ran 289 tests in 1.443s
+
+FAILED (failures=1, errors=3)

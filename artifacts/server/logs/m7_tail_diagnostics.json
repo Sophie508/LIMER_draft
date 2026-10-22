@@ -1,0 +1,77 @@
+{
+  "boundary": "Posthoc trace description; no frozen-rule retuning or causal proof of physical loss/delay.",
+  "rows": [
+    {
+      "name": "m7_val_v3_loss0p5_rep19",
+      "confirmation_ms": 121.438974,
+      "first_new_retrans_ms": 28.144693,
+      "first_nonzero_kernel_lost_ms": 28.144693,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 1,
+      "sample_max_gap_ms": 8.863941
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep18",
+      "confirmation_ms": 408.156494,
+      "first_new_retrans_ms": 179.4564,
+      "first_nonzero_kernel_lost_ms": 179.4564,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 36,
+      "sample_max_gap_ms": 8.499958
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep20",
+      "confirmation_ms": 125.628209,
+      "first_new_retrans_ms": 94.761743,
+      "first_nonzero_kernel_lost_ms": 94.761743,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 1,
+      "sample_max_gap_ms": 8.849643
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep08",
+      "confirmation_ms": 414.772219,
+      "first_new_retrans_ms": 21.693627,
+      "first_nonzero_kernel_lost_ms": 21.693627,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 37,
+      "sample_max_gap_ms": 11.128947
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep12",
+      "confirmation_ms": 126.613407,
+      "first_new_retrans_ms": 94.254021,
+      "first_nonzero_kernel_lost_ms": 94.254021,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 0,
+      "sample_max_gap_ms": 8.109365
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep01",
+      "confirmation_ms": 115.057639,
+      "first_new_retrans_ms": 67.621284,
+      "first_nonzero_kernel_lost_ms": 67.621284,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 1,
+      "sample_max_gap_ms": 8.743354
+    },
+    {
+      "name": "m7_val_v3_loss1_rep03",
+      "confirmation_ms": 105.319489,
+      "first_new_retrans_ms": 22.391305,
+      "first_nonzero_kernel_lost_ms": 22.391305,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 1,
+      "sample_max_gap_ms": 9.220058
+    },
+    {
+      "name": "m7_val_v3_loss2_rep06",
+      "confirmation_ms": 111.643858,
+      "first_new_retrans_ms": 80.660873,
+      "first_nonzero_kernel_lost_ms": 80.660873,
+      "feedback_before_decision": [],
+      "idle_samples_before_decision": 1,
+      "sample_max_gap_ms": 8.32483
+    }
+  ]
+}

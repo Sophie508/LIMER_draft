@@ -1,0 +1,355 @@
+{
+  "scope": "Offline archive reconstruction, not new simulation efficacy evidence",
+  "M13_complete_ledgers": {
+    "adaptive_validation": {
+      "registered": 460,
+      "primary_faults": 400,
+      "timely_faults": 400,
+      "verified_control_trials": 60,
+      "per_condition_95_verdict": "PASS"
+    },
+    "coverage_validation": {
+      "registered": 460,
+      "primary_faults": 400,
+      "timely_faults": 400,
+      "verified_control_trials": 60,
+      "per_condition_95_verdict": "PASS"
+    },
+    "adaptive_high_controls": {
+      "registered": 60,
+      "primary_faults": 0,
+      "timely_faults": 0,
+      "verified_control_trials": 60,
+      "per_condition_95_verdict": "PASS"
+    }
+  },
+  "M13_observable_trace_samples": [
+    {
+      "condition": "wide_sparse_selective",
+      "id": "wide_sparse_selective_r024",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "wide_processing80",
+      "id": "wide_processing80_r001",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "high_businessloss",
+      "id": "high_businessloss_r001",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "wide_pause",
+      "id": "wide_pause_r002",
+      "reports": 4800,
+      "alarms": 0
+    },
+    {
+      "condition": "wide_idle",
+      "id": "wide_idle_r001",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "high_selective",
+      "id": "high_selective_r012",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "wide_sparse_reorder40",
+      "id": "wide_sparse_reorder40_r010",
+      "reports": 4800,
+      "alarms": 0
+    },
+    {
+      "condition": "wide_businessloss",
+      "id": "wide_businessloss_r022",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "wide_selective",
+      "id": "wide_selective_r009",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "wide_nominal",
+      "id": "wide_nominal_r007",
+      "reports": 4800,
+      "alarms": 0
+    },
+    {
+      "condition": "wide_congestion",
+      "id": "wide_congestion_r010",
+      "reports": 4800,
+      "alarms": 0
+    },
+    {
+      "condition": "wide_processing40",
+      "id": "wide_processing40_r001",
+      "reports": 4800,
+      "alarms": 0
+    },
+    {
+      "condition": "wide_reorder80",
+      "id": "wide_reorder80_r017",
+      "reports": 4800,
+      "alarms": 1
+    },
+    {
+      "condition": "wide_reorder40",
+      "id": "wide_reorder40_r002",
+      "reports": 4800,
+      "alarms": 0
+    }
+  ],
+  "M9_execution_replay": [
+    {
+      "id": "ring_no_control",
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 0,
+      "activated_versions": 0,
+      "control_bytes": 0,
+      "makespan_ns": 221994
+    },
+    {
+      "id": "ring_pending_switch",
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 2,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 222678
+    },
+    {
+      "id": "ring_slow_control",
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 0,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 221994
+    },
+    {
+      "id": "ring_missing_ready",
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 0,
+      "activated_versions": 0,
+      "control_bytes": 448,
+      "makespan_ns": 221994
+    },
+    {
+      "id": "ring_two_versions",
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 4,
+      "activated_versions": 2,
+      "control_bytes": 1536,
+      "makespan_ns": 223352
+    },
+    {
+      "id": "reject_nonconsecutive_version",
+      "expected_rejection": 3
+    },
+    {
+      "id": "same_source_chain",
+      "flows": 2,
+      "dependency_edges": 1,
+      "changed_flows": 1,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 50265
+    },
+    {
+      "id": "destination_chain",
+      "flows": 2,
+      "dependency_edges": 1,
+      "changed_flows": 1,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 52551
+    },
+    {
+      "id": "unequal_join",
+      "flows": 4,
+      "dependency_edges": 4,
+      "changed_flows": 1,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 58321
+    }
+  ],
+  "M11_closed_loop_replay": [
+    {
+      "id": "fast_B_stay",
+      "makespan_ns": 1545673728,
+      "changed_flows": 0
+    },
+    {
+      "id": "fast_B_fixed",
+      "makespan_ns": 1339484856,
+      "changed_flows": 41
+    },
+    {
+      "id": "fast_B_oracle",
+      "makespan_ns": 1339484856,
+      "changed_flows": 32
+    },
+    {
+      "id": "fast_B_candidate",
+      "makespan_ns": 1339484856,
+      "changed_flows": 31
+    },
+    {
+      "id": "slow_B_stay",
+      "makespan_ns": 3958543568,
+      "changed_flows": 0
+    },
+    {
+      "id": "slow_B_fixed",
+      "makespan_ns": 5360714496,
+      "changed_flows": 41
+    },
+    {
+      "id": "slow_B_oracle",
+      "makespan_ns": 5190811120,
+      "changed_flows": 38
+    },
+    {
+      "id": "slow_B_candidate",
+      "makespan_ns": 3958543568,
+      "changed_flows": 0
+    }
+  ],
+  "Ring_OptCC_30_network_replays": [
+    {
+      "name": "compare_p5_N5MiB_ring_r1",
+      "makespan_ns": 712075
+    },
+    {
+      "name": "compare_p5_N5MiB_optcc_r1",
+      "makespan_ns": 638219
+    },
+    {
+      "name": "compare_p5_N5MiB_ring_r2",
+      "makespan_ns": 712075
+    },
+    {
+      "name": "compare_p5_N5MiB_optcc_r2",
+      "makespan_ns": 638219
+    },
+    {
+      "name": "compare_p5_N5MiB_ring_r3",
+      "makespan_ns": 712075
+    },
+    {
+      "name": "compare_p5_N5MiB_optcc_r3",
+      "makespan_ns": 638219
+    },
+    {
+      "name": "healthy_p5_N5MiB_ring",
+      "makespan_ns": 412152
+    },
+    {
+      "name": "compare_p5_N20MiB_ring_r1",
+      "makespan_ns": 2753718
+    },
+    {
+      "name": "compare_p5_N20MiB_optcc_r1",
+      "makespan_ns": 2282815
+    },
+    {
+      "name": "compare_p5_N20MiB_ring_r2",
+      "makespan_ns": 2753718
+    },
+    {
+      "name": "compare_p5_N20MiB_optcc_r2",
+      "makespan_ns": 2282815
+    },
+    {
+      "name": "compare_p5_N20MiB_ring_r3",
+      "makespan_ns": 2753718
+    },
+    {
+      "name": "compare_p5_N20MiB_optcc_r3",
+      "makespan_ns": 2282815
+    },
+    {
+      "name": "healthy_p5_N20MiB_ring",
+      "makespan_ns": 1524336
+    },
+    {
+      "name": "compare_p16_N15MiB_ring_r1",
+      "makespan_ns": 2499581
+    },
+    {
+      "name": "compare_p16_N15MiB_optcc_r1",
+      "makespan_ns": 1986118
+    },
+    {
+      "name": "compare_p16_N15MiB_ring_r2",
+      "makespan_ns": 2499581
+    },
+    {
+      "name": "compare_p16_N15MiB_optcc_r2",
+      "makespan_ns": 1986118
+    },
+    {
+      "name": "compare_p16_N15MiB_ring_r3",
+      "makespan_ns": 2499581
+    },
+    {
+      "name": "compare_p16_N15MiB_optcc_r3",
+      "makespan_ns": 1986118
+    },
+    {
+      "name": "healthy_p16_N15MiB_ring",
+      "makespan_ns": 1458030
+    },
+    {
+      "name": "compare_p16_N60MiB_ring_r1",
+      "makespan_ns": 9718382
+    },
+    {
+      "name": "compare_p16_N60MiB_optcc_r1",
+      "makespan_ns": 6916632
+    },
+    {
+      "name": "compare_p16_N60MiB_ring_r2",
+      "makespan_ns": 9718382
+    },
+    {
+      "name": "compare_p16_N60MiB_optcc_r2",
+      "makespan_ns": 6916632
+    },
+    {
+      "name": "compare_p16_N60MiB_ring_r3",
+      "makespan_ns": 9718382
+    },
+    {
+      "name": "compare_p16_N60MiB_optcc_r3",
+      "makespan_ns": 6916632
+    },
+    {
+      "name": "healthy_p16_N60MiB_ring",
+      "makespan_ns": 5365860
+    },
+    {
+      "name": "sensitivity_p16_N15MiB_optcc_k8",
+      "makespan_ns": 2143198
+    },
+    {
+      "name": "sensitivity_p16_N15MiB_optcc_k16",
+      "makespan_ns": 2885682
+    }
+  ],
+  "status": "PASS"
+}

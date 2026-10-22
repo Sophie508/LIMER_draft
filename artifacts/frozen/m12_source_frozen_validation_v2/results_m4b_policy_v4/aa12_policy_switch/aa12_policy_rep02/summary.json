@@ -1,0 +1,9 @@
+{
+  "condition": "C3",
+  "error": "worker 0 error during run_round: BrokenPipeError: [Errno 32] Broken pipe",
+  "error_type": "RuntimeError",
+  "experiment_family": "active_active_v1",
+  "run_id": "aa12_policy_rep02",
+  "scenario_id": "AA12_POLICY",
+  "status": "failed"
+}

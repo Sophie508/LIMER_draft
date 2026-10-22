@@ -1,0 +1,25 @@
+{
+    "condition": "C4",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 8,
+    "fault_rate_mbit": 100.0,
+    "fault_loss_pct": 10.0,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "routing_policy": "balanced_active_active",
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "detector": false,
+    "recovery": true,
+    "oracle": true,
+    "recovery_policy": "localized",
+    "scenario_id": "AA10_SWITCH",
+    "what_changes": "The same 10.0% loss fault, but an oracle immediately commits the localized reroute, so worker 2's traffic leaves the lossy egress; the measured retention is the pure cost of displacing that traffic onto Fabric B.",
+    "expected": "Exactly three worker-2 slots move, correctness holds, and the post-recovery retention for this loss level is reported; no retention bound is asserted."
+}

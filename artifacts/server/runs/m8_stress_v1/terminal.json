@@ -1,0 +1,119 @@
+{
+  "complete": true,
+  "statuses": {
+    "PASS": 25
+  },
+  "summary": {
+    "groups": {
+      "low_idle_0.005": {
+        "kind": "fault",
+        "registered": 5,
+        "verified": 5,
+        "timely": 0,
+        "late": 1,
+        "missed_or_unverified": 4,
+        "p95_ms": "infinite",
+        "timely_wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          252.272804,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "low_overload": {
+        "kind": "control",
+        "registered": 5,
+        "verified": 5,
+        "timely": null,
+        "late": null,
+        "missed_or_unverified": null,
+        "p95_ms": null,
+        "timely_wilson95": null,
+        "false_alarm_runs": 5,
+        "false_alarm_events": 5,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": []
+      },
+      "low_loss_0.005": {
+        "kind": "fault",
+        "registered": 5,
+        "verified": 5,
+        "timely": 0,
+        "late": 2,
+        "missed_or_unverified": 3,
+        "p95_ms": "infinite",
+        "timely_wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 361,
+        "invalid_batches": 0,
+        "delays_ms": [
+          163.786597,
+          172.623401,
+          null,
+          null,
+          null
+        ]
+      },
+      "low_sparse_0.005": {
+        "kind": "fault",
+        "registered": 5,
+        "verified": 5,
+        "timely": 0,
+        "late": 0,
+        "missed_or_unverified": 5,
+        "p95_ms": "infinite",
+        "timely_wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "low_reorder80": {
+        "kind": "control",
+        "registered": 5,
+        "verified": 5,
+        "timely": null,
+        "late": null,
+        "missed_or_unverified": null,
+        "p95_ms": null,
+        "timely_wilson95": null,
+        "false_alarm_runs": 5,
+        "false_alarm_events": 5,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": []
+      }
+    },
+    "registered": 25,
+    "terminal": 25,
+    "strict_verdict": "FAIL",
+    "primary_faults": 15,
+    "timely_faults": 0,
+    "verified_control_trials": 10,
+    "claim": "Isolated UDP delivery-deficit simulation; no collective recovery evidence"
+  }
+}

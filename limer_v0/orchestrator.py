@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import os
 import platform
 import queue
@@ -308,6 +309,12 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
                 "consumes the burst-symptom state that only that rule tracks"
             )
     result["host_gate"] = host_gate
+    headroom_mode = str(result.get("policy_headroom_mode", "live"))
+    if headroom_mode not in {"live", "baseline_guarded"}:
+        raise ValueError(f"unknown policy_headroom_mode: {headroom_mode!r}")
+    if headroom_mode != "live" and host_gate != "policy":
+        raise ValueError("baseline_guarded requires host_gate policy")
+    result["policy_headroom_mode"] = headroom_mode
 
     fault_kind = str(result.get("fault_kind", "rate_cap"))
     if fault_kind not in FAULT_KINDS:
@@ -335,6 +342,20 @@ def validate_config(config: Mapping[str, Any]) -> Dict[str, Any]:
     if step_timeout_s <= 0:
         raise ValueError("step_timeout_s must be positive")
     result["step_timeout_s"] = step_timeout_s
+    tcp_retrans_interval_s = float(result.get("tcp_retrans_interval_s", 0.0))
+    if not math.isfinite(tcp_retrans_interval_s) or tcp_retrans_interval_s < 0:
+        raise ValueError("tcp_retrans_interval_s must be finite and non-negative")
+    result["tcp_retrans_interval_s"] = tcp_retrans_interval_s
+    delivery_interval = float(result.get("tcp_delivery_interval_s", 0.0))
+    if not math.isfinite(delivery_interval) or delivery_interval < 0:
+        raise ValueError("tcp_delivery_interval_s must be finite and non-negative")
+    result["tcp_delivery_interval_s"] = delivery_interval
+    result["tcp_loss_detector"] = bool(result.get("tcp_loss_detector", False))
+    if result["tcp_loss_detector"]:
+        if not 0 < delivery_interval <= 0.005:
+            raise ValueError("tcp_loss_detector requires a sampling interval <= 0.005s")
+        if result["recovery"]:
+            raise ValueError("experimental tcp_loss_detector must be validated before recovery")
 
     b_access_rate_mbit = result.get("b_access_rate_mbit")
     if b_access_rate_mbit is not None:
@@ -620,7 +641,8 @@ class WorkerHandle:
             record["source"] = "worker"
             record["received_t_monotonic_ns"] = time.monotonic_ns()
             self.event_log.append(record)
-            if record.get("event") == "STEP_DONE":
+            if record.get("event") in {"STEP_DONE", "HOST_RETRANS_SAMPLE",
+                                       "HOST_TCP_SAMPLE", "HOST_TCP_LOSS_CONFIRM"}:
                 # Step telemetry is consumed from the event log by the step
                 # gate monitor; keeping it out of the command queue stops
                 # wait_for from accumulating it in pending.
@@ -1009,6 +1031,9 @@ def _launch_workers(
     event_log: EventLog,
     step_telemetry: bool = False,
     step_timeout_s: float = 65.0,
+    tcp_retrans_interval_s: float = 0.0,
+    tcp_delivery_interval_s: float = 0.0,
+    tcp_loss_detector: bool = False,
 ) -> List[WorkerHandle]:
     if initial_plan.world_size != WORLD_SIZE:
         raise ValueError("initial plan world_size must match WORLD_SIZE")
@@ -1036,6 +1061,12 @@ def _launch_workers(
         if step_telemetry:
             command.append("--step-telemetry")
         command.extend(["--step-timeout", str(step_timeout_s)])
+        if tcp_retrans_interval_s:
+            command.extend(["--tcp-retrans-interval", str(tcp_retrans_interval_s)])
+        if tcp_delivery_interval_s:
+            command.extend(["--tcp-delivery-interval", str(tcp_delivery_interval_s)])
+        if tcp_loss_detector:
+            command.append("--tcp-loss-detector")
         for route in sorted(descriptor.fabrics):
             command.extend(
                 ["--fabric", descriptor.fabrics[route][rank].worker_argument()]
@@ -1101,6 +1132,37 @@ def _run_collective_round(
     aggregate["orchestrator_duration_ns"] = command_end_ns - command_start_ns
     event_log.emit("ROUND_AGGREGATED", **aggregate)
     return events, aggregate
+
+
+def _guarded_headroom_snapshot(
+    current: Mapping[str, Any], baseline: Mapping[str, Any],
+) -> Dict[str, Any]:
+    """Bound spare by healthy calibration under stationary backup capacity.
+
+    Fault-induced pauses cannot increase the reference headroom. A known lower
+    live estimate still reduces it. This cannot infer an unobserved capacity
+    decrease on an idle port; retain that modeling assumption in the metrics.
+    """
+    result = dict(current)
+    reference = baseline.get("spare_bps")
+    observed = current.get("spare_bps")
+    if reference is None:
+        selected = None
+        source = "uncalibrated"
+    elif observed is None:
+        selected = float(reference)
+        source = "calibrated_idle_fallback"
+    else:
+        selected = min(float(reference), float(observed))
+        source = "minimum_of_calibrated_and_live"
+    result.update(
+        spare_bps=selected,
+        estimate_source=source,
+        current_observation=dict(current),
+        calibrated_reference=dict(baseline),
+        stationary_capacity_assumption=True,
+    )
+    return result
 
 
 def _baseline_step_thresholds_s(
@@ -1207,6 +1269,17 @@ def _latency_summary(
             ),
         },
     }
+
+
+def _split_switch_suspects(
+    records: Sequence[Mapping[str, Any]], fault_t_ns: Optional[int],
+) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """Retain pre-event alarms separately; never turn them into zero latency."""
+    ordered = sorted((dict(r) for r in records), key=lambda r: int(r["t_monotonic_ns"]))
+    if fault_t_ns is None:
+        return ordered, []
+    return ([r for r in ordered if int(r["t_monotonic_ns"]) < fault_t_ns],
+            [r for r in ordered if int(r["t_monotonic_ns"]) >= fault_t_ns])
 
 
 LOADED_PROBE_LATENCY_LIMIT_MS = 250.0
@@ -2017,9 +2090,14 @@ def execute_run(
             workdir,
             run_dir,
             event_log,
-            step_telemetry=config["host_gate"]
-            in {"step", "step_cutover", "immediate", "policy"},
+            step_telemetry=(
+                config["host_gate"] in {"step", "step_cutover", "immediate", "policy"}
+                or config["tcp_retrans_interval_s"] > 0
+            ),
             step_timeout_s=config["step_timeout_s"],
+            tcp_retrans_interval_s=config["tcp_retrans_interval_s"],
+            tcp_delivery_interval_s=config["tcp_delivery_interval_s"],
+            tcp_loss_detector=config["tcp_loss_detector"],
         )
         if "B" in descriptor.fabrics:
             alternate_path_baseline_probe = descriptor.ping_fabric("B")
@@ -2063,6 +2141,7 @@ def execute_run(
                 round_id += 1
 
         frozen_demand_snapshot: Optional[Dict[str, Any]] = None
+        frozen_surviving_snapshot: Optional[Dict[str, Any]] = None
         if config["detector"]:
             detector_baseline_bps = sampler.freeze_detector_baseline()
             if headroom_estimators:
@@ -2072,8 +2151,14 @@ def execute_run(
                 frozen_demand_snapshot = headroom_estimators[
                     detector_interface
                 ].snapshot()
+                frozen_surviving_snapshot = headroom_estimators[
+                    descriptor.detector_interface("B", fault_rank)
+                ].snapshot()
             event_log.emit(
                 "SWITCH_BASELINE_FROZEN",
+                policy_headroom_mode=config["policy_headroom_mode"],
+                faulted_demand_snapshot=frozen_demand_snapshot,
+                surviving_headroom_snapshot=frozen_surviving_snapshot,
                 interface=detector_interface,
                 baseline_median_bps=detector_baseline_bps,
                 positive_rate_sample_count=(
@@ -2235,6 +2320,10 @@ def execute_run(
                 else headroom_estimators[detector_interface].snapshot()
             )
             spare = headroom_estimators[surviving_interface].snapshot()
+            if config["policy_headroom_mode"] == "baseline_guarded":
+                spare = _guarded_headroom_snapshot(
+                    spare, frozen_surviving_snapshot or {}
+                )
             demand_bps = float(demand["demand_bps"] or 0.0)
             spare_bps = spare["spare_bps"]
             # The ring serializes steps, so displaced traffic fills the
@@ -2245,6 +2334,7 @@ def execute_run(
             metrics = {
                 "faulted_fabric": demand,
                 "surviving_fabric": spare,
+                "headroom_mode": config["policy_headroom_mode"],
                 "reuse_factor": reuse_factor,
                 "rule": (
                     "switch iff surviving spare x reuse_factor >= "
@@ -2674,9 +2764,12 @@ def execute_run(
                 else fault_record["t_after_ns"]
             )
         )
+        pre_fault_suspects, post_fault_suspects = _split_switch_suspects(
+            switch_suspects, fault_t_ns
+        )
         first_suspect_t_ns = (
-            int(switch_suspects[0]["t_monotonic_ns"])
-            if switch_suspects
+            int(post_fault_suspects[0]["t_monotonic_ns"])
+            if post_fault_suspects
             else None
         )
         host_decision_events = [
@@ -2820,6 +2913,13 @@ def execute_run(
                 "detector_rule": config["detector_rule"],
                 "triggered": bool(switch_suspects),
                 "suspect_count": len(switch_suspects),
+                "pre_fault_suspect_count": len(pre_fault_suspects),
+                "post_fault_suspect_count": len(post_fault_suspects),
+                "first_any_suspect_t_monotonic_ns": (
+                    min(int(e["t_monotonic_ns"]) for e in switch_suspects)
+                    if switch_suspects else None
+                ),
+                "latency_reference": "first post-injection suspect; earlier alarms retained",
                 "rule_version": (
                     sentinel_rule.rule_version if sentinel_rule is not None else None
                 ),

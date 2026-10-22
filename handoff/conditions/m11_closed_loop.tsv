@@ -1,0 +1,3 @@
+condition	registered	alternate_bps	eligible	events
+fast_B	4	1000000000	True	[[312000000, 2, 200000000]]
+slow_B	4	100000000	True	[[312000000, 2, 200000000]]

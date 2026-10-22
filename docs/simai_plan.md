@@ -1,5 +1,23 @@
 # SimAI plan: realistic simulation up to 128 GPUs
 
+## Scope amendment, 2026-10-10
+
+Sophie confirmed that the project requires simulation implementation and
+evaluation only. Real hardware access is not a prerequisite. The original
+scale/calibration proposal below remains a plan, not a completion claim.
+
+The detection loop is now explicitly in scope: correctly localized gray-fault
+decisions below 100 ms are the core target, accompanied by switch/stay cost and
+execution correctness. M7's CPU/TCP candidate does not yet meet that target.
+An ns-3 loop must consume modeled endpoint/link observations with declared
+observation delay and cost; the fault injector's time, loss configuration and
+chosen path must not be passed to the detector. See
+[simulation_scope.md](simulation_scope.md) for the continuation pipeline.
+
+The existing OptCC CPU-compatible replay and static dual-plane calibration
+provide separate starting artifacts. They do not constitute a completed
+dynamic detection/cost/execution loop or exact published-figure reproduction.
+
 Advisor guidance: stay at a small scale (at most 128 GPUs) and use the
 realistic SimAI model first; larger systems only if time remains. This plan
 is drafted from first-party sources only: the official repository
@@ -24,8 +42,8 @@ Two constraints to state up front:
 2. **The simulator does not contain this project's detector or coordinator.**
    Phase one therefore answers fault impact and rerouting benefit at scale;
    it does not measure detection latency. Reproducing the detection loop
-   inside the simulator is possible but roughly triples the work and needs an
-   explicit decision.
+   inside the simulator is a required next development phase under the scope
+   amendment above. Static route changes remain a separate baseline.
 
 ## Calibration against the Mininet evidence (never mixed in one table)
 
@@ -66,6 +84,8 @@ never merged with Mininet packet or counter evidence.
 3. S2 ns-3 fault-injection patch with unit tests (3-5 days).
 4. S3 the sweep itself (machine time dominated).
 
-Execution waits on the open decisions listed on the project site: whether the
-detection loop must be simulated, the topology form (dual-ToR dual-plane vs
-rail-optimized), and the compute budget for packet-level runs at 128 GPUs.
+Continue autonomously with the existing dual-plane model and small CPU runs.
+Integrate and validate the detection/decision loop before expanding the scale
+ladder. Larger runs require a measured runtime/memory feasibility gate; the
+128-GPU endpoint is a proposed simulated scale, not a requirement for physical
+GPUs. No additional hardware-platform decision is pending.

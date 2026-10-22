@@ -1,0 +1,24 @@
+{
+  "p": 4,
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "bytes": 1048576,
+      "plane": 0,
+      "deps": []
+    },
+    {
+      "id": 2,
+      "src": 0,
+      "dst": 2,
+      "bytes": 1000,
+      "plane": 0,
+      "deps": [
+        1
+      ]
+    }
+  ],
+  "mode": "execution_micrograph"
+}

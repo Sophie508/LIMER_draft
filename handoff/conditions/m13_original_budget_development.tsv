@@ -1,0 +1,17 @@
+condition	registered	capacityMbps	kind	lossRate	observationEndMs	offeredMbps	probePps	reportCopies	reportDelayMs	reportLoss	reportRateMbps	runId_max	runId_min	scenario
+high_pause	5	10000	control	0.005	600	1000	35000	3	1	0	10	62148	62144	pause
+low_selective	20	100	fault	0.005	600	80	35000	3	1	0	10	62019	62000	selective
+low_congestion	10	100	control	0.005	600	80	35000	3	1	0	10	62113	62104	congestion
+low_sparse_reorder40	10	100	control	0.005	600	80	35000	3	1	0	10	62133	62124	sparse_reorder40
+low_loss	20	100	fault	0.005	600	80	35000	3	1	0	10	62059	62040	loss
+low_processing40	10	100	control	0.005	600	80	35000	3	1	0	10	62143	62134	processing40
+low_businessloss	20	100	fault	0.005	600	80	35000	3	1	0	10	62039	62020	businessloss
+low_idle	3	100	fault	0.005	600	80	35000	3	1	0	10	62083	62081	idle
+low_pause	10	100	control	0.005	600	80	35000	3	1	0	10	62103	62094	pause
+low_reorder80	5	100	fault	0.005	600	80	35000	3	1	0	10	62072	62068	reorder80
+low_nominal	10	100	control	0.005	600	80	35000	3	1	0	10	62093	62084	nominal
+low_sparse	3	100	fault	0.005	600	1	35000	3	1	0	10	62080	62078	sparse
+low_reorder40	10	100	control	0.005	600	80	35000	3	1	0	10	62123	62114	reorder40
+high_loss	3	10000	fault	0.005	600	1000	35000	3	1	0	10	62062	62060	loss
+low_processing80	5	100	fault	0.005	600	80	35000	3	1	0	10	62067	62063	processing80
+low_overload	5	100	fault	0.005	600	80	35000	3	1	0	10	62077	62073	overload

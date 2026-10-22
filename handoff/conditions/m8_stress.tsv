@@ -1,0 +1,6 @@
+condition	registered	capacityMbps	kind	lossRate	offeredMbps	reportLoss	runId_max	runId_min	scenario
+low_idle_0.005	5	100	fault	0.005	80	0	20019	20015	idle
+low_overload	5	100	control	0.005	80	0	20009	20005	overload
+low_loss_0.005	5	100	fault	0.005	80	0.1	20024	20020	loss
+low_sparse_0.005	5	100	fault	0.005	1	0	20014	20010	sparse
+low_reorder80	5	100	control	0.005	80	0	20004	20000	reorder80

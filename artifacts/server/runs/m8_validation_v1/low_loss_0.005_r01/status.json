@@ -1,0 +1,72 @@
+{
+  "id": "low_loss_0.005_r01",
+  "start_unix": 1791643619.652154,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m8-10000",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m8_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m8_backend/simulation/build/scratch/ns3.36.1-LimerBatchObservation-debug",
+    "--out=/work/runs/m8_validation_v1/low_loss_0.005_r01",
+    "--scenario=loss",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.005",
+    "--reportLoss=0",
+    "--runId=10000",
+    "--faultTimeMs=51.839138"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": 77.768862,
+  "timely": true,
+  "missed": false,
+  "late": false,
+  "false_alarm_events": 0,
+  "alarms": [
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 129608000,
+      "missing_packets": 2,
+      "evidence_batches": [
+        6
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 199608000,
+      "missing_packets": 2,
+      "evidence_batches": [
+        13
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "input_rows": 800,
+  "completed_batches": 400,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 88,
+  "packet_audit": true,
+  "input_sha256": "151f3ee0c1b7278942e4b2844491e96b6ec8f73c8720a590fd602b43bbd26b6f",
+  "truth_sha256": "52c42774e8cdbb1b46e29a64291f6a9d0bafb0bc620a1231cdd9392e992fd069",
+  "report_bytes": 51200,
+  "reports_dropped": 0,
+  "sent_packets": 13280,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 2.075674295425415
+}

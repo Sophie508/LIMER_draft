@@ -1,0 +1,26 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m10-build",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m10_backend/simulation:/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation",
+    "-w",
+    "/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation",
+    "limer-simai-cpu:2026-10-10",
+    "bash",
+    "-c",
+    "./ns3 build LimerProgressDagReplay -j 4"
+  ],
+  "source_sha256": "e09b0e96c64e5daba5251668220c81f1b172ec1dfa7367a67854da3dbddcf402",
+  "observer_sha256": "1f597f726568c2cb83883c21f17c4288206311edacafb8977b167e046d9ebe36"
+}

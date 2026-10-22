@@ -1,0 +1,73 @@
+{
+  "id": "low_loss_0.02_r20",
+  "start_unix": 1791643730.0729108,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m8-10059",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m8_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m8_backend/simulation/build/scratch/ns3.36.1-LimerBatchObservation-debug",
+    "--out=/work/runs/m8_validation_v1/low_loss_0.02_r20",
+    "--scenario=loss",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.02",
+    "--reportLoss=0",
+    "--runId=10059",
+    "--faultTimeMs=50.929577"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": 78.678423,
+  "timely": true,
+  "missed": false,
+  "late": false,
+  "false_alarm_events": 0,
+  "alarms": [
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 129608000,
+      "missing_packets": 4,
+      "evidence_batches": [
+        5,
+        6
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "batch-loss-v1",
+      "path": "2/A",
+      "decision_t_ns": 299608000,
+      "missing_packets": 3,
+      "evidence_batches": [
+        23
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "input_rows": 800,
+  "completed_batches": 400,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 88,
+  "packet_audit": true,
+  "input_sha256": "8d44f862a85597f7ee1ea9e0dfc43c646e956141f94925217ccd6d056005fc69",
+  "truth_sha256": "72c6364202a1a5a2f3ea3bff6667cd1d9a65ca9f48974ae424a6371a79bff39e",
+  "report_bytes": 51200,
+  "reports_dropped": 0,
+  "sent_packets": 13280,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 2.081941843032837
+}

@@ -1,0 +1,424 @@
+{
+  "verified": true,
+  "stage": "m11",
+  "tag": "v1",
+  "registered": 8,
+  "source_inputs_reports_verified": true,
+  "binary_verified": true,
+  "library_count": 39,
+  "rows": [
+    {
+      "id": "fast_B_stay",
+      "trace_records": 1008,
+      "execution_end_ns": 1547614400,
+      "observation": {
+        "reports": 6192,
+        "modeled_report_bytes": 594432,
+        "alarms": [
+          {
+            "path": 2,
+            "decision_ns": 321230400
+          }
+        ],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 33030144,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 33030144,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 0,
+        "activated_versions": 0,
+        "control_bytes": 0,
+        "makespan_ns": 1545673728
+      },
+      "policies": [],
+      "requests": [],
+      "science": {
+        "candidate_detection_scored": false,
+        "eligible": true,
+        "delay_ms": 9.2304,
+        "timely": true,
+        "miss": false,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "fast_B_fixed",
+      "trace_records": 1034,
+      "execution_end_ns": 1341614400,
+      "observation": {
+        "reports": 5368,
+        "modeled_report_bytes": 515328,
+        "alarms": [],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 786432,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 65273856,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 41,
+        "activated_versions": 1,
+        "control_bytes": 768,
+        "makespan_ns": 1339484856
+      },
+      "policies": [],
+      "requests": [
+        {
+          "version": 1,
+          "request_ns": 0,
+          "affected_rank": 2,
+          "unavailable_rank": -1
+        }
+      ],
+      "science": {
+        "candidate_detection_scored": false,
+        "eligible": true,
+        "delay_ms": null,
+        "timely": false,
+        "miss": true,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "fast_B_oracle",
+      "trace_records": 1034,
+      "execution_end_ns": 1341614400,
+      "observation": {
+        "reports": 5368,
+        "modeled_report_bytes": 515328,
+        "alarms": [],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 7864320,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 58195968,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 32,
+        "activated_versions": 1,
+        "control_bytes": 768,
+        "makespan_ns": 1339484856
+      },
+      "policies": [],
+      "requests": [
+        {
+          "version": 1,
+          "request_ns": 312000000,
+          "affected_rank": 2,
+          "unavailable_rank": -1
+        }
+      ],
+      "science": {
+        "candidate_detection_scored": false,
+        "eligible": true,
+        "delay_ms": null,
+        "timely": false,
+        "miss": true,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "fast_B_candidate",
+      "trace_records": 1034,
+      "execution_end_ns": 1341614400,
+      "observation": {
+        "reports": 5368,
+        "modeled_report_bytes": 515328,
+        "alarms": [
+          {
+            "path": 2,
+            "decision_ns": 321230400
+          }
+        ],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 8650752,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 57409536,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 31,
+        "activated_versions": 1,
+        "control_bytes": 768,
+        "makespan_ns": 1339484856
+      },
+      "policies": [
+        {
+          "path": 2,
+          "decision_ns": 321230400,
+          "pending_a": 24379392,
+          "pending_b": 25165824,
+          "inflight_a": 615432,
+          "inflight_b": 0,
+          "rate_a": 0.0225,
+          "rate_b": 0.126,
+          "b_age_ns": 9230400,
+          "coordination_ns": 10000,
+          "switch": true,
+          "reason": "cost_comparison",
+          "stay_ns": 1110881066.6666667,
+          "switch_ns": 393226000
+        }
+      ],
+      "requests": [
+        {
+          "version": 1,
+          "request_ns": 321230400,
+          "affected_rank": 2,
+          "unavailable_rank": -1
+        }
+      ],
+      "science": {
+        "candidate_detection_scored": true,
+        "eligible": true,
+        "delay_ms": 9.2304,
+        "timely": true,
+        "miss": false,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "slow_B_stay",
+      "trace_records": 1008,
+      "execution_end_ns": 3961614400,
+      "observation": {
+        "reports": 15848,
+        "modeled_report_bytes": 1521408,
+        "alarms": [
+          {
+            "path": 2,
+            "decision_ns": 347230400
+          }
+        ],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 33030144,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 33030144,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 0,
+        "activated_versions": 0,
+        "control_bytes": 0,
+        "makespan_ns": 3958543568
+      },
+      "policies": [],
+      "requests": [],
+      "science": {
+        "candidate_detection_scored": false,
+        "eligible": true,
+        "delay_ms": 35.2304,
+        "timely": true,
+        "miss": false,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "slow_B_fixed",
+      "trace_records": 1034,
+      "execution_end_ns": 5363614400,
+      "observation": {
+        "reports": 21456,
+        "modeled_report_bytes": 2059776,
+        "alarms": [],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 786432,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 65273856,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 41,
+        "activated_versions": 1,
+        "control_bytes": 768,
+        "makespan_ns": 5360714496
+      },
+      "policies": [],
+      "requests": [
+        {
+          "version": 1,
+          "request_ns": 0,
+          "affected_rank": 2,
+          "unavailable_rank": -1
+        }
+      ],
+      "science": {
+        "candidate_detection_scored": false,
+        "eligible": true,
+        "delay_ms": null,
+        "timely": false,
+        "miss": true,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "slow_B_oracle",
+      "trace_records": 1034,
+      "execution_end_ns": 5193614400,
+      "observation": {
+        "reports": 20776,
+        "modeled_report_bytes": 1994496,
+        "alarms": [],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 3145728,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 62914560,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 38,
+        "activated_versions": 1,
+        "control_bytes": 768,
+        "makespan_ns": 5190811120
+      },
+      "policies": [],
+      "requests": [
+        {
+          "version": 1,
+          "request_ns": 312000000,
+          "affected_rank": 2,
+          "unavailable_rank": -1
+        }
+      ],
+      "science": {
+        "candidate_detection_scored": false,
+        "eligible": true,
+        "delay_ms": null,
+        "timely": false,
+        "miss": true,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "slow_B_candidate",
+      "trace_records": 1008,
+      "execution_end_ns": 3961614400,
+      "observation": {
+        "reports": 15848,
+        "modeled_report_bytes": 1521408,
+        "alarms": [
+          {
+            "path": 2,
+            "decision_ns": 347230400
+          }
+        ],
+        "acked_bytes": 264241152,
+        "final_path_bytes": {
+          "0": 33030144,
+          "1": 33030144,
+          "2": 33030144,
+          "3": 33030144,
+          "4": 33030144,
+          "5": 33030144,
+          "6": 33030144,
+          "7": 33030144
+        }
+      },
+      "execution": {
+        "flows": 336,
+        "dependency_edges": 664,
+        "changed_flows": 0,
+        "activated_versions": 0,
+        "control_bytes": 0,
+        "makespan_ns": 3958543568
+      },
+      "policies": [
+        {
+          "path": 2,
+          "decision_ns": 347230400,
+          "pending_a": 29097984,
+          "pending_b": 29884416,
+          "inflight_a": 642432,
+          "inflight_b": 0,
+          "rate_a": 0.0225,
+          "rate_b": 0.0135,
+          "b_age_ns": 7230400,
+          "coordination_ns": 10000,
+          "switch": false,
+          "reason": "cost_comparison",
+          "stay_ns": 2213660444.4444447,
+          "switch_ns": 4369076666.666667
+        }
+      ],
+      "requests": [],
+      "science": {
+        "candidate_detection_scored": true,
+        "eligible": true,
+        "delay_ms": 35.2304,
+        "timely": true,
+        "miss": false,
+        "other_or_pre_event_alarms": []
+      }
+    }
+  ],
+  "binary_sha256": "998c282a2b76bdbb2a288ee50031b8aab5d9af5458daed6fca9a5f57a7d19ccd",
+  "source_hashes": {
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m11_source/simulation/LimerClosedLoopReplay.cc": "37c183f1ed0a1ea90e6442c518668d17e2dbde014f24755f82573aa5bed72ce4",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m11_source/simulation/ack_progress_policy_observer.h": "4b73adf9f3a56b570fc9c541b423f0b1737bd486a284369044251d5c164a3ba7",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m11_source/simulation/audit_closed_loop.py": "8cb86f19014c4d32192089cea896db488b114c5beb7b5413af257b7e08a289f9",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m11_source/simulation/audit_dynamic_dag.py": "9bf2f6c511530df3506d09ee452106573fee4c056c4e0c6a157cbd8511d672ec",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m11_source/simulation/run_closed_loop.py": "29814452df348bc576f98c47e02c7b7e08d70986a135332c3b2b698f48ab6e20",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m11_source/limer_v0/ack_progress.py": "987e52ea29bf10d3052230f315fe1804245dd5f18c2af8da78e622fae0ed5b30",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m11_source/limer_v0/pending_route_cost.py": "ebf4d41acf28c57779cd379395683c522177799ccc59e937f300ed922ad5aaf7",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime/make_inputs.py": "2f789d3cc1171fba4d7e326055462e8f6396b21222eeb01b4c98d963fc3fc6e1",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime/dag_tools.py": "3bedfd944559b093c2002b69a4c04c6bc3ba385513e81537ee2ed63f6f58553c"
+  }
+}

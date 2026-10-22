@@ -33,3 +33,9 @@ results_pre_audit_same_qdisc_2026-07-14/
 id_rsa*
 id_ed25519*
 .codex_tmp/
+
+# Generated presentation outputs and external simulator workspaces.
+/outputs/
+/baselines/SimAI-official/
+/baselines/optcc_linux/
+/baselines/optcc_generated/

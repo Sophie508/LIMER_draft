@@ -1,5 +1,11 @@
 # LIMER CPU-Only Emulation Prototype
 
+> **Collaborator handoff (2026-10-22):** Start at
+> [handoff/README.md](handoff/README.md) for implemented components, registered
+> conditions, paper-to-code mappings, archived results and portable CPU/Docker
+> entry points. The handoff is based on the last verified 2026-10-15 paper
+> snapshot. Historical sections below retain their original evidence scope.
+
 > **Interactive project demo:** [https://sophie508.github.io/LIMER_draft/](https://sophie508.github.io/LIMER_draft/)
 >
 > The page is a bilingual, evidence-driven stage review. It replays archived
@@ -9,6 +15,50 @@ LIMER stands for **Lightweight In-Network Monitoring with Efficient End-Host
 Recovery**. The research goal is to notice a network gray failure close to the
 switch, confirm that it is harming collective communication at the end host,
 and adapt communication without rolling training back to a checkpoint.
+
+## Current project scope: simulation and emulation
+
+Sophie confirmed on 2026-10-10 that this project ends at an implemented and
+evaluated simulation. Real switch/NIC access, GPU experiments and deployment
+are not acceptance requirements. Mininet provides executable CPU/TCP emulation;
+SimAI/ns-3 provides a separate packet-level simulation track. Their results and
+time bases must remain separate.
+
+The primary research target is a correctly localized gray-fault decision below
+100 ms, with late/missed detections and false alarms retained. The project also
+studies when localized rerouting pays off and whether coordinated execution is
+correct. M7 implements a passive TCP candidate but does not meet that target:
+72/80 fault trials were timely, and 3/5 long-reordering stress trials produced
+false alarms. Simulation-only scope does not change this verdict.
+
+See [the simulation scope and continuation pipeline](docs/simulation_scope.md)
+and [the frozen M7 results](docs/m7_tcp_loss_results.md). Simulated observations
+must have explicit delay, noise and availability assumptions; hidden injector
+state is available to the scorer only.
+
+M8 adds a costed two-ended batch-counter candidate in isolated ns-3 UDP
+simulation. All 200 primary and 25 stress lifecycles pass packet accounting;
+139/160 primary loss decisions are below 100 ms. The strict deadline gate still
+fails: low offered-rate weak-loss cases retain late/missed decisions, and excess
+delay/queue stress triggers no-permanent-loss alarms. This is not yet a dynamic
+collective or route-controller result. See [M8 results](docs/m8_batch_observation_results.md)
+and the [next dynamic simulation design](docs/m9_dynamic_simulation_design.md).
+
+Severe slowdown is now also eligible for detection, followed by separate
+route-benefit evaluation. M9 implements the first native SimAI pending-flow
+cutover: eight scripted workloads drain correctly and one invalid-version case
+is rejected as expected. Launched flows retain their ports; pending affected
+flows can change after charged all-rank coordination. These engineering checks
+do not yet establish online detection or adaptive-policy benefit. See
+[M9 execution results](docs/m9_dynamic_execution_results.md).
+
+M10/M11 now add native causal ACK-progress detection and an observable pending
+route-cost decision. In the registered finite ring workload, candidate switching
+reduces total completion from 1545.674 to 1339.485 ms with a faster alternative;
+with a slower alternative it stays and completes in 3958.544 ms, whereas fixed
+switching takes 5360.714 ms. These bounded configured-rate simulations retain
+the unresolved weak-loss/idle/telemetry-delay constraints and do not establish
+optimality or GPU throughput. See [online results and limitations](docs/m10_m11_online_results.md).
 
 This repository now contains two clearly separated stages:
 
@@ -147,16 +197,16 @@ with one formal run per row in
 
 ## Architecture status
 
-| LIMER layer | Executable CPU prototype | Still required for the research system |
+| LIMER layer | Executable CPU prototype | Remaining simulation work |
 |---|---|---|
-| Switch-side first signal | 20 ms target polling of an isolated switch-facing Linux RX counter; persistent high-recall rule | Switch-resident or production streaming telemetry, resource budget, broader symptoms |
-| End-host refinement | Deterministic impact and alternate-path health gate | Neuro-fuzzy classifier, calibrated GP uncertainty, NIC/NCCL signals |
-| Recovery | Immutable per-step route plans; all-rank prepare/READY/commit; localized worker-2 delta | PyTorch/NCCL integration, real communicator adaptation, production failure handling |
+| Switch-side first signal | 20 ms target polling of an isolated switch-facing Linux RX counter; persistent high-recall rule | Independent simulated observations with explicit sampling delay, observation cost and broader fault/control profiles |
+| End-host refinement | Deterministic impact and alternate-path health gate; opt-in M7 TCP loss candidate | A validated <100 ms gray-fault decision under declared traffic and delay assumptions; M7 fails the current gate |
+| Recovery | Immutable per-step route plans; all-rank prepare/READY/commit; localized worker-2 delta | Cost-aware switch/stay comparison including detection, coordination and unfinished work; packet-level execution validation |
 
 The current latency path still waits for a completed round before host
-confirmation. Raw v1 latency stages are recorded in milliseconds, but no
-formal numeric target was supplied and this repository does not claim that
-millisecond end-to-end recovery has been achieved.
+confirmation. Those archived v1 stages do not establish the current <100 ms
+detection target, and detection time must remain separate from coordination and
+completed-recovery time.
 
 The current requirement-by-requirement evidence boundary is recorded in
 [`docs/active_active_v1_verification.md`](docs/active_active_v1_verification.md).
@@ -250,5 +300,53 @@ The immediate engineering bottleneck is step-level confirmation: the current
 host gate waits for a whole slow round. Fault coverage must then expand from
 the directed egress rate cap to bidirectional, low-loss, queue, and duration
 profiles. SimAI is the next scale/collective-simulation milestone for realistic
-studies up to 128 simulated GPUs. Real GPU/NCCL communicator recovery remains a
-later systems milestone and is not claimed by this repository.
+studies up to 128 simulated GPUs. Simulating the detection and decision loop is
+part of the current project; static post-reroute results alone do not implement
+it. Real GPU/NCCL communicator recovery is outside the agreed project scope.
+
+## M12 bounded hybrid detection result
+
+The frozen one-hop UDP validation reaches the prospective empirical target:
+698/700 correctly localized alarms are STRICTLY below 100 ms, and EACH of
+13 registered fault conditions reaches at least 95%. The two late decisions
+remain in their denominators; 40 negative controls have zero alarms. These
+are simulated timings, independent of the archived Mininet wall-clock results.
+
+Continuous same-path probes and aligned early service windows create this
+result at a material cost: 17.92 Mb/s/path and 4.9152 Mb/s collection traffic.
+It assumes size-independent packet faults and configured report service.
+A matched business-only size-selective supplement reaches only 5/20 timely
+alarms despite real business losses, so broader fast gray-fault coverage
+remains unresolved. The hybrid detector has not been integrated with the
+M11 collective route loop. Older strict FAIL verdicts remain unchanged.
+
+See [the full results and failure ledgers](docs/m12_hybrid_detection_results.md),
+[the prospective plan and amendments](docs/m12_hybrid_detection_plan.md), and
+[the reproduction interface](simulation/README.md#hybrid-delivery-detection-m12).
+
+
+## M13 representative business-delivery detection
+
+The M13 candidate separates business/probe delivery counters and receiver
+sequence gaps, preserving M12 as an independently scored fallback/shadow.
+At the original 100 Mb/s, 17.92 Mb/s probe budget it retains FAIL: selective
+16/20 and application loss 13/20 are timely. Workload-shaped probes at the
+same nominal byte budget improve selective recall but retain application
+and idle failures. These negative results stay in the released ledgers.
+
+An explicitly changed 10 Gb/s, 420 Mb/s/path representative-probe envelope
+passes fresh 460-case validation: 400/400 faults timely, 60 controls without
+alarms, all independently audited. The same-report M12 baseline also meets
+every condition's 95% gate (396/400 timely), so changed observations account
+for most of the gain. This does not establish general gray-fault coverage
+or joint collective recovery. A causal traffic-compensating policy passes fresh independent validation:
+400/400 timely faults, 60 primary and 60 supplemental high-traffic
+controls without alarms. Under the adaptive budget, the matched shadow
+misses the idle target (55/60 timely versus candidate 60/60), whereas
+both pass the constant high-budget envelope. At 1 Gb/s continuous business, actual lifecycle
+probe cost falls to 10.843 Mb/s/path; sparse/idle traffic still needs substantial
+probes. The result remains conditional on the same 10 Gb/s envelope.
+
+See [M13 measured results, costs and retained failures](docs/m13_business_detection_results.md),
+[the prospective amendments](docs/m13_business_detection_plan.md), and
+[the reproduction interface](simulation/README.md#class-separated-business-observations-m13).

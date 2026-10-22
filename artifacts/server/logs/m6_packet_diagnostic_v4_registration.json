@@ -1,0 +1,34 @@
+[
+  [
+    "m6_packet_v4_original_l0",
+    "configs/m6_packet_diagnostic_v4/original_l0.json"
+  ],
+  [
+    "m6_packet_v4_original_l0p5",
+    "configs/m6_packet_diagnostic_v4/original_l0p5.json"
+  ],
+  [
+    "m6_packet_v4_original_l1",
+    "configs/m6_packet_diagnostic_v4/original_l1.json"
+  ],
+  [
+    "m6_packet_v4_original_l2",
+    "configs/m6_packet_diagnostic_v4/original_l2.json"
+  ],
+  [
+    "m6_packet_v4_disabled_l0",
+    "configs/m6_packet_diagnostic_v4/disabled_l0.json"
+  ],
+  [
+    "m6_packet_v4_disabled_l0p5",
+    "configs/m6_packet_diagnostic_v4/disabled_l0p5.json"
+  ],
+  [
+    "m6_packet_v4_disabled_l1",
+    "configs/m6_packet_diagnostic_v4/disabled_l1.json"
+  ],
+  [
+    "m6_packet_v4_disabled_l2",
+    "configs/m6_packet_diagnostic_v4/disabled_l2.json"
+  ]
+]

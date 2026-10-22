@@ -1,0 +1,81 @@
+{
+  "id": "low_idle_0.005_r001",
+  "start_unix": 1791647760.305196,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m12-30035",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m12_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m12_backend/simulation/build/scratch/ns3.36.1-LimerHybridObservation-debug",
+    "--out=/work/runs/m12_development_v1/low_idle_0.005_r001",
+    "--scenario=idle",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.005",
+    "--reportLoss=0",
+    "--runId=30035",
+    "--faultTimeMs=51.362896",
+    "--probePps=25000",
+    "--reportCopies=3",
+    "--reportRateMbps=10",
+    "--reportDelayMs=1"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": 60.917104,
+  "timely": true,
+  "missed": false,
+  "late": false,
+  "false_alarm_events": 0,
+  "alarms": [
+    {
+      "rule_version": "hybrid-delivery-v1",
+      "path": "2/A",
+      "decision_t_ns": 112280000,
+      "missing_packets": 4,
+      "evidence_batches": [
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-delivery-v1",
+      "path": "2/A",
+      "decision_t_ns": 172280000,
+      "missing_packets": 2,
+      "evidence_batches": [
+        11
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "input_rows": 2400,
+  "completed_batches": 400,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 88,
+  "native_alarm_replay": true,
+  "fifo_audit": true,
+  "sample_audit": true,
+  "packet_audit": true,
+  "input_sha256": "58e20fc46d16f55ee42cd5e46e51fe86bba92b2b82c82a50250d6063d6c13144",
+  "truth_sha256": "9cff625f0ed582ac0328ee569b929313ec64a73568fee91e82a7b596fd9f020b",
+  "report_bytes": 153600,
+  "probe_wire_bytes": 3187200,
+  "data_wire_bytes": 7116000,
+  "reports_dropped": 0,
+  "sent_packets": 54544,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 5.533902883529663
+}

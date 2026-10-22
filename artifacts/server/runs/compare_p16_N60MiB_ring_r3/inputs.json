@@ -1,0 +1,22 @@
+{
+  "name": "compare_p16_N60MiB_ring_r3",
+  "ranks": 16,
+  "GPUs_per_server": 1,
+  "switches": 1,
+  "healthy_Gbps": 200,
+  "last_rank_Gbps": 100,
+  "propagation_ns": 500,
+  "slowdown": 2,
+  "MTU": 9000,
+  "CC_MODE": 1,
+  "AS_SEND_LAT_us": 3,
+  "AS_PXN_ENABLE": 0,
+  "AS_NVLS_ENABLE": 0,
+  "packet_loss": 0,
+  "hashes": {
+    "flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "SimAI.conf": "28263521d67aea6d898e877ff7aea8bb10dd41ce322983eb1eeae6b0042a9802",
+    "trace_nodes.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "topology.txt": "55e2345f1ebc05cb3c89b3aa676d2eba991ae41f12bfbc8e8cc759e9ede01b82"
+  }
+}

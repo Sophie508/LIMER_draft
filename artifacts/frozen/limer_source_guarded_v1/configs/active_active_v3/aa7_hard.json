@@ -1,0 +1,29 @@
+{
+    "condition": "C3",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 21,
+    "fault_rate_mbit": 20.0,
+    "fault_loss_pct": 0.0,
+    "fault_kind": "link_down",
+    "detector": true,
+    "recovery": true,
+    "oracle": false,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA7_HARD",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "localized_link",
+    "detector_rule": "burst",
+    "host_gate": "immediate",
+    "step_timeout_s": 10.0,
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "Worker 2's Fabric A access link goes administratively down mid-round: the kernel netlink notification provides event-driven detection, the immediate gate skips impact confirmation because hard evidence is definitive, and a localized link reroute moves the six affected slots (senders 1 and 2) to Fabric B with the blocked step aborted and safely redone. The 10 s step timeout mirrors the untuned-NIC retransmit behavior the requirements warn about.",
+    "expected": "Detection lands within 10 ms of the port-down event, recovered-plan progress resumes within 1 s of detection, exactly six slots move, workers 0 and 3 keep their schedules, checksum and version errors stay zero, and the twenty-round post-recovery retention median stays at or above 0.9."
+}

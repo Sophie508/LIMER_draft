@@ -1,0 +1,68 @@
+{
+  "name": "ecn_v1_dual_a20_stay",
+  "ranks": 4,
+  "GPUs_per_server": "not a physical GPU model",
+  "switches": 2,
+  "healthy_Gbps": 200,
+  "last_rank_Gbps": 200,
+  "propagation_ns": 500,
+  "slowdown": 1,
+  "MTU": 9000,
+  "CC_MODE": 1,
+  "AS_SEND_LAT_us": 3,
+  "AS_PXN_ENABLE": 0,
+  "AS_NVLS_ENABLE": 0,
+  "packet_loss": 0,
+  "hashes": {
+    "flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "SimAI.conf": "406789bc5904b86bcdf70178b42fc1b1af7eb8771845f494eb1ea7e6aef7a46f",
+    "trace_nodes.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "topology.txt": "defbd5200296887f8d3050363ea8fc87d26981a33a8b081098ebf62b4d8fe8ee",
+    "graph.txt": "0e65c165dfd26dca2f7afdcd38d545964c6e0d82a3bb34e9adfef12756f366de",
+    "graph.json": "cf15b0c78806fd366b2b2ec9c956b133ebcd0b9d81f48e2da859fe63bf1bbcff"
+  },
+  "logical_ranks": 4,
+  "physical_network_endpoints": 8,
+  "endpoint_representation": "two network endpoint placeholders per logical rank",
+  "fault_rank": 3,
+  "last_A_Gbps": 40,
+  "last_B_Gbps": 200,
+  "route_policy": "stay",
+  "added_ECN_rows": {
+    "KMIN_MAP": [
+      [
+        40000000000,
+        160
+      ],
+      [
+        20000000000,
+        80
+      ]
+    ],
+    "KMAX_MAP": [
+      [
+        40000000000,
+        640
+      ],
+      [
+        20000000000,
+        320
+      ]
+    ],
+    "PMAX_MAP": [
+      [
+        40000000000,
+        0.2
+      ],
+      [
+        20000000000,
+        0.2
+      ]
+    ]
+  },
+  "plane_payload_bytes": {
+    "0": 9437184,
+    "1": 9437184
+  },
+  "detection_coordination_cost_modeled": false
+}

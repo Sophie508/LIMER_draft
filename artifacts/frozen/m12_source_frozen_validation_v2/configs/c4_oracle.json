@@ -1,0 +1,16 @@
+{
+  "condition": "C4",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": false,
+  "recovery": true,
+  "oracle": true,
+  "transient_ms": 0,
+  "what_changes": "After two fabric-A baseline rounds, rank 2's worker-side A egress qdisc changes to 20 Mbit/s while remaining UP; an oracle supplies the fault time and immediately coordinates all ranks to fabric B at the next completed-round boundary.",
+  "expected": "All post-fault rounds use fabric B at version 1, post-recovery throughput retains at least 90% of baseline, and no rank observes a mixed route/version or checksum error."
+}

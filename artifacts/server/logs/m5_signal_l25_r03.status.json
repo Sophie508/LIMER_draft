@@ -1,0 +1,67 @@
+{
+  "name": "m5_signal_l25_r03",
+  "config": "configs/m5_retrans_observation/l25.json",
+  "source_snapshot": "limer_source_guarded_v1",
+  "command": [
+    "docker",
+    "--host=unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m5_signal_l25_r03",
+    "--privileged",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/limer_source_guarded_v1:/work",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime:/runtime",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/mininet_results:/results",
+    "limer-mininet:2026-10-10-py312",
+    "bash",
+    "/runtime/mininet_entry.sh",
+    "python3",
+    "-m",
+    "limer_v0.orchestrator",
+    "--config",
+    "configs/m5_retrans_observation/l25.json",
+    "--results-dir",
+    "/results",
+    "--workdir",
+    "/work",
+    "--run-id",
+    "m5_signal_l25_r03"
+  ],
+  "start_unix": 1791612812.056825,
+  "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3",
+  "hashes": {
+    "configs/m5_retrans_observation/l25.json": "96ecc5c5449f9f25afbf1469a4c0e37cd868d5b3814155dc9691488960624f84",
+    "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+    "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+    "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+  },
+  "exit_code": 1,
+  "wall_seconds": 305.9690134525299,
+  "summary": {
+    "condition": "C2",
+    "error": "worker 0 did not emit ['ROUND_DONE'] within 120.0s",
+    "error_type": "TimeoutError",
+    "experiment_family": "active_active_v1",
+    "run_id": "m5_signal_l25_r03",
+    "scenario_id": "AA13_LOSSFAST",
+    "status": "failed"
+  },
+  "correctness": {
+    "status": "not_completed"
+  },
+  "completion_pass": false,
+  "policy_decisions": [],
+  "event_counts": {
+    "HOST_CONFIRM": 0,
+    "PLAN_COMMIT": 0,
+    "RECOVERY_SUPPRESSED": 0,
+    "WORKER_ERROR": 0,
+    "TCP_RETRANS_SAMPLE": 0
+  }
+}

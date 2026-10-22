@@ -1,0 +1,2335 @@
+{
+  "all_registrations_accounted": true,
+  "run_complete": false,
+  "scientific_verdict": "FAIL",
+  "reason": "sparse_reorder40 actually deferred 80 ms; not acceptance evidence",
+  "registered": 149,
+  "statuses": {
+    "PASS": 19,
+    "FAILED": 0,
+    "INTERRUPTED": 5,
+    "UNRUN": 125
+  },
+  "trials": [
+    {
+      "id": "low_processing40_r010",
+      "start_unix": 1791699093.160705,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60143",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_processing40_r010",
+        "--scenario=processing40",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60143",
+        "--faultTimeMs=57.359006",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "93ab5dff89a3dbedad2d1f313f4af6de865df960ee90376f46dbff2c62e53415",
+      "truth_sha256": "e2b56985fabfb4afb1ae5f9c69fd6820ae6d5444948d630682c8d9c26bdf9a4c",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 24.84046483039856
+    },
+    {
+      "id": "low_loss_r002",
+      "start_unix": 1791699093.1616144,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60041",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_loss_r002",
+        "--scenario=loss",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60041",
+        "--faultTimeMs=59.659845",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 55.103355,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 114763200,
+          "signal": "probe_gap",
+          "missing_packets": 10,
+          "evidence_batches": [
+            5
+          ],
+          "gap_age_ns": 49214640,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 134763200,
+          "missing_packets": 5,
+          "evidence_batches": [
+            5,
+            7
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "c788bc9525e4d0651d1c06eec4d94eeeca0a838d7cf261c355be5c1e93ab9618",
+      "truth_sha256": "770380bedf63177e68b335a72e043fed63656684b7d3d4f9772505a2238be0b8",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 24.817933082580566
+    },
+    {
+      "id": "low_selective_r001",
+      "start_unix": 1791699093.1625335,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60000",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_selective_r001",
+        "--scenario=selective",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60000",
+        "--faultTimeMs=57.437801",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 107.325399,
+      "timely": false,
+      "missed": false,
+      "late": true,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 164763200,
+          "signal": "data_gap",
+          "missing_packets": 1,
+          "evidence_batches": [
+            10
+          ],
+          "gap_age_ns": 44030000,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 294763200,
+          "missing_packets": 2,
+          "evidence_batches": [
+            23
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "3ba5f90cb9fb50d257a9ef4fb8ef92f54d2545fa6fb9ed310ab378ae788bcbf6",
+      "truth_sha256": "e5b9e828065ba49fc2e4410bf474f701b755462a97a29489ac4efc2516fac73b",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 21.723780632019043
+    },
+    {
+      "id": "low_overload_r004",
+      "start_unix": 1791699093.1639056,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60076",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_overload_r004",
+        "--scenario=overload",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60076",
+        "--faultTimeMs=55.227941",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 29.996059,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 85224000,
+          "signal": "global_early",
+          "missing_packets": 364,
+          "evidence_batches": [
+            5,
+            6
+          ],
+          "gap_age_ns": 0,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-early-v4",
+          "path": "2/A",
+          "decision_t_ns": 85224000,
+          "missing_packets": 364,
+          "evidence_batches": [
+            5,
+            6
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "e9725a25e0d874924bf984cb24cf330df866c65b3b7b269c1b26fecbc13ed947",
+      "truth_sha256": "bcce27cd935b27a4caf1f640ca61e82caf102fb93e70a637e9cbd9a880239568",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 25.042601346969604
+    },
+    {
+      "id": "high_loss_r002",
+      "start_unix": 1791699093.164962,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60061",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/high_loss_r002",
+        "--scenario=loss",
+        "--capacityMbps=10000",
+        "--offeredMbps=1000",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60061",
+        "--faultTimeMs=53.69971",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 51.06349,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 104763200,
+          "signal": "data_gap",
+          "missing_packets": 19,
+          "evidence_batches": [
+            4
+          ],
+          "gap_age_ns": 46206800,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 114763200,
+          "missing_packets": 3,
+          "evidence_batches": [
+            5
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "86d14b1a7adc5cef7d95e9abf6376509450f107425838d4612c30216704da1f4",
+      "truth_sha256": "b3223793da0970f5d8232c70c2540a4557f70885c4b8938a49ecb245ac5a8892",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 249000000,
+      "reports_dropped": 0,
+      "sent_packets": 235720,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 26.950146198272705
+    },
+    {
+      "id": "low_sparse_reorder40_r010",
+      "start_unix": 1791699093.1657295,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60133",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_sparse_reorder40_r010",
+        "--scenario=sparse_reorder40",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60133",
+        "--faultTimeMs=56.202425",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 1,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 114763200,
+          "signal": "probe_gap",
+          "missing_packets": 12,
+          "evidence_batches": [
+            5
+          ],
+          "gap_age_ns": 49674880,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 124763200,
+          "missing_packets": 5,
+          "evidence_batches": [
+            5,
+            6
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "a64cdacf75ba55792af36be26affcd5ffe6b1c5932afe48400507f7fdb2a7433",
+      "truth_sha256": "4c42ce63f0c4a80461427e448c9e6f448447dcc867e9400ebeaf201295aac602",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 25.262884378433228
+    },
+    {
+      "id": "low_businessloss_r013",
+      "start_unix": 1791699093.167119,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60032",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_businessloss_r013",
+        "--scenario=businessloss",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60032",
+        "--faultTimeMs=52.026807",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 72.736393,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 124763200,
+          "signal": "data_gap",
+          "missing_packets": 2,
+          "evidence_batches": [
+            6
+          ],
+          "gap_age_ns": 49329280,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 194763200,
+          "missing_packets": 2,
+          "evidence_batches": [
+            12,
+            13
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "e7da70bcba91a9cc9406b1657d908412ef7a129dc8ce8934fc0aa4e591146e35",
+      "truth_sha256": "ad7436d8950e9dac3c2406fdf0c45b7c52136d15be4d2bc98a6252bc6456584f",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 23.88308882713318
+    },
+    {
+      "id": "low_sparse_reorder40_r001",
+      "start_unix": 1791699093.1680958,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60124",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_sparse_reorder40_r001",
+        "--scenario=sparse_reorder40",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60124",
+        "--faultTimeMs=53.545501",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 1,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 104763200,
+          "signal": "probe_gap",
+          "missing_packets": 11,
+          "evidence_batches": [
+            4
+          ],
+          "gap_age_ns": 44919040,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 114763200,
+          "missing_packets": 3,
+          "evidence_batches": [
+            5
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "ae17350d5b5983c2b434741f2bf61cf457be0bff33675e884e59096008e48f86",
+      "truth_sha256": "a3ac61d11f48865db47ed31085ccec5d52dcddb5fb6deb6ef2240b2314d5629e",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 20.36613631248474
+    },
+    {
+      "id": "low_businessloss_r011",
+      "start_unix": 1791699120.119228,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60030",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_businessloss_r011",
+        "--scenario=businessloss",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60030",
+        "--faultTimeMs=57.734882",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 67.028318,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 124763200,
+          "signal": "data_gap",
+          "missing_packets": 1,
+          "evidence_batches": [
+            6
+          ],
+          "gap_age_ns": 41980000,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "305e66e2ef912ac222b9ae63867abf2fb1a03ad45510c1a33110991a400ecc98",
+      "truth_sha256": "0e6227130ff4677e5b1720df00e34b72eacd0bfff7d42c9601f5d0cc7cbed878",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 24.207169771194458
+    },
+    {
+      "id": "low_selective_r002",
+      "start_unix": 1791699120.1197922,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60001",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_selective_r002",
+        "--scenario=selective",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60001",
+        "--faultTimeMs=57.7809",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 96.9823,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 154763200,
+          "signal": "data_gap",
+          "missing_packets": 2,
+          "evidence_batches": [
+            9
+          ],
+          "gap_age_ns": 44980000,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 174763200,
+          "missing_packets": 2,
+          "evidence_batches": [
+            10,
+            11
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "c0a674f8f7414f0e574ab83289d26d6000c688af0a9f2f4b5fd5cd376b7ebcee",
+      "truth_sha256": "eebab68b64a1215ed1086f91e18b15242945d850e49481452606605fa57114f1",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 28.06139588356018
+    },
+    {
+      "id": "low_selective_r018",
+      "start_unix": 1791699120.1202352,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60017",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_selective_r018",
+        "--scenario=selective",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60017",
+        "--faultTimeMs=59.477173",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 85.286027,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 144763200,
+          "signal": "data_gap",
+          "missing_packets": 1,
+          "evidence_batches": [
+            8
+          ],
+          "gap_age_ns": 44129280,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "3dcdef2dc6fba2ec569b6a6066654bc3b35f03ec10070af09707e81c8a207d7a",
+      "truth_sha256": "0e90e63f2a0af7c06ef8fe67b851c79d9dbbddf56ea66c6e3a491683a3b03349",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 26.78596043586731
+    },
+    {
+      "id": "low_reorder40_r005",
+      "start_unix": 1791699120.1208265,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60118",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_reorder40_r005",
+        "--scenario=reorder40",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60118",
+        "--faultTimeMs=55.646282",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "63968b26f49706b7b95b1b96d8ded8fe1426364bf8ae4188f7377648670a91de",
+      "truth_sha256": "09a5052612c565b38e8dcb70e7e1fdf878e82be1298461f37c343d1b3dbfb20c",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 25.976670503616333
+    },
+    {
+      "id": "low_loss_r014",
+      "start_unix": 1791699120.1226609,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60053",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_loss_r014",
+        "--scenario=loss",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60053",
+        "--faultTimeMs=59.906131",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 54.857069,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 114763200,
+          "signal": "probe_gap",
+          "missing_packets": 5,
+          "evidence_batches": [
+            5
+          ],
+          "gap_age_ns": 46809520,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 124763200,
+          "missing_packets": 3,
+          "evidence_batches": [
+            6
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "ac450bb18146a0b2f243b3e1bdec2f4ba9356043c55ef84b11adf452b63aad64",
+      "truth_sha256": "c1f37bb1de7865ab0293737561344afdba68ccd1a596f918854f192d9236788d",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 27.595494270324707
+    },
+    {
+      "id": "high_pause_r005",
+      "start_unix": 1791699120.1241226,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60148",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/high_pause_r005",
+        "--scenario=pause",
+        "--capacityMbps=10000",
+        "--offeredMbps=1000",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60148",
+        "--faultTimeMs=56.668262",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "91431f3e0537fdf083cde8ae32c10279a9736e04735ad4f7b109b286f0882b91",
+      "truth_sha256": "98d06138eb05a6123ab13851669b00c5969f25055531cab05eb003edaa89ed2e",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 189000000,
+      "reports_dropped": 0,
+      "sent_packets": 195720,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 29.016650438308716
+    },
+    {
+      "id": "low_businessloss_r005",
+      "start_unix": 1791699120.1237233,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60024",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_businessloss_r005",
+        "--scenario=businessloss",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60024",
+        "--faultTimeMs=57.680458",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 57.082742,
+      "timely": true,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 114763200,
+          "signal": "data_gap",
+          "missing_packets": 2,
+          "evidence_batches": [
+            5
+          ],
+          "gap_age_ns": 45780000,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 134763200,
+          "missing_packets": 2,
+          "evidence_batches": [
+            6,
+            7
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "338292fde39f97367ad030b04e7ffbe20c1d75793a7ffcd2e2feccbc01c49217",
+      "truth_sha256": "8a18678b0d4aefdbf3f30f02c7d925ffb0bb4cf996a00148ef016a18d8f5589e",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 27.59399390220642
+    },
+    {
+      "id": "low_pause_r010",
+      "start_unix": 1791699120.1246288,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60103",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_pause_r010",
+        "--scenario=pause",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60103",
+        "--faultTimeMs=51.319477",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "f12cc1d865c282983b942467e05afdcdf7cbcad225638cd03c1f20361e3c9ee7",
+      "truth_sha256": "c66f164cbee2c75f9d3e3a02dca90103cfd297155c076934c199c73719d15f28",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 15120000,
+      "reports_dropped": 0,
+      "sent_packets": 79800,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 23.19181513786316
+    },
+    {
+      "id": "low_loss_r018",
+      "status": "INTERRUPTED",
+      "prior_status": {
+        "id": "low_loss_r018",
+        "start_unix": 1791699149.144678,
+        "command": [
+          "docker",
+          "--host",
+          "unix:///run/user/1005/limer-docker/docker.sock",
+          "run",
+          "--rm",
+          "--name",
+          "limer-m13-60057",
+          "--cpus=1",
+          "--memory=1g",
+          "-v",
+          "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+          "-e",
+          "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+          "limer-simai-cpu:2026-10-10",
+          "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+          "--out=/work/runs/m13_development_v1/low_loss_r018",
+          "--scenario=loss",
+          "--capacityMbps=100",
+          "--offeredMbps=80",
+          "--lossRate=0.005",
+          "--reportLoss=0",
+          "--runId=60057",
+          "--faultTimeMs=57.740385",
+          "--probePps=35000",
+          "--reportCopies=3",
+          "--reportRateMbps=10",
+          "--reportDelayMs=1",
+          "--observationEndMs=600"
+        ],
+        "status": "RUNNING"
+      },
+      "reason": "Invalid sparse-40 setup discovered; process interrupted; no validated exit status"
+    },
+    {
+      "id": "low_reorder80_r003",
+      "status": "INTERRUPTED",
+      "prior_status": {
+        "id": "low_reorder80_r003",
+        "start_unix": 1791699149.14516,
+        "command": [
+          "docker",
+          "--host",
+          "unix:///run/user/1005/limer-docker/docker.sock",
+          "run",
+          "--rm",
+          "--name",
+          "limer-m13-60070",
+          "--cpus=1",
+          "--memory=1g",
+          "-v",
+          "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+          "-e",
+          "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+          "limer-simai-cpu:2026-10-10",
+          "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+          "--out=/work/runs/m13_development_v1/low_reorder80_r003",
+          "--scenario=reorder80",
+          "--capacityMbps=100",
+          "--offeredMbps=80",
+          "--lossRate=0.005",
+          "--reportLoss=0",
+          "--runId=60070",
+          "--faultTimeMs=56.311963",
+          "--probePps=35000",
+          "--reportCopies=3",
+          "--reportRateMbps=10",
+          "--reportDelayMs=1",
+          "--observationEndMs=600"
+        ],
+        "status": "RUNNING"
+      },
+      "reason": "Invalid sparse-40 setup discovered; process interrupted; no validated exit status"
+    },
+    {
+      "id": "low_processing80_r001",
+      "status": "INTERRUPTED",
+      "prior_status": {
+        "id": "low_processing80_r001",
+        "start_unix": 1791699149.1455362,
+        "command": [
+          "docker",
+          "--host",
+          "unix:///run/user/1005/limer-docker/docker.sock",
+          "run",
+          "--rm",
+          "--name",
+          "limer-m13-60063",
+          "--cpus=1",
+          "--memory=1g",
+          "-v",
+          "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+          "-e",
+          "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+          "limer-simai-cpu:2026-10-10",
+          "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+          "--out=/work/runs/m13_development_v1/low_processing80_r001",
+          "--scenario=processing80",
+          "--capacityMbps=100",
+          "--offeredMbps=80",
+          "--lossRate=0.005",
+          "--reportLoss=0",
+          "--runId=60063",
+          "--faultTimeMs=50.241577",
+          "--probePps=35000",
+          "--reportCopies=3",
+          "--reportRateMbps=10",
+          "--reportDelayMs=1",
+          "--observationEndMs=600"
+        ],
+        "status": "RUNNING"
+      },
+      "reason": "Invalid sparse-40 setup discovered; process interrupted; no validated exit status"
+    },
+    {
+      "id": "low_loss_r010",
+      "status": "INTERRUPTED",
+      "prior_status": {
+        "id": "low_loss_r010",
+        "start_unix": 1791699149.1470165,
+        "command": [
+          "docker",
+          "--host",
+          "unix:///run/user/1005/limer-docker/docker.sock",
+          "run",
+          "--rm",
+          "--name",
+          "limer-m13-60049",
+          "--cpus=1",
+          "--memory=1g",
+          "-v",
+          "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+          "-e",
+          "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+          "limer-simai-cpu:2026-10-10",
+          "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+          "--out=/work/runs/m13_development_v1/low_loss_r010",
+          "--scenario=loss",
+          "--capacityMbps=100",
+          "--offeredMbps=80",
+          "--lossRate=0.005",
+          "--reportLoss=0",
+          "--runId=60049",
+          "--faultTimeMs=54.705843",
+          "--probePps=35000",
+          "--reportCopies=3",
+          "--reportRateMbps=10",
+          "--reportDelayMs=1",
+          "--observationEndMs=600"
+        ],
+        "status": "RUNNING"
+      },
+      "reason": "Invalid sparse-40 setup discovered; process interrupted; no validated exit status"
+    },
+    {
+      "id": "low_businessloss_r009",
+      "start_unix": 1791699149.1465495,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60028",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_businessloss_r009",
+        "--scenario=businessloss",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60028",
+        "--faultTimeMs=57.885555",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": 136.877645,
+      "timely": false,
+      "missed": false,
+      "late": true,
+      "false_alarm_events": 0,
+      "alarms": [
+        {
+          "rule_version": "business-delivery-v1",
+          "path": "2/A",
+          "decision_t_ns": 194763200,
+          "signal": "data_gap",
+          "missing_packets": 4,
+          "evidence_batches": [
+            13
+          ],
+          "gap_age_ns": 40430000,
+          "claim": "Observed delivery impairment; cause unresolved"
+        }
+      ],
+      "input_rows": 4800,
+      "baseline_alarms": [
+        {
+          "rule_version": "hybrid-delivery-v4",
+          "path": "2/A",
+          "decision_t_ns": 224763200,
+          "missing_packets": 3,
+          "evidence_batches": [
+            14,
+            16
+          ],
+          "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+        }
+      ],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "22a6708def88758fcfdf72c7f7d0e7a12eda0007b9260dd0ca746f346143795a",
+      "truth_sha256": "ac13374ad6b377c42de659675cdcc6bd5ec5cb385dd9755c731b8cb8ccad95de",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 28.626681089401245
+    },
+    {
+      "id": "low_processing40_r003",
+      "status": "INTERRUPTED",
+      "prior_status": {
+        "id": "low_processing40_r003",
+        "start_unix": 1791699149.1491692,
+        "command": [
+          "docker",
+          "--host",
+          "unix:///run/user/1005/limer-docker/docker.sock",
+          "run",
+          "--rm",
+          "--name",
+          "limer-m13-60136",
+          "--cpus=1",
+          "--memory=1g",
+          "-v",
+          "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+          "-e",
+          "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+          "limer-simai-cpu:2026-10-10",
+          "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+          "--out=/work/runs/m13_development_v1/low_processing40_r003",
+          "--scenario=processing40",
+          "--capacityMbps=100",
+          "--offeredMbps=80",
+          "--lossRate=0.005",
+          "--reportLoss=0",
+          "--runId=60136",
+          "--faultTimeMs=59.942543",
+          "--probePps=35000",
+          "--reportCopies=3",
+          "--reportRateMbps=10",
+          "--reportDelayMs=1",
+          "--observationEndMs=600"
+        ],
+        "status": "RUNNING"
+      },
+      "reason": "Invalid sparse-40 setup discovered; process interrupted; no validated exit status"
+    },
+    {
+      "id": "low_reorder40_r001",
+      "start_unix": 1791699149.1485248,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60114",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_reorder40_r001",
+        "--scenario=reorder40",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60114",
+        "--faultTimeMs=52.366221",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "bc137db949676c415e142fbc358cda94f3954af4966e1e7dedd1d32481522e21",
+      "truth_sha256": "0825b62c41e9cd34407129aa628d1b5b25057e5822d1e206d954f99a86ef38a3",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 19920000,
+      "reports_dropped": 0,
+      "sent_packets": 83000,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 28.355203866958618
+    },
+    {
+      "id": "low_pause_r001",
+      "start_unix": 1791699149.1488569,
+      "command": [
+        "docker",
+        "--host",
+        "unix:///run/user/1005/limer-docker/docker.sock",
+        "run",
+        "--rm",
+        "--name",
+        "limer-m13-60094",
+        "--cpus=1",
+        "--memory=1g",
+        "-v",
+        "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+        "-e",
+        "LD_LIBRARY_PATH=/work/m13_backend/simulation/build/lib",
+        "limer-simai-cpu:2026-10-10",
+        "/work/m13_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+        "--out=/work/runs/m13_development_v1/low_pause_r001",
+        "--scenario=pause",
+        "--capacityMbps=100",
+        "--offeredMbps=80",
+        "--lossRate=0.005",
+        "--reportLoss=0",
+        "--runId=60094",
+        "--faultTimeMs=58.785628",
+        "--probePps=35000",
+        "--reportCopies=3",
+        "--reportRateMbps=10",
+        "--reportDelayMs=1",
+        "--observationEndMs=600"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "delay_ms": null,
+      "timely": false,
+      "missed": false,
+      "late": false,
+      "false_alarm_events": 0,
+      "alarms": [],
+      "input_rows": 4800,
+      "baseline_alarms": [],
+      "completed_batches": 800,
+      "unavailable_batches": 0,
+      "expired_partial_batches": 0,
+      "invalid_batches": 0,
+      "retained_batches": 176,
+      "native_alarm_replay": true,
+      "shadow_alarm_replay": true,
+      "fifo_audit": true,
+      "sample_audit": true,
+      "packet_audit": true,
+      "input_sha256": "ae602bfcdfc1a91dd00df53a7771662e23edf9ccb677fa40eb3bc93277073023",
+      "truth_sha256": "5855eaa2dfc9d5d278167853805a93c94ce6ff551715b11b4230700d37b084c5",
+      "report_bytes": 460800,
+      "probe_wire_bytes": 4462080,
+      "data_wire_bytes": 15120000,
+      "reports_dropped": 0,
+      "sent_packets": 79800,
+      "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+      "wall_seconds": 24.81993269920349
+    },
+    {
+      "id": "low_processing40_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r019",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder80_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r017",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder80_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_idle_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r018",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing40_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r010",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "high_pause_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r010",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r012",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r010",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r020",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder80_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r020",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r011",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r019",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing40_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing40_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing80_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_idle_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r017",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_overload_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing80_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r012",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing80_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r014",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing40_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r008",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r020",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r019",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r010",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r016",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_overload_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing40_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r017",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "high_pause_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r010",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder40_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r016",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_pause_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "high_pause_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing40_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r015",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "high_loss_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_idle_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r015",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_overload_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r014",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "high_pause_r004",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r013",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "high_loss_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r015",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r011",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_reorder80_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r013",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_overload_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_businessloss_r006",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing80_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r009",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r001",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_nominal_r007",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_processing40_r002",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_selective_r016",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_loss_r012",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_sparse_reorder40_r005",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    },
+    {
+      "id": "low_congestion_r003",
+      "status": "UNRUN",
+      "reason": "Stopped invalid setup before dispatch"
+    }
+  ]
+}

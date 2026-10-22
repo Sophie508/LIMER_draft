@@ -1,0 +1,1 @@
+{"rule_version":"hybrid-early-v4","path":"2/A","decision_t_ns":85224000,"missing_packets":365,"evidence_batches":[5,6],"claim":"Observed delivery deficit under the declared guard; cause unresolved"}

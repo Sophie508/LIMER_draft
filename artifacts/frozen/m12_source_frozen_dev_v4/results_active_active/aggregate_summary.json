@@ -1,0 +1,201 @@
+{
+  "all_run_gates_pass": false,
+  "expected_formal_run_count": 21,
+  "experiment_family": "active_active_v1",
+  "formal_run_count": 21,
+  "formal_run_pattern": "^(aa(?:0_healthy|1_fault|2_detect|3_local|3_global|4_oracle|5_transient))_rep([0-9]{2})$",
+  "gate_scope": "Four-worker CPU/Mininet active-active route-plan semantics, raw latency stages, framed transport, and performance retention only.",
+  "interpretation_boundary": "CPU/Mininet framed AllReduce-like traffic with a directed worker-2 Fabric-A egress degradation; not a bidirectional cable fault, NCCL, RDMA, real GPUs, or switch-resident detection.",
+  "latency_target": {
+    "numeric_target_ms": null,
+    "status": "not_formally_specified",
+    "unit": "ms"
+  },
+  "metric_definition": "Recovery scenarios use post-recovery throughput; other scenarios use post-marker or fault-window throughput. Every value is divided by the same run's balanced active-active pre-fault median.",
+  "overall_acceptance": false,
+  "scenarios": {
+    "AA0_HEALTHY": {
+      "checksum_errors": 0,
+      "gate_pass_count": 3,
+      "iqr_retention": 0.00027747609776862525,
+      "l_coordination_ms_values": [],
+      "l_detection_ms_values": [],
+      "l_fault_to_recovered_round_complete_ms_values": [],
+      "l_switch_ms_values": [],
+      "label": "Fault-free active-active",
+      "measured_retention_count": 3,
+      "median_retention": 0.9999752102708412,
+      "retention_values": [
+        1.0004505651732012,
+        0.9999752102708412,
+        0.9998956129776638
+      ],
+      "run_count": 3,
+      "version_errors": 0
+    },
+    "AA1_FAULT": {
+      "checksum_errors": 0,
+      "gate_pass_count": 3,
+      "iqr_retention": 0.00012680124125141745,
+      "l_coordination_ms_values": [],
+      "l_detection_ms_values": [],
+      "l_fault_to_recovered_round_complete_ms_values": [],
+      "l_switch_ms_values": [],
+      "label": "Persistent fault / no detector",
+      "measured_retention_count": 3,
+      "median_retention": 0.3707537915100555,
+      "retention_values": [
+        0.370787806134515,
+        0.3707537915100555,
+        0.3705342036520122
+      ],
+      "run_count": 3,
+      "version_errors": 0
+    },
+    "AA2_DETECT": {
+      "checksum_errors": 0,
+      "gate_pass_count": 3,
+      "iqr_retention": 8.442479835368832e-05,
+      "l_coordination_ms_values": [],
+      "l_detection_ms_values": [],
+      "l_fault_to_recovered_round_complete_ms_values": [],
+      "l_switch_ms_values": [
+        2775.614601,
+        2776.995179,
+        2784.749392
+      ],
+      "label": "Switch detection only",
+      "measured_retention_count": 3,
+      "median_retention": 0.37081343330227257,
+      "retention_values": [
+        0.3708641157477233,
+        0.3706952661510159,
+        0.37081343330227257
+      ],
+      "run_count": 3,
+      "version_errors": 0
+    },
+    "AA3_GLOBAL": {
+      "checksum_errors": 0,
+      "gate_pass_count": 2,
+      "iqr_retention": 0.03998703961780026,
+      "l_coordination_ms_values": [
+        0.543103,
+        0.535453,
+        0.504593
+      ],
+      "l_detection_ms_values": [
+        2868.530224,
+        2868.503874,
+        2868.365332
+      ],
+      "l_fault_to_recovered_round_complete_ms_values": [
+        4060.279699,
+        4078.221402,
+        4114.458269
+      ],
+      "l_switch_ms_values": [
+        2776.018853,
+        2785.94001,
+        2777.293949
+      ],
+      "label": "Closed-loop global failover baseline",
+      "measured_retention_count": 3,
+      "median_retention": 0.9611241929229803,
+      "retention_values": [
+        0.9614933177809691,
+        0.8815192385453687,
+        0.9611241929229803
+      ],
+      "run_count": 3,
+      "version_errors": 0
+    },
+    "AA3_LOCAL": {
+      "checksum_errors": 0,
+      "gate_pass_count": 3,
+      "iqr_retention": 0.00044371081484606556,
+      "l_coordination_ms_values": [
+        0.579533,
+        0.545333,
+        0.532873
+      ],
+      "l_detection_ms_values": [
+        2868.133301,
+        2868.302912,
+        2868.138611
+      ],
+      "l_fault_to_recovered_round_complete_ms_values": [
+        3958.667856,
+        3957.510949,
+        3957.844712
+      ],
+      "l_switch_ms_values": [
+        2777.168719,
+        2775.010637,
+        2777.131699
+      ],
+      "label": "Closed-loop localized recovery",
+      "measured_retention_count": 3,
+      "median_retention": 0.9358429698833192,
+      "retention_values": [
+        0.9358429698833192,
+        0.9365648667210935,
+        0.9356774450914014
+      ],
+      "run_count": 3,
+      "version_errors": 0
+    },
+    "AA4_ORACLE": {
+      "checksum_errors": 0,
+      "gate_pass_count": 3,
+      "iqr_retention": 0.0011304011298219896,
+      "l_coordination_ms_values": [
+        0.547093,
+        0.504723,
+        0.504723
+      ],
+      "l_detection_ms_values": [],
+      "l_fault_to_recovered_round_complete_ms_values": [
+        1091.348829,
+        1090.799771,
+        1090.743162
+      ],
+      "l_switch_ms_values": [],
+      "label": "Oracle localized recovery",
+      "measured_retention_count": 3,
+      "median_retention": 0.9466935747293674,
+      "retention_values": [
+        0.9488038094382512,
+        0.9465430071786072,
+        0.9466935747293674
+      ],
+      "run_count": 3,
+      "version_errors": 0
+    },
+    "AA5_TRANSIENT": {
+      "checksum_errors": 0,
+      "gate_pass_count": 3,
+      "iqr_retention": 0.0004448250151911637,
+      "l_coordination_ms_values": [],
+      "l_detection_ms_values": [],
+      "l_fault_to_recovered_round_complete_ms_values": [],
+      "l_switch_ms_values": [
+        877.04783,
+        875.836024,
+        877.121781
+      ],
+      "label": "Transient suppression",
+      "measured_retention_count": 3,
+      "median_retention": 0.9933904018638565,
+      "retention_values": [
+        0.9925240862108011,
+        0.9934137362411837,
+        0.9933904018638565
+      ],
+      "run_count": 3,
+      "version_errors": 0
+    }
+  },
+  "schema_version": "limer-cpu-active-active-report.1",
+  "three_runs_per_scenario": true
+}

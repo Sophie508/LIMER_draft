@@ -1,0 +1,150 @@
+{
+  "id": "high_pause_r001",
+  "start_unix": 1791649371.6271436,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m12-40510",
+    "--cpus=1",
+    "--memory=1g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m12c_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m12c_backend/simulation/build/scratch/ns3.36.1-LimerHybridObservation-debug",
+    "--out=/work/runs/m12_validation_v1/high_pause_r001",
+    "--scenario=pause",
+    "--capacityMbps=10000",
+    "--offeredMbps=1000",
+    "--lossRate=0.005",
+    "--reportLoss=0",
+    "--runId=40510",
+    "--faultTimeMs=53.000326",
+    "--probePps=35000",
+    "--reportCopies=3",
+    "--reportRateMbps=10",
+    "--reportDelayMs=1",
+    "--observationEndMs=600"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": null,
+  "timely": false,
+  "missed": false,
+  "late": false,
+  "false_alarm_events": 8,
+  "alarms": [
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "0/A",
+      "decision_t_ns": 71204800,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "0/B",
+      "decision_t_ns": 71819200,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "1/A",
+      "decision_t_ns": 72433600,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "1/B",
+      "decision_t_ns": 73048000,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "2/A",
+      "decision_t_ns": 73662400,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "2/B",
+      "decision_t_ns": 74276800,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "3/A",
+      "decision_t_ns": 74891200,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    },
+    {
+      "rule_version": "hybrid-early-v3",
+      "path": "3/B",
+      "decision_t_ns": 75505600,
+      "missing_packets": 750,
+      "evidence_batches": [
+        4,
+        5
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "input_rows": 4800,
+  "completed_batches": 800,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 176,
+  "native_alarm_replay": true,
+  "fifo_audit": true,
+  "sample_audit": true,
+  "packet_audit": true,
+  "input_sha256": "612caed48360d0e04d9e79abe79bc19c999a87093b4ddfce0983dda6fef0c960",
+  "truth_sha256": "86f517ca5464684be4e90e0486a323e54b4621deab11ef4cd1b1eea1abfd3291",
+  "report_bytes": 307200,
+  "probe_wire_bytes": 4462080,
+  "data_wire_bytes": 189000000,
+  "reports_dropped": 0,
+  "sent_packets": 195720,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 17.850549459457397
+}

@@ -1,0 +1,6 @@
+{
+  "validated_runs": 30,
+  "trace_checks": "PASS",
+  "data_byte_balance": "PASS",
+  "shared_binary_sha256": "ed50f2622b69d915e117e8d522b5d940f7e837ad2f45fa408467013117e66cff"
+}

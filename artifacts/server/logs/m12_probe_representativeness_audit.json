@@ -1,0 +1,171 @@
+{
+  "passed": true,
+  "matched_pairs": 20,
+  "records": [
+    {
+      "seed": 52000,
+      "business_packets_dropped": 6,
+      "iid_probe_drops": 35,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52001,
+      "business_packets_dropped": 8,
+      "iid_probe_drops": 43,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52002,
+      "business_packets_dropped": 9,
+      "iid_probe_drops": 28,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": true
+    },
+    {
+      "seed": 52003,
+      "business_packets_dropped": 6,
+      "iid_probe_drops": 32,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52004,
+      "business_packets_dropped": 6,
+      "iid_probe_drops": 36,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52005,
+      "business_packets_dropped": 3,
+      "iid_probe_drops": 34,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52006,
+      "business_packets_dropped": 4,
+      "iid_probe_drops": 35,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52007,
+      "business_packets_dropped": 7,
+      "iid_probe_drops": 43,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52008,
+      "business_packets_dropped": 9,
+      "iid_probe_drops": 34,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52009,
+      "business_packets_dropped": 4,
+      "iid_probe_drops": 42,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52010,
+      "business_packets_dropped": 6,
+      "iid_probe_drops": 30,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52011,
+      "business_packets_dropped": 8,
+      "iid_probe_drops": 33,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52012,
+      "business_packets_dropped": 6,
+      "iid_probe_drops": 28,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": true
+    },
+    {
+      "seed": 52013,
+      "business_packets_dropped": 3,
+      "iid_probe_drops": 30,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52014,
+      "business_packets_dropped": 12,
+      "iid_probe_drops": 28,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": true
+    },
+    {
+      "seed": 52015,
+      "business_packets_dropped": 6,
+      "iid_probe_drops": 38,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52016,
+      "business_packets_dropped": 6,
+      "iid_probe_drops": 25,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52017,
+      "business_packets_dropped": 2,
+      "iid_probe_drops": 36,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": false
+    },
+    {
+      "seed": 52018,
+      "business_packets_dropped": 7,
+      "iid_probe_drops": 26,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": true
+    },
+    {
+      "seed": 52019,
+      "business_packets_dropped": 5,
+      "iid_probe_drops": 25,
+      "selective_probe_drops": 0,
+      "iid_timely": true,
+      "selective_timely": true
+    }
+  ],
+  "business_drops": 123,
+  "zero_business_damage_pairs": 0,
+  "iid_timely": 20,
+  "selective_timely": 5,
+  "claim": "Matched configured phases, seeds and realized business loss COUNTS; no individual-loss-identity claim"
+}

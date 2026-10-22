@@ -1,0 +1,22 @@
+{
+  "name": "compare_p5_N20MiB_optcc_r3",
+  "ranks": 5,
+  "GPUs_per_server": 1,
+  "switches": 1,
+  "healthy_Gbps": 200,
+  "last_rank_Gbps": 100,
+  "propagation_ns": 500,
+  "slowdown": 2,
+  "MTU": 9000,
+  "CC_MODE": 1,
+  "AS_SEND_LAT_us": 3,
+  "AS_PXN_ENABLE": 0,
+  "AS_NVLS_ENABLE": 0,
+  "packet_loss": 0,
+  "hashes": {
+    "flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "SimAI.conf": "9771007aaa85285530714a6fb6610002b093ffc35e0500fa9ba0ee63c12b5634",
+    "trace_nodes.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "topology.txt": "271de453f15f0b8c873290f80c4a33dd91b2430218551d4518f8731686b4ba9e"
+  }
+}

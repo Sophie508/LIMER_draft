@@ -1,0 +1,389 @@
+{
+  "baseline": {
+    "baseline_median_bps": 377902787.4183165,
+    "bytes_completed": [
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.065532015,
+      1.065456154
+    ],
+    "fault_period_retention": 1.0,
+    "iqr_throughput_bps": 13452.952847540379,
+    "median_throughput_bps": 377902787.4183165,
+    "post_recovery_retention": 1.0,
+    "round_count": 2,
+    "throughput_bps": [
+      377889334.4654689,
+      377916240.371164
+    ]
+  },
+  "condition": "C3",
+  "correctness_status": "pass",
+  "detector_interface": "sA-eth3",
+  "detector_interface_operstate_after": "up",
+  "experiment_family": "active_active_v1",
+  "fault_applied": true,
+  "fault_interface": "w2-eth0",
+  "fault_interface_operstate_after": "up",
+  "fault_observation_isolation": {
+    "detector_location": "switch-facing peer interface counters",
+    "detector_reads_injector_qdisc": false,
+    "injector_location": "worker-side egress qdisc",
+    "observed_counter": "rx_bytes",
+    "same_interface": false
+  },
+  "fault_period_retention": 0.3733414661851237,
+  "fault_to_restoration_window": {
+    "baseline_median_bps": 377902787.4183165,
+    "interval_retention": 0.5407516435025602,
+    "interval_throughput_bps": 204351553.38065326,
+    "round_count": 2,
+    "total_bytes_completed": 100663296,
+    "total_duration_s": 3.94078907
+  },
+  "fault_window": {
+    "baseline_median_bps": 377902787.4183165,
+    "bytes_completed": [
+      50331648
+    ],
+    "duration_s": [
+      2.853939837
+    ],
+    "fault_period_retention": 0.3733414661851237,
+    "iqr_throughput_bps": 0.0,
+    "median_throughput_bps": 141086780.7301994,
+    "post_recovery_retention": 0.3733414661851237,
+    "round_count": 1,
+    "throughput_bps": [
+      141086780.7301994
+    ]
+  },
+  "host_refinement": {
+    "action": "confirm",
+    "baseline_p95_s": 1.06552822195,
+    "confidence": null,
+    "decision_t_monotonic_ns": 3012812972389878,
+    "enabled": true,
+    "gate_mode": "round",
+    "l_host_ms": 91.900311,
+    "reasons": [
+      "Switch-side direct symptoms persisted for the configured rule.",
+      "Round duration 2.853940s exceeded 1.5x the fault-free p95 (1.598292s).",
+      "The alternate fabric health probe passed."
+    ]
+  },
+  "interpretation_boundary": "CPU/Mininet framed AllReduce-like workload; not NCCL, RDMA, a real GPU cluster, or production switch hardware.",
+  "latency": {
+    "l_commit_to_recovered_round_ms": 1087.702097,
+    "l_coordination_ms": 0.508423,
+    "l_detection_ms": 2868.154046,
+    "l_fault_to_commit_ms": 2868.662469,
+    "l_fault_to_recovered_round_complete_ms": 3956.364566,
+    "l_host_ms": 91.900311,
+    "l_switch_ms": 2776.253735,
+    "latency_target": {
+      "numeric_target_ms": null,
+      "source": "Review feedback requests millisecond-level detection and recovery without a numeric threshold.",
+      "status": "not_formally_specified",
+      "unit": "ms"
+    }
+  },
+  "post_fault": {
+    "baseline_median_bps": 377902787.4183165,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      2.853939837,
+      1.086849233,
+      1.138262598,
+      1.158064328,
+      1.109823771,
+      1.070719772,
+      1.065219572,
+      1.065276262,
+      1.065307502,
+      1.064723689,
+      1.065075121,
+      1.06493684,
+      1.064944991,
+      1.065922936,
+      1.065527993,
+      1.065488664,
+      1.065394413,
+      1.064964581,
+      1.065376573,
+      1.065367753,
+      1.065363743
+    ],
+    "fault_period_retention": 1.000110299168098,
+    "iqr_throughput_bps": 1941756.016517222,
+    "median_throughput_bps": 377944469.7813906,
+    "post_recovery_retention": 1.000110299168098,
+    "round_count": 21,
+    "throughput_bps": [
+      141086780.7301994,
+      370477497.49849623,
+      353743665.74768186,
+      347695006.4556345,
+      362808217.41382575,
+      376058418.3925951,
+      378000174.40911233,
+      377980058.6601262,
+      377968974.44546485,
+      378176223.709436,
+      378051440.7490324,
+      378100530.35633546,
+      378097636.4064611,
+      377750745.76310647,
+      377890760.8671338,
+      377904709.4582697,
+      377938141.1116899,
+      378090681.3087712,
+      377944469.7813906,
+      377947598.7199323,
+      377949021.3043603
+    ]
+  },
+  "post_recovery": {
+    "baseline_median_bps": 377902787.4183165,
+    "bytes_completed": [
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648,
+      50331648
+    ],
+    "duration_s": [
+      1.086849233,
+      1.138262598,
+      1.158064328,
+      1.109823771,
+      1.070719772,
+      1.065219572,
+      1.065276262,
+      1.065307502,
+      1.064723689,
+      1.065075121,
+      1.06493684,
+      1.064944991,
+      1.065922936,
+      1.065527993,
+      1.065488664,
+      1.065394413,
+      1.064964581,
+      1.065376573,
+      1.065367753,
+      1.065363743
+    ],
+    "fault_period_retention": 1.0001144390403691,
+    "iqr_throughput_bps": 685327.0736137033,
+    "median_throughput_bps": 377946034.2506615,
+    "post_recovery_retention": 1.0001144390403691,
+    "round_count": 20,
+    "throughput_bps": [
+      370477497.49849623,
+      353743665.74768186,
+      347695006.4556345,
+      362808217.41382575,
+      376058418.3925951,
+      378000174.40911233,
+      377980058.6601262,
+      377968974.44546485,
+      378176223.709436,
+      378051440.7490324,
+      378100530.35633546,
+      378097636.4064611,
+      377750745.76310647,
+      377890760.8671338,
+      377904709.4582697,
+      377938141.1116899,
+      378090681.3087712,
+      377944469.7813906,
+      377947598.7199323,
+      377949021.3043603
+    ]
+  },
+  "post_recovery_retention": 1.0001144390403691,
+  "recovery": {
+    "commit_t_monotonic_ns": 3012812972898301,
+    "committed": true,
+    "decision": {
+      "action": "commit",
+      "changed_slots": [
+        {
+          "new_route": "B",
+          "old_route": "A",
+          "sender_rank": 2,
+          "step_id": 0
+        },
+        {
+          "new_route": "B",
+          "old_route": "A",
+          "sender_rank": 2,
+          "step_id": 2
+        },
+        {
+          "new_route": "B",
+          "old_route": "A",
+          "sender_rank": 2,
+          "step_id": 4
+        }
+      ],
+      "effective_round": 4,
+      "missing_ranks": [],
+      "plan": {
+        "policy": "localized_reroute",
+        "routes": [
+          [
+            "A",
+            "B",
+            "A",
+            "B",
+            "A",
+            "B"
+          ],
+          [
+            "B",
+            "A",
+            "B",
+            "A",
+            "B",
+            "A"
+          ],
+          [
+            "B",
+            "B",
+            "B",
+            "B",
+            "B",
+            "B"
+          ],
+          [
+            "B",
+            "A",
+            "B",
+            "A",
+            "B",
+            "A"
+          ]
+        ],
+        "world_size": 4
+      },
+      "plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+      "policy": "localized_reroute",
+      "ready_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "version": 1
+    },
+    "enabled": true,
+    "first_recovered_round_id": 4,
+    "l_commit_to_recovered_round_ms": 1087.702097,
+    "l_coordination_ms": 0.508423,
+    "l_fault_to_commit_ms": 2868.662469,
+    "l_fault_to_recovered_round_complete_ms": 3956.364566,
+    "oracle": false
+  },
+  "routing": {
+    "changed_slots": [
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 0
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 2
+      },
+      {
+        "new_route": "B",
+        "old_route": "A",
+        "sender_rank": 2,
+        "step_id": 4
+      }
+    ],
+    "initial_plan_fingerprint": "6b25bbb30fb02f988d2e6e22ba2dc06d94a582024c487c8e3e27c9bb1843c83e",
+    "initial_policy": "balanced_active_active",
+    "recovered_plan_fingerprint": "1bfb1dcf1307edd96378fc48925c69ede943200d20aa6b7442cd956c46b3d3f5",
+    "recovery_policy": "localized"
+  },
+  "run_id": "aa3_local_rep03",
+  "scenario_id": "AA3_LOCAL",
+  "status": "complete",
+  "switch_detection": {
+    "baseline_median_bps": 449061.65709196695,
+    "detector_rule": "legacy",
+    "enabled": true,
+    "execution_boundary": {
+      "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+      "data_source": "switch-facing Linux interface counters",
+      "process_placement": "orchestrator/root namespace management-plane proxy",
+      "resource_budget_enforced": false,
+      "switch_resident": false
+    },
+    "fault_t_monotonic_ns": 3012810104235832,
+    "first_suspect_t_monotonic_ns": 3012812880489567,
+    "interface": "sA-eth3",
+    "l_switch_ms": 2776.253735,
+    "rule_version": "l1-v0.2-isolated-rx-rate",
+    "state_proxy": {
+      "calibration_rate_samples": 150,
+      "max_consecutive_evidence_samples": 3,
+      "monitored_ports": 1,
+      "rss_isolated_or_budgeted": false
+    },
+    "suspect_count": 1,
+    "triggered": true
+  },
+  "switch_sampling": {
+    "max_actual_interval_ms": 20.063231,
+    "median_actual_interval_ms": 19.999801,
+    "sample_count": 1384,
+    "target_interval_ms": 20.0
+  },
+  "topology": "dual"
+}

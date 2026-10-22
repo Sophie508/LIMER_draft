@@ -1,0 +1,436 @@
+{
+  "mode": "ordinary_ring_network_only",
+  "p": 5,
+  "N": 20971520,
+  "dependency_events": {
+    "send": 35,
+    "recv": 35
+  },
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [],
+      "control": false
+    },
+    {
+      "id": 2,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [],
+      "control": false
+    },
+    {
+      "id": 3,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [],
+      "control": false
+    },
+    {
+      "id": 4,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [],
+      "control": false
+    },
+    {
+      "id": 5,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [],
+      "control": false
+    },
+    {
+      "id": 6,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [
+        1,
+        5
+      ],
+      "control": false
+    },
+    {
+      "id": 7,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [
+        2,
+        1
+      ],
+      "control": false
+    },
+    {
+      "id": 8,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [
+        3,
+        2
+      ],
+      "control": false
+    },
+    {
+      "id": 9,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [
+        4,
+        3
+      ],
+      "control": false
+    },
+    {
+      "id": 10,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [
+        5,
+        4
+      ],
+      "control": false
+    },
+    {
+      "id": 11,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [
+        6,
+        10
+      ],
+      "control": false
+    },
+    {
+      "id": 12,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [
+        7,
+        6
+      ],
+      "control": false
+    },
+    {
+      "id": 13,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [
+        8,
+        7
+      ],
+      "control": false
+    },
+    {
+      "id": 14,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [
+        9,
+        8
+      ],
+      "control": false
+    },
+    {
+      "id": 15,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [
+        10,
+        9
+      ],
+      "control": false
+    },
+    {
+      "id": 16,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [
+        11,
+        15
+      ],
+      "control": false
+    },
+    {
+      "id": 17,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [
+        12,
+        11
+      ],
+      "control": false
+    },
+    {
+      "id": 18,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [
+        13,
+        12
+      ],
+      "control": false
+    },
+    {
+      "id": 19,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [
+        14,
+        13
+      ],
+      "control": false
+    },
+    {
+      "id": 20,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [
+        15,
+        14
+      ],
+      "control": false
+    },
+    {
+      "id": 21,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [
+        16,
+        20
+      ],
+      "control": false
+    },
+    {
+      "id": 22,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [
+        17,
+        16
+      ],
+      "control": false
+    },
+    {
+      "id": 23,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [
+        18,
+        17
+      ],
+      "control": false
+    },
+    {
+      "id": 24,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [
+        19,
+        18
+      ],
+      "control": false
+    },
+    {
+      "id": 25,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [
+        20,
+        19
+      ],
+      "control": false
+    },
+    {
+      "id": 26,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [
+        21,
+        25
+      ],
+      "control": false
+    },
+    {
+      "id": 27,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [
+        22,
+        21
+      ],
+      "control": false
+    },
+    {
+      "id": 28,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [
+        23,
+        22
+      ],
+      "control": false
+    },
+    {
+      "id": 29,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [
+        24,
+        23
+      ],
+      "control": false
+    },
+    {
+      "id": 30,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [
+        25,
+        24
+      ],
+      "control": false
+    },
+    {
+      "id": 31,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [
+        26,
+        30
+      ],
+      "control": false
+    },
+    {
+      "id": 32,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [
+        27,
+        26
+      ],
+      "control": false
+    },
+    {
+      "id": 33,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [
+        28,
+        27
+      ],
+      "control": false
+    },
+    {
+      "id": 34,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [
+        29,
+        28
+      ],
+      "control": false
+    },
+    {
+      "id": 35,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [
+        30,
+        29
+      ],
+      "control": false
+    },
+    {
+      "id": 36,
+      "src": 0,
+      "dst": 1,
+      "bytes": 4194304,
+      "deps": [
+        31,
+        35
+      ],
+      "control": false
+    },
+    {
+      "id": 37,
+      "src": 1,
+      "dst": 2,
+      "bytes": 4194304,
+      "deps": [
+        32,
+        31
+      ],
+      "control": false
+    },
+    {
+      "id": 38,
+      "src": 2,
+      "dst": 3,
+      "bytes": 4194304,
+      "deps": [
+        33,
+        32
+      ],
+      "control": false
+    },
+    {
+      "id": 39,
+      "src": 3,
+      "dst": 4,
+      "bytes": 4194304,
+      "deps": [
+        34,
+        33
+      ],
+      "control": false
+    },
+    {
+      "id": 40,
+      "src": 4,
+      "dst": 0,
+      "bytes": 4194304,
+      "deps": [
+        35,
+        34
+      ],
+      "control": false
+    }
+  ]
+}

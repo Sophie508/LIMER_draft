@@ -11,6 +11,7 @@ import json
 import socket
 import threading
 import unittest
+from unittest import mock
 
 from limer_v0.protocol import FrameHeader, crc32, recv_frame, send_frame
 from limer_v0.route_plan import RoutePlan
@@ -76,6 +77,107 @@ class HarnessedWorker:
 
 
 class StepCutoverTest(unittest.TestCase):
+    def test_observation_sampler_is_disabled_by_default_and_stops_when_enabled(self):
+        harness = HarnessedWorker()
+        observed = threading.Event()
+        original_emit = harness.worker.emit
+
+        def emit(event, **payload):
+            original_emit(event, **payload)
+            if event == "HOST_RETRANS_SAMPLE":
+                observed.set()
+
+        try:
+            harness.worker._start_retransmission_sampler()
+            self.assertIsNone(harness.worker._retransmission_thread)
+            harness.worker.tcp_retrans_interval_s = 0.02
+            with mock.patch.object(harness.worker, "emit", side_effect=emit):
+                harness.worker._start_retransmission_sampler()
+                self.assertTrue(observed.wait(1))
+                harness.worker.close()
+                self.assertFalse(harness.worker._retransmission_thread.is_alive())
+            self.assertIn("HOST_RETRANS_SAMPLE", harness.event_names())
+        finally:
+            harness.close()
+
+    def _assert_send_abort_preserves_receive(self, partial_header=False):
+        harness = HarnessedWorker(step_timeout_s=0.2)
+        received_before_redo = threading.Event()
+        fragment_read = threading.Event()
+        incoming = harness.worker.sockets["B"].incoming
+        original_send = send_frame
+        original_receive = recv_frame
+
+        class ObservedSocket:
+            def recv(self, size):
+                data = incoming.recv(size)
+                fragment_read.set()
+                return data
+
+            def __getattr__(self, name):
+                return getattr(incoming, name)
+
+        if partial_header:
+            harness.worker.sockets["B"].incoming = ObservedSocket()
+
+        def observe_receive(sock):
+            result = original_receive(sock)
+            if result[0].step_id == 0:
+                received_before_redo.set()
+            return result
+
+        def cutover_during_send(sock, header, payload):
+            if sock is harness.worker.sockets["A"].outgoing and header.step_id == 0:
+                peer_header, peer_payload = frame(0, 0, 0)
+                data = peer_header.pack() + peer_payload
+                if partial_header:
+                    harness.peer["B"]["send"].sendall(data[:5])
+                    if not fragment_read.wait(1):
+                        raise AssertionError("receiver did not read partial header")
+                target = RoutePlan.balanced_active_active(2).localized_reroute(
+                    0, "A", "B"
+                )
+                harness.worker._handle_prepare({
+                    "version": 1, "plan": target.to_dict(),
+                    "plan_fingerprint": target.fingerprint,
+                    "effective_round": 0, "effective_step": 0,
+                })
+                harness.worker._handle_commit({
+                    "version": 1, "close_outgoing": ["A"],
+                })
+                harness.peer["B"]["send"].sendall(data[5:] if partial_header else data)
+                if not received_before_redo.wait(1):
+                    raise AssertionError("original receiver did not consume peer frame")
+                raise OSError("send interrupted by cutover")
+            original_send(sock, header, payload)
+
+        try:
+            with mock.patch("limer_v0.worker.send_frame", side_effect=cutover_during_send), \
+                    mock.patch("limer_v0.worker.recv_frame", side_effect=observe_receive):
+                thread, result, errors = self.run_round_async(harness)
+                harness.peer["B"]["recv"].settimeout(1)
+                header, _ = recv_frame(harness.peer["B"]["recv"])
+                self.assertEqual((header.step_id, header.version), (0, 1))
+                send_frame(harness.peer["A"]["send"], *frame(0, 1, 1))
+                thread.join(timeout=1)
+                self.assertFalse(thread.is_alive())
+                self.assertEqual(errors, [])
+                header, _ = recv_frame(harness.peer["B"]["recv"])
+                self.assertEqual((header.step_id, header.version), (1, 1))
+                self.assertEqual(result["round"]["redo_count"], 1)
+                self.assertEqual(result["round"]["frame_count"], 2)
+                self.assertEqual(result["round"]["version_errors"], 0)
+                self.assertEqual(result["round"]["checksum_errors"], 0)
+                self.assertEqual(result["round"]["receive_routes"], ["B", "A"])
+        finally:
+            harness.close()
+
+    def test_send_abort_retains_frame_consumed_by_original_receiver(self):
+        self._assert_send_abort_preserves_receive()
+
+    def test_partial_header_receive_survives_send_abort(self):
+        self._assert_send_abort_preserves_receive(partial_header=True)
+
     def run_round_async(self, harness, round_id=0):
         result = {}
         errors = []

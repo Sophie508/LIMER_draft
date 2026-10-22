@@ -1,0 +1,18 @@
+[
+  [
+    "m7_dev_ingress_v3_nominal",
+    "configs/m7_development_ingress_v3/nominal.json"
+  ],
+  [
+    "m7_dev_ingress_v3_loss1",
+    "configs/m7_development_ingress_v3/loss1.json"
+  ],
+  [
+    "m7_dev_ingress_v3_congestion",
+    "configs/m7_development_ingress_v3/congestion.json"
+  ],
+  [
+    "m7_dev_ingress_v3_reorder10",
+    "configs/m7_development_ingress_v3/reorder10.json"
+  ]
+]

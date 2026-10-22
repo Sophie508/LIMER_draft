@@ -1,0 +1,14 @@
+[
+  [
+    "ecn_v1_dual_b10_healthy",
+    200,
+    20,
+    false
+  ],
+  [
+    "ecn_v1_dual_a20_b10_stay",
+    40,
+    20,
+    false
+  ]
+]

@@ -1,6 +1,18 @@
 import unittest
 
-from limer_v0.orchestrator import _latency_summary
+from limer_v0.orchestrator import _latency_summary, _split_switch_suspects
+
+
+class PreFaultAlarmTest(unittest.TestCase):
+    def test_earlier_alarms_remain_visible_without_negative_post_fault_latency(self):
+        before, after = _split_switch_suspects(
+            [{"t_monotonic_ns": 120}, {"t_monotonic_ns": 70},
+             {"t_monotonic_ns": 110}], 100)
+        self.assertEqual([r["t_monotonic_ns"] for r in before], [70])
+        self.assertEqual([r["t_monotonic_ns"] for r in after], [110, 120])
+        before, after = _split_switch_suspects([{"t_monotonic_ns": 70}], None)
+        self.assertEqual(len(before), 1)
+        self.assertEqual(after, [])
 
 
 class LatencySummaryTest(unittest.TestCase):

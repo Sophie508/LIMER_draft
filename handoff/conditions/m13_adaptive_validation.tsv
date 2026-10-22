@@ -1,0 +1,15 @@
+condition	registered	capacityMbps	kind	lossRate	observationEndMs	offeredMbps	probePps	probeTargetPps	probeWireBytes	reportCopies	reportDelayMs	reportLoss	reportRateMbps	runId_max	runId_min	scenario
+wide_sparse_selective	60	10000	fault	0.005	600	1	0	25000	1500	3	1	0	10	71179	71120	selective
+wide_processing80	20	10000	fault	0.005	600	80	0	25000	1500	3	1	0	10	71379	71360	processing80
+high_businessloss	60	10000	fault	0.005	600	1000	0	25000	1500	3	1	0	10	71359	71300	businessloss
+wide_pause	10	10000	control	0.005	600	80	0	25000	1500	3	1	0	10	71419	71410	pause
+wide_idle	60	10000	fault	0.005	600	80	0	25000	1500	3	1	0	10	71239	71180	idle
+high_selective	60	10000	fault	0.005	600	1000	0	25000	1500	3	1	0	10	71299	71240	selective
+wide_sparse_reorder40	10	10000	control	0.005	600	80	0	25000	1500	3	1	0	10	71449	71440	sparse_reorder40
+wide_businessloss	60	10000	fault	0.005	600	80	0	25000	1500	3	1	0	10	71119	71060	businessloss
+wide_selective	60	10000	fault	0.005	600	80	0	25000	1500	3	1	0	10	71059	71000	selective
+wide_nominal	10	10000	control	0.005	600	80	0	25000	1500	3	1	0	10	71409	71400	nominal
+wide_congestion	10	10000	control	0.005	600	80	0	25000	1500	3	1	0	10	71429	71420	congestion
+wide_processing40	10	10000	control	0.005	600	80	0	25000	1500	3	1	0	10	71459	71450	processing40
+wide_reorder80	20	10000	fault	0.005	600	80	0	25000	1500	3	1	0	10	71399	71380	reorder80
+wide_reorder40	10	10000	control	0.005	600	80	0	25000	1500	3	1	0	10	71439	71430	reorder40

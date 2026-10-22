@@ -1,0 +1,4 @@
+condition	registered	capacityMbps	kind	lossRate	observationEndMs	offeredMbps	probePps	reportCopies	reportDelayMs	reportLoss	reportRateMbps	runId_max	runId_min	scenario
+low_loss_0.005	5	100	fault	0.005	800	80	35000	3	120	0	10	51009	51005	loss
+low_idle_0.005	5	100	fault	0.005	600	80	0	3	1	0	10	51004	51000	idle
+low_selective_0.005	5	100	fault	0.005	600	1	35000	3	1	0	10	51014	51010	selective

@@ -1,0 +1,45 @@
+{
+  "p": 4,
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "bytes": 1048576,
+      "plane": 0,
+      "deps": []
+    },
+    {
+      "id": 2,
+      "src": 0,
+      "dst": 2,
+      "bytes": 1000,
+      "plane": 0,
+      "deps": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "src": 1,
+      "dst": 2,
+      "bytes": 20,
+      "plane": 0,
+      "deps": [
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "src": 2,
+      "dst": 3,
+      "bytes": 10000,
+      "plane": 0,
+      "deps": [
+        2,
+        3
+      ]
+    }
+  ],
+  "mode": "execution_micrograph"
+}

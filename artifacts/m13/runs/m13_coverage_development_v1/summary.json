@@ -1,0 +1,324 @@
+{
+  "groups": {
+    "wide_nominal": {
+      "kind": "control",
+      "registered": 5,
+      "verified": 5,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "wide_businessloss": {
+      "kind": "fault",
+      "registered": 10,
+      "verified": 10,
+      "timely": 10,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 78.133521,
+      "timely_wilson95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        46.700443,
+        49.28507,
+        50.508689,
+        53.397335,
+        53.580149,
+        56.127796,
+        56.173389,
+        59.749621,
+        60.462021,
+        78.133521
+      ]
+    },
+    "wide_sparse_selective": {
+      "kind": "fault",
+      "registered": 10,
+      "verified": 10,
+      "timely": 10,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 67.631509,
+      "timely_wilson95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        49.868502,
+        51.806199,
+        51.922764,
+        52.543859,
+        53.683261,
+        55.526459,
+        57.497077,
+        61.676243,
+        63.477375,
+        67.631509
+      ]
+    },
+    "wide_processing80": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 5,
+      "timely": 5,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 52.356187,
+      "timely_wilson95": [
+        0.5655175352168251,
+        1
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        45.727307,
+        46.698593,
+        49.079011,
+        51.70734,
+        52.356187
+      ]
+    },
+    "wide_selective": {
+      "kind": "fault",
+      "registered": 10,
+      "verified": 10,
+      "timely": 10,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 68.653832,
+      "timely_wilson95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        47.824488,
+        49.329153,
+        50.253571,
+        51.411273,
+        51.979404,
+        52.512817,
+        55.533337,
+        55.533564,
+        57.117519,
+        68.653832
+      ]
+    },
+    "high_businessloss": {
+      "kind": "fault",
+      "registered": 10,
+      "verified": 10,
+      "timely": 10,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 56.631125,
+      "timely_wilson95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        47.777038,
+        49.1305,
+        49.512186,
+        49.947124,
+        50.174267,
+        50.205203,
+        50.29879,
+        54.44984,
+        56.034321,
+        56.631125
+      ]
+    },
+    "wide_reorder40": {
+      "kind": "control",
+      "registered": 5,
+      "verified": 5,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "high_selective": {
+      "kind": "fault",
+      "registered": 10,
+      "verified": 10,
+      "timely": 10,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 55.771877,
+      "timely_wilson95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        45.621463,
+        46.306619,
+        48.396808,
+        50.042658,
+        50.060624,
+        51.907392,
+        52.645632,
+        54.147313,
+        55.618689,
+        55.771877
+      ]
+    },
+    "wide_sparse_reorder40": {
+      "kind": "control",
+      "registered": 5,
+      "verified": 5,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "wide_idle": {
+      "kind": "fault",
+      "registered": 10,
+      "verified": 10,
+      "timely": 10,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 76.401715,
+      "timely_wilson95": [
+        0.7224672001371107,
+        0.9999999999999999
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        47.982695,
+        50.645762,
+        51.424233,
+        52.028003,
+        53.194248,
+        54.434928,
+        56.544276,
+        64.241937,
+        67.443401,
+        76.401715
+      ]
+    },
+    "wide_processing40": {
+      "kind": "control",
+      "registered": 5,
+      "verified": 5,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "wide_congestion": {
+      "kind": "control",
+      "registered": 5,
+      "verified": 5,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "wide_reorder80": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 5,
+      "timely": 5,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 53.842824,
+      "timely_wilson95": [
+        0.5655175352168251,
+        1
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        48.475846,
+        51.328304,
+        51.41331,
+        52.321851,
+        53.842824
+      ]
+    },
+    "wide_pause": {
+      "kind": "control",
+      "registered": 5,
+      "verified": 5,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    }
+  },
+  "registered": 100,
+  "terminal": 100,
+  "strict_verdict": "PASS",
+  "primary_faults": 70,
+  "timely_faults": 70,
+  "verified_control_trials": 30,
+  "claim": "Class-separated causal UDP/application observations and charged probes/reports; not collective recovery",
+  "per_condition_95_verdict": "PASS"
+}

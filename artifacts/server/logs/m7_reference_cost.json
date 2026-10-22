@@ -1,0 +1,134 @@
+{
+  "groups": {
+    "on": {
+      "registered": 5,
+      "completed_correct": 5,
+      "median_run_baseline_duration_s": 1.10567752,
+      "min_run_baseline_duration_s": 1.100988723,
+      "max_run_baseline_duration_s": 1.1103697879999999,
+      "rows": [
+        {
+          "name": "m7_val_v3_nominal_rep01",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.112614737,
+            1.108124839
+          ],
+          "median_baseline_duration_s": 1.1103697879999999
+        },
+        {
+          "name": "m7_val_v3_nominal_rep02",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.104432255,
+            1.106922785
+          ],
+          "median_baseline_duration_s": 1.10567752
+        },
+        {
+          "name": "m7_val_v3_nominal_rep03",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.103749725,
+            1.098227721
+          ],
+          "median_baseline_duration_s": 1.100988723
+        },
+        {
+          "name": "m7_val_v3_nominal_rep04",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.109089617,
+            1.10382697
+          ],
+          "median_baseline_duration_s": 1.1064582935
+        },
+        {
+          "name": "m7_val_v3_nominal_rep05",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.106844858,
+            1.103178063
+          ],
+          "median_baseline_duration_s": 1.1050114605
+        }
+      ]
+    },
+    "off": {
+      "registered": 5,
+      "completed_correct": 5,
+      "median_run_baseline_duration_s": 1.1069645575,
+      "min_run_baseline_duration_s": 1.1034654565,
+      "max_run_baseline_duration_s": 1.109372548,
+      "rows": [
+        {
+          "name": "m7_sensor_off_v3_nominal_rep01",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.113717685,
+            1.105027411
+          ],
+          "median_baseline_duration_s": 1.109372548
+        },
+        {
+          "name": "m7_sensor_off_v3_nominal_rep02",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.102505652,
+            1.113195116
+          ],
+          "median_baseline_duration_s": 1.107850384
+        },
+        {
+          "name": "m7_sensor_off_v3_nominal_rep03",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.102889802,
+            1.104041111
+          ],
+          "median_baseline_duration_s": 1.1034654565
+        },
+        {
+          "name": "m7_sensor_off_v3_nominal_rep04",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.10597672,
+            1.107952395
+          ],
+          "median_baseline_duration_s": 1.1069645575
+        },
+        {
+          "name": "m7_sensor_off_v3_nominal_rep05",
+          "exit_code": 0,
+          "status": "complete",
+          "correctness": "pass",
+          "baseline_duration_s": [
+            1.104706479,
+            1.105649116
+          ],
+          "median_baseline_duration_s": 1.1051777975000001
+        }
+      ]
+    }
+  },
+  "on_to_off_median_ratio": 0.9988373272736873,
+  "boundary": "Five independent unpaired lifecycles per arm; descriptive timing only. No causal CPU/logging overhead or confidence claim."
+}

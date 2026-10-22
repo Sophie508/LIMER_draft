@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import queue
 import socket
 import sys
@@ -24,6 +25,8 @@ from typing import Dict, List, Optional, Set, TextIO, Tuple
 from .protocol import FrameHeader, crc32, recv_frame, send_frame
 from .route_plan import RoutePlan
 from .state import RouteState
+from .tcp_retrans import TcpRetransmissionSampler
+from .tcp_loss import TcpDeliverySampler, TcpLossDetector
 
 
 MAX_STEP_RETRIES = 3
@@ -74,6 +77,14 @@ class FabricSockets:
             sock.close()
 
 
+@dataclass
+class _ReceiveAttempt:
+    route: str
+    thread: threading.Thread
+    frames: List[Tuple[FrameHeader, bytes]]
+    errors: List[BaseException]
+
+
 def _shutdown_socket(sock: socket.socket) -> None:
     try:
         sock.shutdown(socket.SHUT_RDWR)
@@ -96,6 +107,9 @@ class RingWorker:
         step_telemetry: bool = False,
         step_timeout_s: float = 65.0,
         output: TextIO = sys.stdout,
+        tcp_retrans_interval_s: float = 0.0,
+        tcp_delivery_interval_s: float = 0.0,
+        tcp_loss_detector: bool = False,
     ) -> None:
         if world_size < 2:
             raise ValueError("world_size must be at least 2")
@@ -105,6 +119,12 @@ class RingWorker:
             raise ValueError("chunk_bytes must be positive")
         if step_timeout_s <= 0:
             raise ValueError("step_timeout_s must be positive")
+        if not math.isfinite(tcp_retrans_interval_s) or tcp_retrans_interval_s < 0:
+            raise ValueError("tcp_retrans_interval_s must be finite and non-negative")
+        if not math.isfinite(tcp_delivery_interval_s) or tcp_delivery_interval_s < 0:
+            raise ValueError("tcp_delivery_interval_s must be finite and non-negative")
+        if tcp_loss_detector and not 0 < tcp_delivery_interval_s <= 0.005:
+            raise ValueError("tcp_loss_detector requires a sampling interval <= 0.005s")
         names = [fabric.name for fabric in fabrics]
         if len(names) != len(set(names)):
             raise ValueError("fabric names must be unique")
@@ -130,6 +150,12 @@ class RingWorker:
         self.step_telemetry = bool(step_telemetry)
         self.step_timeout_s = float(step_timeout_s)
         self.output = output
+        self.tcp_retrans_interval_s = float(tcp_retrans_interval_s)
+        self.tcp_delivery_interval_s = float(tcp_delivery_interval_s)
+        self.tcp_loss_detector = bool(tcp_loss_detector)
+        self._delivery_thread: Optional[threading.Thread] = None
+        self._retransmission_stop = threading.Event()
+        self._retransmission_thread: Optional[threading.Thread] = None
         self.route_state = RouteState(initial_plan)
         self.sockets: Dict[str, FabricSockets] = {}
         self.listeners: Dict[str, socket.socket] = {}
@@ -140,6 +166,7 @@ class RingWorker:
         self._cutover_generation = 0
         self._pending_resends: List[Tuple[int, int]] = []
         self._step_progress: Dict[Tuple[int, int], Dict[str, bool]] = {}
+        self._step_receivers: Dict[Tuple[int, int], _ReceiveAttempt] = {}
         self._early_frames: Dict[Tuple[int, int], Tuple[FrameHeader, bytes]] = {}
         self._closed_outgoing: Set[str] = set()
         self._resent_keys: Set[Tuple[int, int]] = set()
@@ -203,6 +230,59 @@ class RingWorker:
             routing_policy=self.route_state.active_plan.policy,
             route_plan_fingerprint=self.route_state.active_plan.fingerprint,
         )
+        self._start_retransmission_sampler()
+        self._start_delivery_sampler()
+
+    def _start_delivery_sampler(self) -> None:
+        if not self.tcp_delivery_interval_s or self._delivery_thread is not None:
+            return
+
+        def observe() -> None:
+            sampler = TcpDeliverySampler()
+            detectors = {name: TcpLossDetector() for name in self.sockets}
+            while not self._retransmission_stop.is_set():
+                with self._route_lock:
+                    version = self.route_state.active_version
+                rows = sampler.sample({name: pair.outgoing
+                                       for name, pair in self.sockets.items()})
+                for row in rows:
+                    self.emit("HOST_TCP_SAMPLE", plan_version=version, **row)
+                    if self.tcp_loss_detector:
+                        decision = detectors[row["fabric"]].observe(row)
+                        if decision is not None:
+                            decision["evidence_sample_t_ns"] = decision["decision_t_monotonic_ns"]
+                            decision["decision_t_monotonic_ns"] = time.monotonic_ns()
+                            self.emit("HOST_TCP_LOSS_CONFIRM", fabric=row["fabric"],
+                                      plan_version=version, **decision)
+                self._retransmission_stop.wait(self.tcp_delivery_interval_s)
+
+        self._delivery_thread = threading.Thread(target=observe, daemon=True)
+        self._delivery_thread.start()
+
+    def _start_retransmission_sampler(self) -> None:
+        if not self.tcp_retrans_interval_s or self._retransmission_thread is not None:
+            return
+
+        def observe() -> None:
+            sampler = TcpRetransmissionSampler()
+            while not self._retransmission_stop.is_set():
+                with self._route_lock:
+                    version = self.route_state.active_version
+                records = sampler.sample(
+                    {name: pair.outgoing for name, pair in self.sockets.items()},
+                    time.monotonic_ns(),
+                )
+                for record in records:
+                    self.emit("HOST_RETRANS_SAMPLE", plan_version=version, **record)
+                # Report an unsupported platform once, without manufacturing
+                # zero counters or repeatedly flooding the event stream.
+                if sys.platform != "linux":
+                    return
+                if self._retransmission_stop.wait(self.tcp_retrans_interval_s):
+                    return
+
+        self._retransmission_thread = threading.Thread(target=observe, daemon=True)
+        self._retransmission_thread.start()
 
     # ------------------------------------------------------------------
     # Control channel (reader thread)
@@ -412,18 +492,37 @@ class RingWorker:
         errors: List[BaseException] = []
         receiver: Optional[threading.Thread] = None
         if not progress["received"]:
-            receiver = threading.Thread(
-                target=self._receive_expected,
-                args=(
-                    self.sockets[receive_route].incoming,
-                    round_id,
-                    step_id,
-                    received,
-                    errors,
-                ),
-                daemon=True,
-            )
-            receiver.start()
+            key = (round_id, step_id)
+            attempt = self._step_receivers.get(key)
+            if attempt is not None and attempt.route != receive_route:
+                # The commit closes the superseded incoming socket. Wait for
+                # its reader to stop before another attempt can touch buffers.
+                attempt.thread.join(timeout=self.step_timeout_s)
+                if attempt.thread.is_alive():
+                    raise TimeoutError("superseded receive attempt did not stop")
+                del self._step_receivers[key]
+                attempt = None
+            if attempt is None:
+                receiver = threading.Thread(
+                    target=self._receive_expected,
+                    args=(
+                        self.sockets[receive_route].incoming,
+                        round_id,
+                        step_id,
+                        received,
+                        errors,
+                    ),
+                    daemon=True,
+                )
+                attempt = _ReceiveAttempt(receive_route, receiver, received, errors)
+                self._step_receivers[key] = attempt
+                receiver.start()
+            # A send-side abort does not cancel this reader. Reuse its partial
+            # frame and result on redo instead of starting a competing reader
+            # of the same TCP stream and losing the first reader's frame.
+            receiver = attempt.thread
+            received = attempt.frames
+            errors = attempt.errors
         if not progress["sent"]:
             header = FrameHeader(
                 round_id=round_id,
@@ -441,6 +540,7 @@ class RingWorker:
                 raise TimeoutError(
                     f"receive timed out at round {round_id} step {step_id}"
                 )
+            del self._step_receivers[(round_id, step_id)]
             if errors:
                 raise errors[0]
             if len(received) != 1:
@@ -647,9 +747,17 @@ class RingWorker:
         }
 
     def close(self) -> None:
+        self._retransmission_stop.set()
+        if self._retransmission_thread is not None:
+            self._retransmission_thread.join(timeout=1.0)
+        if self._delivery_thread is not None:
+            self._delivery_thread.join(timeout=1.0)
         for sockets in self.sockets.values():
             sockets.close()
         self.sockets.clear()
+        for attempt in self._step_receivers.values():
+            attempt.thread.join(timeout=min(self.step_timeout_s, 1.0))
+        self._step_receivers.clear()
         for listener in self.listeners.values():
             listener.close()
         self.listeners.clear()
@@ -701,6 +809,9 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument("--step-telemetry", action="store_true")
     parser.add_argument("--step-timeout", type=float, default=65.0)
+    parser.add_argument("--tcp-retrans-interval", type=float, default=0.0)
+    parser.add_argument("--tcp-delivery-interval", type=float, default=0.0)
+    parser.add_argument("--tcp-loss-detector", action="store_true")
     return parser.parse_args(argv)
 
 
@@ -714,6 +825,9 @@ def main(argv: Optional[List[str]] = None) -> int:
         initial_routing_policy=args.initial_routing_policy,
         step_telemetry=args.step_telemetry,
         step_timeout_s=args.step_timeout,
+        tcp_retrans_interval_s=args.tcp_retrans_interval,
+        tcp_delivery_interval_s=args.tcp_delivery_interval,
+        tcp_loss_detector=args.tcp_loss_detector,
     )
     try:
         worker.start()

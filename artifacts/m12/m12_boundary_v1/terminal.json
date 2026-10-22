@@ -1,0 +1,90 @@
+{
+  "complete": true,
+  "statuses": {
+    "PASS": 15
+  },
+  "summary": {
+    "groups": {
+      "low_selective_0.005": {
+        "kind": "fault",
+        "registered": 5,
+        "verified": 5,
+        "timely": 0,
+        "late": 0,
+        "missed_or_unverified": 5,
+        "p95_ms": "infinite",
+        "timely_wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "low_loss_0.005": {
+        "kind": "fault",
+        "registered": 5,
+        "verified": 5,
+        "timely": 0,
+        "late": 5,
+        "missed_or_unverified": 0,
+        "p95_ms": 182.092577,
+        "timely_wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          179.942275,
+          179.966935,
+          180.499699,
+          180.817033,
+          182.092577
+        ]
+      },
+      "low_idle_0.005": {
+        "kind": "fault",
+        "registered": 5,
+        "verified": 5,
+        "timely": 0,
+        "late": 2,
+        "missed_or_unverified": 3,
+        "p95_ms": "infinite",
+        "timely_wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          218.633013,
+          238.229397,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "registered": 15,
+    "terminal": 15,
+    "strict_verdict": "FAIL",
+    "primary_faults": 15,
+    "timely_faults": 0,
+    "verified_control_trials": 0,
+    "claim": "Costed same-path UDP probes and native delivery impairment decisions; not collective recovery",
+    "per_condition_95_verdict": "FAIL"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "m5_aa12_switch_r01",
+  "docker_wait_returncode": 0,
+  "container_exit_code": 1,
+  "docker_wait_stderr": "",
+  "container_started_at": "2026-10-10T05:50:19.886018116Z",
+  "finished_observed_unix": 1791611998.4745102,
+  "source": "limer_source original snapshot",
+  "summary": {
+    "condition": "C3",
+    "error": "worker 0 did not emit ['ROUND_DONE'] within 120.0s",
+    "error_type": "TimeoutError",
+    "experiment_family": "active_active_v1",
+    "run_id": "m5_aa12_switch_r01",
+    "scenario_id": "AA12_POLICY",
+    "status": "failed"
+  },
+  "correctness": {
+    "status": "not_completed"
+  },
+  "policy_decisions": [
+    {
+      "event": "POLICY_DECISION",
+      "metrics": {
+        "faulted_fabric": {
+          "burst_rate_bps": 100936927.81193724,
+          "busy_fraction": 0.4069767441860465,
+          "demand_bps": 41078982.249044225,
+          "interface": "sA-eth3",
+          "sample_count": 172,
+          "spare_bps": 59857945.56289301
+        },
+        "reuse_factor": 1.25,
+        "rule": "switch iff surviving spare x reuse_factor >= faulted pre-fault demand",
+        "surviving_fabric": {
+          "burst_rate_bps": null,
+          "busy_fraction": 0.0,
+          "demand_bps": 0.0,
+          "interface": "sB-eth3",
+          "sample_count": 256,
+          "spare_bps": null
+        }
+      },
+      "source": "orchestrator",
+      "t_monotonic_ns": 5319865115759599,
+      "verdict": "stay"
+    }
+  ],
+  "expected_branch": "switch",
+  "branch_gate_pass": false,
+  "completion_pass": false
+}

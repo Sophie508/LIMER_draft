@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "identical_scientific_files": [
+    "limer_v0/batch_loss.py",
+    "limer_v0/early_delivery.py",
+    "limer_v0/hybrid_delivery.py",
+    "limer_v0/business_delivery.py",
+    "simulation/m13_batch_deficit_observer.h",
+    "simulation/probe_budget.h",
+    "simulation/audit_business_campaign.py",
+    "simulation/build_business_observation.py",
+    "simulation/business_observer.h",
+    "simulation/LimerBusinessObservation.cc"
+  ],
+  "runner_matches": "m13_source_frozen_adaptive_controls_v1",
+  "primary_runner_difference": "Added adaptive_high_controls campaign; full diff retained; original primary conditions verified unchanged by offline verification"
+}

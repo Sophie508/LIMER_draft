@@ -1,0 +1,5512 @@
+[
+  {
+    "name": "m7_dev_ingress_v3_congestion",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14752,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.755016575,
+    "connection_seconds": 77.457351546,
+    "sample_interval_median_ms": 5.213851,
+    "sample_interval_max_ms": 8.587482,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.382872434,
+      1.357721845
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_ingress_v3_loss1",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": true,
+    "confirmation_ms": 43.484636,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325399475989628,
+        "evidence_age_ms": 30.905369,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 4,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325399475933112,
+          "total_retrans": 4,
+          "unacked": 897
+        }
+      }
+    ],
+    "samples": 19196,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.572233675,
+    "connection_seconds": 99.983689297,
+    "sample_interval_median_ms": 5.191319,
+    "sample_interval_max_ms": 9.13057,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.522751,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.096359969,
+      1.099855703
+    ],
+    "first_host_log_receipt_ms": 43.580966
+  },
+  {
+    "name": "m7_dev_ingress_v3_nominal",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12020,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.968158979,
+    "connection_seconds": 63.179058428,
+    "sample_interval_median_ms": 5.2124685,
+    "sample_interval_max_ms": 9.019181,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.107993573,
+      1.104970855
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_ingress_v3_reorder10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12476,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.309100231,
+    "connection_seconds": 65.893498174,
+    "sample_interval_median_ms": 5.243246,
+    "sample_interval_max_ms": 8.669846,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 7.853245,
+    "first_dsack_ms": 23.789797,
+    "baseline_durations_s": [
+      1.113298669,
+      1.106480516
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v2_congestion",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v2",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14838,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.785478272,
+    "connection_seconds": 77.682183296,
+    "sample_interval_median_ms": 5.203917499999999,
+    "sample_interval_max_ms": 8.203652,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.383355109,
+      1.353395092
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v2_loss0p5",
+    "status": "failed",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v2",
+    "confirmed": true,
+    "confirmation_ms": 2488.866968,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325555161420905,
+        "evidence_age_ms": 31.77508,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 1,
+          "lost": 1,
+          "reord_seen": 2,
+          "sample_t_monotonic_ns": 5325555161296321,
+          "total_retrans": 37,
+          "unacked": 43
+        }
+      }
+    ],
+    "samples": 17198,
+    "unavailable_samples": 0,
+    "observation_seconds": 11.366340597,
+    "connection_seconds": 90.338272607,
+    "sample_interval_median_ms": 5.2137910000000005,
+    "sample_interval_max_ms": 8.414438,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 33.87127,
+    "first_dsack_ms": 2.603933,
+    "baseline_durations_s": null,
+    "first_host_log_receipt_ms": 2489.145991
+  },
+  {
+    "name": "m7_dev_rule_v2_loss1",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v2",
+    "confirmed": true,
+    "confirmation_ms": 85.995917,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325552738728007,
+        "evidence_age_ms": 32.096773,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325552738554191,
+          "total_retrans": 5,
+          "unacked": 932
+        }
+      }
+    ],
+    "samples": 20212,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.268235563,
+    "connection_seconds": 105.645934825,
+    "sample_interval_median_ms": 5.2006815,
+    "sample_interval_max_ms": 8.281909,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 53.725328,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108317139,
+      1.103107029
+    ],
+    "first_host_log_receipt_ms": 86.190552
+  },
+  {
+    "name": "m7_dev_rule_v2_nominal",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v2",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 11932,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.982696558,
+    "connection_seconds": 63.324527549,
+    "sample_interval_median_ms": 5.33314,
+    "sample_interval_max_ms": 9.129278,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.1096933,
+      1.110847153
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v2_reorder10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v2",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12388,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.14561065,
+    "connection_seconds": 64.747896354,
+    "sample_interval_median_ms": 5.199399,
+    "sample_interval_max_ms": 8.438302,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.41836,
+    "first_dsack_ms": 21.803573,
+    "baseline_durations_s": [
+      1.106130969,
+      1.101664705
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v2_reorder40",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v2",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325604524625547,
+        "evidence_age_ms": 32.348755,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 2271,
+          "lost": 6,
+          "reord_seen": 7785,
+          "sample_t_monotonic_ns": 5325604524410273,
+          "total_retrans": 4084,
+          "unacked": 18
+        }
+      }
+    ],
+    "samples": 48032,
+    "unavailable_samples": 0,
+    "observation_seconds": 31.965039889,
+    "connection_seconds": 255.085644435,
+    "sample_interval_median_ms": 5.320827,
+    "sample_interval_max_ms": 9.729503,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 6.266029,
+    "first_dsack_ms": 54.357383,
+    "baseline_durations_s": [
+      1.107571521,
+      1.106688425
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v3_congestion",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14836,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.737616299,
+    "connection_seconds": 77.413651849,
+    "sample_interval_median_ms": 5.193348,
+    "sample_interval_max_ms": 8.685265,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.38446495,
+      1.35101015
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v3_loss0p5",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 46.257405,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325988603779197,
+        "evidence_age_ms": 30.989987,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325988603736116,
+          "total_retrans": 3,
+          "unacked": 893
+        }
+      }
+    ],
+    "samples": 16982,
+    "unavailable_samples": 0,
+    "observation_seconds": 11.208493476,
+    "connection_seconds": 89.076643592,
+    "sample_interval_median_ms": 5.2101995,
+    "sample_interval_max_ms": 8.041939,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 15.224337,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102822407,
+      1.103779521
+    ],
+    "first_host_log_receipt_ms": 46.327106
+  },
+  {
+    "name": "m7_dev_rule_v3_loss1",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.280473,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325988613341958,
+        "evidence_age_ms": 31.228175,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 7,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325988613267689,
+          "total_retrans": 7,
+          "unacked": 885
+        }
+      }
+    ],
+    "samples": 18896,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.431153563,
+    "connection_seconds": 98.883059882,
+    "sample_interval_median_ms": 5.2002705,
+    "sample_interval_max_ms": 8.360707,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.978029,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102340041,
+      1.098420473
+    ],
+    "first_host_log_receipt_ms": 43.376803
+  },
+  {
+    "name": "m7_dev_rule_v3_nominal",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 11896,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.886986347,
+    "connection_seconds": 62.836899664,
+    "sample_interval_median_ms": 5.235237,
+    "sample_interval_max_ms": 9.664672,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.107342322,
+      1.103733014
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v3_reorder10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12500,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.278683308,
+    "connection_seconds": 65.633107299,
+    "sample_interval_median_ms": 5.207485,
+    "sample_interval_max_ms": 8.464421,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 13.121503,
+    "first_dsack_ms": 23.418341,
+    "baseline_durations_s": [
+      1.106630797,
+      1.100864485
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_rule_v3_reorder40",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326057412616335,
+        "evidence_age_ms": 32.136898,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 1376,
+          "lost": 2,
+          "reord_seen": 7251,
+          "sample_t_monotonic_ns": 5326057412403586,
+          "total_retrans": 1975,
+          "unacked": 9
+        }
+      }
+    ],
+    "samples": 69222,
+    "unavailable_samples": 0,
+    "observation_seconds": 45.829631259,
+    "connection_seconds": 365.92027249800003,
+    "sample_interval_median_ms": 5.3148205,
+    "sample_interval_max_ms": 9.544586,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 8.008857,
+    "first_dsack_ms": 54.359687,
+    "baseline_durations_s": [
+      1.114013871,
+      1.103174337
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_v1_congestion",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "B",
+        "decision_t_monotonic_ns": 5325113852468172,
+        "evidence_age_ms": 32.179358,
+        "evidence": {
+          "connection_generation": 2,
+          "dsack_dups": 0,
+          "lost": 4,
+          "reord_seen": 1,
+          "sample_t_monotonic_ns": 5325113852301820,
+          "total_retrans": 4,
+          "unacked": 61
+        }
+      }
+    ],
+    "samples": 15258,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.091263113,
+    "connection_seconds": 80.424646199,
+    "sample_interval_median_ms": 5.253175000000001,
+    "sample_interval_max_ms": 9.104732,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.603352114,
+      1.400799838
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_v1_loss1",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": true,
+    "confirmation_ms": 50.975541,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325092635908240,
+        "evidence_age_ms": 31.061973,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325092635857525,
+          "total_retrans": 5,
+          "unacked": 595
+        }
+      }
+    ],
+    "samples": 20072,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.191102024,
+    "connection_seconds": 105.255907903,
+    "sample_interval_median_ms": 5.219962,
+    "sample_interval_max_ms": 7.819963,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 19.862853,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.092921522,
+      1.091508432
+    ],
+    "first_host_log_receipt_ms": 51.299459
+  },
+  {
+    "name": "m7_dev_v1_loss2",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": true,
+    "confirmation_ms": 44.047,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325092673325339,
+        "evidence_age_ms": 31.538116,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 8,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325092673246121,
+          "total_retrans": 8,
+          "unacked": 547
+        }
+      }
+    ],
+    "samples": 25322,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.684749364,
+    "connection_seconds": 132.812785745,
+    "sample_interval_median_ms": 5.2186605,
+    "sample_interval_max_ms": 8.331001,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.429666,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.095432961,
+      1.091521075
+    ],
+    "first_host_log_receipt_ms": 46.269097
+  },
+  {
+    "name": "m7_dev_v1_loss5",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": true,
+    "confirmation_ms": 40.23904,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325109832654033,
+        "evidence_age_ms": 31.200002,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 17,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325109832595293,
+          "total_retrans": 17,
+          "unacked": 507
+        }
+      }
+    ],
+    "samples": 42280,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.732522351,
+    "connection_seconds": 221.35121199900001,
+    "sample_interval_median_ms": 5.2077295,
+    "sample_interval_max_ms": 8.02112,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 8.980298,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.093975918,
+      1.097911288
+    ],
+    "first_host_log_receipt_ms": 40.366749
+  },
+  {
+    "name": "m7_dev_v1_nominal",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 6,
+    "all_alarm_count": 6,
+    "alarms": [
+      {
+        "rank": 3,
+        "fabric": "B",
+        "decision_t_monotonic_ns": 5325083503487914,
+        "evidence_age_ms": 31.327591,
+        "evidence": {
+          "connection_generation": 2,
+          "dsack_dups": 0,
+          "lost": 17,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325083503361697,
+          "total_retrans": 17,
+          "unacked": 430
+        }
+      },
+      {
+        "rank": 0,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325083505187651,
+        "evidence_age_ms": 32.039215,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 16,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325083505063087,
+          "total_retrans": 16,
+          "unacked": 438
+        }
+      },
+      {
+        "rank": 1,
+        "fabric": "B",
+        "decision_t_monotonic_ns": 5325083506515210,
+        "evidence_age_ms": 32.051718,
+        "evidence": {
+          "connection_generation": 2,
+          "dsack_dups": 0,
+          "lost": 18,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325083503762318,
+          "total_retrans": 18,
+          "unacked": 433
+        }
+      },
+      {
+        "rank": 2,
+        "fabric": "B",
+        "decision_t_monotonic_ns": 5325083685596416,
+        "evidence_age_ms": 31.287936,
+        "evidence": {
+          "connection_generation": 2,
+          "dsack_dups": 0,
+          "lost": 16,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325083682712869,
+          "total_retrans": 16,
+          "unacked": 441
+        }
+      },
+      {
+        "rank": 0,
+        "fabric": "B",
+        "decision_t_monotonic_ns": 5325083687959828,
+        "evidence_age_ms": 31.315838,
+        "evidence": {
+          "connection_generation": 2,
+          "dsack_dups": 0,
+          "lost": 17,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325083687857295,
+          "total_retrans": 17,
+          "unacked": 433
+        }
+      },
+      {
+        "rank": 3,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325083688959682,
+        "evidence_age_ms": 31.612575,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 16,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325083688842312,
+          "total_retrans": 16,
+          "unacked": 437
+        }
+      }
+    ],
+    "samples": 11838,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.926659095,
+    "connection_seconds": 62.758700454,
+    "sample_interval_median_ms": 5.29066,
+    "sample_interval_max_ms": 9.019933,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.09864882,
+      1.090384484
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_v1_pause",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "pause",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14612,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.684247129,
+    "connection_seconds": 76.977854398,
+    "sample_interval_median_ms": 5.2354614999999995,
+    "sample_interval_max_ms": 7.958913,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.098838866,
+      1.101845154
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_v1_reorder10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 1,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325143706819346,
+        "evidence_age_ms": 33.509001,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325143706685184,
+          "total_retrans": 5,
+          "unacked": 244
+        }
+      }
+    ],
+    "samples": 12140,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.019646902,
+    "connection_seconds": 63.765514792,
+    "sample_interval_median_ms": 5.208610999999999,
+    "sample_interval_max_ms": 9.381221,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 18.509366,
+    "first_dsack_ms": 64.80368,
+    "baseline_durations_s": [
+      1.100471017,
+      1.094713912
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_dev_v1_reorder40",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5325141444390942,
+        "evidence_age_ms": 31.680813,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 267,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5325141444261238,
+          "total_retrans": 22,
+          "unacked": 343
+        }
+      }
+    ],
+    "samples": 56858,
+    "unavailable_samples": 0,
+    "observation_seconds": 37.594344732,
+    "connection_seconds": 300.22816996,
+    "sample_interval_median_ms": 5.315938,
+    "sample_interval_max_ms": 8.395613,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.613571,
+    "first_dsack_ms": 52.976203,
+    "baseline_durations_s": [
+      1.096143583,
+      1.088386217
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_sensor_off_v3_nominal_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": false,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 0,
+    "unavailable_samples": 0,
+    "observation_seconds": 0,
+    "connection_seconds": 0,
+    "sample_interval_median_ms": null,
+    "sample_interval_max_ms": null,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.113717685,
+      1.105027411
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_sensor_off_v3_nominal_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": false,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 0,
+    "unavailable_samples": 0,
+    "observation_seconds": 0,
+    "connection_seconds": 0,
+    "sample_interval_median_ms": null,
+    "sample_interval_max_ms": null,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102505652,
+      1.113195116
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_sensor_off_v3_nominal_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": false,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 0,
+    "unavailable_samples": 0,
+    "observation_seconds": 0,
+    "connection_seconds": 0,
+    "sample_interval_median_ms": null,
+    "sample_interval_max_ms": null,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102889802,
+      1.104041111
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_sensor_off_v3_nominal_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": false,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 0,
+    "unavailable_samples": 0,
+    "observation_seconds": 0,
+    "connection_seconds": 0,
+    "sample_interval_median_ms": null,
+    "sample_interval_max_ms": null,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.10597672,
+      1.107952395
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_sensor_off_v3_nominal_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": false,
+    "rule_version": "tcp-loss-v1",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 0,
+    "unavailable_samples": 0,
+    "observation_seconds": 0,
+    "connection_seconds": 0,
+    "sample_interval_median_ms": null,
+    "sample_interval_max_ms": null,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104706479,
+      1.105649116
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_stress_v3_reorder40_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 59470,
+    "unavailable_samples": 0,
+    "observation_seconds": 39.289552951,
+    "connection_seconds": 313.694039767,
+    "sample_interval_median_ms": 5.293355,
+    "sample_interval_max_ms": 8.196078,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.155472,
+    "first_dsack_ms": 51.372306,
+    "baseline_durations_s": [
+      1.10369908,
+      1.106332518
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_stress_v3_reorder40_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327117757516692,
+        "evidence_age_ms": 32.029226,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 2215,
+          "lost": 12,
+          "reord_seen": 1212,
+          "sample_t_monotonic_ns": 5327117757391788,
+          "total_retrans": 3581,
+          "unacked": 15
+        }
+      }
+    ],
+    "samples": 65150,
+    "unavailable_samples": 0,
+    "observation_seconds": 42.861684273,
+    "connection_seconds": 342.081186901,
+    "sample_interval_median_ms": 5.227422,
+    "sample_interval_max_ms": 8.689764,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 7.831254,
+    "first_dsack_ms": 59.978303,
+    "baseline_durations_s": [
+      1.103540623,
+      1.104993608
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_stress_v3_reorder40_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327119739139623,
+        "evidence_age_ms": 31.303836,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 1881,
+          "lost": 4,
+          "reord_seen": 1687,
+          "sample_t_monotonic_ns": 5327119738882761,
+          "total_retrans": 3748,
+          "unacked": 32
+        }
+      }
+    ],
+    "samples": 72474,
+    "unavailable_samples": 0,
+    "observation_seconds": 47.505582991,
+    "connection_seconds": 379.15167279,
+    "sample_interval_median_ms": 5.214627,
+    "sample_interval_max_ms": 9.869215,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 7.331827,
+    "first_dsack_ms": 53.474347,
+    "baseline_durations_s": [
+      1.107596949,
+      1.101030967
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_stress_v3_reorder40_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 1,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327163182486351,
+        "evidence_age_ms": 30.965412,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 1726,
+          "lost": 15,
+          "reord_seen": 1385,
+          "sample_t_monotonic_ns": 5327163182329627,
+          "total_retrans": 2804,
+          "unacked": 49
+        }
+      }
+    ],
+    "samples": 62804,
+    "unavailable_samples": 0,
+    "observation_seconds": 41.3051157,
+    "connection_seconds": 329.829296635,
+    "sample_interval_median_ms": 5.233588,
+    "sample_interval_max_ms": 8.895219,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.409488,
+    "first_dsack_ms": 51.584193,
+    "baseline_durations_s": [
+      1.109241602,
+      1.102481307
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_stress_v3_reorder40_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder40",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 56994,
+    "unavailable_samples": 0,
+    "observation_seconds": 37.63902015,
+    "connection_seconds": 300.911633437,
+    "sample_interval_median_ms": 5.312316,
+    "sample_interval_max_ms": 8.818495,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.723682,
+    "first_dsack_ms": 54.411163,
+    "baseline_durations_s": [
+      1.105584004,
+      1.107011481
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_congestion_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14614,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.7015969,
+    "connection_seconds": 77.130245997,
+    "sample_interval_median_ms": 5.2683985,
+    "sample_interval_max_ms": 9.176707,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.373364556,
+      1.348719816
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_congestion_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 15216,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.091589996,
+    "connection_seconds": 80.318360166,
+    "sample_interval_median_ms": 5.26918,
+    "sample_interval_max_ms": 8.843652,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.436715362,
+      1.415284107
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_congestion_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14722,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.726140691,
+    "connection_seconds": 77.361978779,
+    "sample_interval_median_ms": 5.213931499999999,
+    "sample_interval_max_ms": 9.604539,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.371443554,
+      1.351482346
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_congestion_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14768,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.743692102,
+    "connection_seconds": 77.368271218,
+    "sample_interval_median_ms": 5.213350500000001,
+    "sample_interval_max_ms": 8.680806,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.386734766,
+      1.358693788
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_congestion_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "congestion",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14660,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.687442169,
+    "connection_seconds": 77.161710023,
+    "sample_interval_median_ms": 5.2250725,
+    "sample_interval_max_ms": 8.889538,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.381168989,
+      1.359712688
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 115.057639,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326918116074236,
+        "evidence_age_ms": 47.356846,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326918115994727,
+          "total_retrans": 2,
+          "unacked": 958
+        }
+      }
+    ],
+    "samples": 17166,
+    "unavailable_samples": 0,
+    "observation_seconds": 11.305158116,
+    "connection_seconds": 90.040612739,
+    "sample_interval_median_ms": 5.208130000000001,
+    "sample_interval_max_ms": 8.743354,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 67.621284,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108199048,
+      1.102953292
+    ],
+    "first_host_log_receipt_ms": 115.152277
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 52.007396,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326092182647771,
+        "evidence_age_ms": 31.513279,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326092182486489,
+          "total_retrans": 3,
+          "unacked": 905
+        }
+      }
+    ],
+    "samples": 16160,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.657309528,
+    "connection_seconds": 84.723788554,
+    "sample_interval_median_ms": 5.206222,
+    "sample_interval_max_ms": 8.817483,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 20.332835,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101708448,
+      1.098758937
+    ],
+    "first_host_log_receipt_ms": 52.117723
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 91.257983,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326623111334145,
+        "evidence_age_ms": 31.10883,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326623111273060,
+          "total_retrans": 2,
+          "unacked": 890
+        }
+      }
+    ],
+    "samples": 16324,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.818854423,
+    "connection_seconds": 85.952675235,
+    "sample_interval_median_ms": 5.239324,
+    "sample_interval_max_ms": 8.184576,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 60.088068,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.105184365,
+      1.104265452
+    ],
+    "first_host_log_receipt_ms": 91.420007
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 60.949253,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326213980067844,
+        "evidence_age_ms": 30.976512,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326213980016868,
+          "total_retrans": 2,
+          "unacked": 903
+        }
+      }
+    ],
+    "samples": 15234,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.071643816,
+    "connection_seconds": 80.126877429,
+    "sample_interval_median_ms": 5.2225525,
+    "sample_interval_max_ms": 8.976181,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 29.921765,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101152595,
+      1.098160335
+    ],
+    "first_host_log_receipt_ms": 61.033691
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 70.584189,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326561383416679,
+        "evidence_age_ms": 32.197401,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326561383266477,
+          "total_retrans": 3,
+          "unacked": 926
+        }
+      }
+    ],
+    "samples": 16336,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.789811115,
+    "connection_seconds": 86.079275917,
+    "sample_interval_median_ms": 5.246933,
+    "sample_interval_max_ms": 8.658495,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 38.236586,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101212288,
+      1.096242649
+    ],
+    "first_host_log_receipt_ms": 70.685198
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep06",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 52.017916,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327033009211539,
+        "evidence_age_ms": 31.139278,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5327033009157889,
+          "total_retrans": 3,
+          "unacked": 899
+        }
+      }
+    ],
+    "samples": 15710,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.354184454,
+    "connection_seconds": 82.39031920299999,
+    "sample_interval_median_ms": 5.2138314999999995,
+    "sample_interval_max_ms": 9.783665,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 20.824988,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102345953,
+      1.095938107
+    ],
+    "first_host_log_receipt_ms": 52.155795
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep07",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 56.038125,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326416431744808,
+        "evidence_age_ms": 30.866356,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326416431701116,
+          "total_retrans": 2,
+          "unacked": 902
+        }
+      }
+    ],
+    "samples": 16050,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.607006177,
+    "connection_seconds": 84.431345937,
+    "sample_interval_median_ms": 5.227587,
+    "sample_interval_max_ms": 8.118192,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 25.128077,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108123145,
+      1.108973169
+    ],
+    "first_host_log_receipt_ms": 56.253318
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep08",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 414.772219,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326781234093903,
+        "evidence_age_ms": 30.949783,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326781234025144,
+          "total_retrans": 4,
+          "unacked": 556
+        }
+      }
+    ],
+    "samples": 17448,
+    "unavailable_samples": 0,
+    "observation_seconds": 11.468566085,
+    "connection_seconds": 91.165164038,
+    "sample_interval_median_ms": 5.203737,
+    "sample_interval_max_ms": 11.128947,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 21.693627,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.103214782,
+      1.106690459
+    ],
+    "first_host_log_receipt_ms": 414.866045
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep09",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 65.134841,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326690239983518,
+        "evidence_age_ms": 51.29993,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326690239943794,
+          "total_retrans": 2,
+          "unacked": 1023
+        }
+      }
+    ],
+    "samples": 15502,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.160622536,
+    "connection_seconds": 81.015698011,
+    "sample_interval_median_ms": 5.1970545,
+    "sample_interval_max_ms": 13.373826,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 13.795187,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104397019,
+      1.105138859
+    ],
+    "first_host_log_receipt_ms": 65.276557
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 52.565843,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326198261125054,
+        "evidence_age_ms": 31.085848,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326198261058760,
+          "total_retrans": 3,
+          "unacked": 634
+        }
+      }
+    ],
+    "samples": 17666,
+    "unavailable_samples": 0,
+    "observation_seconds": 11.687993612,
+    "connection_seconds": 92.92682607,
+    "sample_interval_median_ms": 5.2317895,
+    "sample_interval_max_ms": 8.214393,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 21.413701,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.111116918,
+      1.111937126
+    ],
+    "first_host_log_receipt_ms": 52.656313
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep11",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 39.827449,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326780326559752,
+        "evidence_age_ms": 31.056081,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326780326515318,
+          "total_retrans": 3,
+          "unacked": 876
+        }
+      }
+    ],
+    "samples": 16286,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.746483905,
+    "connection_seconds": 85.440683868,
+    "sample_interval_median_ms": 5.2160505,
+    "sample_interval_max_ms": 9.150308,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 8.726934,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.105884769,
+      1.110616601
+    ],
+    "first_host_log_receipt_ms": 40.017495
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep12",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 126.613407,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326795062123357,
+        "evidence_age_ms": 32.233119,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 6,
+          "reord_seen": 1,
+          "sample_t_monotonic_ns": 5326795061997090,
+          "total_retrans": 6,
+          "unacked": 1290
+        }
+      }
+    ],
+    "samples": 15942,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.526206163,
+    "connection_seconds": 83.896943559,
+    "sample_interval_median_ms": 5.2247865000000004,
+    "sample_interval_max_ms": 8.109365,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 94.254021,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104865246,
+      1.102274118
+    ],
+    "first_host_log_receipt_ms": 126.763027
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep13",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 96.432315,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326122740012570,
+        "evidence_age_ms": 31.309397,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326122739937470,
+          "total_retrans": 2,
+          "unacked": 921
+        }
+      }
+    ],
+    "samples": 15472,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.239539569,
+    "connection_seconds": 81.262590045,
+    "sample_interval_median_ms": 5.214227,
+    "sample_interval_max_ms": 8.558076,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 65.047818,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.10301656,
+      1.10539528
+    ],
+    "first_host_log_receipt_ms": 96.768947
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep14",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 78.863092,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326796356789579,
+        "evidence_age_ms": 56.58535,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326796356750296,
+          "total_retrans": 2,
+          "unacked": 1051
+        }
+      }
+    ],
+    "samples": 16640,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.933687351,
+    "connection_seconds": 86.923302832,
+    "sample_interval_median_ms": 5.198408,
+    "sample_interval_max_ms": 7.699136,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 22.238459,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.100314083,
+      1.098303824
+    ],
+    "first_host_log_receipt_ms": 78.940788
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep15",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 44.037112,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326136858615033,
+        "evidence_age_ms": 31.473334,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326136858513282,
+          "total_retrans": 2,
+          "unacked": 902
+        }
+      }
+    ],
+    "samples": 16178,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.65150788,
+    "connection_seconds": 84.809667821,
+    "sample_interval_median_ms": 5.2129395,
+    "sample_interval_max_ms": 8.263304,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.462027,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.100619856,
+      1.100382071
+    ],
+    "first_host_log_receipt_ms": 44.240423
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep16",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 51.867313,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326232799193117,
+        "evidence_age_ms": 31.051684,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326232799143775,
+          "total_retrans": 2,
+          "unacked": 906
+        }
+      }
+    ],
+    "samples": 15814,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.484673718,
+    "connection_seconds": 83.241552719,
+    "sample_interval_median_ms": 5.227677,
+    "sample_interval_max_ms": 9.576967,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 20.766287,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.103209392,
+      1.106112014
+    ],
+    "first_host_log_receipt_ms": 52.025209
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep17",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 50.396235,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326295304257632,
+        "evidence_age_ms": 41.405978,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326295304181169,
+          "total_retrans": 2,
+          "unacked": 936
+        }
+      }
+    ],
+    "samples": 15602,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.304953985,
+    "connection_seconds": 81.96760639600001,
+    "sample_interval_median_ms": 5.226285000000001,
+    "sample_interval_max_ms": 8.082906,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 8.913794,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108170444,
+      1.111255749
+    ],
+    "first_host_log_receipt_ms": 50.46262
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep18",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 408.156494,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326384707742566,
+        "evidence_age_ms": 30.978166,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 4,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326384707691801,
+          "total_retrans": 5,
+          "unacked": 718
+        }
+      }
+    ],
+    "samples": 15946,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.596086142,
+    "connection_seconds": 84.254295379,
+    "sample_interval_median_ms": 5.276534,
+    "sample_interval_max_ms": 8.499958,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 179.4564,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.107774972,
+      1.108107867
+    ],
+    "first_host_log_receipt_ms": 408.266109
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep19",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 121.438974,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326151969330306,
+        "evidence_age_ms": 93.250068,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 1,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326151969286093,
+          "total_retrans": 2,
+          "unacked": 509
+        }
+      }
+    ],
+    "samples": 16180,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.7504382,
+    "connection_seconds": 85.408736525,
+    "sample_interval_median_ms": 5.27457,
+    "sample_interval_max_ms": 8.863941,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 28.144693,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.109312315,
+      1.106081047
+    ],
+    "first_host_log_receipt_ms": 121.600417
+  },
+  {
+    "name": "m7_val_v3_loss0p5_rep20",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.5,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 125.628209,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326526317013040,
+        "evidence_age_ms": 30.812515,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326526316959089,
+          "total_retrans": 2,
+          "unacked": 751
+        }
+      }
+    ],
+    "samples": 15872,
+    "unavailable_samples": 0,
+    "observation_seconds": 10.471843641,
+    "connection_seconds": 83.306963437,
+    "sample_interval_median_ms": 5.208356,
+    "sample_interval_max_ms": 8.849643,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 94.761743,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108767454,
+      1.106412237
+    ],
+    "first_host_log_receipt_ms": 125.758454
+  },
+  {
+    "name": "m7_val_v3_loss1_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 41.66853,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326413747991007,
+        "evidence_age_ms": 31.427137,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 7,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326413747893905,
+          "total_retrans": 7,
+          "unacked": 896
+        }
+      }
+    ],
+    "samples": 18798,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.370384598,
+    "connection_seconds": 98.699937026,
+    "sample_interval_median_ms": 5.2178485000000006,
+    "sample_interval_max_ms": 8.329768,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.144291,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.105596347,
+      1.102774717
+    ],
+    "first_host_log_receipt_ms": 41.97745
+  },
+  {
+    "name": "m7_val_v3_loss1_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 44.844405,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326950727064083,
+        "evidence_age_ms": 31.877262,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326950726930002,
+          "total_retrans": 2,
+          "unacked": 896
+        }
+      }
+    ],
+    "samples": 19878,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.13325609,
+    "connection_seconds": 104.76968218900001,
+    "sample_interval_median_ms": 5.2488615,
+    "sample_interval_max_ms": 8.815449,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.833062,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102629715,
+      1.104478191
+    ],
+    "first_host_log_receipt_ms": 45.079205
+  },
+  {
+    "name": "m7_val_v3_loss1_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 105.319489,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326955806887291,
+        "evidence_age_ms": 82.879934,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 1,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326955806839041,
+          "total_retrans": 2,
+          "unacked": 519
+        }
+      }
+    ],
+    "samples": 20258,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.315913842,
+    "connection_seconds": 106.150671441,
+    "sample_interval_median_ms": 5.21569,
+    "sample_interval_max_ms": 9.220058,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 22.391305,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104825872,
+      1.105830958
+    ],
+    "first_host_log_receipt_ms": 105.447098
+  },
+  {
+    "name": "m7_val_v3_loss1_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 56.902645,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326371055502926,
+        "evidence_age_ms": 43.272939,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326371055366891,
+          "total_retrans": 2,
+          "unacked": 982
+        }
+      }
+    ],
+    "samples": 19784,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.062461697,
+    "connection_seconds": 104.042842037,
+    "sample_interval_median_ms": 5.225002,
+    "sample_interval_max_ms": 8.44249,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 13.493671,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102421043,
+      1.105542777
+    ],
+    "first_host_log_receipt_ms": 57.116656
+  },
+  {
+    "name": "m7_val_v3_loss1_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 85.21889,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326827666479656,
+        "evidence_age_ms": 31.319115,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326827666395017,
+          "total_retrans": 5,
+          "unacked": 909
+        }
+      }
+    ],
+    "samples": 20860,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.683430304,
+    "connection_seconds": 109.254001667,
+    "sample_interval_median_ms": 5.2053855,
+    "sample_interval_max_ms": 8.28759,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 53.815136,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.105297107,
+      1.104647668
+    ],
+    "first_host_log_receipt_ms": 85.350877
+  },
+  {
+    "name": "m7_val_v3_loss1_rep06",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 50.474432,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326658093344061,
+        "evidence_age_ms": 30.829728,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326658093301732,
+          "total_retrans": 5,
+          "unacked": 886
+        }
+      }
+    ],
+    "samples": 19442,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.893140271,
+    "connection_seconds": 102.54856294,
+    "sample_interval_median_ms": 5.271013,
+    "sample_interval_max_ms": 8.93865,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 19.602375,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104431343,
+      1.108857522
+    ],
+    "first_host_log_receipt_ms": 50.564861
+  },
+  {
+    "name": "m7_val_v3_loss1_rep07",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 45.215311,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326605781723975,
+        "evidence_age_ms": 30.941136,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 4,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326605781654675,
+          "total_retrans": 4,
+          "unacked": 904
+        }
+      }
+    ],
+    "samples": 19998,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.222762299,
+    "connection_seconds": 105.231765258,
+    "sample_interval_median_ms": 5.237125,
+    "sample_interval_max_ms": 8.868949,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 14.204875,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.106831644,
+      1.101344586
+    ],
+    "first_host_log_receipt_ms": 45.361645
+  },
+  {
+    "name": "m7_val_v3_loss1_rep08",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 49.395959,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326430140023102,
+        "evidence_age_ms": 31.468675,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 4,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326430139922043,
+          "total_retrans": 4,
+          "unacked": 898
+        }
+      }
+    ],
+    "samples": 21022,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.854978995,
+    "connection_seconds": 110.32022579,
+    "sample_interval_median_ms": 5.2226475,
+    "sample_interval_max_ms": 8.887404,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 17.826225,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101837499,
+      1.099005799
+    ],
+    "first_host_log_receipt_ms": 49.639877
+  },
+  {
+    "name": "m7_val_v3_loss1_rep09",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 46.72454,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326228082801411,
+        "evidence_age_ms": 30.967876,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326228082758451,
+          "total_retrans": 5,
+          "unacked": 781
+        }
+      }
+    ],
+    "samples": 21962,
+    "unavailable_samples": 0,
+    "observation_seconds": 14.41690264,
+    "connection_seconds": 114.832680092,
+    "sample_interval_median_ms": 5.197295,
+    "sample_interval_max_ms": 9.235587,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 15.713704,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.109433292,
+      1.105778398
+    ],
+    "first_host_log_receipt_ms": 46.782609
+  },
+  {
+    "name": "m7_val_v3_loss1_rep10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.836155,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327047364124446,
+        "evidence_age_ms": 30.934574,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5327047364075244,
+          "total_retrans": 5,
+          "unacked": 889
+        }
+      }
+    ],
+    "samples": 18794,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.448431049,
+    "connection_seconds": 98.987454235,
+    "sample_interval_median_ms": 5.2385269999999995,
+    "sample_interval_max_ms": 7.898029,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.852379,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108643911,
+      1.103116778
+    ],
+    "first_host_log_receipt_ms": 43.915884
+  },
+  {
+    "name": "m7_val_v3_loss1_rep11",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 51.228696,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326247290227558,
+        "evidence_age_ms": 31.435072,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326247290119205,
+          "total_retrans": 5,
+          "unacked": 889
+        }
+      }
+    ],
+    "samples": 21720,
+    "unavailable_samples": 0,
+    "observation_seconds": 14.26716279,
+    "connection_seconds": 113.585505568,
+    "sample_interval_median_ms": 5.2019839999999995,
+    "sample_interval_max_ms": 8.247304,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 19.685271,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.100327549,
+      1.102133074
+    ],
+    "first_host_log_receipt_ms": 51.310159
+  },
+  {
+    "name": "m7_val_v3_loss1_rep12",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 57.991426,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326399010525105,
+        "evidence_age_ms": 46.52682,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326399010454924,
+          "total_retrans": 2,
+          "unacked": 995
+        }
+      }
+    ],
+    "samples": 20332,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.400638195,
+    "connection_seconds": 106.630809574,
+    "sample_interval_median_ms": 5.2091069999999995,
+    "sample_interval_max_ms": 9.375389,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.394425,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.110631969,
+      1.10271756
+    ],
+    "first_host_log_receipt_ms": 58.08931
+  },
+  {
+    "name": "m7_val_v3_loss1_rep13",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 41.905265,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327015811341349,
+        "evidence_age_ms": 31.849028,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5327015811268071,
+          "total_retrans": 3,
+          "unacked": 892
+        }
+      }
+    ],
+    "samples": 19884,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.125186649,
+    "connection_seconds": 104.56410154299999,
+    "sample_interval_median_ms": 5.2355015,
+    "sample_interval_max_ms": 8.107762,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 9.982959,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.103606025,
+      1.107520826
+    ],
+    "first_host_log_receipt_ms": 42.001114
+  },
+  {
+    "name": "m7_val_v3_loss1_rep14",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.063456,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326468482652194,
+        "evidence_age_ms": 31.724034,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326468482547488,
+          "total_retrans": 5,
+          "unacked": 904
+        }
+      }
+    ],
+    "samples": 18434,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.130133646,
+    "connection_seconds": 96.859072587,
+    "sample_interval_median_ms": 5.225458,
+    "sample_interval_max_ms": 8.491151,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.234716,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.110707872,
+      1.103576641
+    ],
+    "first_host_log_receipt_ms": 43.461202
+  },
+  {
+    "name": "m7_val_v3_loss1_rep15",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 51.683279,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326763642400013,
+        "evidence_age_ms": 31.696834,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326763642313451,
+          "total_retrans": 2,
+          "unacked": 912
+        }
+      }
+    ],
+    "samples": 19196,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.688317108,
+    "connection_seconds": 101.02802171100001,
+    "sample_interval_median_ms": 5.239194,
+    "sample_interval_max_ms": 8.112542,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 19.899883,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.109212078,
+      1.104156498
+    ],
+    "first_host_log_receipt_ms": 51.812932
+  },
+  {
+    "name": "m7_val_v3_loss1_rep16",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 47.990826,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326640836210198,
+        "evidence_age_ms": 31.027337,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326640836147620,
+          "total_retrans": 2,
+          "unacked": 896
+        }
+      }
+    ],
+    "samples": 19942,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.164528608,
+    "connection_seconds": 104.81784119,
+    "sample_interval_median_ms": 5.237004,
+    "sample_interval_max_ms": 8.333976,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 16.900911,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104827305,
+      1.115852398
+    ],
+    "first_host_log_receipt_ms": 48.21725
+  },
+  {
+    "name": "m7_val_v3_loss1_rep17",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 52.511672,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326353765080706,
+        "evidence_age_ms": 31.625018,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326353764955781,
+          "total_retrans": 5,
+          "unacked": 896
+        }
+      }
+    ],
+    "samples": 20054,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.212716592,
+    "connection_seconds": 105.106144,
+    "sample_interval_median_ms": 5.2125284999999995,
+    "sample_interval_max_ms": 8.29353,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 20.761729,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101835837,
+      1.105243807
+    ],
+    "first_host_log_receipt_ms": 52.61752
+  },
+  {
+    "name": "m7_val_v3_loss1_rep18",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 44.338417,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326879527150790,
+        "evidence_age_ms": 31.121635,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326879527075459,
+          "total_retrans": 2,
+          "unacked": 891
+        }
+      }
+    ],
+    "samples": 18952,
+    "unavailable_samples": 0,
+    "observation_seconds": 12.453829151,
+    "connection_seconds": 99.029451714,
+    "sample_interval_median_ms": 5.199174,
+    "sample_interval_max_ms": 8.424175,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 13.141451,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.099147566,
+      1.107226284
+    ],
+    "first_host_log_receipt_ms": 44.426021
+  },
+  {
+    "name": "m7_val_v3_loss1_rep19",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 47.784137,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326809563365898,
+        "evidence_age_ms": 32.13802,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 2,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326809563230324,
+          "total_retrans": 2,
+          "unacked": 897
+        }
+      }
+    ],
+    "samples": 21222,
+    "unavailable_samples": 0,
+    "observation_seconds": 14.004031095,
+    "connection_seconds": 111.481324246,
+    "sample_interval_median_ms": 5.213756,
+    "sample_interval_max_ms": 8.672091,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 15.510543,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104422225,
+      1.102552169
+    ],
+    "first_host_log_receipt_ms": 48.032283
+  },
+  {
+    "name": "m7_val_v3_loss1_rep20",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 1.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 47.880739,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326278161036902,
+        "evidence_age_ms": 31.209379,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 4,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326278160960919,
+          "total_retrans": 4,
+          "unacked": 890
+        }
+      }
+    ],
+    "samples": 20002,
+    "unavailable_samples": 0,
+    "observation_seconds": 13.185869693,
+    "connection_seconds": 105.086523401,
+    "sample_interval_median_ms": 5.22354,
+    "sample_interval_max_ms": 13.073053,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 16.595377,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101297086,
+      1.100002959
+    ],
+    "first_host_log_receipt_ms": 47.947213
+  },
+  {
+    "name": "m7_val_v3_loss2_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.483103,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326759578472589,
+        "evidence_age_ms": 31.428961,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 6,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326759578366100,
+          "total_retrans": 6,
+          "unacked": 895
+        }
+      }
+    ],
+    "samples": 26026,
+    "unavailable_samples": 0,
+    "observation_seconds": 17.107128015,
+    "connection_seconds": 136.385291607,
+    "sample_interval_median_ms": 5.2160055,
+    "sample_interval_max_ms": 8.055104,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.947653,
+    "first_dsack_ms": 190.236263,
+    "baseline_durations_s": [
+      1.10418932,
+      1.100458203
+    ],
+    "first_host_log_receipt_ms": 43.62549
+  },
+  {
+    "name": "m7_val_v3_loss2_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.762486,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326981651486994,
+        "evidence_age_ms": 30.950363,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 3,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326981651431490,
+          "total_retrans": 3,
+          "unacked": 908
+        }
+      }
+    ],
+    "samples": 24788,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.31038386,
+    "connection_seconds": 129.925423897,
+    "sample_interval_median_ms": 5.212924,
+    "sample_interval_max_ms": 9.433809,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.756619,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.106919128,
+      1.106521302
+    ],
+    "first_host_log_receipt_ms": 43.853377
+  },
+  {
+    "name": "m7_val_v3_loss2_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 42.127241,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327002017333717,
+        "evidence_age_ms": 31.200663,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 4,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5327002017279085,
+          "total_retrans": 4,
+          "unacked": 894
+        }
+      }
+    ],
+    "samples": 26182,
+    "unavailable_samples": 0,
+    "observation_seconds": 17.21522964,
+    "connection_seconds": 137.286265128,
+    "sample_interval_median_ms": 5.2192810000000005,
+    "sample_interval_max_ms": 8.355316,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.871946,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.11268559,
+      1.10101656
+    ],
+    "first_host_log_receipt_ms": 42.209345
+  },
+  {
+    "name": "m7_val_v3_loss2_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 46.730662,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326151645857679,
+        "evidence_age_ms": 30.867127,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 9,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326151645806132,
+          "total_retrans": 9,
+          "unacked": 907
+        }
+      }
+    ],
+    "samples": 24696,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.155942726,
+    "connection_seconds": 128.88041815100001,
+    "sample_interval_median_ms": 5.190783,
+    "sample_interval_max_ms": 7.917386,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 15.811988,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104537101,
+      1.100369878
+    ],
+    "first_host_log_receipt_ms": 46.8148
+  },
+  {
+    "name": "m7_val_v3_loss2_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 45.498883,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5327048955258090,
+        "evidence_age_ms": 31.820796,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 8,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5327048955129228,
+          "total_retrans": 8,
+          "unacked": 896
+        }
+      }
+    ],
+    "samples": 24636,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.219553429,
+    "connection_seconds": 129.150360338,
+    "sample_interval_median_ms": 5.212083,
+    "sample_interval_max_ms": 7.949326,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 13.549225,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.106364868,
+      1.101844402
+    ],
+    "first_host_log_receipt_ms": 47.26823
+  },
+  {
+    "name": "m7_val_v3_loss2_rep06",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 111.643858,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326973196603563,
+        "evidence_age_ms": 30.895972,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 1,
+          "lost": 11,
+          "reord_seen": 2,
+          "sample_t_monotonic_ns": 5326973196516550,
+          "total_retrans": 12,
+          "unacked": 1293
+        }
+      }
+    ],
+    "samples": 25768,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.992122404,
+    "connection_seconds": 135.375204123,
+    "sample_interval_median_ms": 5.2353615,
+    "sample_interval_max_ms": 8.32483,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 80.660873,
+    "first_dsack_ms": 1.216441,
+    "baseline_durations_s": [
+      1.101996027,
+      1.100990421
+    ],
+    "first_host_log_receipt_ms": 111.764073
+  },
+  {
+    "name": "m7_val_v3_loss2_rep07",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 46.417364,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326197895413216,
+        "evidence_age_ms": 31.193749,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 11,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326197895347062,
+          "total_retrans": 11,
+          "unacked": 896
+        }
+      }
+    ],
+    "samples": 25712,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.980698894,
+    "connection_seconds": 135.48477525799998,
+    "sample_interval_median_ms": 5.257057,
+    "sample_interval_max_ms": 11.004253,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 15.157461,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104986454,
+      1.102731646
+    ],
+    "first_host_log_receipt_ms": 46.486464
+  },
+  {
+    "name": "m7_val_v3_loss2_rep08",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 39.762246,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326668980851081,
+        "evidence_age_ms": 30.940695,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 7,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326668980794014,
+          "total_retrans": 7,
+          "unacked": 882
+        }
+      }
+    ],
+    "samples": 26154,
+    "unavailable_samples": 0,
+    "observation_seconds": 17.220864266,
+    "connection_seconds": 137.16587203400002,
+    "sample_interval_median_ms": 5.2230585000000005,
+    "sample_interval_max_ms": 9.092619,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 8.764484,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.110859777,
+      1.1102906
+    ],
+    "first_host_log_receipt_ms": 39.909993
+  },
+  {
+    "name": "m7_val_v3_loss2_rep09",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 44.431111,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326265652805464,
+        "evidence_age_ms": 31.68994,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 9,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326265652665661,
+          "total_retrans": 9,
+          "unacked": 910
+        }
+      }
+    ],
+    "samples": 25936,
+    "unavailable_samples": 0,
+    "observation_seconds": 17.110307907,
+    "connection_seconds": 136.336257866,
+    "sample_interval_median_ms": 5.243301499999999,
+    "sample_interval_max_ms": 8.278954,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.601368,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.105509816,
+      1.104540638
+    ],
+    "first_host_log_receipt_ms": 44.645102
+  },
+  {
+    "name": "m7_val_v3_loss2_rep10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 39.629267,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326452327792860,
+        "evidence_age_ms": 30.873269,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 12,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326452327750651,
+          "total_retrans": 12,
+          "unacked": 751
+        }
+      }
+    ],
+    "samples": 27542,
+    "unavailable_samples": 0,
+    "observation_seconds": 18.11464565,
+    "connection_seconds": 144.400533589,
+    "sample_interval_median_ms": 5.215098,
+    "sample_interval_max_ms": 8.59722,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 8.713789,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.114221781,
+      1.100944164
+    ],
+    "first_host_log_receipt_ms": 39.711451
+  },
+  {
+    "name": "m7_val_v3_loss2_rep11",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.133126,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326933407951797,
+        "evidence_age_ms": 31.675253,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 8,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326933407850838,
+          "total_retrans": 8,
+          "unacked": 891
+        }
+      }
+    ],
+    "samples": 27762,
+    "unavailable_samples": 0,
+    "observation_seconds": 18.296504915,
+    "connection_seconds": 146.075635899,
+    "sample_interval_median_ms": 5.241098,
+    "sample_interval_max_ms": 8.137658,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.356914,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.102363345,
+      1.106347356
+    ],
+    "first_host_log_receipt_ms": 43.269702
+  },
+  {
+    "name": "m7_val_v3_loss2_rep12",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 48.220145,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326994075763733,
+        "evidence_age_ms": 32.210326,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 9,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326994075628400,
+          "total_retrans": 9,
+          "unacked": 590
+        }
+      }
+    ],
+    "samples": 26860,
+    "unavailable_samples": 0,
+    "observation_seconds": 17.68137685,
+    "connection_seconds": 140.972888567,
+    "sample_interval_median_ms": 5.229005000000001,
+    "sample_interval_max_ms": 8.424326,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 15.874486,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.107265818,
+      1.107394399
+    ],
+    "first_host_log_receipt_ms": 48.349798
+  },
+  {
+    "name": "m7_val_v3_loss2_rep13",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 48.457611,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326474542961953,
+        "evidence_age_ms": 31.777454,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 10,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326474542841046,
+          "total_retrans": 10,
+          "unacked": 832
+        }
+      }
+    ],
+    "samples": 25796,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.987657512,
+    "connection_seconds": 135.334737297,
+    "sample_interval_median_ms": 5.220568999999999,
+    "sample_interval_max_ms": 8.388629,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 16.55925,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.110656966,
+      1.100549505
+    ],
+    "first_host_log_receipt_ms": 48.589057
+  },
+  {
+    "name": "m7_val_v3_loss2_rep14",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 44.02004,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326447987961253,
+        "evidence_age_ms": 31.913349,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 9,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326447987839875,
+          "total_retrans": 9,
+          "unacked": 911
+        }
+      }
+    ],
+    "samples": 25100,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.499385167,
+    "connection_seconds": 131.613243033,
+    "sample_interval_median_ms": 5.2173175,
+    "sample_interval_max_ms": 8.863961,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.985313,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.109552796,
+      1.103816279
+    ],
+    "first_host_log_receipt_ms": 44.193325
+  },
+  {
+    "name": "m7_val_v3_loss2_rep15",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 48.005413,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326675003109291,
+        "evidence_age_ms": 31.700009,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 6,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326675002964610,
+          "total_retrans": 6,
+          "unacked": 894
+        }
+      }
+    ],
+    "samples": 24808,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.339142244,
+    "connection_seconds": 130.369670322,
+    "sample_interval_median_ms": 5.226931,
+    "sample_interval_max_ms": 8.971572,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 16.160723,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.114873252,
+      1.117893906
+    ],
+    "first_host_log_receipt_ms": 48.108386
+  },
+  {
+    "name": "m7_val_v3_loss2_rep16",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 40.611809,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326620012212920,
+        "evidence_age_ms": 31.222834,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 6,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326620012095430,
+          "total_retrans": 6,
+          "unacked": 893
+        }
+      }
+    ],
+    "samples": 25610,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.758453864,
+    "connection_seconds": 133.672243249,
+    "sample_interval_median_ms": 5.20229,
+    "sample_interval_max_ms": 7.626179,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 9.271485,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101799719,
+      1.100913397
+    ],
+    "first_host_log_receipt_ms": 40.953851
+  },
+  {
+    "name": "m7_val_v3_loss2_rep17",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 48.859834,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326851667472405,
+        "evidence_age_ms": 31.060801,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 7,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326851667401172,
+          "total_retrans": 7,
+          "unacked": 880
+        }
+      }
+    ],
+    "samples": 25752,
+    "unavailable_samples": 0,
+    "observation_seconds": 16.964338668,
+    "connection_seconds": 135.215813218,
+    "sample_interval_median_ms": 5.225974,
+    "sample_interval_max_ms": 9.046793,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 17.7278,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108842864,
+      1.106729221
+    ],
+    "first_host_log_receipt_ms": 48.952698
+  },
+  {
+    "name": "m7_val_v3_loss2_rep18",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 42.640153,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326431087154731,
+        "evidence_age_ms": 31.501627,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 5,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326431087054683,
+          "total_retrans": 5,
+          "unacked": 892
+        }
+      }
+    ],
+    "samples": 25968,
+    "unavailable_samples": 0,
+    "observation_seconds": 17.180708723,
+    "connection_seconds": 136.921503752,
+    "sample_interval_median_ms": 5.2617709999999995,
+    "sample_interval_max_ms": 8.227537,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.038478,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.106690269,
+      1.10700581
+    ],
+    "first_host_log_receipt_ms": 42.719702
+  },
+  {
+    "name": "m7_val_v3_loss2_rep19",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 60.893168,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326929256125389,
+        "evidence_age_ms": 31.295631,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 8,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326929256054496,
+          "total_retrans": 8,
+          "unacked": 702
+        }
+      }
+    ],
+    "samples": 26538,
+    "unavailable_samples": 0,
+    "observation_seconds": 17.51653316,
+    "connection_seconds": 139.608252018,
+    "sample_interval_median_ms": 5.237204999999999,
+    "sample_interval_max_ms": 8.8798,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 29.526644,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.103306984,
+      1.109225192
+    ],
+    "first_host_log_receipt_ms": 61.029814
+  },
+  {
+    "name": "m7_val_v3_loss2_rep20",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 2.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 42.268055,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326286771817498,
+        "evidence_age_ms": 31.886579,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 8,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326286771683086,
+          "total_retrans": 8,
+          "unacked": 834
+        }
+      }
+    ],
+    "samples": 27612,
+    "unavailable_samples": 0,
+    "observation_seconds": 18.16115116,
+    "connection_seconds": 144.71326103,
+    "sample_interval_median_ms": 5.214608,
+    "sample_interval_max_ms": 9.34904,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.247064,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.103807493,
+      1.10568317
+    ],
+    "first_host_log_receipt_ms": 42.446369
+  },
+  {
+    "name": "m7_val_v3_loss5_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 44.486173,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326353175120571,
+        "evidence_age_ms": 31.469026,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 14,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326353175042465,
+          "total_retrans": 14,
+          "unacked": 898
+        }
+      }
+    ],
+    "samples": 41148,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.085036082,
+    "connection_seconds": 216.106968425,
+    "sample_interval_median_ms": 5.234299,
+    "sample_interval_max_ms": 8.219702,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.939041,
+    "first_dsack_ms": 22353.614374,
+    "baseline_durations_s": [
+      1.106803822,
+      1.104483671
+    ],
+    "first_host_log_receipt_ms": 46.213723
+  },
+  {
+    "name": "m7_val_v3_loss5_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 42.676621,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326246450556544,
+        "evidence_age_ms": 30.903015,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 14,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326246450513664,
+          "total_retrans": 14,
+          "unacked": 891
+        }
+      }
+    ],
+    "samples": 41920,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.630247761,
+    "connection_seconds": 220.342139199,
+    "sample_interval_median_ms": 5.242074,
+    "sample_interval_max_ms": 8.478347,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.730726,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104105001,
+      1.102967919
+    ],
+    "first_host_log_receipt_ms": 42.760839
+  },
+  {
+    "name": "m7_val_v3_loss5_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 48.995309,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326308914832649,
+        "evidence_age_ms": 30.949281,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 12,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326308914771734,
+          "total_retrans": 12,
+          "unacked": 905
+        }
+      }
+    ],
+    "samples": 42880,
+    "unavailable_samples": 0,
+    "observation_seconds": 28.127526934,
+    "connection_seconds": 224.491239348,
+    "sample_interval_median_ms": 5.212263,
+    "sample_interval_max_ms": 8.46404,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 17.985113,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101826248,
+      1.098465497
+    ],
+    "first_host_log_receipt_ms": 49.098793
+  },
+  {
+    "name": "m7_val_v3_loss5_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 73.071292,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326092188684550,
+        "evidence_age_ms": 30.868209,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 11,
+          "reord_seen": 1,
+          "sample_t_monotonic_ns": 5326092188633124,
+          "total_retrans": 11,
+          "unacked": 1153
+        }
+      }
+    ],
+    "samples": 40328,
+    "unavailable_samples": 0,
+    "observation_seconds": 26.461294066,
+    "connection_seconds": 211.060439275,
+    "sample_interval_median_ms": 5.207299,
+    "sample_interval_max_ms": 8.163366,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 42.151657,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.095616945,
+      1.098709234
+    ],
+    "first_host_log_receipt_ms": 73.152054
+  },
+  {
+    "name": "m7_val_v3_loss5_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 46.268856,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326495498813463,
+        "evidence_age_ms": 31.862163,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 13,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326495498695141,
+          "total_retrans": 13,
+          "unacked": 895
+        }
+      }
+    ],
+    "samples": 40292,
+    "unavailable_samples": 0,
+    "observation_seconds": 26.645127943,
+    "connection_seconds": 212.631864495,
+    "sample_interval_median_ms": 5.306359499999999,
+    "sample_interval_max_ms": 8.623038,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 14.288371,
+    "first_dsack_ms": 1040.340209,
+    "baseline_durations_s": [
+      1.10342187,
+      1.112424861
+    ],
+    "first_host_log_receipt_ms": 46.627869
+  },
+  {
+    "name": "m7_val_v3_loss5_rep06",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 45.274983,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326886343118354,
+        "evidence_age_ms": 31.203118,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 17,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326886343050457,
+          "total_retrans": 17,
+          "unacked": 888
+        }
+      }
+    ],
+    "samples": 41812,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.579973214,
+    "connection_seconds": 220.343631869,
+    "sample_interval_median_ms": 5.2624525,
+    "sample_interval_max_ms": 9.133766,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 14.003968,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.105767328,
+      1.101918682
+    ],
+    "first_host_log_receipt_ms": 45.367396
+  },
+  {
+    "name": "m7_val_v3_loss5_rep07",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 48.538422,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326321946670665,
+        "evidence_age_ms": 31.032497,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 21,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326321946621813,
+          "total_retrans": 21,
+          "unacked": 899
+        }
+      }
+    ],
+    "samples": 42394,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.774684266,
+    "connection_seconds": 221.82771907400002,
+    "sample_interval_median_ms": 5.2183045,
+    "sample_interval_max_ms": 8.380083,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 17.457073,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.107658114,
+      1.097132377
+    ],
+    "first_host_log_receipt_ms": 50.160022
+  },
+  {
+    "name": "m7_val_v3_loss5_rep08",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 42.866587,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326637872289371,
+        "evidence_age_ms": 30.971653,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 26,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326637872236521,
+          "total_retrans": 26,
+          "unacked": 867
+        }
+      }
+    ],
+    "samples": 41398,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.041358475,
+    "connection_seconds": 216.124681329,
+    "sample_interval_median_ms": 5.200952,
+    "sample_interval_max_ms": 7.808502,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.842084,
+    "first_dsack_ms": 9539.852231,
+    "baseline_durations_s": [
+      1.099578293,
+      1.100205259
+    ],
+    "first_host_log_receipt_ms": 44.345169
+  },
+  {
+    "name": "m7_val_v3_loss5_rep09",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.525933,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326106914525144,
+        "evidence_age_ms": 31.107197,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 24,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326106914473728,
+          "total_retrans": 24,
+          "unacked": 887
+        }
+      }
+    ],
+    "samples": 41200,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.044413734,
+    "connection_seconds": 215.764338,
+    "sample_interval_median_ms": 5.216251,
+    "sample_interval_max_ms": 8.205065,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.36732,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108028367,
+      1.101785933
+    ],
+    "first_host_log_receipt_ms": 43.592679
+  },
+  {
+    "name": "m7_val_v3_loss5_rep10",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 45.514722,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326716721984430,
+        "evidence_age_ms": 31.427368,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 9,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326716721891997,
+          "total_retrans": 9,
+          "unacked": 900
+        }
+      }
+    ],
+    "samples": 44088,
+    "unavailable_samples": 0,
+    "observation_seconds": 29.01829572,
+    "connection_seconds": 231.59060111600002,
+    "sample_interval_median_ms": 5.2369045,
+    "sample_interval_max_ms": 7.965326,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 13.994921,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.10647235,
+      1.104609708
+    ],
+    "first_host_log_receipt_ms": 45.68451
+  },
+  {
+    "name": "m7_val_v3_loss5_rep11",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 46.150465,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326588311869931,
+        "evidence_age_ms": 31.216312,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 19,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326588311802745,
+          "total_retrans": 19,
+          "unacked": 888
+        }
+      }
+    ],
+    "samples": 42212,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.737630038,
+    "connection_seconds": 221.429547501,
+    "sample_interval_median_ms": 5.22099,
+    "sample_interval_max_ms": 8.395953,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 14.866967,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.107439303,
+      1.1059072
+    ],
+    "first_host_log_receipt_ms": 46.319301
+  },
+  {
+    "name": "m7_val_v3_loss5_rep12",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.831105,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326572981802341,
+        "evidence_age_ms": 31.888713,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 19,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326572981682276,
+          "total_retrans": 19,
+          "unacked": 889
+        }
+      }
+    ],
+    "samples": 43864,
+    "unavailable_samples": 0,
+    "observation_seconds": 28.732114416,
+    "connection_seconds": 229.28715525500002,
+    "sample_interval_median_ms": 5.204168,
+    "sample_interval_max_ms": 9.64285,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.822327,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.103558616,
+      1.097736951
+    ],
+    "first_host_log_receipt_ms": 43.958334
+  },
+  {
+    "name": "m7_val_v3_loss5_rep13",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 42.784824,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326895995076369,
+        "evidence_age_ms": 31.884285,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 17,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326895994937439,
+          "total_retrans": 17,
+          "unacked": 764
+        }
+      }
+    ],
+    "samples": 44356,
+    "unavailable_samples": 0,
+    "observation_seconds": 29.206204467,
+    "connection_seconds": 233.170316251,
+    "sample_interval_median_ms": 5.248356,
+    "sample_interval_max_ms": 9.672176,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.761609,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.112676874,
+      1.104322429
+    ],
+    "first_host_log_receipt_ms": 42.928263
+  },
+  {
+    "name": "m7_val_v3_loss5_rep14",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.76449,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326727123337357,
+        "evidence_age_ms": 31.405647,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 14,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326727123229365,
+          "total_retrans": 14,
+          "unacked": 562
+        }
+      }
+    ],
+    "samples": 42942,
+    "unavailable_samples": 0,
+    "observation_seconds": 28.356040388,
+    "connection_seconds": 226.34816314900002,
+    "sample_interval_median_ms": 5.279675,
+    "sample_interval_max_ms": 8.445014,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.250851,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.110846512,
+      1.107381545
+    ],
+    "first_host_log_receipt_ms": 46.949352
+  },
+  {
+    "name": "m7_val_v3_loss5_rep15",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 40.072068,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326484686816749,
+        "evidence_age_ms": 31.201064,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 10,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326484686747018,
+          "total_retrans": 10,
+          "unacked": 887
+        }
+      }
+    ],
+    "samples": 41688,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.354157989,
+    "connection_seconds": 218.508592869,
+    "sample_interval_median_ms": 5.215219,
+    "sample_interval_max_ms": 8.288782,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 8.801273,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.101103122,
+      1.104613875
+    ],
+    "first_host_log_receipt_ms": 41.778377
+  },
+  {
+    "name": "m7_val_v3_loss5_rep16",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 42.594126,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326695399088483,
+        "evidence_age_ms": 31.149937,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 13,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326695399041525,
+          "total_retrans": 13,
+          "unacked": 819
+        }
+      }
+    ],
+    "samples": 42022,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.609832652,
+    "connection_seconds": 220.48517527,
+    "sample_interval_median_ms": 5.220975,
+    "sample_interval_max_ms": 8.467067,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 11.397231,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.107440285,
+      1.108292503
+    ],
+    "first_host_log_receipt_ms": 43.950089
+  },
+  {
+    "name": "m7_val_v3_loss5_rep17",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.37486,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326528099554373,
+        "evidence_age_ms": 31.295551,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 16,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326528099484893,
+          "total_retrans": 16,
+          "unacked": 487
+        }
+      }
+    ],
+    "samples": 44628,
+    "unavailable_samples": 0,
+    "observation_seconds": 29.232992416,
+    "connection_seconds": 233.557219292,
+    "sample_interval_median_ms": 5.211983,
+    "sample_interval_max_ms": 7.936712,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.009829,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108180242,
+      1.110767243
+    ],
+    "first_host_log_receipt_ms": 43.44951
+  },
+  {
+    "name": "m7_val_v3_loss5_rep18",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 45.058296,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326845388366904,
+        "evidence_age_ms": 32.27156,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 20,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326845388229406,
+          "total_retrans": 20,
+          "unacked": 548
+        }
+      }
+    ],
+    "samples": 45524,
+    "unavailable_samples": 0,
+    "observation_seconds": 30.047607139,
+    "connection_seconds": 239.693837975,
+    "sample_interval_median_ms": 5.2674315,
+    "sample_interval_max_ms": 8.488176,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.649238,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.10702661,
+      1.110230677
+    ],
+    "first_host_log_receipt_ms": 45.263661
+  },
+  {
+    "name": "m7_val_v3_loss5_rep19",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 47.96694,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326540745328500,
+        "evidence_age_ms": 31.347448,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 15,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326540745178719,
+          "total_retrans": 15,
+          "unacked": 889
+        }
+      }
+    ],
+    "samples": 42928,
+    "unavailable_samples": 0,
+    "observation_seconds": 28.148788671,
+    "connection_seconds": 224.688572836,
+    "sample_interval_median_ms": 5.209963999999999,
+    "sample_interval_max_ms": 8.536156,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 16.469711,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.10868068,
+      1.099881111
+    ],
+    "first_host_log_receipt_ms": 48.105931
+  },
+  {
+    "name": "m7_val_v3_loss5_rep20",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 5.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": true,
+    "confirmation_ms": 43.064017,
+    "within100ms": true,
+    "false_alarm_count": 0,
+    "all_alarm_count": 1,
+    "alarms": [
+      {
+        "rank": 2,
+        "fabric": "A",
+        "decision_t_monotonic_ns": 5326166715937318,
+        "evidence_age_ms": 32.163158,
+        "evidence": {
+          "connection_generation": 1,
+          "dsack_dups": 0,
+          "lost": 16,
+          "reord_seen": 0,
+          "sample_t_monotonic_ns": 5326166715801534,
+          "total_retrans": 16,
+          "unacked": 898
+        }
+      }
+    ],
+    "samples": 41784,
+    "unavailable_samples": 0,
+    "observation_seconds": 27.419265809,
+    "connection_seconds": 219.070501315,
+    "sample_interval_median_ms": 5.212649,
+    "sample_interval_max_ms": 8.140283,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.765075,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.111184295,
+      1.109482815
+    ],
+    "first_host_log_receipt_ms": 43.350034
+  },
+  {
+    "name": "m7_val_v3_nominal_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12002,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.978865986,
+    "connection_seconds": 63.247805782,
+    "sample_interval_median_ms": 5.218851,
+    "sample_interval_max_ms": 8.776727,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.112614737,
+      1.108124839
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_nominal_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 11990,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.927164813,
+    "connection_seconds": 63.013840174,
+    "sample_interval_median_ms": 5.209693,
+    "sample_interval_max_ms": 7.918097,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.104432255,
+      1.106922785
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_nominal_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12046,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.967626,
+    "connection_seconds": 63.156425159,
+    "sample_interval_median_ms": 5.2078500000000005,
+    "sample_interval_max_ms": 8.72551,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": 182.710822,
+    "baseline_durations_s": [
+      1.103749725,
+      1.098227721
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_nominal_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12010,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.945234315,
+    "connection_seconds": 63.038263911,
+    "sample_interval_median_ms": 5.2082255,
+    "sample_interval_max_ms": 8.535344,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.109089617,
+      1.10382697
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_nominal_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "nominal",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 11980,
+    "unavailable_samples": 0,
+    "observation_seconds": 7.956005401,
+    "connection_seconds": 63.126198291,
+    "sample_interval_median_ms": 5.2227879999999995,
+    "sample_interval_max_ms": 9.12005,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.106844858,
+      1.103178063
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_pause_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "pause",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14726,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.751817146,
+    "connection_seconds": 77.410658306,
+    "sample_interval_median_ms": 5.220128,
+    "sample_interval_max_ms": 9.032056,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.114449968,
+      1.101410649
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_pause_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "pause",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14670,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.732823251,
+    "connection_seconds": 77.318368257,
+    "sample_interval_median_ms": 5.239359,
+    "sample_interval_max_ms": 10.432601,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.105022992,
+      1.107675736
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_pause_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "pause",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14732,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.729327096,
+    "connection_seconds": 77.175171654,
+    "sample_interval_median_ms": 5.2083255,
+    "sample_interval_max_ms": 9.362755,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": 1170.755544,
+    "baseline_durations_s": [
+      1.103803997,
+      1.103817823
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_pause_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "pause",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14688,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.685224571,
+    "connection_seconds": 77.07583066800001,
+    "sample_interval_median_ms": 5.211903,
+    "sample_interval_max_ms": 7.986234,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": null,
+    "baseline_durations_s": [
+      1.108151619,
+      1.106191674
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_pause_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "pause",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 14738,
+    "unavailable_samples": 0,
+    "observation_seconds": 9.738754883,
+    "connection_seconds": 77.362376064,
+    "sample_interval_median_ms": 5.2089925,
+    "sample_interval_max_ms": 7.791409,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": null,
+    "first_dsack_ms": 2536.838677,
+    "baseline_durations_s": [
+      1.113226985,
+      1.104334702
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_reorder10_rep01",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12554,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.321444196,
+    "connection_seconds": 65.967287502,
+    "sample_interval_median_ms": 5.2101995,
+    "sample_interval_max_ms": 8.465523,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 12.087895,
+    "first_dsack_ms": 27.735114,
+    "baseline_durations_s": [
+      1.106351463,
+      1.103637484
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_reorder10_rep02",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12142,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.076888292,
+    "connection_seconds": 64.057003467,
+    "sample_interval_median_ms": 5.2579139999999995,
+    "sample_interval_max_ms": 8.91713,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.936436,
+    "first_dsack_ms": 21.579763,
+    "baseline_durations_s": [
+      1.105127328,
+      1.097129882
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_reorder10_rep03",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12470,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.238361101,
+    "connection_seconds": 65.367097418,
+    "sample_interval_median_ms": 5.203357,
+    "sample_interval_max_ms": 8.296867,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 10.021801,
+    "first_dsack_ms": 20.383079,
+    "baseline_durations_s": [
+      1.107065021,
+      1.101403205
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_reorder10_rep04",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12480,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.276952973,
+    "connection_seconds": 65.617368226,
+    "sample_interval_median_ms": 5.2214255000000005,
+    "sample_interval_max_ms": 9.619026,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 9.113718,
+    "first_dsack_ms": 19.394625,
+    "baseline_durations_s": [
+      1.106198987,
+      1.103826249
+    ],
+    "first_host_log_receipt_ms": null
+  },
+  {
+    "name": "m7_val_v3_reorder10_rep05",
+    "status": "complete",
+    "correctness": "pass",
+    "configured_loss_pct": 0.0,
+    "control": "reorder10",
+    "tcp_loss_detector": true,
+    "rule_version": "tcp-loss-v3",
+    "confirmed": false,
+    "confirmation_ms": null,
+    "within100ms": false,
+    "false_alarm_count": 0,
+    "all_alarm_count": 0,
+    "alarms": [],
+    "samples": 12440,
+    "unavailable_samples": 0,
+    "observation_seconds": 8.159949486,
+    "connection_seconds": 64.972903534,
+    "sample_interval_median_ms": 5.197425,
+    "sample_interval_max_ms": 9.154054,
+    "gaps_over15ms": 0,
+    "first_kernel_lost_ms": 5.828038,
+    "first_dsack_ms": 16.224011,
+    "baseline_durations_s": [
+      1.103184766,
+      1.097246712
+    ],
+    "first_host_log_receipt_ms": null
+  }
+]

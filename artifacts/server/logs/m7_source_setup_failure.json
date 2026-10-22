@@ -1,0 +1,6 @@
+{
+  "stage": "snapshot_copy",
+  "error": "two dangling node_modules links in prior private snapshot; copytree stopped before source overlay",
+  "workload_runs": 0,
+  "repair": "retain partial copied tree; extract curated local source/tests overlay before new tests"
+}

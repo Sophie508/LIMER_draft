@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "source": "m13_source_frozen_dev_v1",
+  "campaign": "m13_smoke_v1",
+  "registrations": 3,
+  "report_rows": 14400,
+  "probe_packets": 209160,
+  "wire_bytes": 73146240,
+  "source_hashes": {
+    "binary": "9d5d718b578bd7dcac4f908174642cdd91fbf589e2e9829c92f95f3473fe3b2a",
+    "detector": "0be57ebecb842e3eec6ec0d525ad2a87c7556ae1d156044414b1dabb2012fa5b",
+    "runner": "119e62d84bfbb71f9d8bb5c2579f2132566f8628e3d3824b8c3c0e956e8d704f",
+    "cpp": "28d69b90756ae4aa6d616ed9c89cb92018f0d2b9eee25b06255c1bd0b95cd8c3",
+    "header": "208fd516805d356d8f129301aa7c434d5808389d46e5afe3384c8e39423f7169",
+    "native_base": "f3f038dfecaf50b1c36ce65964e8a31b8501707639d5f4611075e4ed196a7aa4",
+    "hybrid_base": "cef319ca2f069a508602023bc6c410685802c74d249ff1468338456460eb739c",
+    "early_detector": "96adb8ca044916d5b0d76dffb7326f59ba322a553447c02545f29b9013710297",
+    "base_detector": "d7166b6d3ef246103c4b9c9e7a034e9f7e50c9acd502bf4b546dfec7a5562678"
+  },
+  "artifacts": {
+    "low_processing80_r001": {
+      "reports.jsonl": "70b81ef1a9eac6019d3878dd14a7caae23247ea687a67fa661249fe1c74cdb65",
+      "offers.jsonl": "1a3ad262c8bef48f7b7fc40efbbbcd6bed6cec0740c8ed9f5c57916d024825eb",
+      "alarms.jsonl": "31712b6cd543b898b35d533cbe4fbda440404e9cfbf8b0c3996e11dd04ca04ea",
+      "baseline_alarms.jsonl": "d58e4ca53dfdec122019e8a8495d39903f4d395250c76a249b0a74e74e94ac94",
+      "samples.jsonl": "20ad2ed49b6d54813298973a543af8b20ab1de4f919e6f650800c5e1c9d49236"
+    },
+    "low_selective_r001": {
+      "reports.jsonl": "35c1de03c111ca241f3f99d23fb3e804feaacebcc403790a3d531f5d58d2c9dd",
+      "offers.jsonl": "1922c0dafea8fc18dec415bdfec5fb630b789250ae09edf9caa6e49b093003c0",
+      "alarms.jsonl": "789db0ecb3afa295c97be484c0220e2aa3b3b728f4508a76a1947bc9ee486626",
+      "baseline_alarms.jsonl": "2f2cfa6adeab4bdf9072863ba78bd4a807829033f3cf8a5a89d49d8c84cfbda8",
+      "samples.jsonl": "df772456d7fb5c85313a1df1060ce476430b98c832de7219757da749e17506a9"
+    },
+    "low_nominal_r001": {
+      "reports.jsonl": "4b12ce73c787970b6c9c905296b4be86214b9f2edd7d3b33c68339307e73b95d",
+      "offers.jsonl": "aeaa5573f1dab0420dfe6abd2694fb859c14b5a53212aac88f268c0a50092802",
+      "alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "baseline_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "samples.jsonl": "0093463568d9a44c28940e5b8d06dbcf790c246c21db1bd7483c5f9bcca45223"
+    }
+  },
+  "summary": {
+    "groups": {
+      "low_processing80": {
+        "kind": "fault",
+        "registered": 1,
+        "verified": 1,
+        "timely": 1,
+        "late": 0,
+        "missed_or_unverified": 0,
+        "p95_ms": 53.618333,
+        "timely_wilson95": [
+          0.20654931437723745,
+          1
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          53.618333
+        ]
+      },
+      "low_selective": {
+        "kind": "fault",
+        "registered": 1,
+        "verified": 1,
+        "timely": 1,
+        "late": 0,
+        "missed_or_unverified": 0,
+        "p95_ms": 48.681281,
+        "timely_wilson95": [
+          0.20654931437723745,
+          1
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          48.681281
+        ]
+      },
+      "low_nominal": {
+        "kind": "control",
+        "registered": 1,
+        "verified": 1,
+        "timely": null,
+        "late": null,
+        "missed_or_unverified": null,
+        "p95_ms": null,
+        "timely_wilson95": null,
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": []
+      }
+    },
+    "registered": 3,
+    "terminal": 3,
+    "strict_verdict": "PASS",
+    "primary_faults": 2,
+    "timely_faults": 2,
+    "verified_control_trials": 1,
+    "claim": "Class-separated causal UDP/application observations and charged probes/reports; not collective recovery",
+    "per_condition_95_verdict": "PASS"
+  },
+  "claim": "Native causal report replay and exact accounting, not independent physical-cause proof"
+}

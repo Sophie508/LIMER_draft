@@ -1,0 +1,11 @@
+waiting_for_frozen_validation
+independent_primary_audit
+python3: can't open file '/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_source_frozen_validation_v1/simulation/audit_hybrid_campaign.py': [Errno 2] No such file or directory
+Traceback (most recent call last):
+  File "/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_post_validation.py", line 43, in <module>
+    main()
+  File "/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_post_validation.py", line 24, in main
+    subprocess.run(['python3', str(FROZEN / 'simulation/audit_hybrid_campaign.py'),
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['python3', '/home/suliu/scratch/LIMER_WORK_2026-10-10/m12_source_frozen_validation_v1/simulation/audit_hybrid_campaign.py', '--root', '/home/suliu/scratch/LIMER_WORK_2026-10-10', '--frozen', 'm12_source_frozen_validation_v1', '--campaign', 'm12_validation_v1']' returned non-zero exit status 2.

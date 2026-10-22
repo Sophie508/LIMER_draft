@@ -1,0 +1,175 @@
+// Network-only DAG reconstruction over the pinned SimAI frontend and RDMA backend.
+#include "astra-sim/system/AstraNetworkAPI.hh"
+#include "astra-sim/system/Sys.hh"
+#include "astra-sim/system/RecvPacketEventHadndlerData.hh"
+#include "replay_entry.h"
+#define main LimerUnusedNativeMain
+#include "AstraSimNetwork.cc"
+#undef main
+#include <memory>
+#include <stdexcept>
+#include <set>
+
+struct ReplayFlow {
+  int id, src, dst;
+  uint64_t bytes;
+  std::vector<int> deps, children;
+  int remaining = 0;
+  bool started = false, sent = false, received = false;
+  AstraSim::sim_request request{};
+};
+
+static std::map<int, ReplayFlow> flows;
+static std::vector<std::unique_ptr<ASTRASimNetwork>> networks;
+static std::ofstream trace;
+static int send_count = 0, recv_count = 0;
+static std::set<std::pair<int,int>> released_edges;
+static std::map<int,std::unique_ptr<AstraSim::SendPacketEventHandlerData>> send_events;
+
+static void record(int id, const char* event) {
+  trace << "{\"id\":" << id << ",\"event\":\"" << event
+        << "\",\"ns\":" << Simulator::Now().GetNanoSeconds() << "}\n";
+  trace.flush();
+}
+
+static void launch(int id);
+static void release(int id, bool at_sender) {
+  auto& parent = flows.at(id);
+  int endpoint = at_sender ? parent.src : parent.dst;
+  for (int child_id : parent.children) {
+    auto& child = flows.at(child_id);
+    if (child.src != endpoint) continue;
+    if (!released_edges.insert({id, child_id}).second)
+      throw std::runtime_error("Duplicate dependency release");
+    if (--child.remaining < 0) throw std::runtime_error("Negative indegree");
+    if (child.remaining == 0) launch(child_id);
+  }
+}
+
+static void maybe_stop() {
+  if (send_count == int(flows.size()) && recv_count == int(flows.size()))
+    Simulator::Stop();
+}
+
+static void sent(void* argument) {
+  auto* event = static_cast<AstraSim::SendPacketEventHandlerData*>(argument);
+  auto& flow = flows.at(event->flowTag.current_flow_id);
+  if (flow.sent || !flow.started) throw std::runtime_error("Invalid send completion");
+  flow.sent = true;
+  ++send_count;
+  record(flow.id, "send");
+  release(flow.id, true);
+  maybe_stop();
+}
+
+static void received(void* argument) {
+  auto* event = static_cast<AstraSim::RecvPacketEventHadndlerData*>(argument);
+  auto& flow = flows.at(event->flowTag.current_flow_id);
+  if (flow.received || !flow.started || event->flowTag.flow_size != flow.bytes)
+    throw std::runtime_error("Invalid receive completion");
+  flow.received = true;
+  ++recv_count;
+  record(flow.id, "recv");
+  release(flow.id, false);
+  maybe_stop();
+}
+
+static void launch(int id) {
+  auto& flow = flows.at(id);
+  if (flow.started || flow.remaining) throw std::runtime_error("Invalid launch");
+  flow.started = true;
+  record(id, "start");
+  send_events[id].reset(new AstraSim::SendPacketEventHandlerData(
+      static_cast<AstraSim::Sys*>(nullptr), flow.src, flow.dst, id));
+  networks[flow.src]->sim_send(nullptr, flow.bytes, 0, flow.dst, id,
+                              &flow.request, sent, send_events[id].get());
+}
+
+int main(int argc, char** argv) {
+  try {
+    if (argc != 5) throw std::runtime_error("Usage: replay topo config graph trace");
+    MockNcclLog::set_log_name("SimAI_replay.log");
+    // Shared DAG state requires globally chronological callbacks. MTP may run
+    // separate node logical processes out of order even with one worker thread.
+    GlobalValue::Bind("SimulatorImplementationType", StringValue("ns3::DefaultSimulatorImpl"));
+    if (main1(argv[1], argv[2]) != 0) throw std::runtime_error("Network setup failed");
+    std::ifstream graph(argv[3]);
+    int ranks = 0, count = 0;
+    if (!(graph >> ranks >> count) || ranks != int(node_num - switch_num - nvswitch_num)
+        || gpus_per_server != 1 || count <= 0) throw std::runtime_error("Invalid header/topology");
+    for (int i = 0; i < count; ++i) {
+      ReplayFlow flow;
+      int parents;
+      if (!(graph >> flow.id >> flow.src >> flow.dst >> flow.bytes >> parents)
+          || flow.id <= 0 || flow.src < 0 || flow.src >= ranks || flow.dst < 0
+          || flow.dst >= ranks || flow.src == flow.dst || flow.bytes == 0 || parents < 0)
+        throw std::runtime_error("Invalid flow");
+      std::set<int> unique;
+      for (int j = 0; j < parents; ++j) {
+        int parent;
+        if (!(graph >> parent) || !unique.insert(parent).second)
+          throw std::runtime_error("Invalid dependency");
+        flow.deps.push_back(parent);
+      }
+      flow.remaining = parents;
+      if (!flows.emplace(flow.id, flow).second) throw std::runtime_error("Duplicate ID");
+    }
+    std::string trailing;
+    if (graph >> trailing) throw std::runtime_error("Unexpected trailing input");
+    for (auto& entry : flows) {
+      auto& flow = entry.second;
+      for (int parent_id : flow.deps) {
+        auto& parent = flows.at(parent_id);
+        if (flow.src != parent.src && flow.src != parent.dst)
+          throw std::runtime_error("Remote dependency");
+        parent.children.push_back(flow.id);
+      }
+    }
+    // Validate acyclicity independently of the Python converter.
+    std::map<int,int> degrees;
+    std::queue<int> roots;
+    for (const auto& entry : flows) {
+      degrees[entry.first] = entry.second.remaining;
+      if (!entry.second.remaining) roots.push(entry.first);
+    }
+    int visited = 0;
+    while (!roots.empty()) {
+      int id = roots.front(); roots.pop(); ++visited;
+      for (int child : flows.at(id).children) if (--degrees[child] == 0) roots.push(child);
+    }
+    if (visited != count) throw std::runtime_error("Cyclic graph");
+    for (int rank = 0; rank < ranks; ++rank)
+      networks.emplace_back(new ASTRASimNetwork(rank, 0));
+    std::vector<std::unique_ptr<AstraSim::RecvPacketEventHadndlerData>> receives;
+    trace.open(argv[4]);
+    if (!trace) throw std::runtime_error("Cannot open trace");
+    for (auto& entry : flows) {
+      auto& f = entry.second;
+      auto& tag = f.request.flowTag;
+      tag.channel_id = 0; tag.chunk_id = 0; tag.current_flow_id = f.id;
+      tag.sender_node = f.src; tag.receiver_node = f.dst;
+      tag.flow_size = f.bytes; tag.tag_id = f.id; tag.nvls_on = false;
+      auto placeholder = tag;
+      placeholder.current_flow_id = -1;
+      receives.emplace_back(new AstraSim::RecvPacketEventHadndlerData(
+          AstraSim::EventType::PacketReceived, placeholder));
+      networks[f.dst]->sim_recv(nullptr, f.bytes, 0, f.src, f.id, &f.request,
+                               received, receives.back().get());
+    }
+    for (auto& entry : flows) if (!entry.second.remaining) launch(entry.first);
+    Simulator::Stop(Seconds(10));
+    Simulator::Run();
+    bool complete = send_count == count && recv_count == count && sentHash.empty()
+       && recvHash.empty() && expeRecvHash.empty() && receiver_pending_queue.empty()
+       && sender_src_port_map.empty() && waiting_to_sent_callback.empty()
+       && waiting_to_notify_receiver.empty() && sent_chunksize.empty() && received_chunksize.empty();
+    std::cout << "REPLAY_SUMMARY nodes=" << count << " sent=" << send_count
+              << " received=" << recv_count << " released_edges=" << released_edges.size()
+              << " drain=" << complete << " time_ns=" << Simulator::Now().GetNanoSeconds() << '\n';
+    Simulator::Destroy();
+    return complete ? 0 : 2;
+  } catch (const std::exception& error) {
+    std::cerr << "REPLAY_ERROR " << error.what() << '\n';
+    return 3;
+  }
+}

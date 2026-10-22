@@ -1,0 +1,16 @@
+{
+  "condition": "C5",
+  "topology": "dual",
+  "chunk_bytes": 2097152,
+  "warmup_rounds": 1,
+  "baseline_rounds": 2,
+  "post_fault_rounds": 3,
+  "fault_rate_mbit": 20.0,
+  "fault_loss_pct": 0.0,
+  "detector": true,
+  "recovery": true,
+  "oracle": false,
+  "transient_ms": 100,
+  "what_changes": "At the start of the first post-baseline round, rank 2's worker-side A egress qdisc changes to 20 Mbit/s for 100 ms and then returns to 100 Mbit/s while remaining UP; the detector reads only the distinct switch-facing peer interface.",
+  "expected": "A switch suspicion may occur, but the completed collective round does not exceed 1.5 times the fault-free p95; the host gate suppresses recovery, all rounds remain on fabric A version 0, and no consistency error occurs."
+}

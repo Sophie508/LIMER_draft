@@ -1,0 +1,859 @@
+{
+  "p": 4,
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 2,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 3,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 4,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 5,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        1,
+        4
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 6,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        2,
+        1
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 7,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        3,
+        2
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 8,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        4,
+        3
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 9,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        5,
+        8
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 10,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        6,
+        5
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 11,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        7,
+        6
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 12,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        8,
+        7
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 13,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        9,
+        12
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 14,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        10,
+        9
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 15,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        11,
+        10
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 16,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        12,
+        11
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 17,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        13,
+        16
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 18,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        14,
+        13
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 19,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        15,
+        14
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 20,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        16,
+        15
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 21,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        17,
+        20
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 22,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        18,
+        17
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 23,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        19,
+        18
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 24,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        20,
+        19
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 25,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        21,
+        24
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 26,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        22,
+        21
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 27,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        23,
+        22
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 28,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        24,
+        23
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 29,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        25,
+        28
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 30,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        26,
+        25
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 31,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        27,
+        26
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 32,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        28,
+        27
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 33,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        29,
+        32
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 34,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        30,
+        29
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 35,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        31,
+        30
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 36,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        32,
+        31
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 37,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        33,
+        36
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 38,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        34,
+        33
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 39,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        35,
+        34
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 40,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        36,
+        35
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 41,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        37,
+        40
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 42,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        38,
+        37
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 43,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        39,
+        38
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 44,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        40,
+        39
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 45,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        41,
+        44
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 46,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        42,
+        41
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 47,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        43,
+        42
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 48,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        44,
+        43
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 49,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        45,
+        48
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 50,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        46,
+        45
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 51,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        47,
+        46
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 52,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        48,
+        47
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 53,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        49,
+        52
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 54,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        50,
+        49
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 55,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        51,
+        50
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 56,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        52,
+        51
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 57,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        53,
+        56
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 58,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        54,
+        53
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 59,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        55,
+        54
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 60,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        56,
+        55
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 61,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        57,
+        60
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 62,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        58,
+        57
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 63,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        59,
+        58
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 64,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        60,
+        59
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 65,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        61,
+        64
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 66,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        62,
+        61
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 67,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        63,
+        62
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 68,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        64,
+        63
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 69,
+      "src": 0,
+      "dst": 1,
+      "bytes": 786432,
+      "deps": [
+        65,
+        68
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 70,
+      "src": 1,
+      "dst": 2,
+      "bytes": 786432,
+      "deps": [
+        66,
+        65
+      ],
+      "control": false,
+      "plane": 0
+    },
+    {
+      "id": 71,
+      "src": 2,
+      "dst": 3,
+      "bytes": 786432,
+      "deps": [
+        67,
+        66
+      ],
+      "control": false,
+      "plane": 1
+    },
+    {
+      "id": 72,
+      "src": 3,
+      "dst": 0,
+      "bytes": 786432,
+      "deps": [
+        68,
+        67
+      ],
+      "control": false,
+      "plane": 0
+    }
+  ],
+  "mode": "consecutive_network_only_ring",
+  "rounds": 3
+}

@@ -1,0 +1,644 @@
+{
+  "registration": "m7_stress_v3",
+  "registered": 5,
+  "launched": 5,
+  "terminal": 5,
+  "completed_correct": 5,
+  "faults": {},
+  "controls": {
+    "reorder40": {
+      "registered": 5,
+      "observed": 5,
+      "false_alarm_runs": 3,
+      "false_alarm_events": 3,
+      "observed_seconds": 208.600956065,
+      "connection_seconds": 1665.66782953,
+      "netem_drop_total": 0
+    }
+  },
+  "timely_faults": 0,
+  "registered_faults": 0,
+  "pooled_p95": {
+    "value_ms": null,
+    "status": "no_registered_faults"
+  },
+  "all_fault_false_alarm_events": 0,
+  "all_control_false_alarm_events": 3,
+  "all_control_false_alarm_runs": 3,
+  "control_false_alarm_run_rate_wilson95": [
+    0.2307242812760128,
+    0.882379225767352
+  ],
+  "strict_all_run_gate": "fail",
+  "source_hashes": {
+    "limer_v0/worker.py": [
+      "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c"
+    ],
+    "limer_v0/orchestrator.py": [
+      "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f"
+    ],
+    "limer_v0/tcp_loss.py": [
+      "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a"
+    ]
+  },
+  "source_frozen": true,
+  "image_ids": [
+    "sha256:f4e2c4b035a76dd44ab1eea827464976ad3caf9210800e832c8169ea939ded2a"
+  ],
+  "wrapper_hashes": [
+    "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b"
+  ],
+  "rule_versions": {
+    "tcp-loss-v3": 5
+  },
+  "rows": [
+    {
+      "name": "m7_stress_v3_reorder40_rep01",
+      "configured_loss_pct": 0.0,
+      "control": "reorder40",
+      "launched": true,
+      "terminal": true,
+      "complete": true,
+      "correctness": "pass",
+      "confirmation_ms": null,
+      "within100ms": false,
+      "false_alarm_count": 0,
+      "observed": true,
+      "status": "complete",
+      "tcp_loss_detector": true,
+      "rule_version": "tcp-loss-v3",
+      "confirmed": false,
+      "all_alarm_count": 0,
+      "alarms": [],
+      "samples": 59470,
+      "unavailable_samples": 0,
+      "observation_seconds": 39.289552951,
+      "connection_seconds": 313.694039767,
+      "sample_interval_median_ms": 5.293355,
+      "sample_interval_max_ms": 8.196078,
+      "gaps_over15ms": 0,
+      "first_kernel_lost_ms": 10.155472,
+      "first_dsack_ms": 51.372306,
+      "baseline_durations_s": [
+        1.10369908,
+        1.106332518
+      ],
+      "first_host_log_receipt_ms": null,
+      "within100ms_and_complete": false,
+      "input_hashes": {
+        "configs/m7_stress_v3/reorder40_rep01.json": "6bc9f96a39e21609b2769135332a77ba9ff1c444bad8d0123f5f22f001cf16ce",
+        "limer_v0/worker.py": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+        "limer_v0/orchestrator.py": "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f",
+        "limer_v0/tcp_loss.py": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a"
+      },
+      "wrapper_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+      "image_id": "sha256:f4e2c4b035a76dd44ab1eea827464976ad3caf9210800e832c8169ea939ded2a",
+      "final_netem_drops": [
+        {
+          "interface": "sA-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A3",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B3",
+          "drops": 0
+        }
+      ]
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep02",
+      "configured_loss_pct": 0.0,
+      "control": "reorder40",
+      "launched": true,
+      "terminal": true,
+      "complete": true,
+      "correctness": "pass",
+      "confirmation_ms": null,
+      "within100ms": false,
+      "false_alarm_count": 1,
+      "observed": true,
+      "status": "complete",
+      "tcp_loss_detector": true,
+      "rule_version": "tcp-loss-v3",
+      "confirmed": false,
+      "all_alarm_count": 1,
+      "alarms": [
+        {
+          "rank": 2,
+          "fabric": "A",
+          "decision_t_monotonic_ns": 5327117757516692,
+          "evidence_age_ms": 32.029226,
+          "evidence": {
+            "connection_generation": 1,
+            "dsack_dups": 2215,
+            "lost": 12,
+            "reord_seen": 1212,
+            "sample_t_monotonic_ns": 5327117757391788,
+            "total_retrans": 3581,
+            "unacked": 15
+          }
+        }
+      ],
+      "samples": 65150,
+      "unavailable_samples": 0,
+      "observation_seconds": 42.861684273,
+      "connection_seconds": 342.081186901,
+      "sample_interval_median_ms": 5.227422,
+      "sample_interval_max_ms": 8.689764,
+      "gaps_over15ms": 0,
+      "first_kernel_lost_ms": 7.831254,
+      "first_dsack_ms": 59.978303,
+      "baseline_durations_s": [
+        1.103540623,
+        1.104993608
+      ],
+      "first_host_log_receipt_ms": null,
+      "within100ms_and_complete": false,
+      "input_hashes": {
+        "configs/m7_stress_v3/reorder40_rep02.json": "6bc9f96a39e21609b2769135332a77ba9ff1c444bad8d0123f5f22f001cf16ce",
+        "limer_v0/worker.py": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+        "limer_v0/orchestrator.py": "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f",
+        "limer_v0/tcp_loss.py": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a"
+      },
+      "wrapper_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+      "image_id": "sha256:f4e2c4b035a76dd44ab1eea827464976ad3caf9210800e832c8169ea939ded2a",
+      "final_netem_drops": [
+        {
+          "interface": "sA-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A3",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B3",
+          "drops": 0
+        }
+      ]
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep03",
+      "configured_loss_pct": 0.0,
+      "control": "reorder40",
+      "launched": true,
+      "terminal": true,
+      "complete": true,
+      "correctness": "pass",
+      "confirmation_ms": null,
+      "within100ms": false,
+      "false_alarm_count": 1,
+      "observed": true,
+      "status": "complete",
+      "tcp_loss_detector": true,
+      "rule_version": "tcp-loss-v3",
+      "confirmed": false,
+      "all_alarm_count": 1,
+      "alarms": [
+        {
+          "rank": 2,
+          "fabric": "A",
+          "decision_t_monotonic_ns": 5327119739139623,
+          "evidence_age_ms": 31.303836,
+          "evidence": {
+            "connection_generation": 1,
+            "dsack_dups": 1881,
+            "lost": 4,
+            "reord_seen": 1687,
+            "sample_t_monotonic_ns": 5327119738882761,
+            "total_retrans": 3748,
+            "unacked": 32
+          }
+        }
+      ],
+      "samples": 72474,
+      "unavailable_samples": 0,
+      "observation_seconds": 47.505582991,
+      "connection_seconds": 379.15167279,
+      "sample_interval_median_ms": 5.214627,
+      "sample_interval_max_ms": 9.869215,
+      "gaps_over15ms": 0,
+      "first_kernel_lost_ms": 7.331827,
+      "first_dsack_ms": 53.474347,
+      "baseline_durations_s": [
+        1.107596949,
+        1.101030967
+      ],
+      "first_host_log_receipt_ms": null,
+      "within100ms_and_complete": false,
+      "input_hashes": {
+        "configs/m7_stress_v3/reorder40_rep03.json": "6bc9f96a39e21609b2769135332a77ba9ff1c444bad8d0123f5f22f001cf16ce",
+        "limer_v0/worker.py": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+        "limer_v0/orchestrator.py": "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f",
+        "limer_v0/tcp_loss.py": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a"
+      },
+      "wrapper_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+      "image_id": "sha256:f4e2c4b035a76dd44ab1eea827464976ad3caf9210800e832c8169ea939ded2a",
+      "final_netem_drops": [
+        {
+          "interface": "sA-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A3",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B3",
+          "drops": 0
+        }
+      ]
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep04",
+      "configured_loss_pct": 0.0,
+      "control": "reorder40",
+      "launched": true,
+      "terminal": true,
+      "complete": true,
+      "correctness": "pass",
+      "confirmation_ms": null,
+      "within100ms": false,
+      "false_alarm_count": 1,
+      "observed": true,
+      "status": "complete",
+      "tcp_loss_detector": true,
+      "rule_version": "tcp-loss-v3",
+      "confirmed": false,
+      "all_alarm_count": 1,
+      "alarms": [
+        {
+          "rank": 2,
+          "fabric": "A",
+          "decision_t_monotonic_ns": 5327163182486351,
+          "evidence_age_ms": 30.965412,
+          "evidence": {
+            "connection_generation": 1,
+            "dsack_dups": 1726,
+            "lost": 15,
+            "reord_seen": 1385,
+            "sample_t_monotonic_ns": 5327163182329627,
+            "total_retrans": 2804,
+            "unacked": 49
+          }
+        }
+      ],
+      "samples": 62804,
+      "unavailable_samples": 0,
+      "observation_seconds": 41.3051157,
+      "connection_seconds": 329.829296635,
+      "sample_interval_median_ms": 5.233588,
+      "sample_interval_max_ms": 8.895219,
+      "gaps_over15ms": 0,
+      "first_kernel_lost_ms": 10.409488,
+      "first_dsack_ms": 51.584193,
+      "baseline_durations_s": [
+        1.109241602,
+        1.102481307
+      ],
+      "first_host_log_receipt_ms": null,
+      "within100ms_and_complete": false,
+      "input_hashes": {
+        "configs/m7_stress_v3/reorder40_rep04.json": "6bc9f96a39e21609b2769135332a77ba9ff1c444bad8d0123f5f22f001cf16ce",
+        "limer_v0/worker.py": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+        "limer_v0/orchestrator.py": "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f",
+        "limer_v0/tcp_loss.py": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a"
+      },
+      "wrapper_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+      "image_id": "sha256:f4e2c4b035a76dd44ab1eea827464976ad3caf9210800e832c8169ea939ded2a",
+      "final_netem_drops": [
+        {
+          "interface": "sA-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A3",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B3",
+          "drops": 0
+        }
+      ]
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep05",
+      "configured_loss_pct": 0.0,
+      "control": "reorder40",
+      "launched": true,
+      "terminal": true,
+      "complete": true,
+      "correctness": "pass",
+      "confirmation_ms": null,
+      "within100ms": false,
+      "false_alarm_count": 0,
+      "observed": true,
+      "status": "complete",
+      "tcp_loss_detector": true,
+      "rule_version": "tcp-loss-v3",
+      "confirmed": false,
+      "all_alarm_count": 0,
+      "alarms": [],
+      "samples": 56994,
+      "unavailable_samples": 0,
+      "observation_seconds": 37.63902015,
+      "connection_seconds": 300.911633437,
+      "sample_interval_median_ms": 5.312316,
+      "sample_interval_max_ms": 8.818495,
+      "gaps_over15ms": 0,
+      "first_kernel_lost_ms": 11.723682,
+      "first_dsack_ms": 54.411163,
+      "baseline_durations_s": [
+        1.105584004,
+        1.107011481
+      ],
+      "first_host_log_receipt_ms": null,
+      "within100ms_and_complete": false,
+      "input_hashes": {
+        "configs/m7_stress_v3/reorder40_rep05.json": "6bc9f96a39e21609b2769135332a77ba9ff1c444bad8d0123f5f22f001cf16ce",
+        "limer_v0/worker.py": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+        "limer_v0/orchestrator.py": "ae93374f62ed8fa694da542807ea03fef94990b2b23569028f9d848b5f9ffb6f",
+        "limer_v0/tcp_loss.py": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a"
+      },
+      "wrapper_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+      "image_id": "sha256:f4e2c4b035a76dd44ab1eea827464976ad3caf9210800e832c8169ea939ded2a",
+      "final_netem_drops": [
+        {
+          "interface": "sA-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sA-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth1",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth2",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth3",
+          "drops": 0
+        },
+        {
+          "interface": "sB-eth4",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7A3",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B0",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B1",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B2",
+          "drops": 0
+        },
+        {
+          "interface": "ifbm7B3",
+          "drops": 0
+        }
+      ]
+    }
+  ]
+}

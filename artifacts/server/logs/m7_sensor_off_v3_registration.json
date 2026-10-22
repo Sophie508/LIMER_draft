@@ -1,0 +1,22 @@
+[
+  [
+    "m7_sensor_off_v3_nominal_rep01",
+    "configs/m7_sensor_off_v3/nominal_rep01.json"
+  ],
+  [
+    "m7_sensor_off_v3_nominal_rep02",
+    "configs/m7_sensor_off_v3/nominal_rep02.json"
+  ],
+  [
+    "m7_sensor_off_v3_nominal_rep03",
+    "configs/m7_sensor_off_v3/nominal_rep03.json"
+  ],
+  [
+    "m7_sensor_off_v3_nominal_rep04",
+    "configs/m7_sensor_off_v3/nominal_rep04.json"
+  ],
+  [
+    "m7_sensor_off_v3_nominal_rep05",
+    "configs/m7_sensor_off_v3/nominal_rep05.json"
+  ]
+]

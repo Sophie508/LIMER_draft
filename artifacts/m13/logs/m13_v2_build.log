@@ -1,0 +1,137 @@
+-- Using default output directory /work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build
+-- [33mProceeding without cmake-format[0m
+-- find_external_library: SQLite3 was found.
+-- [33mHarfbuzz is required by GTK3 and was not found.[0m
+-- LibXML2 was found.
+-- LibRT was found.
+-- Could NOT find Python3 (missing: Python3_LIBRARIES Python3_INCLUDE_DIRS Development) (found version "3.8.10")
+-- [33mPython: development libraries were not found[0m
+-- [33mVisualizer requires Python bindings[0m
+-- GSL was found.
+-- [33mdocs: doxygen documentation not enabled due to missing dependencies: doxygen;dot;dia[0m
+-- Failed to locate sphinx-build executable (missing: SPHINX_EXECUTABLE) 
+-- [33mdocs: sphinx documentation not enabled due to missing dependencies: Sphinx;epstopdf;pdflatex;latexmk;convert;dvipng[0m
+-- Precompiled headers were enabled
+-- Processing src/antenna
+-- Processing src/aodv
+-- Processing src/applications
+-- Processing src/bridge
+-- Processing src/brite
+-- [33mfind_external_library: brite was not found. Missing headers: "Brite.h" and missing libraries: "brite".[0m
+-- [33mSkipping src/brite[0m
+-- Processing src/buildings
+-- Processing src/click
+-- [33mfind_external_library: click was not found. Missing headers: "simclick.h" and missing libraries: "nsclick;click".[0m
+-- [33mSkipping src/click[0m
+-- Processing src/config-store
+-- Processing src/core
+-- Boost Units have been found.
+-- Processing src/csma
+-- Processing src/csma-layout
+-- Processing src/dsdv
+-- Processing src/dsr
+-- Processing src/energy
+-- Processing src/fd-net-device
+-- Checking for module 'libdpdk'
+--   No package 'libdpdk' found
+-- Processing src/flow-monitor
+-- Processing src/internet
+-- Processing src/internet-apps
+-- Processing src/lr-wpan
+-- Processing src/lte
+-- Processing src/mesh
+-- Processing src/mobility
+-- Processing src/mtp
+-- Processing src/netanim
+-- Processing src/network
+-- Processing src/nix-vector-routing
+-- Processing src/olsr
+-- Processing src/openflow
+-- [33mfind_external_library: openflow was not found. Missing headers: "openflow.h" and missing libraries: "openflow".[0m
+-- [33mSkipping src/openflow[0m
+-- Processing src/point-to-point
+-- Processing src/point-to-point-layout
+-- Processing src/propagation
+-- Processing src/sixlowpan
+-- Processing src/spectrum
+-- Processing src/stats
+-- Processing src/tap-bridge
+-- Processing src/test
+-- Processing src/topology-read
+-- Processing src/traffic-control
+-- Processing src/uan
+-- Processing src/virtual-net-device
+-- Processing src/wave
+-- Processing src/wifi
+-- Processing src/wimax
+-- ---- Summary of optional ns-3 features:
+Build profile                 : debug
+Build directory               : /work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build
+BRITE Integration             : [31mOFF (missing dependency)[0m
+DES Metrics event collection  : OFF (not requested)
+DPDK NetDevice                : OFF (not requested)
+Emulation FdNetDevice         : [32mON[0m
+Examples                      : OFF (not requested)
+File descriptor NetDevice     : [32mON[0m
+GNU Scientific Library (GSL)  : [32mON[0m
+GtkConfigStore                : [31mOFF (missing dependency)[0m
+LibXml2 support               : [32mON[0m
+MPI Support                   : OFF (not requested)
+Multithreaded Simulation      : [32mON[0m
+ns-3 Click Integration        : [31mOFF (missing dependency)[0m
+ns-3 OpenFlow Integration     : [31mOFF (missing dependency)[0m
+Netmap emulation FdNetDevice  : [31mOFF (missing dependency)[0m
+PyViz visualizer              : [31mOFF (missing dependency)[0m
+Python API Scanning Support   : OFF (not requested)
+Python Bindings               : OFF (not requested)
+Real Time Simulator           : [32mON[0m
+SQLite support                : [32mON[0m
+Tap Bridge                    : [32mON[0m
+Tap FdNetDevice               : [32mON[0m
+Tests                         : OFF (not requested)
+
+
+Modules configured to be built:
+antenna                   aodv                      applications              
+bridge                    buildings                 config-store              
+core                      csma                      csma-layout               
+dsdv                      dsr                       energy                    
+fd-net-device             flow-monitor              internet                  
+internet-apps             lr-wpan                   lte                       
+mesh                      mobility                  mtp                       
+netanim                   network                   nix-vector-routing        
+olsr                      point-to-point            point-to-point-layout     
+propagation               sixlowpan                 spectrum                  
+stats                     tap-bridge                topology-read             
+traffic-control           uan                       virtual-net-device        
+wave                      wifi                      wimax                     
+
+
+Modules that cannot be built:
+brite                     click                     mpi                       
+openflow                  test                      visualizer                
+
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/cmake-cache
+Scanning dependencies of target scratch_LimerBusinessObservation
+[  0%] Building CXX object scratch/CMakeFiles/scratch_LimerBusinessObservation.dir/LimerBusinessObservation.cc.o
+In file included from [01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/include/ns3/point-to-point-module.h:8[m[K,
+                 from [01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/LimerBusinessObservation.cc:5[m[K:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/include/ns3/sim-setting.h:[m[K In member function ‘[01m[Kvoid SimSetting::Serialize(FILE*)[m[K’:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/include/ns3/sim-setting.h:19:14:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kj[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+   19 |    for (auto [01;35m[Kj[m[K : i.second)
+      |              [01;35m[K^[m[K
+In file included from [01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/business_observer.h:9[m[K,
+                 from [01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/LimerBusinessObservation.cc:16[m[K:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/m13_batch_deficit_observer.h:[m[K In member function ‘[01m[Kvoid NativeDeficitObserver::advance(int64_t)[m[K’:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/m13_batch_deficit_observer.h:35:5:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kif[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   35 |     [01;35m[Kif[m[K (arrival<now) throw std::runtime_error("Regressing observer time"); now=arrival;
+      |     [01;35m[K^~[m[K
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/m13_batch_deficit_observer.h:35:76:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kif[m[K’
+   35 |     if (arrival<now) throw std::runtime_error("Regressing observer time"); [01;36m[Know[m[K=arrival;
+      |                                                                            [01;36m[K^~~[m[K
+[  0%] Building CXX object scratch/CMakeFiles/scratch_LimerBusinessObservation.dir/__/src/applications/model/simple-seq-ts-header.cc.o
+[  0%] Linking CXX executable ../../build/scratch/ns3.36.1-LimerBusinessObservation-debug

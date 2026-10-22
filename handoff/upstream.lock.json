@@ -1,0 +1,9 @@
+{
+  "SimAI": "f5efb5a93ea9be7db25a8843f9f7ff54044f6062",
+  "ns3": "7e3cb5b88c99abcb582c5abc3919484a4805111b",
+  "archives": {
+    "SimAI-f5efb5a93ea9be7db25a8843f9f7ff54044f6062.tar.gz": "b2453385dbf1018021d89ac2c95918efec00f021cadf0dab589150afb486710c",
+    "ns-3-alibabacloud-7e3cb5b88c99abcb582c5abc3919484a4805111b.tar.gz": "ed2280b2d26f7b1aa9871702e18148b3afe81218f631d9179ba700cf2bbdd1eb"
+  },
+  "transport_patch_sha256": "1236ba53356d61e596f60e7ad278e8c837cee994833afd018bac4103fd876e6f"
+}

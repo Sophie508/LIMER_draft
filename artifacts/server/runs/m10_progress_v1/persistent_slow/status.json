@@ -1,0 +1,77 @@
+{
+  "id": "persistent_slow",
+  "status": "PASS",
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m10-persistent_slow",
+    "--cpus=4",
+    "--memory=4g",
+    "-e",
+    "AS_SEND_LAT=3",
+    "-e",
+    "AS_PXN_ENABLE=0",
+    "-e",
+    "AS_NVLS_ENABLE=0",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m10_backend/simulation/build/lib",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-w",
+    "/work/runs/m10_progress_v1/persistent_slow",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m10_backend/simulation/build/scratch/ns3.36.1-LimerProgressDagReplay-debug",
+    "topology.txt",
+    "SimAI.conf",
+    "graph.txt",
+    "trace.jsonl",
+    "controls.txt",
+    "observer.txt",
+    "rate_events.txt",
+    "progress.jsonl"
+  ],
+  "exit_code": 0,
+  "execution": {
+    "flows": 72,
+    "dependency_edges": 136,
+    "changed_flows": 0,
+    "activated_versions": 0,
+    "control_bytes": 0,
+    "makespan_ns": 242287568
+  },
+  "observation": {
+    "reports": 984,
+    "modeled_report_bytes": 62976,
+    "alarms": [
+      {
+        "path": 2,
+        "decision_ns": 59153600
+      }
+    ],
+    "acked_bytes": 56623104,
+    "final_path_bytes": {
+      "0": 7077888,
+      "1": 7077888,
+      "2": 7077888,
+      "3": 7077888,
+      "4": 7077888,
+      "5": 7077888,
+      "6": 7077888,
+      "7": 7077888
+    }
+  },
+  "science": {
+    "eligible": true,
+    "delay_ms": 9.1536,
+    "timely": true,
+    "miss": false,
+    "other_or_pre_event_alarms": []
+  },
+  "trace_sha256": "1eef72b34f701cfefd03a02fc188c23b1e65cf5c9c5c488e857650529fca3627",
+  "progress_sha256": "7fbc41935455366146d5c9eaab9aac655d0d5940f1696f142786e462ebfeab55",
+  "wall_seconds": 1.396846546791494
+}

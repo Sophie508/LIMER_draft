@@ -1,0 +1,351 @@
+{
+  "passed": true,
+  "source": "m12_source_frozen_validation_v2",
+  "campaign": "m12_boundary_size_v1",
+  "registrations": 40,
+  "report_rows": 192000,
+  "probe_packets": 2788800,
+  "wire_bytes": 975283200,
+  "source_hashes": {
+    "binary": "313e379bc736961072161863f6a5cb1729fb89bc326a8e4177d4eda0438e84df",
+    "detector": "cef319ca2f069a508602023bc6c410685802c74d249ff1468338456460eb739c",
+    "runner": "ce8649c50509e8e6ae3f4ee648e096aec6de04bd698eb8fd2bd8a6975e7729f8",
+    "cpp": "07267875d944e0da6c9f4834078dfdbe67e415c5a13b8e7e21501c4831dddf50",
+    "header": "d1f89384a16813f6459ae2863705dbf42ecd51b3834769aeb06c0964ce4e43ca",
+    "early_detector": "96adb8ca044916d5b0d76dffb7326f59ba322a553447c02545f29b9013710297",
+    "base_detector": "d7166b6d3ef246103c4b9c9e7a034e9f7e50c9acd502bf4b546dfec7a5562678"
+  },
+  "artifacts": {
+    "iid_80mbps_r001": {
+      "reports.jsonl": "6f3d11f0a1639f511aa909988cccdbcaa90a214c348f3abdea64d1377420419e",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "8eed9fd62dd50047077cf2cbc07655fabe5f64f1bb8276dde08a20b0e69b9de7",
+      "samples.jsonl": "8be1c03cf169415c3a9577f28db71b2bea756c587b4f0a68580bfa5d4d169e1e"
+    },
+    "iid_80mbps_r002": {
+      "reports.jsonl": "cf7e18edfe15f6c04b3b8f3f0af723926e2dc55998f2dd580784144c4f28d140",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "9e2a75210b8a2616fad0725e5114ea0f760dc95dfe1d058adcff994efe026743",
+      "samples.jsonl": "cf8f446e740fb7516a3403aa20da76178713b3039d23ba6dace200e1b60f7846"
+    },
+    "iid_80mbps_r003": {
+      "reports.jsonl": "4faaa83cd96dcafe32e3d4215fc215011058b1bb062b68ad3fb7120a5808cb26",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "9e2a75210b8a2616fad0725e5114ea0f760dc95dfe1d058adcff994efe026743",
+      "samples.jsonl": "5cd751a1c86595a418ca7d352b72856063132a2398b97f2ab6a8386794bec272"
+    },
+    "iid_80mbps_r004": {
+      "reports.jsonl": "21ff398fd3870efc36e453d4e2be3701214366c321cae95d4670961f675e1cfe",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "92fb4acdab42ba38dbea5c6b89a84103d5afec7b7aba0ad804dee28336bf6ad2",
+      "samples.jsonl": "fe6076467a339fa9878d51303feeda66f2c4bcd3d78d458ca158ea01b1454e58"
+    },
+    "iid_80mbps_r005": {
+      "reports.jsonl": "d217f4a5682f46d177ee5fe46b4a0351dfb114949015c9bb2d6fa60273d7eadc",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "9e2a75210b8a2616fad0725e5114ea0f760dc95dfe1d058adcff994efe026743",
+      "samples.jsonl": "f28983ad35b6d37b697d12b399b837e224d57ad61b273df8233800bb862562f3"
+    },
+    "iid_80mbps_r006": {
+      "reports.jsonl": "fc4f1742ee2bca61c7cbb919285cd22e3b9cec1c2344c45e3f19cdcdb548a7ea",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "9e2a75210b8a2616fad0725e5114ea0f760dc95dfe1d058adcff994efe026743",
+      "samples.jsonl": "98d42a82f5ec142b76920cf2befca92b75fffe1267bb38dcbf6e05ae9a83485c"
+    },
+    "iid_80mbps_r007": {
+      "reports.jsonl": "381fe8cb8ec3c3daab002e7d746debbe18aaf0323befd503454189b8199fbc05",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "92fb4acdab42ba38dbea5c6b89a84103d5afec7b7aba0ad804dee28336bf6ad2",
+      "samples.jsonl": "0f6c0ce2aef6ccb9ed1b7a446301cbc6cd64d71223d90484eb4dae04d256eb5e"
+    },
+    "iid_80mbps_r008": {
+      "reports.jsonl": "88e356e4a868a66c0cc06f2ae428958526538beffa9a6741cb336d04f90a724c",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "92fb4acdab42ba38dbea5c6b89a84103d5afec7b7aba0ad804dee28336bf6ad2",
+      "samples.jsonl": "7359720d26d6979e7a5f9bd1f1dccd3605e0c1165824ac8ff88f41cf4ef94988"
+    },
+    "iid_80mbps_r009": {
+      "reports.jsonl": "c2ca69b69fc514c30c77fa965527a13bbd35f2b7f08e4ecbc5bcdf88b1b387d4",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "9e2a75210b8a2616fad0725e5114ea0f760dc95dfe1d058adcff994efe026743",
+      "samples.jsonl": "b6a45758bca89970ece61cab493cfea24e17d50abd8db0b30cc022fa96aca763"
+    },
+    "iid_80mbps_r010": {
+      "reports.jsonl": "fed18e6f3acdd338527179b95c0b967ca8a5606762157a9c14c251fe8a3b8c41",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "3ac41ba433d8a9cc260a576b04911d494f4c64acdcd3072541ec290a2fb42554",
+      "samples.jsonl": "695324342bf443258050afa48eba2be4530c446d0a0f3722af57fa34ba7e88ab"
+    },
+    "iid_80mbps_r011": {
+      "reports.jsonl": "eb5457458914fa25460eafdbb597e2effabf7998812a5d620ffd41d6a3ddcac1",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "9e2a75210b8a2616fad0725e5114ea0f760dc95dfe1d058adcff994efe026743",
+      "samples.jsonl": "dd2d4d90f44b6c8748362b1271bcaf85c4e8efd9ff47973a6403a6e02223a408"
+    },
+    "iid_80mbps_r012": {
+      "reports.jsonl": "60276df508fce610ee521ca399f0a0599b3cfcb4157bc052741d8c20e6360675",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "403f2ae344bf66980167ee108a32dfe3b844764c11f8944a092f4177d0f9c505",
+      "samples.jsonl": "bf6f52508d82657164da092be1aada7d099bc127331c161662659e1ea604c7fc"
+    },
+    "iid_80mbps_r013": {
+      "reports.jsonl": "de4ecc77e0f766e3742c928bbed6a0994d07da5387d1a3a73027146f5a56112b",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "92fb4acdab42ba38dbea5c6b89a84103d5afec7b7aba0ad804dee28336bf6ad2",
+      "samples.jsonl": "4e508231a55a7543b1d57ff92ef4823d7ef70b8ca0843cda33cb8c86ff993820"
+    },
+    "iid_80mbps_r014": {
+      "reports.jsonl": "267616b897eb98e4290e8fbcde249b0d0ad92babe95af3e62e4922611dbfe3a7",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "7247f045cd0306500f771406d2f506b21994836e55aa4eb60e7d02536c0ff1cb",
+      "samples.jsonl": "fd04af56c88260ed66e4a1c8dd464c8c3beaaa19b25c940ed276ca222814b510"
+    },
+    "iid_80mbps_r015": {
+      "reports.jsonl": "45c7ced45e464bbd28dcfd050d71876afce6a5e297f65d262f72dfec36438ee9",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "3ac41ba433d8a9cc260a576b04911d494f4c64acdcd3072541ec290a2fb42554",
+      "samples.jsonl": "29a62aa7e176d7eb931528c12d7ca50b58d858138c70acfd8d3f2be4da9d2fee"
+    },
+    "iid_80mbps_r016": {
+      "reports.jsonl": "91933553f6f65a5d3bc96ee142cb94d68775620aaaafdec1a7d409ea9a1ba2da",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "9e2a75210b8a2616fad0725e5114ea0f760dc95dfe1d058adcff994efe026743",
+      "samples.jsonl": "c8613402620311df9de64ed7b7c034643cefd249ecb810fcaf5b3afd3c9b2790"
+    },
+    "iid_80mbps_r017": {
+      "reports.jsonl": "ded12676f9ba0302e55e4f1a1e8c28e6f27ebd57dcf91fdd36f3c4797967b34d",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "8eed9fd62dd50047077cf2cbc07655fabe5f64f1bb8276dde08a20b0e69b9de7",
+      "samples.jsonl": "6d057e3b953d43dc4549a28a0947a7ec922878ee44f533f6de36d078a4db8c47"
+    },
+    "iid_80mbps_r018": {
+      "reports.jsonl": "c911f93f7c45ab12ebbd56d085354f79e44d2b4bc3c482674762feee72635d8f",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "91566a5d68c004c873b6aa0a02ba050f217c94c141e3b102bb7b864f87792ebd",
+      "samples.jsonl": "6e032926a9ecf9fd8a933bd1bb4ef5af9840e5b6c75ed0f731d24e17a13cef38"
+    },
+    "iid_80mbps_r019": {
+      "reports.jsonl": "08d2b9dc87c73c9a27bf3b398660f926f50f8915e4daa2c2c3d840994491cb14",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "8eed9fd62dd50047077cf2cbc07655fabe5f64f1bb8276dde08a20b0e69b9de7",
+      "samples.jsonl": "9337f7eeb1c7953e8cd720d54c50792ac14f0bfa33a8e4eeaa7a45873c3a6571"
+    },
+    "iid_80mbps_r020": {
+      "reports.jsonl": "06763f0dba041cbc6d47335f1cffb9b0131d635bf53522eff9af5309edd2704e",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "91566a5d68c004c873b6aa0a02ba050f217c94c141e3b102bb7b864f87792ebd",
+      "samples.jsonl": "da9393c073dceec168f0459270888c96bf9ff8368ace5f2ad2bb209fc018c3ee"
+    },
+    "selective_80mbps_r001": {
+      "reports.jsonl": "ca68d0fa17b3898d0d48a6845cbe9dfd0dc71a80b7b43a30dd35664ea1a29421",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "975498fadc4d75972d4ace7f20dfe07b89c439a6e27a4636ca07ca7b79e711c4",
+      "samples.jsonl": "29c7fb69ea0c6229d973b6503409edff54c504892d68acad47448b852bfa84ef"
+    },
+    "selective_80mbps_r002": {
+      "reports.jsonl": "0fbc261b858b061ae67102fda2dd35b2b23e6f64b91f76976f431e99f2bcf787",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "a65e337eee081ff15681727eb9758c3678c7e24d23f8ec74ec9326af86104eb9",
+      "samples.jsonl": "c47752481f2a2d9904c96aff4acd3109107c78873ebead7716daa571679e04d6"
+    },
+    "selective_80mbps_r003": {
+      "reports.jsonl": "a6256fbfdee5a1565a1430628202df95343f8f2afe33bf73cc9f289f81e3a6e1",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "4b8c17f85adbdaeeaba6a028945a92e65666295c44ba7197068a3e56f2e099f1",
+      "samples.jsonl": "760371c9f7734c74d6782cb5041b798314191e0e2bcc89c6bb7e5b1993447f25"
+    },
+    "selective_80mbps_r004": {
+      "reports.jsonl": "055303b12e0f15e23b7d98460aea56847a093219fa9627b38bd4e5bc22e5640f",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "54da7eb0bc65ab26504f95ccfcd8494cc7b8d903d05758975e2a76c3057c0dda",
+      "samples.jsonl": "a4fad03183dbec90590fb8051c62a36f557047048e237b448de9db444cbcd6b5"
+    },
+    "selective_80mbps_r005": {
+      "reports.jsonl": "6112e99b4144812cc3325a5461f31727b0838580f59d3bed753e6900230680a9",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "55f94723dcf5e51688ffb264db009e35e58b928cba9b822ffe5757cb6fd6b137",
+      "samples.jsonl": "004ed28ee08ffc25a96c9559b83f25b46874daabfd49601ac091a10fab756558"
+    },
+    "selective_80mbps_r006": {
+      "reports.jsonl": "b6a03f4fd8f5f02ea255421f11102b8277712943afdddac49455e44bfa3cf098",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "54da7eb0bc65ab26504f95ccfcd8494cc7b8d903d05758975e2a76c3057c0dda",
+      "samples.jsonl": "f114cad2444c7bfc39c62f5a9613ff31e1ee1c96b86289c63f9f4d8775452566"
+    },
+    "selective_80mbps_r007": {
+      "reports.jsonl": "0073a5b5ca01fc46de7759c9c99c1d2210e2a026527d4103b8846cfa61b56951",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "dfa319d754d7cd91ba9e53cf78163ecf2d23c2c2fa206d43af36996bba7a740e",
+      "samples.jsonl": "89def53e50e70468e94535530fd9c8c39487b7e18a26868872617bef70edbebd"
+    },
+    "selective_80mbps_r008": {
+      "reports.jsonl": "cc93688be2780836dc1fcd60c4efabc3e136fad3ea8ebe17fee2899b495c307a",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "a42030e3cc6a98a1aadbccbb954419a3ea322e61a25f0ff5c9dcc019a885cf0b",
+      "samples.jsonl": "9230b173205614512456931c831c2c4101e58bde95a0a82845dcdbfaebf82ab7"
+    },
+    "selective_80mbps_r009": {
+      "reports.jsonl": "527e0ea715216650a70ac8949d3cb58909aa8e5c3b3e7f4a6544c829e6d0187c",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "f7e06f473604a6177394969243dbe93e1d992abb9c34ec4bdcc20583cbdf33fb",
+      "samples.jsonl": "a5302403e276403de17b76bd246f4f22d590e7578a4379dcd11f30f0cf5dbc95"
+    },
+    "selective_80mbps_r010": {
+      "reports.jsonl": "7ca65373431d00d8db6f08c58c12d89c2107da935146f82e69f20192eebe56c7",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "4dd6996cddbd2562d01a6947ef2314150b061dc85bf049a052ed912dfb626831",
+      "samples.jsonl": "daa9d681c02cae6dbbce09a38a51412a034cf6d914745679495fd61139569368"
+    },
+    "selective_80mbps_r011": {
+      "reports.jsonl": "2beed0ae020834ffe2e882e4dcb67b352b6c413ee8b1925ce491993c7368e657",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "4dd6996cddbd2562d01a6947ef2314150b061dc85bf049a052ed912dfb626831",
+      "samples.jsonl": "2f291ccd744f151a744197fdd3906fe8fab419b991c142199beaa531e3b2ba67"
+    },
+    "selective_80mbps_r012": {
+      "reports.jsonl": "5d4673dbffedc79142bf10df99a0e328b45483210f3120e59af87b16262de400",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "e2f07997cd217b34adc16fdc1492390f6e2b769c0c558008535ccf5c56357b9a",
+      "samples.jsonl": "1a3b9dd3564308d652ec9d86dce5a690099d145d9e186ddad39944bc868b3018"
+    },
+    "selective_80mbps_r013": {
+      "reports.jsonl": "093722c0dea30c45393b03b9c412578d31af3381b1e54016229cad03aff107f8",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "dddb7d2fca2867cb8ab6ba0a5448db7c2c799d6ee187698a98518487bc8b93fb",
+      "samples.jsonl": "d84171bbd82bc85b25687a5ef25ede1babe85adb5621a3ae62a02c706ee7c70b"
+    },
+    "selective_80mbps_r014": {
+      "reports.jsonl": "b3b864f93abb3bec72864ff0de16414e81b7faf23df063bc2fa941d46f608b78",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "a1f7a71aa1c6d82543342fd312dc0bf53057a559f9dc853c458d8069abd4b390",
+      "samples.jsonl": "bf4f5f3bf9e316314f3966bc52962a5ddf65239e605d39dfe91f2c4c2fe5534f"
+    },
+    "selective_80mbps_r015": {
+      "reports.jsonl": "567f79eb86b16e90da76728a6154fb3604e3936dd9e67bcaa0886fd79bb602f5",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "dddb7d2fca2867cb8ab6ba0a5448db7c2c799d6ee187698a98518487bc8b93fb",
+      "samples.jsonl": "6ef0c06e0753b726ab6939e3b210972f1efe4ceb31f2e363cd981d47b2f00736"
+    },
+    "selective_80mbps_r016": {
+      "reports.jsonl": "ebd5ba1b6f65a3a055c8247fe71f075fec47e16429f96785f98a6e68bd838c2e",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "a1fe06523435f15c0989b2cab5e420d37ff9e9fdbd9cab586c15743b3cf7e35b",
+      "samples.jsonl": "20fe6886932ac4ea5d96bc2688102ab05b2b994f60b2112e2e0b9deb377502f2"
+    },
+    "selective_80mbps_r017": {
+      "reports.jsonl": "c54149fa9b3bad78cebedba6984622b00a243aa7cd83e534ec7de57bace5dd59",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "1e884de8236b3226608407a4f4b3bf00b7d264f574e1515a79d2bc2190ae1149",
+      "samples.jsonl": "9a117725f09b21b25b4648c33208559832ce4d266f25cfed910259a2df705338"
+    },
+    "selective_80mbps_r018": {
+      "reports.jsonl": "0b28c72a22763fb07b550b67b29de0ac3ed9e5254ffcea3e600f24626c5d6fde",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "samples.jsonl": "53596bb937911cf0889a5edce1c5484e70d39c58916b040ffa624cdf584c3a40"
+    },
+    "selective_80mbps_r019": {
+      "reports.jsonl": "5590a3eec82a3a47d09dac1323e07216ff367ab7f5b21eb996729e4ee500f331",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "0a9f49e9ee401ec9d9903b8cf62c40e05468738b6baa82e9c45b2b345be5b98c",
+      "samples.jsonl": "42fe3af4a081b8aa25c00f2d61a3693694856162f4a4ac0c1a63783d395d9cbe"
+    },
+    "selective_80mbps_r020": {
+      "reports.jsonl": "33fe3ad91e0e733ef95743213a906be486d20f3a4d11228a1ace2d613e570b1b",
+      "offers.jsonl": "43b74e265943243ee21d94aa6e2544f9e732abf267fe8698440a3957971651ff",
+      "alarms.jsonl": "403f2ae344bf66980167ee108a32dfe3b844764c11f8944a092f4177d0f9c505",
+      "samples.jsonl": "5e40c4b24053ab5893399576087c0c517e4feff1faa42f32fe44d07f4a7a75cf"
+    }
+  },
+  "summary": {
+    "groups": {
+      "iid_80mbps_0.005": {
+        "kind": "fault",
+        "registered": 20,
+        "verified": 20,
+        "timely": 20,
+        "late": 0,
+        "missed_or_unverified": 0,
+        "p95_ms": 72.079444,
+        "timely_wilson95": [
+          0.8388748419471806,
+          1
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          55.941016,
+          57.044451,
+          57.452513,
+          59.322673,
+          60.178986,
+          60.865448,
+          61.002267,
+          62.773003,
+          63.264622,
+          63.999212,
+          64.755806,
+          65.986355,
+          68.633847,
+          69.447189,
+          70.382644,
+          70.538028,
+          71.144148,
+          71.46991,
+          72.079444,
+          74.832667
+        ]
+      },
+      "selective_80mbps_0.005": {
+        "kind": "fault",
+        "registered": 20,
+        "verified": 20,
+        "timely": 5,
+        "late": 14,
+        "missed_or_unverified": 1,
+        "p95_ms": 231.144148,
+        "timely_wilson95": [
+          0.11186170140766569,
+          0.468700877618744
+        ],
+        "false_alarm_runs": 0,
+        "false_alarm_events": 0,
+        "unknown_batches": 0,
+        "invalid_batches": 0,
+        "delays_ms": [
+          72.773003,
+          78.633847,
+          79.322673,
+          79.447189,
+          82.079444,
+          101.46991,
+          107.044451,
+          110.382644,
+          120.178986,
+          137.452513,
+          160.538028,
+          164.755806,
+          171.002267,
+          173.999212,
+          185.941016,
+          185.986355,
+          224.832667,
+          230.865448,
+          231.144148,
+          null
+        ]
+      }
+    },
+    "registered": 40,
+    "terminal": 40,
+    "strict_verdict": "FAIL",
+    "primary_faults": 40,
+    "timely_faults": 25,
+    "verified_control_trials": 0,
+    "claim": "Costed same-path UDP probes and native delivery impairment decisions; not collective recovery",
+    "per_condition_95_verdict": "FAIL"
+  },
+  "claim": "Native causal report replay and exact accounting, not independent physical-cause proof"
+}

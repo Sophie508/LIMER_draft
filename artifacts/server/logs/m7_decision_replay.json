@@ -1,0 +1,744 @@
+{
+  "registered": 105,
+  "matched": 105,
+  "samples": 2679256,
+  "source_sha256": "45b8d59994bb560674726228a924f87445bfdb1319a3691e30d544d4666f6f1a",
+  "boundary": "Replay checks consistency of actual worker decisions with archived observations; it does not independently prove physical fault accuracy.",
+  "checks": [
+    {
+      "name": "m7_val_v3_nominal_rep01",
+      "samples": 12002,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep02",
+      "samples": 16160,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep04",
+      "samples": 40328,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep09",
+      "samples": 41200,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep13",
+      "samples": 15472,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep15",
+      "samples": 16178,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_pause_rep03",
+      "samples": 14732,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep04",
+      "samples": 24696,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep19",
+      "samples": 16180,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep20",
+      "samples": 41784,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_pause_rep01",
+      "samples": 14726,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_reorder10_rep03",
+      "samples": 12470,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep07",
+      "samples": 25712,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep10",
+      "samples": 17666,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep04",
+      "samples": 15234,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_congestion_rep03",
+      "samples": 14722,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep09",
+      "samples": 21962,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep16",
+      "samples": 15814,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep02",
+      "samples": 41920,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep11",
+      "samples": 21720,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep09",
+      "samples": 25936,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep20",
+      "samples": 20002,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep20",
+      "samples": 27612,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep17",
+      "samples": 15602,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep03",
+      "samples": 42880,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_reorder10_rep01",
+      "samples": 12554,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep07",
+      "samples": 42394,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_reorder10_rep02",
+      "samples": 12142,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep01",
+      "samples": 41148,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep17",
+      "samples": 20054,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep04",
+      "samples": 19784,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep18",
+      "samples": 15946,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_congestion_rep05",
+      "samples": 14660,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep12",
+      "samples": 20332,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_nominal_rep04",
+      "samples": 12010,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep01",
+      "samples": 18798,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep07",
+      "samples": 16050,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep08",
+      "samples": 21022,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep18",
+      "samples": 25968,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep14",
+      "samples": 25100,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep10",
+      "samples": 27542,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep14",
+      "samples": 18434,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep13",
+      "samples": 25796,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep15",
+      "samples": 41688,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep05",
+      "samples": 40292,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_nominal_rep02",
+      "samples": 11990,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep20",
+      "samples": 15872,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep17",
+      "samples": 44628,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep19",
+      "samples": 42928,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep05",
+      "samples": 16336,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep12",
+      "samples": 43864,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_nominal_rep03",
+      "samples": 12046,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep11",
+      "samples": 42212,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep07",
+      "samples": 19998,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep16",
+      "samples": 25610,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep03",
+      "samples": 16324,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep08",
+      "samples": 41398,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep16",
+      "samples": 19942,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep06",
+      "samples": 19442,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep08",
+      "samples": 26154,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep15",
+      "samples": 24808,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep09",
+      "samples": 15502,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep16",
+      "samples": 42022,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_reorder10_rep04",
+      "samples": 12480,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep10",
+      "samples": 44088,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep14",
+      "samples": 42942,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_congestion_rep01",
+      "samples": 14614,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep01",
+      "samples": 26026,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep15",
+      "samples": 19196,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep11",
+      "samples": 16286,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep08",
+      "samples": 17448,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep12",
+      "samples": 15942,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep14",
+      "samples": 16640,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep19",
+      "samples": 21222,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_congestion_rep04",
+      "samples": 14768,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_reorder10_rep05",
+      "samples": 12440,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep05",
+      "samples": 20860,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_congestion_rep02",
+      "samples": 15216,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep18",
+      "samples": 45524,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep17",
+      "samples": 25752,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_pause_rep02",
+      "samples": 14670,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep18",
+      "samples": 18952,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep06",
+      "samples": 41812,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss5_rep13",
+      "samples": 44356,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep01",
+      "samples": 17166,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep19",
+      "samples": 26538,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep11",
+      "samples": 27762,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep02",
+      "samples": 19878,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep03",
+      "samples": 20258,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_pause_rep05",
+      "samples": 14738,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep06",
+      "samples": 25768,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep02",
+      "samples": 24788,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep12",
+      "samples": 26860,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep03",
+      "samples": 26182,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep13",
+      "samples": 19884,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_pause_rep04",
+      "samples": 14688,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss0p5_rep06",
+      "samples": 15710,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_nominal_rep05",
+      "samples": 11980,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss1_rep10",
+      "samples": 18794,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_val_v3_loss2_rep05",
+      "samples": 24636,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep01",
+      "samples": 59470,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep02",
+      "samples": 65150,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep03",
+      "samples": 72474,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep04",
+      "samples": 62804,
+      "replayed": 1,
+      "logged": 1,
+      "matched": true
+    },
+    {
+      "name": "m7_stress_v3_reorder40_rep05",
+      "samples": 56994,
+      "replayed": 0,
+      "logged": 0,
+      "matched": true
+    }
+  ]
+}

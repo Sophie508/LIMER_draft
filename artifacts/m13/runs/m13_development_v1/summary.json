@@ -1,0 +1,372 @@
+{
+  "groups": {
+    "low_processing40": {
+      "kind": "control",
+      "registered": 10,
+      "verified": 1,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "low_loss": {
+      "kind": "fault",
+      "registered": 20,
+      "verified": 2,
+      "timely": 2,
+      "late": 0,
+      "missed_or_unverified": 18,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0.027866481213768224,
+        0.3010336452284873
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        54.857069,
+        55.103355,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "low_selective": {
+      "kind": "fault",
+      "registered": 20,
+      "verified": 3,
+      "timely": 2,
+      "late": 1,
+      "missed_or_unverified": 17,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0.027866481213768224,
+        0.3010336452284873
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        85.286027,
+        96.9823,
+        107.325399,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "low_overload": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 1,
+      "timely": 1,
+      "late": 0,
+      "missed_or_unverified": 4,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0.03622410863243014,
+        0.6244653702374747
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        29.996059,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "high_loss": {
+      "kind": "fault",
+      "registered": 3,
+      "verified": 1,
+      "timely": 1,
+      "late": 0,
+      "missed_or_unverified": 2,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0.06149194472039621,
+        0.7923403991979522
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        51.06349,
+        null,
+        null
+      ]
+    },
+    "low_sparse_reorder40": {
+      "kind": "control",
+      "registered": 10,
+      "verified": 2,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 2,
+      "false_alarm_events": 2,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "low_businessloss": {
+      "kind": "fault",
+      "registered": 20,
+      "verified": 3,
+      "timely": 3,
+      "late": 0,
+      "missed_or_unverified": 17,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0.052368745896216595,
+        0.36041886474075696
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        57.082742,
+        67.028318,
+        72.736393,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "low_reorder40": {
+      "kind": "control",
+      "registered": 10,
+      "verified": 1,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "high_pause": {
+      "kind": "control",
+      "registered": 5,
+      "verified": 1,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "low_pause": {
+      "kind": "control",
+      "registered": 10,
+      "verified": 1,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "low_reorder80": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 0,
+      "timely": 0,
+      "late": 0,
+      "missed_or_unverified": 5,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "low_processing80": {
+      "kind": "fault",
+      "registered": 5,
+      "verified": 0,
+      "timely": 0,
+      "late": 0,
+      "missed_or_unverified": 5,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "low_congestion": {
+      "kind": "control",
+      "registered": 10,
+      "verified": 0,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "low_idle": {
+      "kind": "fault",
+      "registered": 3,
+      "verified": 0,
+      "timely": 0,
+      "late": 0,
+      "missed_or_unverified": 3,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        5.551115123125783e-17,
+        0.5614970317550454
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        null,
+        null,
+        null
+      ]
+    },
+    "low_nominal": {
+      "kind": "control",
+      "registered": 10,
+      "verified": 0,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "low_sparse": {
+      "kind": "fault",
+      "registered": 3,
+      "verified": 0,
+      "timely": 0,
+      "late": 0,
+      "missed_or_unverified": 3,
+      "p95_ms": "infinite",
+      "timely_wilson95": [
+        5.551115123125783e-17,
+        0.5614970317550454
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  "registered": 149,
+  "terminal": 16,
+  "strict_verdict": "FAIL",
+  "primary_faults": 84,
+  "timely_faults": 9,
+  "verified_control_trials": 6,
+  "claim": "Class-separated causal UDP/application observations and charged probes/reports; not collective recovery",
+  "per_condition_95_verdict": "FAIL"
+}

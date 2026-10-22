@@ -1,0 +1,41 @@
+{
+  "command": [
+    "docker",
+    "--host=unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-healthy_p16_N15MiB_ring",
+    "--cpus=4",
+    "--memory=8g",
+    "-e",
+    "AS_SEND_LAT=3",
+    "-e",
+    "AS_PXN_ENABLE=0",
+    "-e",
+    "AS_NVLS_ENABLE=0",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-w",
+    "/work/runs/healthy_p16_N15MiB_ring",
+    "limer-simai-cpu:2026-10-10",
+    "/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/scratch/ns3.36.1-LimerDagReplay-debug",
+    "topology.txt",
+    "SimAI.conf",
+    "graph.txt",
+    "trace.jsonl"
+  ],
+  "graph_sha256": "d2b3b682da006386ed8dc057d93a161b2372dc41765e41cb4f23f5ae1f9e7868",
+  "start_unix": 1791610781.2959502,
+  "binary_sha256": "ed50f2622b69d915e117e8d522b5d940f7e837ad2f45fa408467013117e66cff",
+  "exit_code": 0,
+  "wall_seconds": 2.7289109230041504,
+  "trace_check": {
+    "nodes": 480,
+    "events": 1440,
+    "dependency_edges": 928,
+    "makespan_ns": 1458030,
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

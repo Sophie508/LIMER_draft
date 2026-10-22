@@ -1,0 +1,115 @@
+{
+  "name": "m5_guarded_stay_pilot",
+  "config": "configs/m5_guarded/stay.json",
+  "source_snapshot": "limer_source_guarded_v1",
+  "command": [
+    "docker",
+    "--host=unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m5_guarded_stay_pilot",
+    "--privileged",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/limer_source_guarded_v1:/work",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime:/runtime",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/mininet_results:/results",
+    "limer-mininet:2026-10-10-py312",
+    "bash",
+    "/runtime/mininet_entry.sh",
+    "python3",
+    "-m",
+    "limer_v0.orchestrator",
+    "--config",
+    "configs/m5_guarded/stay.json",
+    "--results-dir",
+    "/results",
+    "--workdir",
+    "/work",
+    "--run-id",
+    "m5_guarded_stay_pilot"
+  ],
+  "start_unix": 1791611998.5170262,
+  "image_id": "sha256:dcec46c50bed5602c73a5e5a25ce65badd1f680baa88ee9fb708a625ddde6af3",
+  "hashes": {
+    "configs/m5_guarded/stay.json": "f6abae449a72db7e39eeb433e0ead1f204f11d93e6369c02f1c128475ed0b044",
+    "limer_v0/orchestrator.py": "e8e39060788f301ee351b6abd154844b4bb7cac0962a8787afdd273f1dc1beac",
+    "limer_v0/worker.py": "ff4304cde8634fdc996a9465703d4c175e1e58680fc60bca6264c09969e38122",
+    "limer_v0/tcp_retrans.py": "f7967ef40e7035f3a68cdb623a07e1c456078faa688fd60e30e35901f760a7c7"
+  },
+  "exit_code": 1,
+  "wall_seconds": 299.52075123786926,
+  "summary": {
+    "condition": "C3",
+    "error": "worker 0 did not emit ['ROUND_DONE'] within 120.0s",
+    "error_type": "TimeoutError",
+    "experiment_family": "active_active_v1",
+    "run_id": "m5_guarded_stay_pilot",
+    "scenario_id": "AA12_POLICY",
+    "status": "failed"
+  },
+  "correctness": {
+    "status": "not_completed"
+  },
+  "completion_pass": false,
+  "policy_decisions": [
+    {
+      "event": "POLICY_DECISION",
+      "metrics": {
+        "faulted_fabric": {
+          "burst_rate_bps": 139076474.32410288,
+          "busy_fraction": 0.03515625,
+          "demand_bps": 4889407.300456742,
+          "interface": "sA-eth3",
+          "sample_count": 256,
+          "spare_bps": 134187067.02364613
+        },
+        "headroom_mode": "baseline_guarded",
+        "reuse_factor": 1.25,
+        "rule": "switch iff surviving spare x reuse_factor >= faulted pre-fault demand",
+        "surviving_fabric": {
+          "burst_rate_bps": null,
+          "busy_fraction": 0.0,
+          "calibrated_reference": {
+            "burst_rate_bps": 9643354.656043291,
+            "busy_fraction": 0.9921875,
+            "demand_bps": 9568015.947792953,
+            "interface": "sB-eth3",
+            "sample_count": 256,
+            "spare_bps": 75338.70825033821
+          },
+          "current_observation": {
+            "burst_rate_bps": null,
+            "busy_fraction": 0.0,
+            "demand_bps": 0.0,
+            "interface": "sB-eth3",
+            "sample_count": 256,
+            "spare_bps": null
+          },
+          "demand_bps": 0.0,
+          "estimate_source": "calibrated_idle_fallback",
+          "interface": "sB-eth3",
+          "sample_count": 256,
+          "spare_bps": 75338.70825033821,
+          "stationary_capacity_assumption": true
+        }
+      },
+      "source": "orchestrator",
+      "t_monotonic_ns": 5320493705173110,
+      "verdict": "stay"
+    }
+  ],
+  "event_counts": {
+    "HOST_CONFIRM": 1,
+    "PLAN_COMMIT": 0,
+    "RECOVERY_SUPPRESSED": 1,
+    "WORKER_ERROR": 0,
+    "TCP_RETRANS_SAMPLE": 0
+  },
+  "expected_branch": "stay",
+  "branch_gate_pass": true
+}

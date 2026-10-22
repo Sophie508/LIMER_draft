@@ -1,0 +1,88 @@
+{
+  "id": "low_selective_r014",
+  "start_unix": 1791699329.7385352,
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m13-62013",
+    "--cpus=1",
+    "--memory=1g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m13b_backend/simulation/build/lib",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m13b_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+    "--out=/work/runs/m13_development_v2/low_selective_r014",
+    "--scenario=selective",
+    "--capacityMbps=100",
+    "--offeredMbps=80",
+    "--lossRate=0.005",
+    "--reportLoss=0",
+    "--runId=62013",
+    "--faultTimeMs=53.055191",
+    "--probePps=35000",
+    "--reportCopies=3",
+    "--reportRateMbps=10",
+    "--reportDelayMs=1",
+    "--observationEndMs=600"
+  ],
+  "status": "PASS",
+  "exit_code": 0,
+  "delay_ms": 61.708009,
+  "timely": true,
+  "missed": false,
+  "late": false,
+  "false_alarm_events": 0,
+  "alarms": [
+    {
+      "rule_version": "business-delivery-v1",
+      "path": "2/A",
+      "decision_t_ns": 114763200,
+      "signal": "data_gap",
+      "missing_packets": 4,
+      "evidence_batches": [
+        5
+      ],
+      "gap_age_ns": 42180000,
+      "claim": "Observed delivery impairment; cause unresolved"
+    }
+  ],
+  "input_rows": 4800,
+  "baseline_alarms": [
+    {
+      "rule_version": "hybrid-delivery-v4",
+      "path": "2/A",
+      "decision_t_ns": 134763200,
+      "missing_packets": 2,
+      "evidence_batches": [
+        6,
+        7
+      ],
+      "claim": "Observed delivery deficit under the declared guard; cause unresolved"
+    }
+  ],
+  "completed_batches": 800,
+  "unavailable_batches": 0,
+  "expired_partial_batches": 0,
+  "invalid_batches": 0,
+  "retained_batches": 176,
+  "native_alarm_replay": true,
+  "shadow_alarm_replay": true,
+  "fifo_audit": true,
+  "sample_audit": true,
+  "packet_audit": true,
+  "input_sha256": "5f335d1688a88527ef4d7262ac204ed3ecf4546cd3de5da1270d53fbf6d673c4",
+  "truth_sha256": "fbb27d15d843616e0dff489f9f6be48e70db4f4b36baf2c90d5e784da507cded",
+  "report_bytes": 460800,
+  "probe_wire_bytes": 4462080,
+  "data_wire_bytes": 19920000,
+  "reports_dropped": 0,
+  "sent_packets": 83000,
+  "report_cost_basis": "separate serialized modeled channel; not shared data-plane congestion",
+  "wall_seconds": 9.31575059890747
+}

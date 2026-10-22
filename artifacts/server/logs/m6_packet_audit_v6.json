@@ -1,0 +1,722 @@
+[
+  {
+    "name": "m6_packet_v4_disabled_l0",
+    "status": "complete",
+    "clock_offset_drift_ns": 39,
+    "clock_bracket_width_ns": [
+      2114,
+      2255
+    ],
+    "observer_first_positive_ms": null,
+    "sender": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3383.702329,
+      "capture_last_packet_from_fault_ms": 3457.637671,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 27141,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 611,
+      "first_data_after_fault_ms": 24.327671,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "42012 packets captured",
+        "43379 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3383.685329,
+      "capture_last_packet_from_fault_ms": 3457.651671,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 27141,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 611,
+      "first_data_after_fault_ms": 24.336671,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "42012 packets captured",
+        "43379 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v4_disabled_l0p5",
+    "status": "complete",
+    "clock_offset_drift_ns": 636,
+    "clock_bracket_width_ns": [
+      2715,
+      1843
+    ],
+    "observer_first_positive_ms": 1268.286139,
+    "sender": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3379.321788,
+      "capture_last_packet_from_fault_ms": 4186.261212,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 29866,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 603,
+      "first_data_after_fault_ms": 26.495212,
+      "first_gap_ms": 1253.629212,
+      "first_gap_duration_ms": 55.018,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "45904 packets captured",
+        "47258 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3379.309788,
+      "capture_last_packet_from_fault_ms": 4186.273212,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 29866,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 603,
+      "first_data_after_fault_ms": 26.504212,
+      "first_gap_ms": 1253.666212,
+      "first_gap_duration_ms": 54.984,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "45903 packets captured",
+        "47257 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v4_disabled_l1",
+    "status": "complete",
+    "clock_offset_drift_ns": 4053,
+    "clock_bracket_width_ns": [
+      9738,
+      1894
+    ],
+    "observer_first_positive_ms": 136.421898,
+    "sender": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3377.609708,
+      "capture_last_packet_from_fault_ms": 3256.626292,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 24486,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 656,
+      "first_data_after_fault_ms": 20.257292,
+      "first_gap_ms": 125.154292,
+      "first_gap_duration_ms": 65.162,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "37794 packets captured",
+        "39149 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3377.595708,
+      "capture_last_packet_from_fault_ms": 3256.635292,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 24486,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 656,
+      "first_data_after_fault_ms": 20.266292,
+      "first_gap_ms": 125.157292,
+      "first_gap_duration_ms": 65.161,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "37794 packets captured",
+        "39149 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v4_disabled_l2",
+    "status": "complete",
+    "clock_offset_drift_ns": 732,
+    "clock_bracket_width_ns": [
+      2795,
+      1392
+    ],
+    "observer_first_positive_ms": 82.45655,
+    "sender": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3370.395667,
+      "capture_last_packet_from_fault_ms": 3249.159333,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 21743,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 627,
+      "first_data_after_fault_ms": 22.028333,
+      "first_gap_ms": 64.911333,
+      "first_gap_duration_ms": 62.497,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "33749 packets captured",
+        "35106 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3370.382667,
+      "capture_last_packet_from_fault_ms": 3249.165333,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 21743,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 627,
+      "first_data_after_fault_ms": 22.034333,
+      "first_gap_ms": 64.913333,
+      "first_gap_duration_ms": 62.496,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "33749 packets captured",
+        "35106 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v4_original_l0",
+    "status": "complete",
+    "clock_offset_drift_ns": -115,
+    "clock_bracket_width_ns": [
+      1262,
+      2094
+    ],
+    "observer_first_positive_ms": null,
+    "sender": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3424.911825,
+      "capture_last_packet_from_fault_ms": 3562.964175,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 2504,
+      "ip_length_max": 37700,
+      "ip_length_median": 18876.0,
+      "ip_lengths_above_mtu1500": 2396,
+      "data_packets_first100ms": 55,
+      "first_data_after_fault_ms": 25.519175,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "4971 packets captured",
+        "5640 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3424.894825,
+      "capture_last_packet_from_fault_ms": 3562.967175,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 2504,
+      "ip_length_max": 37700,
+      "ip_length_median": 18876.0,
+      "ip_lengths_above_mtu1500": 2396,
+      "data_packets_first100ms": 55,
+      "first_data_after_fault_ms": 25.529175,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "4971 packets captured",
+        "5641 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v4_original_l0p5",
+    "status": "complete",
+    "clock_offset_drift_ns": 105,
+    "clock_bracket_width_ns": [
+      1724,
+      2254
+    ],
+    "observer_first_positive_ms": 781.514599,
+    "sender": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3368.911188,
+      "capture_last_packet_from_fault_ms": 3547.281812,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 2889,
+      "ip_length_max": 37700,
+      "ip_length_median": 17428,
+      "ip_lengths_above_mtu1500": 2741,
+      "data_packets_first100ms": 62,
+      "first_data_after_fault_ms": 17.223812,
+      "first_gap_ms": 772.944812,
+      "first_gap_duration_ms": 77.64,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "5692 packets captured",
+        "6669 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3368.892188,
+      "capture_last_packet_from_fault_ms": 3547.287812,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 2889,
+      "ip_length_max": 37700,
+      "ip_length_median": 17428,
+      "ip_lengths_above_mtu1500": 2741,
+      "data_packets_first100ms": 62,
+      "first_data_after_fault_ms": 17.230812,
+      "first_gap_ms": 772.947812,
+      "first_gap_duration_ms": 77.64,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "5692 packets captured",
+        "6669 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v4_original_l1",
+    "status": "complete",
+    "clock_offset_drift_ns": 865,
+    "clock_bracket_width_ns": [
+      2946,
+      1873
+    ],
+    "observer_first_positive_ms": 88.186995,
+    "sender": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3404.24871,
+      "capture_last_packet_from_fault_ms": 3584.51629,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 3099,
+      "ip_length_max": 37700,
+      "ip_length_median": 13084,
+      "ip_lengths_above_mtu1500": 2884,
+      "data_packets_first100ms": 61,
+      "first_data_after_fault_ms": 19.56029,
+      "first_gap_ms": 77.81829,
+      "first_gap_duration_ms": 62.378,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "6036 packets captured",
+        "6873 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3404.23071,
+      "capture_last_packet_from_fault_ms": 3584.51929,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 3099,
+      "ip_length_max": 37700,
+      "ip_length_median": 13084,
+      "ip_lengths_above_mtu1500": 2884,
+      "data_packets_first100ms": 61,
+      "first_data_after_fault_ms": 19.66329,
+      "first_gap_ms": 77.82229,
+      "first_gap_duration_ms": 62.377,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "6036 packets captured",
+        "6873 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v4_original_l2",
+    "status": "complete",
+    "clock_offset_drift_ns": 30,
+    "clock_bracket_width_ns": [
+      1563,
+      1502
+    ],
+    "observer_first_positive_ms": 200.388448,
+    "sender": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3417.26984,
+      "capture_last_packet_from_fault_ms": 3598.90716,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 2882,
+      "ip_length_max": 37700,
+      "ip_length_median": 10188.0,
+      "ip_lengths_above_mtu1500": 2662,
+      "data_packets_first100ms": 56,
+      "first_data_after_fault_ms": 22.54916,
+      "first_gap_ms": 189.95016,
+      "first_gap_duration_ms": 7.917,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "5621 packets captured",
+        "6759 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "switch": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3417.25984,
+      "capture_last_packet_from_fault_ms": 3598.91616,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 2882,
+      "ip_length_max": 37700,
+      "ip_length_median": 10188.0,
+      "ip_lengths_above_mtu1500": 2662,
+      "data_packets_first100ms": 56,
+      "first_data_after_fault_ms": 22.55816,
+      "first_gap_ms": 189.95316,
+      "first_gap_duration_ms": 7.92,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "5621 packets captured",
+        "6759 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v5_disabled_l0",
+    "status": "complete",
+    "clock_offset_drift_ns": 581,
+    "clock_bracket_width_ns": [
+      3226,
+      1803
+    ],
+    "observer_first_positive_ms": null,
+    "sender": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3389.225073,
+      "capture_last_packet_from_fault_ms": 3444.301927,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 27097,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 791,
+      "first_data_after_fault_ms": 3.944927,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "42032 packets captured",
+        "43395 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "receiver": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3388.174073,
+      "capture_last_packet_from_fault_ms": 3445.280927,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 27090,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 761,
+      "first_data_after_fault_ms": 4.996927,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "42033 packets captured",
+        "43397 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "ifb": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3389.206073,
+      "capture_last_packet_from_fault_ms": 3394.188927,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 26685,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 791,
+      "first_data_after_fault_ms": 3.961927,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "26688 packets captured",
+        "27904 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v5_disabled_l0p5",
+    "status": "complete",
+    "clock_offset_drift_ns": 25,
+    "clock_bracket_width_ns": [
+      1954,
+      2344
+    ],
+    "observer_first_positive_ms": 22.328417,
+    "sender": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3384.77976,
+      "capture_last_packet_from_fault_ms": 4065.92924,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": 52.64924,
+      "data_packets": 23558,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 785,
+      "first_data_after_fault_ms": 4.92324,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": 52.64924,
+      "capture_stats": [
+        "36465 packets captured",
+        "37819 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "receiver": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3383.72276,
+      "capture_last_packet_from_fault_ms": 4080.39924,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 23541,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 761,
+      "first_data_after_fault_ms": 6.00424,
+      "first_gap_ms": 10.58224,
+      "first_gap_duration_ms": 44.557,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "36472 packets captured",
+        "37827 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "ifb": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3384.76076,
+      "capture_last_packet_from_fault_ms": 3895.27324,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 23045,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 778,
+      "first_data_after_fault_ms": 4.96024,
+      "first_gap_ms": 8.12124,
+      "first_gap_duration_ms": 44.529,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "23049 packets captured",
+        "24263 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v5_disabled_l1",
+    "status": "complete",
+    "clock_offset_drift_ns": 250,
+    "clock_bracket_width_ns": [
+      1994,
+      2134
+    ],
+    "observer_first_positive_ms": 22.384452,
+    "sender": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3408.504527,
+      "capture_last_packet_from_fault_ms": 3780.428473,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": 54.463473,
+      "data_packets": 20861,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 798,
+      "first_data_after_fault_ms": 3.343473,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": 54.463473,
+      "capture_stats": [
+        "32409 packets captured",
+        "33761 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "receiver": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3407.470527,
+      "capture_last_packet_from_fault_ms": 3821.453473,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 20834,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 770,
+      "first_data_after_fault_ms": 4.377473,
+      "first_gap_ms": 10.862473,
+      "first_gap_duration_ms": 46.455,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "32417 packets captured",
+        "33772 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "ifb": {
+      "startup_syn_connections": 1,
+      "capture_first_packet_from_fault_ms": -3408.493527,
+      "capture_last_packet_from_fault_ms": 3596.517473,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 20527,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 786,
+      "first_data_after_fault_ms": 3.357473,
+      "first_gap_ms": 9.672473,
+      "first_gap_duration_ms": 44.793,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "20530 packets captured",
+        "21746 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  },
+  {
+    "name": "m6_packet_v5_disabled_l2",
+    "status": "complete",
+    "clock_offset_drift_ns": -365,
+    "clock_bracket_width_ns": [
+      1823,
+      2274
+    ],
+    "observer_first_positive_ms": 19.675272,
+    "sender": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3410.639352,
+      "capture_last_packet_from_fault_ms": 3535.793648,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": 49.899648,
+      "data_packets": 19082,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 787,
+      "first_data_after_fault_ms": 4.692648,
+      "first_gap_ms": null,
+      "first_gap_duration_ms": null,
+      "first_repeated_sequence_ms": 49.899648,
+      "capture_stats": [
+        "29689 packets captured",
+        "31045 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "receiver": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3409.585352,
+      "capture_last_packet_from_fault_ms": 3580.282648,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 19047,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 758,
+      "first_data_after_fault_ms": 5.762648,
+      "first_gap_ms": 9.197648,
+      "first_gap_duration_ms": 43.266,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "29704 packets captured",
+        "31060 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "ifb": {
+      "startup_syn_connections": 2,
+      "capture_first_packet_from_fault_ms": -3410.610352,
+      "capture_last_packet_from_fault_ms": 3665.965648,
+      "first100ms_covered": true,
+      "first_overlapping_sequence_ms": null,
+      "data_packets": 19158,
+      "ip_length_max": 1500,
+      "ip_length_median": 1500.0,
+      "ip_lengths_above_mtu1500": 0,
+      "data_packets_first100ms": 768,
+      "first_data_after_fault_ms": 4.719648,
+      "first_gap_ms": 7.917648,
+      "first_gap_duration_ms": 41.987,
+      "first_repeated_sequence_ms": null,
+      "capture_stats": [
+        "19162 packets captured",
+        "20375 packets received by filter",
+        "0 packets dropped by kernel"
+      ]
+    },
+    "diagnostic_valid": true
+  }
+]

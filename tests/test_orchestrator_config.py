@@ -53,6 +53,37 @@ def valid_active_active_config():
 
 
 class ConfigValidationTest(unittest.TestCase):
+    def test_tcp_loss_candidate_is_opt_in_and_requires_fast_sampling_without_recovery(self):
+        config = valid_config()
+        self.assertFalse(validate_config(config)["tcp_loss_detector"])
+        self.assertEqual(validate_config(config)["tcp_delivery_interval_s"], 0)
+        for invalid in (-1, float("nan"), float("inf")):
+            config["tcp_delivery_interval_s"] = invalid
+            with self.assertRaises(ValueError):
+                validate_config(config)
+        config.update(tcp_loss_detector=True)
+        for invalid in (0, 0.006):
+            config["tcp_delivery_interval_s"] = invalid
+            with self.assertRaises(ValueError):
+                validate_config(config)
+        config["tcp_delivery_interval_s"] = 0.005
+        self.assertTrue(validate_config(config)["tcp_loss_detector"])
+        config = valid_active_active_config()
+        config.update(tcp_loss_detector=True, tcp_delivery_interval_s=0.005)
+        with self.assertRaisesRegex(ValueError, "before recovery"):
+            validate_config(config)
+
+    def test_retransmission_observation_is_opt_in_and_interval_is_finite(self):
+        self.assertEqual(validate_config(valid_config())["tcp_retrans_interval_s"], 0)
+        config = valid_config()
+        config["tcp_retrans_interval_s"] = 0.02
+        self.assertEqual(validate_config(config)["tcp_retrans_interval_s"], 0.02)
+        for invalid in (-0.01, float("nan"), float("inf")):
+            with self.subTest(invalid=invalid):
+                config["tcp_retrans_interval_s"] = invalid
+                with self.assertRaises(ValueError):
+                    validate_config(config)
+
     def test_active_active_matrix(self):
         config_dir = ROOT / "configs" / "active_active_v1"
         paths = sorted(config_dir.glob("*.json"))

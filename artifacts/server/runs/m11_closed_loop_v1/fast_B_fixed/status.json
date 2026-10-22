@@ -1,0 +1,84 @@
+{
+  "id": "fast_B_fixed",
+  "status": "PASS",
+  "command": [
+    "docker",
+    "--host",
+    "unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m11-fast_B_fixed",
+    "--cpus=4",
+    "--memory=4g",
+    "-e",
+    "AS_SEND_LAT=3",
+    "-e",
+    "AS_PXN_ENABLE=0",
+    "-e",
+    "AS_NVLS_ENABLE=0",
+    "-e",
+    "LD_LIBRARY_PATH=/work/m11_backend/simulation/build/lib",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-w",
+    "/work/runs/m11_closed_loop_v1/fast_B_fixed",
+    "limer-simai-cpu:2026-10-10",
+    "/work/m11_backend/simulation/build/scratch/ns3.36.1-LimerClosedLoopReplay-debug",
+    "topology.txt",
+    "SimAI.conf",
+    "graph.txt",
+    "trace.jsonl",
+    "controls.txt",
+    "observer.txt",
+    "rate_events.txt",
+    "progress.jsonl",
+    "off",
+    "releases.txt"
+  ],
+  "exit_code": 0,
+  "observation": {
+    "reports": 5368,
+    "modeled_report_bytes": 515328,
+    "alarms": [],
+    "acked_bytes": 264241152,
+    "final_path_bytes": {
+      "0": 33030144,
+      "1": 33030144,
+      "2": 786432,
+      "3": 33030144,
+      "4": 33030144,
+      "5": 33030144,
+      "6": 65273856,
+      "7": 33030144
+    }
+  },
+  "execution": {
+    "flows": 336,
+    "dependency_edges": 664,
+    "changed_flows": 41,
+    "activated_versions": 1,
+    "control_bytes": 768,
+    "makespan_ns": 1339484856
+  },
+  "policies": [],
+  "requests": [
+    {
+      "version": 1,
+      "request_ns": 0,
+      "affected_rank": 2,
+      "unavailable_rank": -1
+    }
+  ],
+  "science": {
+    "candidate_detection_scored": false,
+    "eligible": true,
+    "delay_ms": null,
+    "timely": false,
+    "miss": true,
+    "other_or_pre_event_alarms": []
+  },
+  "trace_sha256": "f9da7e6236497cae3a201abcfe2e5aa6e29ba27dab52a95a98bd030c6231385e",
+  "progress_sha256": "d04b477032965817e66fd8017c326b0f90885489b6b261cc8bb08d5bc4779ed5",
+  "wall_seconds": 3.346412939019501
+}

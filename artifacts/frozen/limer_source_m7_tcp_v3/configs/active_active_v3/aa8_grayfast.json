@@ -1,0 +1,28 @@
+{
+    "condition": "C3",
+    "topology": "dual",
+    "chunk_bytes": 2097152,
+    "warmup_rounds": 1,
+    "baseline_rounds": 2,
+    "post_fault_rounds": 21,
+    "fault_rate_mbit": 20.0,
+    "fault_loss_pct": 0.0,
+    "detector": true,
+    "recovery": true,
+    "oracle": false,
+    "transient_ms": 0,
+    "experiment_family": "active_active_v1",
+    "scenario_id": "AA8_GRAYFAST",
+    "routing_policy": "balanced_active_active",
+    "recovery_policy": "localized",
+    "detector_rule": "burst",
+    "host_gate": "step_cutover",
+    "min_slow_steps": 1,
+    "fault_scope": {
+        "rank": 2,
+        "fabric": "A",
+        "direction": "egress"
+    },
+    "what_changes": "The gray rate-cap fault now flows through the fast path: one slow step completing while the switch-side burst symptom is still active confirms mid-round, and the localized plan commits at a step boundary with the in-flight degraded send aborted and redone on Fabric B, instead of waiting for the round boundary.",
+    "expected": "Switch suspicion lands within 200 ms of the fault, recovered-plan progress resumes within 1 s of detection, only worker 2's three baseline-A slots move, checksum and version errors stay zero, and the twenty-round post-recovery retention median stays at or above 0.9."
+}

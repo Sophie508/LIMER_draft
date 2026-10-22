@@ -1,0 +1,7 @@
+condition	registered	capacityMbps	kind	lossRate	observationEndMs	offeredMbps	probePps	probeTargetPps	probeWireBytes	reportCopies	reportDelayMs	reportLoss	reportRateMbps	runId_max	runId_min	scenario
+high_reorder40	10	10000	control	0.005	600	1000	0	25000	1500	3	1	0	10	72039	72030	reorder40
+high_nominal	10	10000	control	0.005	600	1000	0	25000	1500	3	1	0	10	72009	72000	nominal
+high_processing40	10	10000	control	0.005	600	1000	0	25000	1500	3	1	0	10	72059	72050	processing40
+high_sparse_reorder40	10	10000	control	0.005	600	1000	0	25000	1500	3	1	0	10	72049	72040	sparse_reorder40
+high_congestion	10	10000	control	0.005	600	1000	0	25000	1500	3	1	0	10	72029	72020	congestion
+high_pause	10	10000	control	0.005	600	1000	0	25000	1500	3	1	0	10	72019	72010	pause

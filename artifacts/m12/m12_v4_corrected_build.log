@@ -1,0 +1,17 @@
+Scanning dependencies of target scratch_LimerHybridObservation
+[  0%] Building CXX object scratch/CMakeFiles/scratch_LimerHybridObservation.dir/LimerHybridObservation.cc.o
+In file included from [01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/include/ns3/point-to-point-module.h:8[m[K,
+                 from [01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/LimerHybridObservation.cc:5[m[K:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/include/ns3/sim-setting.h:[m[K In member function ‘[01m[Kvoid SimSetting::Serialize(FILE*)[m[K’:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/include/ns3/sim-setting.h:19:14:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kj[m[K’ set but not used [[01;35m[K-Wunused-but-set-variable[m[K]
+   19 |    for (auto [01;35m[Kj[m[K : i.second)
+      |              [01;35m[K^[m[K
+In file included from [01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/LimerHybridObservation.cc:14[m[K:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/batch_deficit_observer.h:[m[K In member function ‘[01m[Kvoid NativeDeficitObserver::advance(int64_t)[m[K’:
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/batch_deficit_observer.h:31:5:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kif[m[K’ clause does not guard... [[01;35m[K-Wmisleading-indentation[m[K]
+   31 |     [01;35m[Kif[m[K (arrival<now) throw std::runtime_error("Regressing observer time"); now=arrival;
+      |     [01;35m[K^~[m[K
+[01m[K/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/scratch/batch_deficit_observer.h:31:76:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kif[m[K’
+   31 |     if (arrival<now) throw std::runtime_error("Regressing observer time"); [01;36m[Know[m[K=arrival;
+      |                                                                            [01;36m[K^~~[m[K
+[  0%] Linking CXX executable ../../build/scratch/ns3.36.1-LimerHybridObservation-debug

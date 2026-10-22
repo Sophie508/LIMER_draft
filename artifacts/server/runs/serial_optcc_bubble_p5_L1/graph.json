@@ -1,0 +1,2529 @@
+{
+  "mode": "optcc_independent_reconstruction",
+  "p": 5,
+  "k": 4,
+  "L": "1",
+  "N": 5242880,
+  "control_bytes": 20,
+  "section_bytes": "262144",
+  "dependency_events": {
+    "send": 152,
+    "recv": 147
+  },
+  "outgoing_bytes": {
+    "0": {
+      "data": 8388608,
+      "control": 200
+    },
+    "1": {
+      "data": 8388608,
+      "control": 200
+    },
+    "2": {
+      "data": 8388608,
+      "control": 180
+    },
+    "3": {
+      "data": 8388608,
+      "control": 180
+    },
+    "4": {
+      "data": 8388608,
+      "control": 380
+    }
+  },
+  "flows": [
+    {
+      "id": 1,
+      "src": 0,
+      "dst": 1,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 2,
+      "src": 0,
+      "dst": 4,
+      "type": "bub_up",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        1,
+        101
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 3,
+      "src": 0,
+      "dst": 1,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        2,
+        14,
+        140
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 4,
+      "src": 0,
+      "dst": 1,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        3,
+        15
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 5,
+      "src": 1,
+      "dst": 2,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 6,
+      "src": 1,
+      "dst": 2,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        1,
+        5
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 7,
+      "src": 1,
+      "dst": 4,
+      "type": "bub_up",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        6,
+        102
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 8,
+      "src": 1,
+      "dst": 2,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        3,
+        7,
+        141
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 9,
+      "src": 2,
+      "dst": 3,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 10,
+      "src": 2,
+      "dst": 3,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        5,
+        9
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 11,
+      "src": 2,
+      "dst": 3,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        6,
+        10
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 12,
+      "src": 2,
+      "dst": 4,
+      "type": "bub_up",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        11,
+        103
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 13,
+      "src": 3,
+      "dst": 4,
+      "type": "bub_up",
+      "body": 0,
+      "chain": -1,
+      "deps": [],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 14,
+      "src": 3,
+      "dst": 0,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        13,
+        139
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 15,
+      "src": 3,
+      "dst": 0,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        9,
+        14
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 16,
+      "src": 3,
+      "dst": 0,
+      "type": "A1",
+      "body": 0,
+      "chain": 0,
+      "deps": [
+        10,
+        15
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 17,
+      "src": 4,
+      "dst": 0,
+      "type": "B2dn",
+      "body": 0,
+      "chain": 1,
+      "deps": [],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 18,
+      "src": 4,
+      "dst": 1,
+      "type": "B2dn",
+      "body": 0,
+      "chain": 1,
+      "deps": [
+        17,
+        120
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 19,
+      "src": 4,
+      "dst": 2,
+      "type": "B2dn",
+      "body": 0,
+      "chain": 1,
+      "deps": [
+        18,
+        121
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 20,
+      "src": 4,
+      "dst": 3,
+      "type": "B2dn",
+      "body": 0,
+      "chain": 1,
+      "deps": [
+        19,
+        122
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 21,
+      "src": 0,
+      "dst": 1,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        4,
+        17
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 22,
+      "src": 0,
+      "dst": 4,
+      "type": "A2up",
+      "body": 1,
+      "chain": 0,
+      "deps": [
+        16,
+        21,
+        105
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 23,
+      "src": 0,
+      "dst": 1,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        22,
+        34,
+        144
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 24,
+      "src": 0,
+      "dst": 1,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        23,
+        35
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 25,
+      "src": 1,
+      "dst": 2,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        8,
+        18
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 26,
+      "src": 1,
+      "dst": 2,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        21,
+        25
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 27,
+      "src": 1,
+      "dst": 4,
+      "type": "A2up",
+      "body": 1,
+      "chain": 0,
+      "deps": [
+        4,
+        26,
+        106
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 28,
+      "src": 1,
+      "dst": 2,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        23,
+        27,
+        145
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 29,
+      "src": 2,
+      "dst": 3,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        12,
+        19,
+        142
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 30,
+      "src": 2,
+      "dst": 3,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        25,
+        29
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 31,
+      "src": 2,
+      "dst": 3,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        26,
+        30
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 32,
+      "src": 2,
+      "dst": 4,
+      "type": "A2up",
+      "body": 1,
+      "chain": 0,
+      "deps": [
+        8,
+        31,
+        107
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 33,
+      "src": 3,
+      "dst": 4,
+      "type": "A2up",
+      "body": 1,
+      "chain": 0,
+      "deps": [
+        11,
+        16,
+        104
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 34,
+      "src": 3,
+      "dst": 0,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        20,
+        33,
+        143
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 35,
+      "src": 3,
+      "dst": 0,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        29,
+        34
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 36,
+      "src": 3,
+      "dst": 0,
+      "type": "C1B1",
+      "body": 1,
+      "chain": 2,
+      "deps": [
+        30,
+        35
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 37,
+      "src": 4,
+      "dst": 0,
+      "type": "D2dn",
+      "body": 1,
+      "chain": 3,
+      "deps": [
+        12,
+        20,
+        123
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 38,
+      "src": 4,
+      "dst": 1,
+      "type": "D2dn",
+      "body": 1,
+      "chain": 3,
+      "deps": [
+        37,
+        124
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 39,
+      "src": 4,
+      "dst": 2,
+      "type": "D2dn",
+      "body": 1,
+      "chain": 3,
+      "deps": [
+        38,
+        125
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 40,
+      "src": 4,
+      "dst": 3,
+      "type": "D2dn",
+      "body": 1,
+      "chain": 3,
+      "deps": [
+        39,
+        126
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 41,
+      "src": 0,
+      "dst": 1,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        24,
+        36,
+        37
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 42,
+      "src": 0,
+      "dst": 4,
+      "type": "C2up",
+      "body": 2,
+      "chain": 2,
+      "deps": [
+        36,
+        41,
+        109
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 43,
+      "src": 0,
+      "dst": 1,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        42,
+        54,
+        148
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 44,
+      "src": 0,
+      "dst": 1,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        43,
+        55
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 45,
+      "src": 1,
+      "dst": 2,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        24,
+        28,
+        38
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 46,
+      "src": 1,
+      "dst": 2,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        41,
+        45
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 47,
+      "src": 1,
+      "dst": 4,
+      "type": "C2up",
+      "body": 2,
+      "chain": 2,
+      "deps": [
+        24,
+        46,
+        110
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 48,
+      "src": 1,
+      "dst": 2,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        43,
+        47,
+        149
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 49,
+      "src": 2,
+      "dst": 3,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        28,
+        32,
+        39,
+        146
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 50,
+      "src": 2,
+      "dst": 3,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        45,
+        49
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 51,
+      "src": 2,
+      "dst": 3,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        46,
+        50
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 52,
+      "src": 2,
+      "dst": 4,
+      "type": "C2up",
+      "body": 2,
+      "chain": 2,
+      "deps": [
+        28,
+        51,
+        111
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 53,
+      "src": 3,
+      "dst": 4,
+      "type": "C2up",
+      "body": 2,
+      "chain": 2,
+      "deps": [
+        31,
+        36,
+        108
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 54,
+      "src": 3,
+      "dst": 0,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        31,
+        40,
+        53,
+        147
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 55,
+      "src": 3,
+      "dst": 0,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        49,
+        54
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 56,
+      "src": 3,
+      "dst": 0,
+      "type": "D1B3",
+      "body": 2,
+      "chain": 3,
+      "deps": [
+        50,
+        55
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 57,
+      "src": 4,
+      "dst": 0,
+      "type": "A2dn",
+      "body": 2,
+      "chain": 0,
+      "deps": [
+        22,
+        40,
+        127
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 58,
+      "src": 4,
+      "dst": 1,
+      "type": "A2dn",
+      "body": 2,
+      "chain": 0,
+      "deps": [
+        27,
+        57,
+        128
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 59,
+      "src": 4,
+      "dst": 2,
+      "type": "A2dn",
+      "body": 2,
+      "chain": 0,
+      "deps": [
+        32,
+        58,
+        129
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 60,
+      "src": 4,
+      "dst": 3,
+      "type": "A2dn",
+      "body": 2,
+      "chain": 0,
+      "deps": [
+        33,
+        59,
+        130
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 61,
+      "src": 0,
+      "dst": 1,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        44,
+        56,
+        57
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 62,
+      "src": 0,
+      "dst": 4,
+      "type": "B2up",
+      "body": 3,
+      "chain": 1,
+      "deps": [
+        56,
+        61,
+        113
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 63,
+      "src": 0,
+      "dst": 1,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        62,
+        74,
+        152
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 64,
+      "src": 0,
+      "dst": 1,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        63,
+        75
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 65,
+      "src": 1,
+      "dst": 2,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        44,
+        48,
+        58
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 66,
+      "src": 1,
+      "dst": 2,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        61,
+        65
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 67,
+      "src": 1,
+      "dst": 4,
+      "type": "B2up",
+      "body": 3,
+      "chain": 1,
+      "deps": [
+        44,
+        66,
+        114
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 68,
+      "src": 1,
+      "dst": 2,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        63,
+        67,
+        153
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 69,
+      "src": 2,
+      "dst": 3,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        48,
+        52,
+        59,
+        150
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 70,
+      "src": 2,
+      "dst": 3,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        65,
+        69
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 71,
+      "src": 2,
+      "dst": 3,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        66,
+        70
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 72,
+      "src": 2,
+      "dst": 4,
+      "type": "B2up",
+      "body": 3,
+      "chain": 1,
+      "deps": [
+        48,
+        71,
+        115
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 73,
+      "src": 3,
+      "dst": 4,
+      "type": "B2up",
+      "body": 3,
+      "chain": 1,
+      "deps": [
+        51,
+        56,
+        112
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 74,
+      "src": 3,
+      "dst": 0,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        51,
+        60,
+        73,
+        151
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 75,
+      "src": 3,
+      "dst": 0,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        69,
+        74
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 76,
+      "src": 3,
+      "dst": 0,
+      "type": "D3A3",
+      "body": 3,
+      "chain": 3,
+      "deps": [
+        70,
+        75
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 77,
+      "src": 4,
+      "dst": 0,
+      "type": "C2dn",
+      "body": 3,
+      "chain": 2,
+      "deps": [
+        42,
+        60,
+        131
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 78,
+      "src": 4,
+      "dst": 1,
+      "type": "C2dn",
+      "body": 3,
+      "chain": 2,
+      "deps": [
+        47,
+        77,
+        132
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 79,
+      "src": 4,
+      "dst": 2,
+      "type": "C2dn",
+      "body": 3,
+      "chain": 2,
+      "deps": [
+        52,
+        78,
+        133
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 80,
+      "src": 4,
+      "dst": 3,
+      "type": "C2dn",
+      "body": 3,
+      "chain": 2,
+      "deps": [
+        53,
+        79,
+        134
+      ],
+      "bytes": 524288,
+      "exact_bytes": "524288",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 81,
+      "src": 0,
+      "dst": 1,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        64,
+        77
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 82,
+      "src": 0,
+      "dst": 4,
+      "type": "D2up",
+      "body": 4,
+      "chain": 3,
+      "deps": [
+        76,
+        81,
+        117
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 83,
+      "src": 0,
+      "dst": 1,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        82,
+        94,
+        156
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 84,
+      "src": 0,
+      "dst": 1,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        83,
+        95
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 85,
+      "src": 1,
+      "dst": 2,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        68,
+        78
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 86,
+      "src": 1,
+      "dst": 2,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        81,
+        85
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 87,
+      "src": 1,
+      "dst": 4,
+      "type": "D2up",
+      "body": 4,
+      "chain": 3,
+      "deps": [
+        64,
+        86,
+        118
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 88,
+      "src": 1,
+      "dst": 2,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        83,
+        87,
+        157
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 89,
+      "src": 2,
+      "dst": 3,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        72,
+        79,
+        154
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 90,
+      "src": 2,
+      "dst": 3,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        85,
+        89
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 91,
+      "src": 2,
+      "dst": 3,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        86,
+        90
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 92,
+      "src": 2,
+      "dst": 4,
+      "type": "D2up",
+      "body": 4,
+      "chain": 3,
+      "deps": [
+        68,
+        91,
+        119
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 93,
+      "src": 3,
+      "dst": 4,
+      "type": "D2up",
+      "body": 4,
+      "chain": 3,
+      "deps": [
+        71,
+        76,
+        116
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 94,
+      "src": 3,
+      "dst": 0,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        80,
+        93,
+        155
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 95,
+      "src": 3,
+      "dst": 0,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        89,
+        94
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 96,
+      "src": 3,
+      "dst": 0,
+      "type": "C3",
+      "body": 4,
+      "chain": 2,
+      "deps": [
+        90,
+        95
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 97,
+      "src": 4,
+      "dst": 0,
+      "type": "bub_dn",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        72,
+        80,
+        135
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 98,
+      "src": 4,
+      "dst": 1,
+      "type": "bub_dn",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        97,
+        136
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 99,
+      "src": 4,
+      "dst": 2,
+      "type": "bub_dn",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        98,
+        137
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 100,
+      "src": 4,
+      "dst": 3,
+      "type": "bub_dn",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        99,
+        138
+      ],
+      "bytes": 262144,
+      "exact_bytes": "262144",
+      "rounding_error": "0",
+      "control": false
+    },
+    {
+      "id": 101,
+      "src": 3,
+      "dst": 0,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        13
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 102,
+      "src": 0,
+      "dst": 1,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        2
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 103,
+      "src": 1,
+      "dst": 2,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        7
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 104,
+      "src": 2,
+      "dst": 3,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        12
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 105,
+      "src": 3,
+      "dst": 0,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        33
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 106,
+      "src": 0,
+      "dst": 1,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        22
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 107,
+      "src": 1,
+      "dst": 2,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        27
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 108,
+      "src": 2,
+      "dst": 3,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        32
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 109,
+      "src": 3,
+      "dst": 0,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        53
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 110,
+      "src": 0,
+      "dst": 1,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        42
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 111,
+      "src": 1,
+      "dst": 2,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        47
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 112,
+      "src": 2,
+      "dst": 3,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        52
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 113,
+      "src": 3,
+      "dst": 0,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        73
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 114,
+      "src": 0,
+      "dst": 1,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        62
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 115,
+      "src": 1,
+      "dst": 2,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        67
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 116,
+      "src": 2,
+      "dst": 3,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        72
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 117,
+      "src": 3,
+      "dst": 0,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        93
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 118,
+      "src": 0,
+      "dst": 1,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        82
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 119,
+      "src": 1,
+      "dst": 2,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        87
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 120,
+      "src": 0,
+      "dst": 4,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        1
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 121,
+      "src": 1,
+      "dst": 4,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        6
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 122,
+      "src": 2,
+      "dst": 4,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        11
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 123,
+      "src": 3,
+      "dst": 4,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        16
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 124,
+      "src": 0,
+      "dst": 4,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        21
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 125,
+      "src": 1,
+      "dst": 4,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        26
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 126,
+      "src": 2,
+      "dst": 4,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        31
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 127,
+      "src": 3,
+      "dst": 4,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        36
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 128,
+      "src": 0,
+      "dst": 4,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        41
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 129,
+      "src": 1,
+      "dst": 4,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        46
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 130,
+      "src": 2,
+      "dst": 4,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        51
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 131,
+      "src": 3,
+      "dst": 4,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        56
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 132,
+      "src": 0,
+      "dst": 4,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        61
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 133,
+      "src": 1,
+      "dst": 4,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        66
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 134,
+      "src": 2,
+      "dst": 4,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        71
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 135,
+      "src": 3,
+      "dst": 4,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        76
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 136,
+      "src": 0,
+      "dst": 4,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        81
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 137,
+      "src": 1,
+      "dst": 4,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        86
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 138,
+      "src": 2,
+      "dst": 4,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        91
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 139,
+      "src": 4,
+      "dst": 3,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        17
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 140,
+      "src": 4,
+      "dst": 0,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        18
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 141,
+      "src": 4,
+      "dst": 1,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        19
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 142,
+      "src": 4,
+      "dst": 2,
+      "type": "sync",
+      "body": 0,
+      "chain": -1,
+      "deps": [
+        20
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 143,
+      "src": 4,
+      "dst": 3,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        37
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 144,
+      "src": 4,
+      "dst": 0,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        38
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 145,
+      "src": 4,
+      "dst": 1,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        39
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 146,
+      "src": 4,
+      "dst": 2,
+      "type": "sync",
+      "body": 1,
+      "chain": -1,
+      "deps": [
+        40
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 147,
+      "src": 4,
+      "dst": 3,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        57
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 148,
+      "src": 4,
+      "dst": 0,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        58
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 149,
+      "src": 4,
+      "dst": 1,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        59
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 150,
+      "src": 4,
+      "dst": 2,
+      "type": "sync",
+      "body": 2,
+      "chain": -1,
+      "deps": [
+        60
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 151,
+      "src": 4,
+      "dst": 3,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        77
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 152,
+      "src": 4,
+      "dst": 0,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        78
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 153,
+      "src": 4,
+      "dst": 1,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        79
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 154,
+      "src": 4,
+      "dst": 2,
+      "type": "sync",
+      "body": 3,
+      "chain": -1,
+      "deps": [
+        80
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 155,
+      "src": 4,
+      "dst": 3,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        97
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 156,
+      "src": 4,
+      "dst": 0,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        98
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    },
+    {
+      "id": 157,
+      "src": 4,
+      "dst": 1,
+      "type": "sync",
+      "body": 4,
+      "chain": -1,
+      "deps": [
+        99
+      ],
+      "bytes": 20,
+      "exact_bytes": "20",
+      "rounding_error": "0",
+      "control": true
+    }
+  ]
+}

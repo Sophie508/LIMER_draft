@@ -1,0 +1,36 @@
+{
+  "name": "dual_a50_switch",
+  "ranks": 4,
+  "GPUs_per_server": "not a physical GPU model",
+  "switches": 2,
+  "healthy_Gbps": 200,
+  "last_rank_Gbps": 200,
+  "propagation_ns": 500,
+  "slowdown": 1,
+  "MTU": 9000,
+  "CC_MODE": 1,
+  "AS_SEND_LAT_us": 3,
+  "AS_PXN_ENABLE": 0,
+  "AS_NVLS_ENABLE": 0,
+  "packet_loss": 0,
+  "hashes": {
+    "flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "SimAI.conf": "f25d7827179d4e165883278061790ada176cbad9bd565e0dbf814559defa907f",
+    "trace_nodes.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "topology.txt": "6fbb46c60a93735bc7f6b2afbccf1533ed42a9a734d64079c63b780d80e54af8",
+    "graph.txt": "8d3baeadaaede93e2497a2121eacffbf38d832f64a818e313e7d66be3009e3b0",
+    "graph.json": "41a3ec9d0fa166ed262ff3143a3218e52391bcd62e107c765124b31435e5e2e2"
+  },
+  "logical_ranks": 4,
+  "physical_network_endpoints": 8,
+  "endpoint_representation": "two network endpoint placeholders per logical rank",
+  "fault_rank": 3,
+  "last_A_Gbps": 100,
+  "last_B_Gbps": 200,
+  "route_policy": "static_localized_switch",
+  "plane_payload_bytes": {
+    "0": 7077888,
+    "1": 11796480
+  },
+  "detection_coordination_cost_modeled": false
+}

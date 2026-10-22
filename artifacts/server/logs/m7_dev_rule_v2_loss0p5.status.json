@@ -1,0 +1,114 @@
+{
+  "name": "m7_dev_rule_v2_loss0p5",
+  "config": "configs/m7_development_rule_v2/loss0p5.json",
+  "command": [
+    "docker",
+    "--host=unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-m7_dev_rule_v2_loss0p5",
+    "--privileged",
+    "--cpus=4",
+    "--memory=4g",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/limer_source_m7_tcp_v2:/work",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime:/runtime",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/mininet_results:/results",
+    "limer-mininet-diagnostic:2026-10-10",
+    "bash",
+    "/runtime/mininet_entry.sh",
+    "python3",
+    "/runtime/m7_tcp_wrapper_ingress_v3.py",
+    "--config",
+    "configs/m7_development_rule_v2/loss0p5.json",
+    "--results-dir",
+    "/results",
+    "--workdir",
+    "/work",
+    "--run-id",
+    "m7_dev_rule_v2_loss0p5"
+  ],
+  "start_unix": 1791617113.9314466,
+  "image_id": "sha256:f4e2c4b035a76dd44ab1eea827464976ad3caf9210800e832c8169ea939ded2a",
+  "hashes": {
+    "configs/m7_development_rule_v2/loss0p5.json": "e46bfc2c8e7488efe3bbd7901eae3ada68ef66ec6b8043aaaeffc309b2ba3758",
+    "limer_v0/worker.py": "dc7a49718a116014f86b93efce04189aa3481f1521fcfea729ffe54c2b3cbe3c",
+    "limer_v0/orchestrator.py": "0a5123c2555cf2333a4a8579b90c681dce99d296d20ce5336e9a9a396018c487",
+    "limer_v0/tcp_loss.py": "fe2d56f45f3fad9679b11d59414281b779a2ca669771df59d7646eb472c0026b"
+  },
+  "wrapper_sha256": "4b71770a223eea221c3d83fccb84858d08a21d6c1a4dc456521fd839c412216b",
+  "randomness": "uncontrolled kernel netem draws; independent unpaired lifecycles",
+  "exit_code": 1,
+  "wall_seconds": 15.488821029663086,
+  "summary": {
+    "condition": "C2",
+    "error": "latency timestamp order is negative",
+    "error_type": "ValueError",
+    "experiment_family": "active_active_v1",
+    "run_id": "m7_dev_rule_v2_loss0p5",
+    "scenario_id": "AA13_LOSSFAST",
+    "status": "failed"
+  },
+  "correctness": {
+    "active_active_use": {
+      "baseline_send_bytes": {
+        "A": 50331648,
+        "B": 50331648
+      },
+      "baseline_send_steps": {
+        "A": 24,
+        "B": 24
+      },
+      "passed": true,
+      "required": true
+    },
+    "checksum_errors": 0,
+    "expected_collective_rounds": 7,
+    "limitation": "This checks framed byte transport and route-version agreement; it is not the deferred true-reduction correctness mode.",
+    "locality": {
+      "changed_sender_ranks": [],
+      "changed_slot_count": 0,
+      "changed_slots": [],
+      "mode": "none",
+      "passed": null,
+      "required": false,
+      "unchanged_sender_ranks": []
+    },
+    "mode": "framed-transport-integrity",
+    "observed_collective_rounds": 7,
+    "observed_worker_rounds": 28,
+    "plan_consistency": {
+      "passed": true,
+      "worker_round_cardinality": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1
+      }
+    },
+    "route_version_cardinality": {
+      "0": 1,
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1
+    },
+    "schedule_conformance": {
+      "failure_count": 0,
+      "failures": [],
+      "passed": true
+    },
+    "status": "pass",
+    "version_errors": 0,
+    "worker_error_count": 0,
+    "worker_errors": []
+  }
+}

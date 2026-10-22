@@ -1,0 +1,130 @@
+{
+  "verified": true,
+  "registered": 9,
+  "completed_workloads": 8,
+  "expected_invalid_input_rejections": 1,
+  "rows": [
+    {
+      "id": "ring_no_control",
+      "trace_records": 72,
+      "activation_ns": [],
+      "execution_end_ns": 221994,
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 0,
+      "activated_versions": 0,
+      "control_bytes": 0,
+      "makespan_ns": 221994
+    },
+    {
+      "id": "ring_pending_switch",
+      "trace_records": 98,
+      "activation_ns": [
+        13145
+      ],
+      "execution_end_ns": 222678,
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 2,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 222678
+    },
+    {
+      "id": "ring_slow_control",
+      "trace_records": 98,
+      "activation_ns": [
+        759609
+      ],
+      "execution_end_ns": 759609,
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 0,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 221994
+    },
+    {
+      "id": "ring_missing_ready",
+      "trace_records": 88,
+      "activation_ns": [],
+      "execution_end_ns": 1005000,
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 0,
+      "activated_versions": 0,
+      "control_bytes": 448,
+      "makespan_ns": 221994
+    },
+    {
+      "id": "ring_two_versions",
+      "trace_records": 124,
+      "activation_ns": [
+        13145,
+        88145
+      ],
+      "execution_end_ns": 223352,
+      "flows": 24,
+      "dependency_edges": 40,
+      "changed_flows": 4,
+      "activated_versions": 2,
+      "control_bytes": 1536,
+      "makespan_ns": 223352
+    },
+    {
+      "id": "reject_nonconsecutive_version",
+      "expected_rejection": true
+    },
+    {
+      "id": "same_source_chain",
+      "trace_records": 32,
+      "activation_ns": [
+        13145
+      ],
+      "execution_end_ns": 50265,
+      "flows": 2,
+      "dependency_edges": 1,
+      "changed_flows": 1,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 50265
+    },
+    {
+      "id": "destination_chain",
+      "trace_records": 32,
+      "activation_ns": [
+        13145
+      ],
+      "execution_end_ns": 52551,
+      "flows": 2,
+      "dependency_edges": 1,
+      "changed_flows": 1,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 52551
+    },
+    {
+      "id": "unequal_join",
+      "trace_records": 38,
+      "activation_ns": [
+        13145
+      ],
+      "execution_end_ns": 58321,
+      "flows": 4,
+      "dependency_edges": 4,
+      "changed_flows": 1,
+      "activated_versions": 1,
+      "control_bytes": 768,
+      "makespan_ns": 58321
+    }
+  ],
+  "hashes": {
+    "binary": "313581e37c0a71b82c6005d23bc4fb8cbff5d0bf5697a189888fe90a12258ea2",
+    "cpp": "2ab5b3431a6ab831fd934c0b38897dafdddc384d432c51147e2a68014c3625df",
+    "runner": "96c2ad27fe96597364a4d1529e0a6d327356e224e9918bc4232187371f22e8ca",
+    "auditor": "9bf2f6c511530df3506d09ee452106573fee4c056c4e0c6a157cbd8511d672ec",
+    "input_builder": "2f789d3cc1171fba4d7e326055462e8f6396b21222eeb01b4c98d963fc3fc6e1",
+    "graph_builder": "3bedfd944559b093c2002b69a4c04c6bc3ba385513e81537ee2ed63f6f58553c"
+  },
+  "library_count": 39
+}

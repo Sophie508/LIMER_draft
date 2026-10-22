@@ -1,0 +1,67 @@
+{
+  "groups": {
+    "low_selective": {
+      "kind": "fault",
+      "registered": 1,
+      "verified": 1,
+      "timely": 0,
+      "late": 1,
+      "missed_or_unverified": 0,
+      "p95_ms": 138.246252,
+      "timely_wilson95": [
+        0,
+        0.7934506856227626
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        138.246252
+      ]
+    },
+    "low_nominal": {
+      "kind": "control",
+      "registered": 1,
+      "verified": 1,
+      "timely": null,
+      "late": null,
+      "missed_or_unverified": null,
+      "p95_ms": null,
+      "timely_wilson95": null,
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": []
+    },
+    "low_processing80": {
+      "kind": "fault",
+      "registered": 1,
+      "verified": 1,
+      "timely": 1,
+      "late": 0,
+      "missed_or_unverified": 0,
+      "p95_ms": 45.825045,
+      "timely_wilson95": [
+        0.20654931437723745,
+        1
+      ],
+      "false_alarm_runs": 0,
+      "false_alarm_events": 0,
+      "unknown_batches": 0,
+      "invalid_batches": 0,
+      "delays_ms": [
+        45.825045
+      ]
+    }
+  },
+  "registered": 3,
+  "terminal": 3,
+  "strict_verdict": "FAIL",
+  "primary_faults": 2,
+  "timely_faults": 1,
+  "verified_control_trials": 1,
+  "claim": "Class-separated causal UDP/application observations and charged probes/reports; not collective recovery",
+  "per_condition_95_verdict": "FAIL"
+}

@@ -1,0 +1,36 @@
+{
+  "actual_topology": "four ranks, two planes, 1 Gb/s; runtime directed events",
+  "case": {
+    "id": "brief_slow",
+    "events": [
+      [
+        50000000,
+        2,
+        200000000
+      ],
+      [
+        52000000,
+        2,
+        1000000000
+      ]
+    ],
+    "eligible": false
+  },
+  "model": {
+    "period_ns": 2000000,
+    "capacity_bps": 10000000,
+    "propagation_ns": 1000000,
+    "launch_delay_ns": 3000
+  },
+  "hashes": {
+    "controls.txt": "87ff42506f3112bc29fe69c408d6cbdeac15dbd8d8efa8082dcd89f8efd8228c",
+    "flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "observer.txt": "9966e40f1e418735412bd75795314e7ef078a591b411a3d07670d405be6daaff",
+    "SimAI.conf": "1c159854314704f1c392f3f8d4caf42efd35b541c92f666f60b80ec693505784",
+    "graph.txt": "9a2a7ecc86e53eb327ef1d89b31290149a9090a70fd160a3008aaacf2a5b16ec",
+    "graph.json": "e5d4a8087c243f43845448fa269b11cca3083116c9b54fedde17d3963f62703a",
+    "rate_events.txt": "ce4c8e40f28af25159527d376fa17bc05662af99822d6142478b43f0a1d92d35",
+    "trace_nodes.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "topology.txt": "711ee5a96d992b3591b2a384e8e793b29e6d033bc9b6068f9ca8114ea72dde63"
+  }
+}

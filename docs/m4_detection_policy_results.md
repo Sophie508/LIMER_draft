@@ -1,5 +1,16 @@
 # M4 results: loss-fault detectability and the switch/stay policy
 
+> **Diagnosis update (2026-10-10):** The numerical results and failed run below
+> remain preserved. The historical explanation that a resend was dropped twice
+> is not established by the packet evidence. A send-side abort can abandon a
+> still-running receive thread and redo can create a second reader of the same
+> stream. Two deterministic regressions reproduce this bug, consistent with the
+> failed trace. The M5 patch retains receive ownership; fresh Mininet validation
+> is pending. See `m5_cutover_prereg.md` and `m5_related_work_audit.md`. Also treat
+> "information limit" below as an empirical observer-specific explanation,
+> not a proved universal bound, and "zero false positives" as an observation
+> on the recorded pre-fault windows, not a deployment guarantee.
+
 Two campaigns closing the gaps left open by the M3a cost curve: (a) can
 the existing detector *see* loss-type gray faults at all, and (b) a first
 non-learned switch/stay policy that uses the measured cost structure.

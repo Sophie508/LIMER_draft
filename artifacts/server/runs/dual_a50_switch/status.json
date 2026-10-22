@@ -1,0 +1,41 @@
+{
+  "name": "dual_a50_switch",
+  "command": [
+    "docker",
+    "--host=unix:///run/user/1005/limer-docker/docker.sock",
+    "run",
+    "--rm",
+    "--name",
+    "limer-dual_a50_switch",
+    "--cpus=4",
+    "--memory=8g",
+    "-e",
+    "AS_SEND_LAT=3",
+    "-e",
+    "AS_PXN_ENABLE=0",
+    "-e",
+    "AS_NVLS_ENABLE=0",
+    "-v",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10:/work",
+    "-w",
+    "/work/runs/dual_a50_switch",
+    "limer-simai-cpu:2026-10-10",
+    "/work/baselines/SimAI-official/astra-sim-alibabacloud/extern/network_backend/ns3-interface/simulation/build/scratch/ns3.36.1-LimerDualPlaneReplay-debug",
+    "topology.txt",
+    "SimAI.conf",
+    "graph.txt",
+    "trace.jsonl"
+  ],
+  "start_unix": 1791612313.886979,
+  "binary_sha256": "155e22b3d603262fe7f2c41a76fbf0f450d75b26e8a8be7e7cb2823c34063256",
+  "exit_code": 0,
+  "wall_seconds": 0.7190203666687012,
+  "trace_check": {
+    "nodes": 24,
+    "events": 72,
+    "dependency_edges": 40,
+    "makespan_ns": 305282,
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

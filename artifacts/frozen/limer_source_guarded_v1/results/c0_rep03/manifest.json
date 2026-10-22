@@ -1,0 +1,262 @@
+{
+  "config": {
+    "baseline_rounds": 2,
+    "chunk_bytes": 2097152,
+    "condition": "C0",
+    "detector": false,
+    "expected": "The post-marker throughput distribution remains close to the pre-marker baseline, all ports stay UP, and no checksum or version error occurs.",
+    "fault_loss_pct": 0.0,
+    "fault_rate_mbit": 20.0,
+    "oracle": false,
+    "post_fault_rounds": 3,
+    "recovery": false,
+    "topology": "single",
+    "transient_ms": 0,
+    "warmup_rounds": 1,
+    "what_changes": "No fault is injected; all access links remain healthy. The worker-side injector interface and its switch-facing peer are recorded as distinct observation points."
+  },
+  "detector_execution_boundary": {
+    "claim_boundary": "Demonstrates a switch-counter-first interface and closed-loop control scaffold; does not satisfy the final switch-hardware placement or ASIC resource-footprint requirement.",
+    "data_source": "switch-facing Linux interface counters",
+    "process_placement": "orchestrator/root namespace management-plane proxy",
+    "resource_budget_enforced": false,
+    "switch_resident": false
+  },
+  "expected": "The post-marker throughput distribution remains close to the pre-marker baseline, all ports stay UP, and no checksum or version error occurs.",
+  "finished_at_utc": "2026-07-14T04:26:02.878751+00:00",
+  "finished_t_monotonic_ns": 310452848859600,
+  "host": {
+    "hostname": "experiment",
+    "platform": "Linux-6.12.94+deb13-amd64-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, Jun 13 2026, 14:18:01) [GCC 14.2.0]"
+  },
+  "run_id": "c0_rep03",
+  "schema_version": "limer-cpu-v0.1",
+  "started_at_utc": "2026-07-14T04:25:53.272352+00:00",
+  "started_t_monotonic_ns": 310443242477546,
+  "status": "complete",
+  "topology": {
+    "base_profile": {
+      "delay_ms": 1.0,
+      "loss_pct": 0.0,
+      "rate_mbit": 100.0
+    },
+    "detector_interface": "sA-eth3",
+    "fabrics": [
+      "A"
+    ],
+    "fault_interface": "w2-eth0",
+    "fault_observation_isolation": {
+      "detector_location": "peer switch-facing interface counters",
+      "detector_reads_injector_qdisc": false,
+      "injector_location": "worker-side egress qdisc",
+      "observed_signal": "switch-port RX byte rate while operstate stays up",
+      "same_interface": false
+    },
+    "fault_rank": 2,
+    "fault_route": "A",
+    "kind": "single",
+    "ping_attempts": 4,
+    "ping_successes": 4,
+    "profile_records": [
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth1",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth1",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth1",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 310444504876418,
+          "tx_bytes": 180,
+          "tx_dropped": 0,
+          "tx_packets": 2
+        },
+        "t_after_ns": 310444504876418,
+        "t_before_ns": 310444503194324
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth2",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth2",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth2",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 310444510852971,
+          "tx_bytes": 180,
+          "tx_dropped": 0,
+          "tx_packets": 2
+        },
+        "t_after_ns": 310444510852971,
+        "t_before_ns": 310444509485489
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth3",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth3",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth3",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 310444516698863,
+          "tx_bytes": 180,
+          "tx_dropped": 0,
+          "tx_packets": 2
+        },
+        "t_after_ns": 310444516698863,
+        "t_before_ns": 310444515165569
+      },
+      {
+        "command": [
+          "tc",
+          "qdisc",
+          "replace",
+          "dev",
+          "sA-eth4",
+          "root",
+          "handle",
+          "1:",
+          "netem",
+          "limit",
+          "1000",
+          "delay",
+          "1.0ms",
+          "rate",
+          "100.0mbit"
+        ],
+        "interface": "sA-eth4",
+        "operstate": "up",
+        "profile": {
+          "delay_ms": 1.0,
+          "limit_packets": 1000,
+          "loss_pct": 0.0,
+          "rate_mbit": 100.0
+        },
+        "sample": {
+          "backlog_bytes": 0,
+          "bytes": 0,
+          "drops": 0,
+          "interface": "sA-eth4",
+          "kind": "netem",
+          "overlimits": 0,
+          "packets": 0,
+          "qlen": 0,
+          "requeues": 0,
+          "rx_bytes": 200,
+          "rx_dropped": 0,
+          "rx_packets": 2,
+          "t_ns": 310444522447143,
+          "tx_bytes": 180,
+          "tx_dropped": 0,
+          "tx_packets": 2
+        },
+        "t_after_ns": 310444522447143,
+        "t_before_ns": 310444521035590
+      }
+    ]
+  },
+  "what_changes": "No fault is injected; all access links remain healthy. The worker-side injector interface and its switch-facing peer are recorded as distinct observation points.",
+  "workload": {
+    "bytes_per_rank_per_round": 12582912,
+    "chunk_bytes_per_step_per_rank": 2097152,
+    "metric_denominator": "sum of application payload bytes reported sent by all ranks in a fully completed round, divided by the slowest rank duration; this is an aggregate wire-volume proxy, not unique tensor bytes",
+    "name": "framed-ring-AllReduce-like",
+    "retry_accounting": "TCP retransmissions are below the application counter and do not increase bytes_completed; an incomplete rank makes the run fail",
+    "steps_per_round": 6,
+    "world_size": 4
+  }
+}

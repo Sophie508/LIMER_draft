@@ -1,0 +1,6 @@
+{
+  "stage": "m13",
+  "binary": "/home/suliu/scratch/LIMER_HANDOFF_VERIFY_2026-10-22/workspace/m13e_backend/simulation/build/scratch/ns3.36.1-LimerBusinessObservation-debug",
+  "sha256": "7beea34fc5a98870dd90150f8628142b19c4a9f7ae208dfd97f85834e8df78d8",
+  "source_sha256": "1ad1b00fe542db4d688ae4de597c6893662337d45c42d888fcfaa75ddd9bb1b5"
+}

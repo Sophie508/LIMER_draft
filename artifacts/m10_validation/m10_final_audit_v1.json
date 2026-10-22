@@ -1,0 +1,180 @@
+{
+  "verified": true,
+  "stage": "m10",
+  "tag": "v1",
+  "registered": 4,
+  "source_inputs_reports_verified": true,
+  "binary_verified": true,
+  "library_count": 39,
+  "rows": [
+    {
+      "id": "healthy",
+      "trace_records": 216,
+      "execution_end_ns": 117409600,
+      "execution": {
+        "flows": 72,
+        "dependency_edges": 136,
+        "changed_flows": 0,
+        "activated_versions": 0,
+        "control_bytes": 0,
+        "makespan_ns": 115315920
+      },
+      "observation": {
+        "reports": 472,
+        "modeled_report_bytes": 30208,
+        "alarms": [],
+        "acked_bytes": 56623104,
+        "final_path_bytes": {
+          "0": 7077888,
+          "1": 7077888,
+          "2": 7077888,
+          "3": 7077888,
+          "4": 7077888,
+          "5": 7077888,
+          "6": 7077888,
+          "7": 7077888
+        }
+      },
+      "science": {
+        "eligible": false,
+        "control_alarms": []
+      }
+    },
+    {
+      "id": "persistent_slow",
+      "trace_records": 216,
+      "execution_end_ns": 245409600,
+      "execution": {
+        "flows": 72,
+        "dependency_edges": 136,
+        "changed_flows": 0,
+        "activated_versions": 0,
+        "control_bytes": 0,
+        "makespan_ns": 242287568
+      },
+      "observation": {
+        "reports": 984,
+        "modeled_report_bytes": 62976,
+        "alarms": [
+          {
+            "path": 2,
+            "decision_ns": 59153600
+          }
+        ],
+        "acked_bytes": 56623104,
+        "final_path_bytes": {
+          "0": 7077888,
+          "1": 7077888,
+          "2": 7077888,
+          "3": 7077888,
+          "4": 7077888,
+          "5": 7077888,
+          "6": 7077888,
+          "7": 7077888
+        }
+      },
+      "science": {
+        "eligible": true,
+        "delay_ms": 9.1536,
+        "timely": true,
+        "miss": false,
+        "other_or_pre_event_alarms": []
+      }
+    },
+    {
+      "id": "brief_slow",
+      "trace_records": 216,
+      "execution_end_ns": 143409600,
+      "execution": {
+        "flows": 72,
+        "dependency_edges": 136,
+        "changed_flows": 0,
+        "activated_versions": 0,
+        "control_bytes": 0,
+        "makespan_ns": 140734416
+      },
+      "observation": {
+        "reports": 576,
+        "modeled_report_bytes": 36864,
+        "alarms": [
+          {
+            "path": 2,
+            "decision_ns": 59153600
+          }
+        ],
+        "acked_bytes": 56623104,
+        "final_path_bytes": {
+          "0": 7077888,
+          "1": 7077888,
+          "2": 7077888,
+          "3": 7077888,
+          "4": 7077888,
+          "5": 7077888,
+          "6": 7077888,
+          "7": 7077888
+        }
+      },
+      "science": {
+        "eligible": false,
+        "control_alarms": [
+          {
+            "path": 2,
+            "decision_ns": 59153600
+          }
+        ]
+      }
+    },
+    {
+      "id": "delayed_reports",
+      "trace_records": 216,
+      "execution_end_ns": 364409600,
+      "execution": {
+        "flows": 72,
+        "dependency_edges": 136,
+        "changed_flows": 0,
+        "activated_versions": 0,
+        "control_bytes": 0,
+        "makespan_ns": 242287568
+      },
+      "observation": {
+        "reports": 984,
+        "modeled_report_bytes": 62976,
+        "alarms": [
+          {
+            "path": 2,
+            "decision_ns": 178153600
+          }
+        ],
+        "acked_bytes": 56623104,
+        "final_path_bytes": {
+          "0": 7077888,
+          "1": 7077888,
+          "2": 7077888,
+          "3": 7077888,
+          "4": 7077888,
+          "5": 7077888,
+          "6": 7077888,
+          "7": 7077888
+        }
+      },
+      "science": {
+        "eligible": true,
+        "delay_ms": 128.1536,
+        "timely": false,
+        "miss": false,
+        "other_or_pre_event_alarms": []
+      }
+    }
+  ],
+  "binary_sha256": "6c7e9eb285e6c7d36cf5cb12b592356f6380535b345bf96549193985deec032f",
+  "source_hashes": {
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m10_source/simulation/LimerProgressDagReplay.cc": "e09b0e96c64e5daba5251668220c81f1b172ec1dfa7367a67854da3dbddcf402",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m10_source/simulation/ack_progress_observer.h": "1f597f726568c2cb83883c21f17c4288206311edacafb8977b167e046d9ebe36",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m10_source/simulation/audit_progress_reports.py": "567a84f54fa238409b8a7bb68823343a02706f18722050cc2146bea3b9aec734",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m10_source/simulation/audit_dynamic_dag.py": "9bf2f6c511530df3506d09ee452106573fee4c056c4e0c6a157cbd8511d672ec",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m10_source/simulation/run_progress_development.py": "ac5397de409ce0eadd4cc0ab19f913663eb0034f9cac89501047b2a3f1293aa9",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/m10_source/limer_v0/ack_progress.py": "987e52ea29bf10d3052230f315fe1804245dd5f18c2af8da78e622fae0ed5b30",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime/make_inputs.py": "2f789d3cc1171fba4d7e326055462e8f6396b21222eeb01b4c98d963fc3fc6e1",
+    "/home/suliu/scratch/LIMER_WORK_2026-10-10/baselines/simai_runtime/dag_tools.py": "3bedfd944559b093c2002b69a4c04c6bc3ba385513e81537ee2ed63f6f58553c"
+  }
+}
