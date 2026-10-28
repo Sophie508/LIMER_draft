@@ -1,0 +1,16 @@
+{
+  "source_files_byte_identical": 3897,
+  "collaborator_relative_changed_files": 45,
+  "current_tests_passed": 142,
+  "archive_members_verified": true,
+  "extracted_main_verified": 580,
+  "extracted_loss_verified": 60,
+  "retained_failed_validation": {
+    "registered": 580,
+    "verified": 530,
+    "infrastructure_errors": 50
+  },
+  "regenerated_report_identical": true,
+  "scope": "Compact experiment evidence; raw packet archives remain on otakotak.",
+  "commit_or_push_performed": false
+}

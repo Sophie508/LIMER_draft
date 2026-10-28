@@ -1,0 +1,15 @@
+{
+  "filesystems": {
+    "/dev/mapper/snowman--scratch--vg-scratch": {
+      "used_kib": 169553884,
+      "soft_quota_kib": 169869312,
+      "below_soft_quota": true
+    },
+    "/dev/mapper/ubuntu--vg-snowman--home": {
+      "used_kib": 140977224,
+      "soft_quota_kib": 141557760,
+      "below_soft_quota": true
+    }
+  },
+  "scope": "Home and scratch rebalanced; all valid scientific archives retained on otakotak; research/data quota unchanged."
+}

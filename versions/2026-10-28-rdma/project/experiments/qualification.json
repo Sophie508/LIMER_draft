@@ -1,0 +1,111 @@
+{
+  "schema": "limer-campaign-v1",
+  "name": "qualification",
+  "cases": [
+    {
+      "name": "healthy-G00",
+      "family": "healthy",
+      "method": "G00",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 1,
+        "chunks_per_phase": 16,
+        "fault_ns": 5000000,
+        "horizon_ns": 100000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "healthy-G10",
+      "family": "healthy",
+      "method": "G10",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 1,
+        "chunks_per_phase": 16,
+        "fault_ns": 5000000,
+        "horizon_ns": 100000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "healthy-G01",
+      "family": "healthy",
+      "method": "G01",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 1,
+        "chunks_per_phase": 16,
+        "fault_ns": 5000000,
+        "horizon_ns": 100000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "healthy-G11",
+      "family": "healthy",
+      "method": "G11",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 1,
+        "chunks_per_phase": 16,
+        "fault_ns": 5000000,
+        "horizon_ns": 100000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-G01",
+      "family": "blackhole",
+      "method": "G01",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100001,
+        "node": 0,
+        "rounds": 2,
+        "chunks_per_phase": 64,
+        "fault_ns": 20000000,
+        "horizon_ns": 2500000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-G11",
+      "family": "blackhole",
+      "method": "G11",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100001,
+        "node": 0,
+        "rounds": 2,
+        "chunks_per_phase": 64,
+        "fault_ns": 20000000,
+        "horizon_ns": 2500000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-G11",
+      "family": "weak_loss",
+      "method": "G11",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 2,
+        "chunks_per_phase": 64,
+        "fault_ns": 20000000,
+        "horizon_ns": 2500000000,
+        "local_gbps": 2400
+      }
+    }
+  ]
+}

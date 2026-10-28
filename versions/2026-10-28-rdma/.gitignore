@@ -1,0 +1,6 @@
+# Keep compact evidence archives; expanded data stays local.
+!evidence/*.tar.gz
+/project/research_evidence/
+__pycache__/
+*.pyc
+*.partial

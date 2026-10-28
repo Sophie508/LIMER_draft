@@ -1,0 +1,48 @@
+{
+  "schema": "limer-research-summary-v1",
+  "phase": "validation",
+  "registered": 60,
+  "attempted": 60,
+  "primary_conditions": [
+    "weak_loss"
+  ],
+  "verified": 60,
+  "complete": true,
+  "primary_empirical_95_percent_under_100ms_met": true,
+  "healthy_controls_verified": false,
+  "healthy_false_alarm_trials": 0,
+  "groups": [
+    {
+      "condition": "weak_loss",
+      "detector": "service",
+      "arm": "benefit",
+      "registered": 60,
+      "verified": 60,
+      "classifications": {
+        "timely": 60
+      },
+      "timely_trials": 60,
+      "empirical_timely_rate": 1.0,
+      "exact_one_sided_95_lower": 0.9512970866899025,
+      "empirical_target_met": true,
+      "first_incident_timely_trials": 60,
+      "p95_all_trials_ms": 43.115947,
+      "p95_all_trials_unbounded": false,
+      "healthy_false_alarm_trials": null,
+      "verified_healthy_exposure_ms": null,
+      "completed": 60,
+      "mean_capped_ms": 231.6449360333334,
+      "invalid_or_missing": 0
+    }
+  ],
+  "paired_comparisons": [],
+  "conclusion": "Registered simulation conditions meet the empirical detection target; inspect healthy false alarms and per-condition confidence bounds separately.",
+  "scope": "16 GPUs, fixed dual-plane topology and registered traffic/fault distributions; not general grey-fault coverage",
+  "limitations": [
+    "No claim of general grey-fault coverage or GPU hardware validation.",
+    "Exact binomial bounds are per condition, not simultaneous familywise guarantees.",
+    "Capped unfinished times are lower bounds, not exact completion times; invalid attempts are cap-penalized.",
+    "Canaries continue to the registered horizon even if business work has finished.",
+    "Paired realized differences measure ex post performance; they do not prove the online estimates are optimal."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "observed_utc": "2026-10-28T07:15:48.944261+00:00",
+  "main_registered_utc": "2026-10-28T06:23:00.852986+00:00",
+  "confirmation_registered_utc": "2026-10-28T06:41:00.708060+00:00",
+  "confirmation_plan_sha256": "30c4cad6ee5fda1a90031ee01f821331e47cebca266848bdb2dd75f115072dba",
+  "confirmation_registered_before_first_main_loss_manifest": true,
+  "records": {
+    "first_main_loss_manifest": {
+      "file": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/validation-v2/runs/validation-weak_loss-service-000-no_proxy/run_manifest.json",
+      "mtime_utc": "2026-10-28T06:50:17.474541+00:00",
+      "sha256": "56ec313934f9adfca1624bb8490fb6f276a5003b789847c53f45e98cdb250458"
+    },
+    "first_main_loss_result": {
+      "file": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/validation-v2/runs/validation-weak_loss-service-000-no_proxy/result.json",
+      "mtime_utc": "2026-10-28T06:51:50.282545+00:00",
+      "sha256": "447422138c04a9285bc8254c2124f3d6a1a9d03943aaab70900d6492f24cae7a"
+    },
+    "first_confirmation_manifest": {
+      "file": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/validation-loss-independent-v4/runs/validation-weak_loss-service-000-benefit/run_manifest.json",
+      "mtime_utc": "2026-10-28T07:05:07.694585+00:00",
+      "sha256": "cbae51d6df52157c47862040d7e46231b170c8151ab6e3ac4eb7b0e9c518ae05"
+    }
+  },
+  "scope": "Registration and filesystem timing trace; not digitally signed clock evidence."
+}

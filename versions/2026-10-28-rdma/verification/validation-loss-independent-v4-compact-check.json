@@ -1,0 +1,29 @@
+{
+  "schema": "limer-research-integrity-v1",
+  "passed": true,
+  "scope": "compact-only",
+  "registered": 60,
+  "attempts_present": 60,
+  "verified_runs": 60,
+  "archive_digests_verified": 0,
+  "archive_bytes_hashed": 0,
+  "compact_files_verified": 1860,
+  "native_binary_verified": false,
+  "build_scope": "copied-descriptor-and-run-links-only",
+  "errors": [],
+  "warnings": [
+    "Raw archives were deliberately not checked. This is compact-only verification.",
+    "Original native build directory is unavailable; only its copied descriptor and run provenance links are verified."
+  ],
+  "checks": [
+    "Frozen toolchain and exact case registration",
+    "Copied build descriptor and native-binary provenance links",
+    "Retained compact evidence content hashes and result agreement",
+    "First-alarm score replay using the campaign frozen scorer"
+  ],
+  "limitations": [
+    "This does not rerun native simulation or raw packet audit.",
+    "Archived member content is not decompressed again; full mode verifies each complete archive byte digest.",
+    "Content hashes are relative to the supplied registration and are not digital signatures."
+  ]
+}

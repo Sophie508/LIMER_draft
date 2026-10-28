@@ -1,0 +1,5 @@
+Disk quotas for user suliu (uid 1005): 
+     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace
+/dev/mapper/snowman--scratch--vg-scratch 169553884  169869312 188743680         2742238  5400000 6000000        
+/dev/mapper/ubuntu--vg-snowman--home 140977224  141557760 157286400          480098  4500000 5000000        
+/dev/mapper/snowman--research--vg-research 852168576* 849346560 943718400    none 5932996  27000000 30000000        

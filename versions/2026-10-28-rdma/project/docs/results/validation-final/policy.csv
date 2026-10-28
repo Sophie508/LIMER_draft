@@ -1,0 +1,9 @@
+condition,pairs,cap_ms,valid_pairs,no_proxy_completed,no_proxy_mean_capped_ms,always_completed,always_mean_capped_ms,benefit_completed,benefit_mean_capped_ms,benefit_minus_always_mean_capped_ms,benefit_faster_than_always,benefit_slower_than_always,benefit_minus_no_proxy_mean_capped_ms,benefit_faster_than_no_proxy,benefit_slower_than_no_proxy
+blackhole,20,399.0,20,0,399.0,20,211.40725265,20,217.1612511,5.753998449999999,0,19,-181.8387489,20,0
+delay,20,399.0,20,0,399.0,20,211.0867824,20,216.47127945,5.384497050000002,0,18,-182.52872055,20,0
+no_idle_helpers,10,399.0,10,0,399.0,0,399.0,0,399.0,0.0,0,0,0.0,0,0
+quarter,20,399.0,20,20,196.41226935,20,196.41226935,20,196.41226935,0.0,0,0,0.0,0,0
+slow_proxy_1gbps,10,399.0,10,0,399.0,10,215.5344191,10,217.8441314,2.309712300000001,0,3,-181.1558686,10,0
+slow_proxy_quarter,10,799.0,10,10,389.147071,10,440.7994469,10,389.5415846,-51.25786229999999,8,0,0.3945135999999991,1,1
+transient_2ms,10,399.0,10,0,399.0,10,243.6310986,10,243.6310986,0.0,0,0,-155.3689014,10,0
+weak_loss,20,399.0,20,0,399.0,20,222.75658815,20,234.35890265,11.602314499999999,0,19,-164.64109735,20,0

@@ -1,0 +1,21 @@
+{
+  "created_utc": "2026-10-28T08:02:47.724900+00:00",
+  "scope": "Compact evidence and reports; full raw archives remain on otakotak.",
+  "files": [
+    {
+      "file": "validation-final-compact-evidence.tar.gz",
+      "bytes": 61324121,
+      "sha256": "3696d8cfa1c9d9bc1ad6eed37b63469f998ab1d72b89e1cde1e81c9f3fff3666"
+    },
+    {
+      "file": "validation-final-report.tar.gz",
+      "bytes": 219977,
+      "sha256": "7552baf265c410741d0528d197bfac31df2c51fdfd7a43fba3fd52099ae3bd02"
+    },
+    {
+      "file": "validation-v1-compact-evidence.tar.gz",
+      "bytes": 47082981,
+      "sha256": "bae4d04b0afe49b02599d30f0a0eda83c73f8e5e09af91c19fcdff0caa7ac373"
+    }
+  ]
+}

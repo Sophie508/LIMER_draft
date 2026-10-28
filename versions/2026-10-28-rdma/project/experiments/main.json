@@ -1,0 +1,696 @@
+{
+  "schema": "limer-campaign-v1",
+  "name": "main",
+  "cases": [
+    {
+      "name": "healthy-G00",
+      "family": "healthy",
+      "method": "G00",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "healthy-G10",
+      "family": "healthy",
+      "method": "G10",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "healthy-G01",
+      "family": "healthy",
+      "method": "G01",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "healthy-G11",
+      "family": "healthy",
+      "method": "G11",
+      "scene": {
+        "family": "healthy",
+        "seed": 100000,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i0-G00",
+      "family": "quarter",
+      "method": "G00",
+      "scene": {
+        "family": "quarter",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i0-G10",
+      "family": "quarter",
+      "method": "G10",
+      "scene": {
+        "family": "quarter",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i0-G01",
+      "family": "quarter",
+      "method": "G01",
+      "scene": {
+        "family": "quarter",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i0-G11",
+      "family": "quarter",
+      "method": "G11",
+      "scene": {
+        "family": "quarter",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i1-G00",
+      "family": "quarter",
+      "method": "G00",
+      "scene": {
+        "family": "quarter",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i1-G10",
+      "family": "quarter",
+      "method": "G10",
+      "scene": {
+        "family": "quarter",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i1-G01",
+      "family": "quarter",
+      "method": "G01",
+      "scene": {
+        "family": "quarter",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i1-G11",
+      "family": "quarter",
+      "method": "G11",
+      "scene": {
+        "family": "quarter",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i2-G00",
+      "family": "quarter",
+      "method": "G00",
+      "scene": {
+        "family": "quarter",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i2-G10",
+      "family": "quarter",
+      "method": "G10",
+      "scene": {
+        "family": "quarter",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i2-G01",
+      "family": "quarter",
+      "method": "G01",
+      "scene": {
+        "family": "quarter",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "quarter-i2-G11",
+      "family": "quarter",
+      "method": "G11",
+      "scene": {
+        "family": "quarter",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i0-G00",
+      "family": "weak_loss",
+      "method": "G00",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i0-G10",
+      "family": "weak_loss",
+      "method": "G10",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i0-G01",
+      "family": "weak_loss",
+      "method": "G01",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i0-G11",
+      "family": "weak_loss",
+      "method": "G11",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i1-G00",
+      "family": "weak_loss",
+      "method": "G00",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i1-G10",
+      "family": "weak_loss",
+      "method": "G10",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i1-G01",
+      "family": "weak_loss",
+      "method": "G01",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i1-G11",
+      "family": "weak_loss",
+      "method": "G11",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i2-G00",
+      "family": "weak_loss",
+      "method": "G00",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i2-G10",
+      "family": "weak_loss",
+      "method": "G10",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i2-G01",
+      "family": "weak_loss",
+      "method": "G01",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "weak_loss-i2-G11",
+      "family": "weak_loss",
+      "method": "G11",
+      "scene": {
+        "family": "weak_loss",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i0-G00",
+      "family": "blackhole",
+      "method": "G00",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i0-G10",
+      "family": "blackhole",
+      "method": "G10",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i0-G01",
+      "family": "blackhole",
+      "method": "G01",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i0-G11",
+      "family": "blackhole",
+      "method": "G11",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100012,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i1-G00",
+      "family": "blackhole",
+      "method": "G00",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i1-G10",
+      "family": "blackhole",
+      "method": "G10",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i1-G01",
+      "family": "blackhole",
+      "method": "G01",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i1-G11",
+      "family": "blackhole",
+      "method": "G11",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100013,
+        "node": 6,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 60000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i2-G00",
+      "family": "blackhole",
+      "method": "G00",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i2-G10",
+      "family": "blackhole",
+      "method": "G10",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i2-G01",
+      "family": "blackhole",
+      "method": "G01",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "blackhole-i2-G11",
+      "family": "blackhole",
+      "method": "G11",
+      "scene": {
+        "family": "blackhole",
+        "seed": 100014,
+        "node": 15,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 65000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "no_idle_helpers-G01",
+      "family": "no_idle_helpers",
+      "method": "G01",
+      "scene": {
+        "family": "no_idle_helpers",
+        "seed": 100021,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "no_idle_helpers-G11",
+      "family": "no_idle_helpers",
+      "method": "G11",
+      "scene": {
+        "family": "no_idle_helpers",
+        "seed": 100021,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "slow_local-G01",
+      "family": "slow_local",
+      "method": "G01",
+      "scene": {
+        "family": "slow_local",
+        "seed": 100021,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 100
+      }
+    },
+    {
+      "name": "slow_local-G11",
+      "family": "slow_local",
+      "method": "G11",
+      "scene": {
+        "family": "slow_local",
+        "seed": 100021,
+        "node": 0,
+        "rounds": 4,
+        "chunks_per_phase": 64,
+        "fault_ns": 55000000,
+        "horizon_ns": 5000000000,
+        "local_gbps": 100
+      }
+    },
+    {
+      "name": "short_blackhole-G01",
+      "family": "short_blackhole",
+      "method": "G01",
+      "scene": {
+        "family": "short_blackhole",
+        "seed": 100021,
+        "node": 0,
+        "rounds": 1,
+        "chunks_per_phase": 16,
+        "fault_ns": 5000000,
+        "horizon_ns": 500000000,
+        "local_gbps": 2400
+      }
+    },
+    {
+      "name": "short_blackhole-G11",
+      "family": "short_blackhole",
+      "method": "G11",
+      "scene": {
+        "family": "short_blackhole",
+        "seed": 100021,
+        "node": 0,
+        "rounds": 1,
+        "chunks_per_phase": 16,
+        "fault_ns": 5000000,
+        "horizon_ns": 500000000,
+        "local_gbps": 2400
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "overleaf_project": "https://www.overleaf.com/project/6ad9dce761ca17ea4b0e7371",
+  "source_persisted_after_reload": true,
+  "source_sha256": "f920507def1f4bd23851bd9f21cdf3c06bd4629c72a892a2b4978a94931c4d5e",
+  "pdf_sha256": "496924bce5e26b0c338985b8d53c4c526ff63f5424998508061acef4eea5fff7",
+  "pages": 14,
+  "compile_errors": 0,
+  "typesetting_issues": 0,
+  "template_warnings": 4,
+  "main_tables": {
+    "Table 1": "Detection, page 4",
+    "Table 2": "Policy comparison, page 5"
+  },
+  "failed_validation_section": "5.4",
+  "limitations_section": "6",
+  "historical_evidence": "Appendix A",
+  "git_commit_or_push": false
+}

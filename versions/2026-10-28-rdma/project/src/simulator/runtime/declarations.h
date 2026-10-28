@@ -1,0 +1,41 @@
+#pragma once
+namespace limer { namespace engine {
+static void PeerEvent(const char* name,const PeerChunk& c,uint64_t route=0);
+static uint64_t Message(const char* name,unsigned src,uint64_t route=0);
+static std::vector<std::array<unsigned,3>> Edges(const Route& r);
+static bool Capacity(const Route& r);
+static void Reserve(Route& r,bool add);
+static void Forget(uint64_t tag);
+static void Noop();
+static void Sent(Ptr<RdmaQueuePair>);
+static void Put(unsigned char*& p,uint64_t x,unsigned n);
+static uint64_t Get(const unsigned char*& p,unsigned n);
+extern "C" uint32_t limer_split_select_qp(void* opaque,uint32_t fallback);
+extern "C" uint32_t limer_peer_reverse_nic(unsigned path);
+extern "C" bool limer_joint_encode(void* opaque,unsigned char* data,unsigned size);
+extern "C" void limer_joint_wire_tx(void* opaque,unsigned sequence,unsigned size);
+extern "C" void limer_joint_receive(unsigned dst,unsigned sip,unsigned sport,unsigned sequence,unsigned bytes,const unsigned char* data,unsigned size,bool accepted);
+static void Progress(PeerChunk& c,uint64_t prefix,uint64_t route);
+extern "C" void limer_split_ack_progress(void* opaque,uint64_t);
+static void FinalAck(uint64_t id);
+static void Commit(unsigned src,unsigned p,uint64_t version);
+static void SendCommit(unsigned src,unsigned p,uint64_t v);
+static void SendReady(unsigned src,unsigned p,uint64_t v);
+static void Configure(unsigned src);
+static void HealthDone(uint64_t id);
+static void Completed(Ptr<RdmaQueuePair> q);
+static void StartLeg(uint64_t id);
+static void Launch(PeerChunk& c,bool relay);
+static bool CanLaunch(unsigned src,unsigned lane,bool relay);
+static void Pump(unsigned src);
+static void StartPhase();
+static void Tick();
+static void Alarm(int key,int64_t t,const std::string& signal);
+static void DeliverReport(BusinessObservation r);
+static void Report(unsigned key,unsigned batch,bool receive,int64_t guard);
+static void ObserveTick();
+static void ProbeTick();
+static void ServiceTick();
+static void ServiceCompleted(const Route&);
+static bool BenefitAllows(unsigned,const char*);
+}}

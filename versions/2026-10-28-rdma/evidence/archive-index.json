@@ -1,0 +1,26 @@
+[
+  {
+    "campaign": "validation-v1",
+    "path": "evidence/validation-v1.tar.gz",
+    "bytes": 46107282,
+    "sha256": "f7b5599c7fe11b42f48f6351ba561b85fa07003020e7120240adde295736b8fb",
+    "members": 20759,
+    "member_content_verified": true
+  },
+  {
+    "campaign": "validation-v2",
+    "path": "evidence/validation-v2.tar.gz",
+    "bytes": 53856181,
+    "sha256": "1ba91b2d7001ee56b5ff66256304fe12d889308c0ba12b3c31b38d0a4de954de",
+    "members": 21030,
+    "member_content_verified": true
+  },
+  {
+    "campaign": "validation-loss-independent-v4",
+    "path": "evidence/validation-loss-independent-v4.tar.gz",
+    "bytes": 6379057,
+    "sha256": "a89ac836cdcb434e718b6f0bb90d2f1d3f3a547a4ef7ab2d76d03c52aa57c865",
+    "members": 2310,
+    "member_content_verified": true
+  }
+]

@@ -1,0 +1,235 @@
+{
+  "baseline_zip_sha256": "73f6ee061855a9ea5f6a043453b51b0007dc65406b6026796225ee21be5b5549",
+  "excluded_generated": [
+    "research_evidence/",
+    "docs/results/",
+    "__pycache__/"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "before_sha256": "a50c1765181929490f8dc0d69b50c4d5fa08895ce34c03975fb4444578963373",
+      "after_sha256": "dd496aebaaf01d66e04ae9c942dc3d4c978b999a54fda99cbe6a1eeae2264211"
+    },
+    {
+      "path": "docs/research_conditions.md",
+      "before_sha256": null,
+      "after_sha256": "74f1c2f104e60e0622aa2f8297ae8f7bf96c88696a1991dd5a4ee020707f1632"
+    },
+    {
+      "path": "docs/research_failed_validation.md",
+      "before_sha256": null,
+      "after_sha256": "f57d8179b4a064efba783b3159d9dd012124eeaee3d8695932962c9979d3f869"
+    },
+    {
+      "path": "docs/research_handoff.md",
+      "before_sha256": null,
+      "after_sha256": "cdb0a8c5e5a05097eefe873825cb32ea7200735b30a40c88bc918627b5408aaf"
+    },
+    {
+      "path": "docs/research_implementation.md",
+      "before_sha256": null,
+      "after_sha256": "d72a865ec088b69e2b002b7e07031815e89bc2d550d49bcb239fbc4cb27a5234"
+    },
+    {
+      "path": "docs/research_protocol.md",
+      "before_sha256": null,
+      "after_sha256": "fc77b9f4e4ac21109467ff48b783ddd415e6aef92517a91cc94e29d0bfe406bf"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-28-detection-benefit-plan.md",
+      "before_sha256": null,
+      "after_sha256": "92fe76a2e38bc87e349b9caa92890746aebe04781ba615d76c3d941030391c6d"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-10-28-detection-benefit-design.md",
+      "before_sha256": null,
+      "after_sha256": "e100c0477db97001903954a731e25fb7149e92c20ee01c01217a8707aa4ef192"
+    },
+    {
+      "path": "experiments/development_delay.json",
+      "before_sha256": null,
+      "after_sha256": "d56b0460334e58e0eb5d856e2678d985c6737e0d38b944a8dad83b3190b2e77e"
+    },
+    {
+      "path": "python/limerlab/archive.py",
+      "before_sha256": "b27d15ed22d46be121f7ccfd66573eb4e0f58908c103e7753dce1f9484b96ef1",
+      "after_sha256": "e4da7df65634e7c5697a10c9f8fabc31b021066ce58e185fb42dd38218bf2ce3"
+    },
+    {
+      "path": "python/limerlab/audit.py",
+      "before_sha256": "a17ab37f7c75c0ae57de48568f04f9e474cb924edd8b5a88eb582aac43b66552",
+      "after_sha256": "327c8f92aaffe426a92e17d4b728750f1701d7bb9eb3c16ea8acf75f4782b52f"
+    },
+    {
+      "path": "python/limerlab/benefit_policy.py",
+      "before_sha256": null,
+      "after_sha256": "336054e44fcbfa5308e8854265427b8b5c0aecb7268d74a28bfde2e1c2931900"
+    },
+    {
+      "path": "python/limerlab/cli.py",
+      "before_sha256": "8095fc7c71af22ead09c19fc5d4771f35669854e17a840d6f078cd9a1cf87f14",
+      "after_sha256": "998a7625421b80862b4a4be0609fce16f16c7a1c5b4870983176360d4e95498d"
+    },
+    {
+      "path": "python/limerlab/config.py",
+      "before_sha256": "d7ffb4b2d1d71055a45e00cad76ffb34b0baad287d2b86b23c073959e022e310",
+      "after_sha256": "30b31780550b0aafa0c5528a8e63d2c1671b31ee705c3db08bcd8e8f0ad614b2"
+    },
+    {
+      "path": "python/limerlab/detector/service_detector.py",
+      "before_sha256": null,
+      "after_sha256": "271834ca313882fd88e15d486df844a7c5051fbd71c11763b9b7bc0c65e7f048"
+    },
+    {
+      "path": "python/limerlab/inputs.py",
+      "before_sha256": "6aa8c15449977b5ba5c71abfc0ad1c45a638e392eb65663d42a44de020d4f7d9",
+      "after_sha256": "aef443b328446ad9f4cb6bdde110e5ee518ec3bf56faa0a70c1bb60d1f3bc4c6"
+    },
+    {
+      "path": "python/limerlab/policy_replay.py",
+      "before_sha256": null,
+      "after_sha256": "3e00577618245127790da63c235df8d5aac75a321122318b2b94bf865cd30183"
+    },
+    {
+      "path": "python/limerlab/replay.py",
+      "before_sha256": "24a70210b575295e41c850da66d6f6c7c5ce603d54484998a4f5a97202edc3a1",
+      "after_sha256": "3bf77b81ce917cf286ce29026514e1afc085b7164edceabc4579cb937fa3efca"
+    },
+    {
+      "path": "python/limerlab/runner.py",
+      "before_sha256": "9b08f2941bf2cce27f8ea6a929520569618b830e55aff5a84cd024e8e5ede229",
+      "after_sha256": "a1e252e3007f4130f3bf8f922f1e16312312db8853e099c7eb79e732c12d38a5"
+    },
+    {
+      "path": "python/limerlab/service_replay.py",
+      "before_sha256": null,
+      "after_sha256": "2e713a26d825743c5d9decc4c359cc201bee2cf9f7800293976d3b7005c59db3"
+    },
+    {
+      "path": "src/simulator/detection/monitor.h",
+      "before_sha256": "44822a5b9636eec005fec87b31d51790f037f2026da6f371d812ba2b86c61690",
+      "after_sha256": "bc9243a1a2138910dbd0c6fcebe8a8328c737cec6f22caf43f2cf2b74f3a9ff6"
+    },
+    {
+      "path": "src/simulator/detection/service_detector.h",
+      "before_sha256": null,
+      "after_sha256": "49b1376296e7242196bbb0542b3226d8673fbc23a47a3eb29ad3eeacfa04f51f"
+    },
+    {
+      "path": "src/simulator/detection/spacing.h",
+      "before_sha256": null,
+      "after_sha256": "8da2908408cb1add7725ec3604a0ea06e55efa7351eb474b2f41c468f79aaff0"
+    },
+    {
+      "path": "src/simulator/experiment/faults.h",
+      "before_sha256": "6f0a0ec648d04dab5792e90d68821c213d796f6b008b00ce7588af5bb955f088",
+      "after_sha256": "35df57952a85796318c4f31a3b1c0133f8256f8d0b6ab6e9cc6e8867a0fd5b1c"
+    },
+    {
+      "path": "src/simulator/main.cc",
+      "before_sha256": "c3968e0bc349f50d4ea2c118d6f985fcafc51bd7d1cbb9a9296797eabc9e771e",
+      "after_sha256": "969f6139121af29673709f39ecadcb4c1690c3d74d1f387582b4396ae6353079"
+    },
+    {
+      "path": "src/simulator/recovery/benefit_policy.h",
+      "before_sha256": null,
+      "after_sha256": "1773716fbd8c5e130545302e6daa96723f841e4ed2524518742bfc49368ed88d"
+    },
+    {
+      "path": "src/simulator/recovery/decision.h",
+      "before_sha256": null,
+      "after_sha256": "059837bbbc8d8121f1222651d3ebe3cc48f44723bd3d3c86e0a2415b45d9cd57"
+    },
+    {
+      "path": "src/simulator/recovery/proxy.h",
+      "before_sha256": "221c910968146fef905546f14162bb134b6f5124ac612ddd2b555a22d97f67dd",
+      "after_sha256": "e973a4f785eacd6b976a845a8599196e631c65737a0917b1913fd1ecf6d753e2"
+    },
+    {
+      "path": "src/simulator/runtime/declarations.h",
+      "before_sha256": "eb2affd2bd1eab9871ef4348aa9a00b7677689a8b306b600cb6be7675a498b27",
+      "after_sha256": "ed5ee04d8ff163fa856f807032e9b170067cc25c5f7033a409347d0289681ee0"
+    },
+    {
+      "path": "src/simulator/runtime/state.h",
+      "before_sha256": "fb27bda7f2feefc1c5fe5d86128472f247a6923dc591bd566465e246af9e228b",
+      "after_sha256": "77e212afcd2b1967a87681acf2b7a4dab3fac16361910ddf91b492fbd93bc5dd"
+    },
+    {
+      "path": "src/simulator/transport/rdma.h",
+      "before_sha256": "07707cc39fe3605635e9bae47ba3103239e9bd41dd080e39ca645ed68818a93b",
+      "after_sha256": "501facec00b47434012e549680df050fcafc2e934cfd25f4bab3b351b010f3d0"
+    },
+    {
+      "path": "tests/test_benefit_policy.py",
+      "before_sha256": null,
+      "after_sha256": "8a5843d843febb58a62a90c2c34d0f875dc22c3a648dbd06f303b6fdcd7993da"
+    },
+    {
+      "path": "tests/test_health_reports.py",
+      "before_sha256": null,
+      "after_sha256": "c7d75b175cf46562c7c973cc13dd7d77a2ebeb7fbfbfa4339ebfabe42afef56c"
+    },
+    {
+      "path": "tests/test_independent_loss_plan.py",
+      "before_sha256": null,
+      "after_sha256": "866d610b4f3d115544a1fa154d02ad294579e9bcdc365d4c92332caa88edef7f"
+    },
+    {
+      "path": "tests/test_policy_replay.py",
+      "before_sha256": null,
+      "after_sha256": "6d2bbd2711eee38b7294f6e7bdc7fc9c3d33360516b9a3981a27dc2d5370ad62"
+    },
+    {
+      "path": "tests/test_research_integrity.py",
+      "before_sha256": null,
+      "after_sha256": "f0c40cac20c615f88633385e25e0f1c4e1f83c2080cec7de2d80fcff82bb7080"
+    },
+    {
+      "path": "tests/test_research_report.py",
+      "before_sha256": null,
+      "after_sha256": "f8a8a6eeeb1d68c05cdb76917966d3bfb54463803aa36f9cf31f6f8323d1d8c8"
+    },
+    {
+      "path": "tests/test_research_scoring.py",
+      "before_sha256": null,
+      "after_sha256": "c75e9eedd230450f467b20e885afec1c3cd6dbe03ebbdf06d4eda9e98684144e"
+    },
+    {
+      "path": "tests/test_service_detector.py",
+      "before_sha256": null,
+      "after_sha256": "93c0796b373477dcab44a8dcde2f6f9f30361321017a7e5bfb5d4c263fb4b064"
+    },
+    {
+      "path": "tests/test_service_replay.py",
+      "before_sha256": null,
+      "after_sha256": "d1247ea8ba9cc2dc580eb5c6f35ab49f4b854dfdf9e4a7e2ce0c3fed108d5d6f"
+    },
+    {
+      "path": "tools/dev_native_smoke.py",
+      "before_sha256": null,
+      "after_sha256": "6d27d8326a3e6575386e1fbeeaad2df6555accecd19f4b4598afc5ca01a7d860"
+    },
+    {
+      "path": "tools/register_independent_loss.py",
+      "before_sha256": null,
+      "after_sha256": "39568fb534115f339e8c10df54786a79e65b8fd8d98010137e51e643fbcaa839"
+    },
+    {
+      "path": "tools/research_campaign.py",
+      "before_sha256": null,
+      "after_sha256": "703ceca4b89f9bd1f31bd7935049d08655ac0d6edd6727c077c1a1b52867db71"
+    },
+    {
+      "path": "tools/research_report.py",
+      "before_sha256": null,
+      "after_sha256": "370be8d6aacbc1065607913834fbf5f22d023957ca27bef315380e619811d9c2"
+    },
+    {
+      "path": "tools/verify_research.py",
+      "before_sha256": null,
+      "after_sha256": "12c5c12940c65b07a4dd12d885ed1b2aa26ac5f8705a7bbf74ce2797fdbccba2"
+    }
+  ]
+}

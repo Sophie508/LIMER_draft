@@ -1,0 +1,105 @@
+{
+  "created_utc": "2026-10-28T08:16:41.820229+00:00",
+  "scope": "Infrastructure-damaged attempts only; no valid scientific raw archive moved off server.",
+  "both_locations_sha256_verified": true,
+  "files": [
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-no_idle_helpers-service-006-benefit.tar.gz",
+      "name": "validation-no_idle_helpers-service-006-benefit.tar.gz",
+      "bytes": 49738686,
+      "sha256": "4fdc018372a2b9fd626ee6e761a999b62410ba8f37b7ac491793d469912b8355",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-no_idle_helpers-service-006-benefit.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-no_idle_helpers-service-009-always.tar.gz",
+      "name": "validation-no_idle_helpers-service-009-always.tar.gz",
+      "bytes": 49808208,
+      "sha256": "73d915fbd69dda13ab4948095eadb07faeeca8d0d969124f09e8b9cd18cd879f",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-no_idle_helpers-service-009-always.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-no_idle_helpers-service-009-benefit.tar.gz",
+      "name": "validation-no_idle_helpers-service-009-benefit.tar.gz",
+      "bytes": 49808148,
+      "sha256": "79aed12d306d4f0c8a0e1d2151e6def305dd510da9819cd944ab3e447911374a",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-no_idle_helpers-service-009-benefit.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-no_idle_helpers-service-009-no_proxy.tar.gz",
+      "name": "validation-no_idle_helpers-service-009-no_proxy.tar.gz",
+      "bytes": 49808818,
+      "sha256": "93a842381a48a462fbd8020357e3a7fd79b02d5000dc418ccbce56ee1cb2f388",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-no_idle_helpers-service-009-no_proxy.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-001-benefit.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-001-benefit.tar.gz",
+      "bytes": 123515361,
+      "sha256": "678cb90b632745314f0be9430d3d4e6882b88c52511f272cfb6d2a5a9c79661d",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-001-benefit.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-002-benefit.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-002-benefit.tar.gz",
+      "bytes": 124950344,
+      "sha256": "9e79df7f1fda63b4842eac2ca1700fa7649f9d0a6d97b5c2bdace9704552bab9",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-002-benefit.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-003-always.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-003-always.tar.gz",
+      "bytes": 126281134,
+      "sha256": "efc01868d35d41801e77405848b1a54bb86d579588affc6dd8bddb03bcd24c0b",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-003-always.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-003-benefit.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-003-benefit.tar.gz",
+      "bytes": 126318803,
+      "sha256": "e6043d50373fa3ff9357f4fd59c266806c096888f83e829d6a5b4cfe32bf87b6",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-003-benefit.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-004-always.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-004-always.tar.gz",
+      "bytes": 122009853,
+      "sha256": "05766b1f3d1d90ddade72ae18ac2ece8c6f142bcc24815d0f9e130b9330a7f14",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-004-always.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-004-benefit.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-004-benefit.tar.gz",
+      "bytes": 119216673,
+      "sha256": "fe910c42141b7216b8668bb8f33abf8976a0a83beac0e0d6aaa7e3bf9ce93e5d",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-004-benefit.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-005-always.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-005-always.tar.gz",
+      "bytes": 127707991,
+      "sha256": "8040b98d92ab2991a0021b293434c255dc586f9144331983efb716ef26d8981a",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-005-always.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-005-benefit.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-005-benefit.tar.gz",
+      "bytes": 126496860,
+      "sha256": "5373193ee3c70a83089417e7c10a3c5ee82c6b191b59f0720cfa8b4a06fae051",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-005-benefit.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-006-always.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-006-always.tar.gz",
+      "bytes": 121913079,
+      "sha256": "ae6c810513ce81770e86055f3c0a4515829d119c88b75347b011e8ecd2c4ad12",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-006-always.tar.gz"
+    },
+    {
+      "source": "/home/suliu/LIMER_RESEARCH_2026-10-28/results/infrastructure_failures_2026-10-28/validation-v1/validation-slow_proxy_1gbps-service-006-benefit.tar.gz",
+      "name": "validation-slow_proxy_1gbps-service-006-benefit.tar.gz",
+      "bytes": 121948751,
+      "sha256": "2aadb41d9361749f234eadbaacba095099473fe8bbb8503ade7eb1af9c5cf172",
+      "local_backup": "/Users/sophie/Documents/LIMER_COLLAB_REVIEW_2026-10-28/infrastructure_failure_archives/validation-slow_proxy_1gbps-service-006-benefit.tar.gz"
+    }
+  ]
+}

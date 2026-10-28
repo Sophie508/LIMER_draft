@@ -1,5 +1,12 @@
 # LIMER CPU-Only Emulation Prototype
 
+> **Latest research version (2026-10-28):** Start at
+> [the RDMA detector and switching-benefit release](versions/2026-10-28-rdma/README.md).
+> It contains runnable source, collaborator-relative changes, all registered
+> conditions, 640 new compact run records, the retained failed validation,
+> results and the current paper snapshot. Earlier sections below keep their
+> historical evidence scope.
+
 > **Collaborator handoff (2026-10-22):** Start at
 > [handoff/README.md](handoff/README.md) for implemented components, registered
 > conditions, paper-to-code mappings, archived results and portable CPU/Docker

@@ -1,0 +1,518 @@
+{
+  "schema": "limer-research-report-v1",
+  "plan_sha256": "67b754bd64d590b1d66d8357f5157a9bf3b75779f25d51b872e7ac2fd6e6b5e6",
+  "frozen_aggregate_replay_checked": true,
+  "supplemental_plan_sha256": "30c4cad6ee5fda1a90031ee01f821331e47cebca266848bdb2dd75f115072dba",
+  "binary_sha256": "9c1b0fbbd1ffe87b6f4b0502e961a1f264a05f511e06497fbed7c94aae19f8b9",
+  "registered": 640,
+  "verified": 640,
+  "main_registered": 580,
+  "main_verified": 580,
+  "selected_primary_empirical_target_met": true,
+  "primary_detection": [
+    {
+      "condition": "blackhole",
+      "registered": 60,
+      "timely": 60,
+      "classifications": {
+        "timely": 60
+      },
+      "p95_ms": 8.638846,
+      "max_ms": 8.807439,
+      "exact_one_sided_95_lower": 0.9512970866899025,
+      "unique_derived_loss_stream_pairs": null,
+      "campaign": "validation-v2",
+      "invalid": 0
+    },
+    {
+      "condition": "quarter",
+      "registered": 60,
+      "timely": 60,
+      "classifications": {
+        "timely": 60
+      },
+      "p95_ms": 29.817308,
+      "max_ms": 30.017382,
+      "exact_one_sided_95_lower": 0.9512970866899025,
+      "unique_derived_loss_stream_pairs": null,
+      "campaign": "validation-v2",
+      "invalid": 0
+    },
+    {
+      "condition": "weak_loss",
+      "registered": 60,
+      "timely": 60,
+      "classifications": {
+        "timely": 60
+      },
+      "p95_ms": 43.115947,
+      "max_ms": 47.633741,
+      "exact_one_sided_95_lower": 0.9512970866899025,
+      "unique_derived_loss_stream_pairs": 60,
+      "campaign": "validation-loss-independent-v4",
+      "invalid": 0
+    },
+    {
+      "condition": "delay",
+      "registered": 60,
+      "timely": 60,
+      "classifications": {
+        "timely": 60
+      },
+      "p95_ms": 8.656175,
+      "max_ms": 8.724189,
+      "exact_one_sided_95_lower": 0.9512970866899025,
+      "unique_derived_loss_stream_pairs": null,
+      "campaign": "validation-v2",
+      "invalid": 0
+    }
+  ],
+  "boundary_detection": [
+    {
+      "condition": "no_idle_helpers",
+      "detector": "service",
+      "arm": "benefit",
+      "registered": 10,
+      "verified": 10,
+      "classifications": {
+        "timely": 10
+      },
+      "timely_trials": 10,
+      "empirical_timely_rate": 1.0,
+      "exact_one_sided_95_lower": 0.7411344491069477,
+      "empirical_target_met": true,
+      "first_incident_timely_trials": 10,
+      "p95_all_trials_ms": 8.576849,
+      "p95_all_trials_unbounded": false,
+      "healthy_false_alarm_trials": null,
+      "verified_healthy_exposure_ms": null,
+      "completed": 0,
+      "mean_capped_ms": 399.0,
+      "invalid_or_missing": 0
+    },
+    {
+      "condition": "slow_proxy_1gbps",
+      "detector": "service",
+      "arm": "benefit",
+      "registered": 10,
+      "verified": 10,
+      "classifications": {
+        "timely": 10
+      },
+      "timely_trials": 10,
+      "empirical_timely_rate": 1.0,
+      "exact_one_sided_95_lower": 0.7411344491069477,
+      "empirical_target_met": true,
+      "first_incident_timely_trials": 10,
+      "p95_all_trials_ms": 8.744984,
+      "p95_all_trials_unbounded": false,
+      "healthy_false_alarm_trials": null,
+      "verified_healthy_exposure_ms": null,
+      "completed": 10,
+      "mean_capped_ms": 217.8441314,
+      "invalid_or_missing": 0
+    },
+    {
+      "condition": "slow_proxy_quarter",
+      "detector": "service",
+      "arm": "benefit",
+      "registered": 10,
+      "verified": 10,
+      "classifications": {
+        "timely": 10
+      },
+      "timely_trials": 10,
+      "empirical_timely_rate": 1.0,
+      "exact_one_sided_95_lower": 0.7411344491069477,
+      "empirical_target_met": true,
+      "first_incident_timely_trials": 10,
+      "p95_all_trials_ms": 12.445169,
+      "p95_all_trials_unbounded": false,
+      "healthy_false_alarm_trials": null,
+      "verified_healthy_exposure_ms": null,
+      "completed": 10,
+      "mean_capped_ms": 389.54158459999996,
+      "invalid_or_missing": 0
+    },
+    {
+      "condition": "transient_2ms",
+      "detector": "service",
+      "arm": "benefit",
+      "registered": 10,
+      "verified": 10,
+      "classifications": {
+        "timely": 10
+      },
+      "timely_trials": 10,
+      "empirical_timely_rate": 1.0,
+      "exact_one_sided_95_lower": 0.7411344491069477,
+      "empirical_target_met": true,
+      "first_incident_timely_trials": 10,
+      "p95_all_trials_ms": 42.87572,
+      "p95_all_trials_unbounded": false,
+      "healthy_false_alarm_trials": null,
+      "verified_healthy_exposure_ms": null,
+      "completed": 10,
+      "mean_capped_ms": 243.6310986,
+      "invalid_or_missing": 0
+    }
+  ],
+  "paired_policy": [
+    {
+      "condition": "blackhole",
+      "pairs": 20,
+      "cap_ms": 399.0,
+      "valid_pairs": 20,
+      "no_proxy_completed": 0,
+      "no_proxy_mean_capped_ms": 399.0,
+      "always_completed": 20,
+      "always_mean_capped_ms": 211.40725265,
+      "benefit_completed": 20,
+      "benefit_mean_capped_ms": 217.1612511,
+      "benefit_minus_always_mean_capped_ms": 5.753998449999999,
+      "benefit_faster_than_always": 0,
+      "benefit_slower_than_always": 19,
+      "benefit_minus_no_proxy_mean_capped_ms": -181.8387489,
+      "benefit_faster_than_no_proxy": 20,
+      "benefit_slower_than_no_proxy": 0
+    },
+    {
+      "condition": "delay",
+      "pairs": 20,
+      "cap_ms": 399.0,
+      "valid_pairs": 20,
+      "no_proxy_completed": 0,
+      "no_proxy_mean_capped_ms": 399.0,
+      "always_completed": 20,
+      "always_mean_capped_ms": 211.0867824,
+      "benefit_completed": 20,
+      "benefit_mean_capped_ms": 216.47127945,
+      "benefit_minus_always_mean_capped_ms": 5.384497050000002,
+      "benefit_faster_than_always": 0,
+      "benefit_slower_than_always": 18,
+      "benefit_minus_no_proxy_mean_capped_ms": -182.52872055,
+      "benefit_faster_than_no_proxy": 20,
+      "benefit_slower_than_no_proxy": 0
+    },
+    {
+      "condition": "no_idle_helpers",
+      "pairs": 10,
+      "cap_ms": 399.0,
+      "valid_pairs": 10,
+      "no_proxy_completed": 0,
+      "no_proxy_mean_capped_ms": 399.0,
+      "always_completed": 0,
+      "always_mean_capped_ms": 399.0,
+      "benefit_completed": 0,
+      "benefit_mean_capped_ms": 399.0,
+      "benefit_minus_always_mean_capped_ms": 0.0,
+      "benefit_faster_than_always": 0,
+      "benefit_slower_than_always": 0,
+      "benefit_minus_no_proxy_mean_capped_ms": 0.0,
+      "benefit_faster_than_no_proxy": 0,
+      "benefit_slower_than_no_proxy": 0
+    },
+    {
+      "condition": "quarter",
+      "pairs": 20,
+      "cap_ms": 399.0,
+      "valid_pairs": 20,
+      "no_proxy_completed": 20,
+      "no_proxy_mean_capped_ms": 196.41226935,
+      "always_completed": 20,
+      "always_mean_capped_ms": 196.41226935,
+      "benefit_completed": 20,
+      "benefit_mean_capped_ms": 196.41226935,
+      "benefit_minus_always_mean_capped_ms": 0.0,
+      "benefit_faster_than_always": 0,
+      "benefit_slower_than_always": 0,
+      "benefit_minus_no_proxy_mean_capped_ms": 0.0,
+      "benefit_faster_than_no_proxy": 0,
+      "benefit_slower_than_no_proxy": 0
+    },
+    {
+      "condition": "slow_proxy_1gbps",
+      "pairs": 10,
+      "cap_ms": 399.0,
+      "valid_pairs": 10,
+      "no_proxy_completed": 0,
+      "no_proxy_mean_capped_ms": 399.0,
+      "always_completed": 10,
+      "always_mean_capped_ms": 215.5344191,
+      "benefit_completed": 10,
+      "benefit_mean_capped_ms": 217.8441314,
+      "benefit_minus_always_mean_capped_ms": 2.309712300000001,
+      "benefit_faster_than_always": 0,
+      "benefit_slower_than_always": 3,
+      "benefit_minus_no_proxy_mean_capped_ms": -181.1558686,
+      "benefit_faster_than_no_proxy": 10,
+      "benefit_slower_than_no_proxy": 0
+    },
+    {
+      "condition": "slow_proxy_quarter",
+      "pairs": 10,
+      "cap_ms": 799.0,
+      "valid_pairs": 10,
+      "no_proxy_completed": 10,
+      "no_proxy_mean_capped_ms": 389.147071,
+      "always_completed": 10,
+      "always_mean_capped_ms": 440.7994469,
+      "benefit_completed": 10,
+      "benefit_mean_capped_ms": 389.5415846,
+      "benefit_minus_always_mean_capped_ms": -51.25786229999999,
+      "benefit_faster_than_always": 8,
+      "benefit_slower_than_always": 0,
+      "benefit_minus_no_proxy_mean_capped_ms": 0.3945135999999991,
+      "benefit_faster_than_no_proxy": 1,
+      "benefit_slower_than_no_proxy": 1
+    },
+    {
+      "condition": "transient_2ms",
+      "pairs": 10,
+      "cap_ms": 399.0,
+      "valid_pairs": 10,
+      "no_proxy_completed": 0,
+      "no_proxy_mean_capped_ms": 399.0,
+      "always_completed": 10,
+      "always_mean_capped_ms": 243.6310986,
+      "benefit_completed": 10,
+      "benefit_mean_capped_ms": 243.6310986,
+      "benefit_minus_always_mean_capped_ms": 0.0,
+      "benefit_faster_than_always": 0,
+      "benefit_slower_than_always": 0,
+      "benefit_minus_no_proxy_mean_capped_ms": -155.3689014,
+      "benefit_faster_than_no_proxy": 10,
+      "benefit_slower_than_no_proxy": 0
+    },
+    {
+      "condition": "weak_loss",
+      "pairs": 20,
+      "cap_ms": 399.0,
+      "valid_pairs": 20,
+      "no_proxy_completed": 0,
+      "no_proxy_mean_capped_ms": 399.0,
+      "always_completed": 20,
+      "always_mean_capped_ms": 222.75658815,
+      "benefit_completed": 20,
+      "benefit_mean_capped_ms": 234.35890265,
+      "benefit_minus_always_mean_capped_ms": 11.602314499999999,
+      "benefit_faster_than_always": 0,
+      "benefit_slower_than_always": 19,
+      "benefit_minus_no_proxy_mean_capped_ms": -164.64109735,
+      "benefit_faster_than_no_proxy": 20,
+      "benefit_slower_than_no_proxy": 0
+    }
+  ],
+  "healthy_false_alarm_trials": 0,
+  "healthy_trajectories": "60 deterministic repetitions, not independent traffic samples",
+  "healthy_canary_data_wire_capacity_percent": 2.82816,
+  "policy_decision_counts": {
+    "blackhole": {
+      "stay:stay_no_slower": 108,
+      "switch:predicted_benefit": 240,
+      "stay:benefit_below_margin": 4
+    },
+    "quarter": {
+      "stay:stay_no_slower": 2165,
+      "stay:no_remaining_work": 3
+    },
+    "weak_loss": {
+      "switch:predicted_benefit": 240,
+      "stay:no_remaining_work": 23,
+      "stay:stay_no_slower": 118
+    },
+    "delay": {
+      "stay:stay_no_slower": 110,
+      "switch:predicted_benefit": 240,
+      "stay:benefit_below_margin": 2
+    },
+    "transient_2ms": {
+      "switch:predicted_benefit": 40
+    },
+    "slow_proxy_1gbps": {
+      "switch:predicted_benefit": 40,
+      "stay:stay_no_slower": 6
+    },
+    "slow_proxy_quarter": {
+      "stay:stay_no_slower": 486,
+      "stay:no_remaining_work": 2
+    }
+  },
+  "proxy_execution": {
+    "healthy:benefit": {
+      "runs": 60,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "blackhole:no_proxy": {
+      "runs": 20,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "blackhole:always": {
+      "runs": 20,
+      "activated_runs": 20,
+      "rescued_chunks": 160,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "blackhole:benefit": {
+      "runs": 60,
+      "activated_runs": 60,
+      "rescued_chunks": 480,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "quarter:no_proxy": {
+      "runs": 20,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "quarter:always": {
+      "runs": 20,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "quarter:benefit": {
+      "runs": 60,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "weak_loss:no_proxy": {
+      "runs": 20,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "weak_loss:always": {
+      "runs": 20,
+      "activated_runs": 20,
+      "rescued_chunks": 47,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "weak_loss:benefit": {
+      "runs": 60,
+      "activated_runs": 60,
+      "rescued_chunks": 147,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "delay:no_proxy": {
+      "runs": 20,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "delay:always": {
+      "runs": 20,
+      "activated_runs": 20,
+      "rescued_chunks": 160,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "delay:benefit": {
+      "runs": 60,
+      "activated_runs": 60,
+      "rescued_chunks": 480,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "transient_2ms:no_proxy": {
+      "runs": 10,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "transient_2ms:always": {
+      "runs": 10,
+      "activated_runs": 10,
+      "rescued_chunks": 80,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "transient_2ms:benefit": {
+      "runs": 10,
+      "activated_runs": 10,
+      "rescued_chunks": 80,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "slow_proxy_1gbps:no_proxy": {
+      "runs": 10,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "slow_proxy_1gbps:always": {
+      "runs": 10,
+      "activated_runs": 10,
+      "rescued_chunks": 80,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "slow_proxy_1gbps:benefit": {
+      "runs": 10,
+      "activated_runs": 10,
+      "rescued_chunks": 80,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "no_idle_helpers:no_proxy": {
+      "runs": 10,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "no_idle_helpers:always": {
+      "runs": 10,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "no_idle_helpers:benefit": {
+      "runs": 10,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "slow_proxy_quarter:no_proxy": {
+      "runs": 10,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    },
+    "slow_proxy_quarter:always": {
+      "runs": 10,
+      "activated_runs": 8,
+      "rescued_chunks": 32,
+      "new_proxy_completions": 693,
+      "sustained_new_proxy_runs": 8
+    },
+    "slow_proxy_quarter:benefit": {
+      "runs": 10,
+      "activated_runs": 0,
+      "rescued_chunks": 0,
+      "new_proxy_completions": 0,
+      "sustained_new_proxy_runs": 0
+    }
+  }
+}

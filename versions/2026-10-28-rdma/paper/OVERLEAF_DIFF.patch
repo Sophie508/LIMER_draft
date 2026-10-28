@@ -1,0 +1,929 @@
+--- main.before.tex
++++ main.updated.tex
+@@ -30,28 +30,25 @@
+ 
+ \begin{abstract}
+ Gray link failures preserve connectivity while impairing communication.
+-We study how to confirm an affected path below 100~ms in an active-active
+-dual-plane fabric, with explicit observation cost, and how that decision
+-could support beneficial, coordinated local rerouting. The primary
+-detection candidate separates business and probe observations, tracks
+-guarded receiver sequence gaps and compensates for sparse business traffic
+-with representative probes. In a registered 10-Gb/s one-hop packet model,
+-fresh validation gives 400/400 correctly localized decisions below 100~ms,
+-a largest per-condition p95 of 75.4~ms and no alarms in 60 primary controls.
+-Another 60 high-traffic controls are alarm-free. Average probe traffic is
+-10.84--299.04~Mb/s/path across the tested business profiles. Same-report
+-comparisons distinguish decision-rule effects from observation opportunity,
+-and smaller-budget and nonrepresentative-probe failures remain visible.
+-
+-Separate component experiments study the use of an impairment alarm.
+-A bounded ACK-progress route loop reduces completion time by 13.34\%
+-with a faster alternative and avoids the 35.42\% penalty of fixed switching
+-with a slower alternative. Versioned pending-flow checks preserve ownership
+-under modeled coordination. An independently reconstructed OptCC comparator
+-provides the scheduling baseline for future joint comparisons. The primary
+-detector has not been integrated into the collective route loop. These
+-results establish conditional simulation behavior, not a universal timing
+-guarantee or a validated end-to-end recovery system.
++LIMER studies timely path-level detection, cost-aware local rerouting and
++execution consistency in an active-active dual-plane fabric. We implement
++a packet-level RDMA simulation loop that combines periodic same-path
++canaries, actual retransmission and ACK progress, and receiver packet-spacing
++changes. A controller uses delivered alarms and measured three-leg helper
++routes to compare the cost of staying with coordinated replacement.
++Across four registered fault conditions, each selected detection cohort
++has 60/60 trials correctly localized strictly below 100~ms; the largest
++per-condition p95 is 43.12~ms and the largest observed latency is 47.63~ms.
++The 640 new runs pass execution audits and independent event replay;
++this count includes unfinished communication controls. In a matched
++slow-helper boundary, benefit gating reduces mean completion from 440.80
++to 389.54~ms relative to direct replacement, but adds 5.75 and 11.60~ms
++under persistent blackholes and weak loss. Earlier validation failures
++and a corrected loss-stream sampling issue remain in the evidence.
++The results are conditional on healthy startup calibration, ideal endpoint
++observations and the registered workload. They do not establish universal
++gray-fault detection, sustained replacement-plane throughput, numerical
++AllReduce correctness or superiority over external recovery systems.
+ \end{abstract}
+ 
+ \keywords{GPU clusters, collective communication, fault tolerance,
+@@ -59,66 +56,58 @@
+ \maketitle
+ 
+ \section{Introduction}
+-An access link can remain UP while packet loss or severe delay slows the
+-communication that depends on it. In a collective, a delayed transfer can
+-hold back later dependent work. Our primary question is whether a
+-communication-impaired path can be correctly confirmed strictly below
+-100~ms of fault onset. We require at least 95\% timely decisions in each
+-registered eligible fault condition, rather than a favorable average across
+-conditions. Late, missed and unverified attempts remain in the denominator.
+-
+-Fast confirmation requires observations that expose the impairment seen by
+-business traffic. Passive transport signals can arrive late or respond to
+-reordering and congestion. Active probes create observations when business
+-traffic is sparse, but a small probe can remain healthy while larger business
+-packets suffer. More probe traffic can also improve detection without making
+-the decision rule better. Detection speed, observation representativeness
+-and observation cost must therefore be evaluated together.
+-
+-LIMER's primary detection candidate separates business and probe acceptance,
+-delivery and sequence observations. Receiver gaps must persist through a
+-guard before they supply impairment evidence. Representative probes follow
+-the same modeled delivery path as business packets; their source rate uses
+-only the previous closed business-traffic window. This makes the extra
+-observation budget causal and measurable. It does not guarantee that probes
+-experience every fault that business traffic might encounter.
+-
+-An impairment decision is useful only if the subsequent action helps.
+-Both network planes already carry work in our active-active setting, so
+-rerouting consumes service that is also needed by the alternate plane's
+-existing work. A route decision must compare the remaining work and
+-coordination cost. Once chosen, a local update also needs a shared version
+-and activation point so that senders and receivers agree. These are
+-supporting questions around the primary detection constraint, not an
+-assumption that every alarm should cause a switch.
++An access link can remain UP while loss or severe delay slows a collective.
++Consider two network planes already carrying data: when plane B becomes
++unreliable, its unacknowledged data can delay dependent communication even
++if the scheduler sends new work over A. A useful response must identify
++the impaired path quickly, decide whether a helper route repays its setup
++cost, and preserve ownership while unfinished data changes route.
++
++Our primary target is a correctly localized controller alarm strictly
++below 100~ms in at least 95\% of trials in each registered fault condition.
++We detect impaired delivery, including severe slowdown; we do not require
++proof of permanent packet loss. Fast detection depends on the opportunity
++to observe the impairment. Passive progress can be sparse, while probes
++consume bandwidth and need not expose every fault seen by business traffic.
++A timing result is therefore meaningful only with its traffic, calibration,
++measurement and reporting assumptions stated.
++
++LIMER now connects detection and recovery in one native packet simulation.
++A 64-KiB canary traverses every original sender/plane path every 2~ms.
++Distinct canary failures, actual retransmissions, business ACK stalls and
++a sustained shift in receiver packet spacing provide complementary evidence.
++An alarm then travels through the modeled control FIFO. The controller
++measures a three-leg route through an idle GPU in each endpoint server and
++compares the estimated completion cost of staying and replacing B.
++A versioned transaction and per-chunk acknowledgment prefix govern rescue
++of unfinished data. Both physical planes remain present.
+ 
+ We organize the study around three questions:
+ \begin{enumerate}
+-\item \textbf{Fast detection:} which observations allow at least 95\% of
+-decisions to be timely and correct in each fault condition, and at what cost?
+-\item \textbf{Route utility:} when does localized switching reduce the
+-completion time of finite remaining communication compared with staying?
+-\item \textbf{Execution consistency:} which coordination and transfer-ownership
+-checks are required to activate a route change within unfinished work?
++\item \textbf{Fast detection:} can each registered fault condition meet the
++95\% below-100-ms target, and what observations and overhead does that require?
++\item \textbf{Route utility:} when does avoiding an expensive replacement
++help, and when does waiting for benefit evidence hurt?
++\item \textbf{Execution consistency:} do modeled coordination, route epochs
++and final acknowledgments preserve the declared logical delivery contract?
+ \end{enumerate}
+ 
+-The strongest detection validation has 400/400 timely fault decisions,
+-largest per-condition p95 75.4~ms and 60 alarm-free primary controls in an
+-explicit 10-Gb/s one-hop model. A separate high-traffic supplement has
+-60 alarm-free controls. Under adaptive observations, the same-report shadow
+-gives 391/400 timely decisions and misses the idle condition's target;
+-under a constant high probe budget, both rules meet each condition's target.
+-This distinction limits the attribution of gains to the decision rule.
+-
+-The recovery evidence is separate. An online loop driven by ACK progress
+-demonstrates a beneficial switch with faster alternate service and a stay
+-decision with slower service. Checks of pending transfers validate
+-coordination and ownership under a modeled reliable management channel.
+-The primary packet detector and its observation traffic have not been
+-integrated into that collective loop. Our results therefore support a
+-conditional detection finding and supporting recovery components, not a
+-completed recovery system. The study ends at simulation and
+-CPU emulation; physical deployment is outside its scope.
++The new evaluation freezes a 580-run main matrix and a separate 60-run
++weak-loss confirmation. Four selected detection cohorts each achieve
++60/60 timely trials; the worst per-condition p95 is 43.12~ms. The separate
++loss cohort corrects reused derived RNG streams without changing native
++rules or pooling old and new detection counts. In matched policy tests,
++benefit gating avoids harmful slow-helper replacement, saving 51.26~ms on
++average relative to direct replacement. It also delays recovery in some
++persistent faults. The evidence supports a bounded simulation result,
++not a uniformly faster policy.
++
++The appendices retain the earlier UDP observer and pending-only route
++experiments as historical component evidence. We do not combine their
++timings or probe costs with the new RDMA loop. The reconstructed OptCC
++schedule is a separate comparator; no completed matched test establishes
++full LIMER superiority over OptCC. This study covers simulation and CPU
++emulation; physical deployment is outside its scope.
+ 
+ \section{Problem Setting and Comparison Scope}
+ \label{sec:setting}
+@@ -135,9 +124,9 @@
+ impairing delivery. We distinguish random packet loss, configured service-rate
+ reduction and severe delivery delay. Their effects on transport are different.
+ The target decision concerns impaired delivery, including severe slowdown;
+-it need not establish permanent loss or its physical cause. The one-hop
+-detector labels identify sender/plane paths, not arbitrary physical hops
+-inside a multi-hop fabric.
++it need not establish permanent loss or its physical cause. The detectors
++identify original sender/plane paths, not arbitrary physical hops inside
++a multi-hop fabric.
+ 
+ \subsection{Timing Target and Evidence Boundaries}
+ Detection latency runs from fault onset to the delivered-report-driven
+@@ -147,7 +136,9 @@
+ primary empirical gate requires at least 95\% timely, correctly localized
+ decisions in each eligible condition and no counted control or off-target
+ alarms. This finite-sample gate is not a population confidence guarantee.
+-Earlier all-trial and loss-only gates keep their original verdicts.
++Earlier all-trial and loss-only gates keep their original verdicts. The new
++RDMA score requires every affected direction to be timely, with no pre-fault
++or unaffected-path alarm throughout the registered observation horizon.
+ 
+ Detection, route commit and completed communication are different milestones.
+ We report their respective timings without adding measurements from separate
+@@ -186,9 +177,419 @@
+ These systems motivate explicit execution identity. They are literature
+ comparisons, not reproduced recovery baselines here.
+ 
+-\section{Fast Detection with Representative Observations}
++\section{Fast Detection from RDMA Delivery Observations}
+ \label{sec:detection}
+-\subsection{Observation Contract}
++\subsection{Inputs and Healthy Calibration}
++The native detector, \texttt{canary-service-v4}, monitors 32 original paths:
++16 senders, each with an A and a B path to its ring successor. It receives
++actual QP submission/completion events, sender retransmissions, business
++ACK prefixes and receiver-local accepted-packet times. Fault onset, affected
++node, injected service fraction, drop probability and future recovery time
++are available only to the injector and offline scorer.
++
++Each path sends a real 64-KiB RDMA canary every 2~ms, starting at 1~ms and
++continuing to the observation horizon. The first 20~ms freezes the maximum
++completed canary service time $b$; this interval is assumed healthy.
++The deadline is $\max(100~\mu\mathrm{s},2b+100~\mu\mathrm{s})$, with a
++2-ms fallback when no completed calibration sample exists. The fallback
++does not establish coverage of arbitrary startup degradation.
++
++\subsection{Three Complementary Evidence Lanes}
++\paragraph{Repeated canary impairment.}
++A canary becomes bad when it exceeds its deadline or actually retransmits.
++An outstanding canary can count before completion. Repeated retransmissions
++of the same canary count once. At least three distinct bad canaries in a
++trailing 40-ms window, with submission times spanning at least 4~ms, trigger
++an alarm. The 2-ms cadence therefore supplies repeated evidence well before
++100~ms when the impairment affects canary service.
++
++\paragraph{Business progress stall.}
++An allocated, unfinished original-path chunk with no real ACK-prefix
++progress for 40~ms supplies a second alarm lane. Idle work, unallocated
++work and already migrated epochs do not supply this signal. This lane
++can expose delivery stalls that surviving canaries fail to reveal.
++
++\paragraph{Receiver spacing shift.}
++Completion-time thresholds alone missed capacity reductions in the first
++formal validation. v4 adds the P10 of positive interarrival gaps between
++adjacent accepted packets on the same original path, aggregating business
++and canary QPs. Both packets must have a full 976-byte payload; a short tail
++breaks adjacency. The 1--21-ms interval calibrates the P10. Thereafter,
++two consecutive nonoverlapping 10-ms windows, each with at least 64 gaps,
++must exceed $2\times$ the baseline P10 plus 100~ns. Insufficient samples
++or a healthy window interrupt confirmation. This is a model-specific
++service-change rule, not a general capacity estimator or a way to distinguish
++all congestion from faults.
++
++\subsection{Alarm Delivery and Measurement Assumptions}
++The first qualifying lane emits one alarm per path. A 96-byte alarm pays
++serialization on a shared 100-Mb/s management FIFO plus 1-ms propagation.
++Latency is scored at actual controller receipt, including queueing, rather
++than at the earlier detector callback. Fast evidence accumulation, not
++post hoc subtraction of control time, explains the measured sub-100-ms result.
++
++Endpoint timestamps and local summaries are ideal simulator observations.
++The implementation feeds endpoint evidence into a shared detector object;
++it does not separately serialize every raw observation or spacing summary
++between hosts. Clock error, timestamp noise and callback CPU time are not
++modeled. Thus charging alarm transport is not evidence that a distributed
++telemetry implementation has been validated. The older explicitly reported
++UDP observer has a different observation contract and remains in
++Appendix~\ref{app:historical-udp}.
++
++\section{Cost-Aware Replacement and Coordinated Execution}
++\label{sec:recovery-design}
++\subsection{Measure the Candidate Before Choosing It}
++The candidate route uses three store-and-forward legs: source GPU to a local
++helper, helper to remote helper over healthy B accesses, and remote helper
++to the original destination. Candidate eligibility uses modeled phase-idle
++state and resource credits. It is not an implemented distributed discovery
++protocol. A full 64-KiB probe measures all three legs; its 96-byte health
++report must actually arrive through the control FIFO before use. Freshness
++is measured from physical probe completion, including report transit, with
++a 20-ms limit. Both compared replacement policies pay the same candidate
++measurement and health-report costs.
++
++\subsection{Compare Finite Remaining Work}
++For each sender/phase, the controller reconstructs A-owned and B-owned
++unacknowledged bytes plus flexible pending bytes. Direct service is the ACK
++progress observed over the previous 10~ms. If a lane has no owned bytes and
++no recent business progress, a fresh completed canary can supply a service
++estimate. Observed zero service is not knowledge that the fault will persist.
++
++Let $F(a,b,p;r_A,r_B,d)$ be the fluid finish estimate: A serves immediately,
++B serves after delay $d$, owned bytes $a,b$ remain assigned to their lanes,
++and pending bytes $p$ can use spare service on either lane. The implementation
++finds the earliest feasible completion time by bisection. With probe leg
++times $\ell_1,\ell_2,\ell_3$, final-notification estimate $q$ and chunk size
++$C=64$~KiB, the candidate service estimate is
++\[
++\widehat r_H=\min\left\{\frac{C}{\max_j\ell_j},
++\frac{4C}{\ell_1+\ell_2+\ell_3+q}\right\}.
++\]
++The four-credit limit bounds overlap; it does not divide the first chunk's
++end-to-end latency by four. The switch estimate charges pipeline fill,
++current management queueing, four-party coordination and final notification.
++Even a short rescued tail pays a complete first route/ACK cycle.
++
++The policy compares $F$ under observed direct service with $F$ under the
++measured helper service and its setup delay. It switches only when estimated
++gain exceeds $\max(1~\mathrm{ms},0.1\widehat T_{\rm stay})$. A finite helper
++estimate can justify replacing an observed zero-service owned lane.
++The gate is checked after the paid probe and again before initial commit;
++rejected attempts wait 5~ms before retrying. This is a sender/phase heuristic,
++not a global DAG optimizer. Access to modeled helper eligibility and current
++control-queue state is an explicit simulation assumption.
++
++\subsection{Logical Ownership and Completion}
++PREPARE, READY and COMMIT coordinate the source, destination and two helpers.
++Messages pay the same 96-byte, 100-Mb/s, 1-ms-propagation FIFO costs as alarms
++and health reports. Phase and binding version reject stale reports; helper
++idleness and freshness are rechecked before activation. Replacement keeps
++the physical A/B topology, retires the old B allocation and rescues the
++unacknowledged suffix under a new chunk epoch. Old-epoch ACKs cannot advance
++that logical suffix. Three completed legs and a final source notification
++are required before logical completion.
++
++The audit checks physical NIC selection, helper and source credits, ACK
++prefix monotonicity, route epochs and final delivery accounting. These are
++logical communication invariants, not tensor reduction correctness. A proxy
++activation or rescued suffix also does not imply sustained use of B$'$ for
++new chunks; that outcome is measured separately.
++
++\section{Evaluation}
++\subsection{Registered Model, Metrics and Internal Controls}
++The new packet experiments use the ns-3/RDMA backend in the collaborator's
++standalone simulator, run on CPUs without real GPUs. The topology has 16
++logical GPUs, four per server, physical A/B planes and 10-Gb/s accesses.
++Normal local helper links are modeled at 2400~Gb/s; the 1-Gb/s helper is an
++artificial stress boundary, not a hardware configuration claim.
++
++The ordinary workload has two ring rounds, 60 phases and 64 chunks of
++64~KiB per rank/phase, totaling 4,026,531,840 logical bytes. Work starts at
++1~ms and observation ends at 400~ms. The slow-helper plus quarter-capacity
++boundary deliberately uses one round, 30 phases and 256 chunks per
++rank/phase, totaling 8,053,063,680 bytes, with an 800-ms horizon. All arms
++within a pair share workload and horizon; cross-row speedup comparisons
++between these workloads are invalid.
++
++We design the fault injections; they are not drawn from a datacenter trace.
++A chosen GPU's B access receives a blackhole, service fraction 0.25,
++independent per-packet loss 0.005, or 80-ms channel propagation delay.
++Placement is drawn from 16 GPUs and onset from 35--55~ms. Both directions
++of the access are impaired. Extra boundaries use a 2-ms blackhole, 1-Gb/s
++helper links, or B blackholes on all four GPUs in server 0. The last case
++removes idle local helper candidates.
++
++The main matrix contains 580 registered attempts: four benefit-policy fault
++cohorts of 60, 60 healthy controls, 20 three-arm pairs per main fault type
++and 10 three-arm pairs per extra boundary. The main cohorts already include
++the benefit arm of each pair. A separate 60-run weak-loss confirmation
++brings the new total to 640. Native source, binary, parameters and inputs
++are frozen before execution; development cases are not acceptance samples.
++
++The three internal arms share adaptive A/B allocation and detection:
++\emph{no proxy} (G10) never replaces B, \emph{direct replacement} (G11)
++coordinates a qualified candidate after alarm and probe, and \emph{benefit
++gate} (G11) adds the cost comparison. ``Direct'' does not mean zero-cost
++or immediate migration. These are mechanism controls, not external-system
++baselines. Ring versus reconstructed OptCC remains a separate scheduling
++comparison (Section~\ref{sec:baseline-reproduction}); VCCL, SprayCheck and
++Chameleon remain literature comparisons.
++
++\subsection{Detection Meets the Registered Empirical Target}
++\label{sec:primary-validation}
++A timely success requires every affected original direction to reach the
++controller strictly below 100~ms, with no pre-fault or unaffected-path
++alarm in the full horizon. A usual access fault affects two monitored
++directions; the no-helper boundary affects eight. Late, missed, invalid
++and missing attempts remain in each registered denominator. Trial latency
++is the slowest affected direction, and p95 uses nearest rank over the full
++denominator, assigning a missing latency infinity.
++
++\begin{table}[t]
++\caption{New RDMA-loop detection. Every row has 60 registered trials;
++all affected directions must be correct and timely. Delay starts at injection
++and ends at controller receipt. No row has late, missed or invalid trials.}
++\label{tab:rdma-detection}
++\centering\small
++\setlength{\tabcolsep}{4pt}
++\begin{tabular}{@{}lrrr@{}}
++\toprule
++Condition & $<100$ ms & p95 (ms) & Max (ms)\\
++\midrule
++Persistent blackhole & 60/60 & 8.64 & 8.81\\
++B capacity 25\% & 60/60 & 29.82 & 30.02\\
++0.5\% loss, new streams & 60/60 & 43.12 & 47.63\\
++80-ms link delay & 60/60 & 8.66 & 8.72\\
++\bottomrule
++\end{tabular}
++\end{table}
++
++Each selected condition passes the empirical 95\% target
++(Table~\ref{tab:rdma-detection}). The worst observed latency is 47.63~ms;
++this is a sample maximum, not a guaranteed bound. Per-condition 60/60 gives
++a one-sided exact 95\% lower success bound of 95.13\% only under the stated
++sampling and independence assumptions; it is not a simultaneous
++multi-condition or arbitrary-fault guarantee.
++
++The loss row deliberately uses the independent confirmation. The inherited
++injector derives streams from \texttt{seed+node}; the main 60 loss trials
++contain only 38 distinct stream pairs. We retain all original counts but
++do not use their nominal binomial bound as independent-sample evidence.
++A separately registered stride-32 cohort supplies 60 non-reused pairs,
++with unchanged native binary, rules, workload and audit modules. It was
++registered before the first main weak-loss result. The final row replaces,
++rather than pools with, the old loss cohort. Policy pairs remain the main
++matrix's empirical matched comparisons.
++
++All four extra benefit-policy detection boundaries achieve 10/10 timely
++trials. Healthy controls have 0/60 alarms, but repeat the same deterministic
++healthy trajectory, not 60 traffic classes. Healthy canary data-side wire
++load averages 2.83\% of the total capacity of the 32 sender-NIC/plane exits,
++including data headers but excluding transport ACKs; management messages
++are charged separately. This is not the utilization of an arbitrary fabric
++link or a complete wire-overhead total.
++
++\subsection{When Does Benefit Gating Help?}
++\label{sec:native-policy-results}
++Policy comparisons use 20 matched triples per main condition and 10 per
++boundary: identical seed, placement, onset, workload and observation horizon.
++Table~\ref{tab:rdma-policy} retains all 120 triples. Completion time starts
++at business launch (1~ms); an unfinished job receives the horizon-based
++cost of 399~ms, or 799~ms in the longer slow-helper/capacity boundary.
++The capped mean therefore includes censored observations and must be read
++with the completion counts, not as an exact mean completion time or speedup.
++
++\begin{table*}[t]
++\caption{Internal policy comparison in the new RDMA loop. N/D/G denote
++no proxy, direct replacement and benefit gate. Every registered triple is
++valid; completion counts can still be zero. Lower capped cost is better.
++Negative G$-$D favors the gate. * marks the longer 799-ms-cap workload;
++other rows use a 399-ms cap.}
++\label{tab:rdma-policy}
++\centering\small
++\setlength{\tabcolsep}{5pt}
++\begin{tabular}{@{}lrrrrrr@{}}
++\toprule
++& Matched & Completed & \multicolumn{3}{c}{Mean capped cost (ms)} & G$-$D\\
++\cmidrule(lr){4-6}
++Condition & triples & N / D / G & N & D & G & (ms)\\
++\midrule
++Persistent blackhole & 20 & 0 / 20 / 20 & 399.00 & 211.41 & 217.16 & +5.75\\
++B capacity 25\% & 20 & 20 / 20 / 20 & 196.41 & 196.41 & 196.41 & 0.00\\
++0.5\% packet loss & 20 & 0 / 20 / 20 & 399.00 & 222.76 & 234.36 & +11.60\\
++80-ms link delay & 20 & 0 / 20 / 20 & 399.00 & 211.09 & 216.47 & +5.38\\
++No idle helper & 10 & 0 / 0 / 0 & 399.00 & 399.00 & 399.00 & 0.00\\
++Blackhole, 1-Gb/s helper & 10 & 0 / 10 / 10 & 399.00 & 215.53 & 217.84 & +2.31\\
++B capacity 25\%, 1-Gb/s helper* & 10 & 10 / 10 / 10 & 389.15 & 440.80 & 389.54 & -51.26\\
++2-ms transient & 10 & 0 / 10 / 10 & 399.00 & 243.63 & 243.63 & 0.00\\
++\bottomrule
++\end{tabular}
++\end{table*}
++
++The slow-helper/capacity boundary isolates the value of refusing a healthy
++but costly candidate. The gate improves over direct replacement in 8 of
++10 pairs and ties in two, reducing the mean by 51.26~ms (11.63\%). It is
++still 0.39~ms slower than no proxy, so the finding is avoidance of harmful
++replacement, not improvement over the best staying control. Persistent
++blackhole and weak-loss groups instead pay 5.75 and 11.60~ms additional
++latency. A gate based on past finite windows can wait for service evidence;
++it does not know how long a fault will last. There is no uniform policy win.
++
++Without idle helpers all three arms remain unfinished despite timely
++detection. The short transient also leaves stalled business work in this
++transport configuration; the replacement arms complete, but the gate does
++not improve on direct replacement. These are retained boundary outcomes,
++not cases removed from the performance denominator.
++
++\subsection{Execution Audits and Retained Validation Failures}
++\label{sec:native-audit}
++All 640 new runs pass the declared execution audit and independent detection
++and policy replay. Raw packet events reconstruct receiver P10/counts and
++canary retransmissions; ACK and physical-leg events reconstruct remaining
++work, route measurements, health-report delivery and policy arithmetic.
++All 640 retained raw archives have verified SHA-256 digests, and frozen
++scoring regenerates the retained trial and pair tables. These checks verify
++recorded content and modeled invariants, not every job's completion.
++
++In the main four benefit-policy cohorts (240 trials), 180 trials activate a
++proxy and 1107 chunks begin in-flight rescue. No newly assigned B$'$ chunk
++completes, and no trial establishes sustained new B$'$ use across phases.
++The current result therefore demonstrates rescue of stalled work followed
++by adaptive service, not restoration of healthy dual-plane throughput.
++A no-proxy timeout remains a valid execution outcome.
++
++The first formal \texttt{canary-service-v3} validation is preserved separately:
++580 attempts, 530 with valid execution/replay and 50 infrastructure errors
++caused by disk quota. In the quarter-capacity cohort, all 60 executions are
++valid but only 42/60 detect every affected direction below 100~ms; 18 miss
++a direction. Counting only the first alarm would conceal these misses.
++Healthy queueing inflated the canary completion reference. v4 adds whole-path
++receiver spacing after development showed that an isolated canary train was
++confounded by QP interleaving. Four old misses are development regressions
++only; the new matrix uses disjoint input seeds and a fresh frozen build.
++The first validation is never relabeled as a pass or pooled into the new 640.
++
++The historical standalone UDP observer achieves 400/400 timely faults under
++its own representative-probe envelope, but its 75.4-ms worst condition p95,
++probe costs and eight-path traffic model are different. Its earlier low-budget
++misses, reordering false alarms and management-delay failures remain in
++Appendix~\ref{app:historical-udp}. Those results motivate the new design;
++they are neither its baselines nor additional trials in its denominator.
++
++\subsection{Executable Scheduling Comparator}
++\label{sec:baseline-reproduction}
++OptCC and ordinary ring schedules share the same network runner using
++SimAI and ns-3. The matched setting has one nonblocking switch and one
++participating GPU per server. Healthy NICs supply 200~Gb/s; the last-rank
++NIC supplies 100~Gb/s ($L=2$). Both arms use 500-ns propagation,
++9000-byte payload MTU, DCQCN and 3-$\mu$s launch delay. The setting
++includes no packet loss, NVLink or PXN. OptCC uses
++$k=4$, and both schedules transmit $2(p-1)N$ data bytes in aggregate;
++OptCC synchronization nodes additionally carry 20-byte control payloads.
++
++\begin{table}[t]
++  \caption{Independent network-only replay, $L=2$, $k=4$. Ratio is ring
++  makespan divided by OptCC makespan. These are reconstructed measurements,
++  not reproduced paper figures or LIMER results.}
++  \label{tab:optcc-replay}
++  \centering
++  \small
++  \begin{tabular}{@{}rrrrr@{}}
++    \toprule
++    $p$ & $N$ (MiB) & Ring (ms) & OptCC (ms) & Ratio \\
++    \midrule
++    5 & 5 & 0.712 & 0.638 & 1.116 \\
++    5 & 20 & 2.754 & 2.283 & 1.206 \\
++    16 & 15 & 2.500 & 1.986 & 1.259 \\
++    16 & 60 & 9.718 & 6.917 & 1.405 \\
++    \bottomrule
++  \end{tabular}
++\end{table}
++
++All 24 primary launches pass; three deterministic launches per arm and
++condition reproduce the same values. OptCC reduces network makespan by
++10.4--28.8\% relative to ring in these four settings. Four healthy-ring
++references and two segmentation checks bring the measurement denominator
++to 30/30. These repeated fixed settings do not provide confidence intervals.
++
++The public artifact lacks the original simulator integration and experiment
++driver, so this is an independent reconstruction, not an exact reproduction
++of a published performance figure. It omits native collective memory and
++reduction costs. Appendix~\ref{app:optcc} preserves artifact, transport,
++scheduler and segmentation checks. The result establishes an executable
++schedule comparator, not LIMER superiority. The planned common-backend
++matrix crosses ring/OptCC schedules with stay/fixed-switch/LIMER route
++policies under identical faults, workload and seeds, charging all recovery
++cost and retaining failures. That joint comparison remains unrun. The new 16-GPU helper-recovery
++backend and the earlier reconstructed scheduling runner are not a matched
++full-system comparison.
++
++\section{Limitations and Remaining Validation}
++\label{sec:limitations}
++The detector and helper recovery are now evaluated together in a native
++packet-level simulation. This closes the earlier separation between isolated
++detection and route components, but only under the newly registered model.
++It does not establish general fast gray-fault coverage. The pass depends on
++a healthy 20-ms startup reference, fixed canary geometry, ideal nanosecond
++endpoint timestamps and centrally available local summaries. Raw observation
++exchange, timestamp noise and detector processing time are not separately
++charged. Only alarms and the declared recovery/control traffic pay the
++management FIFO. Arbitrary background traffic, startup degradation,
++correlated faults and multiple episodes remain unvalidated.
++
++The healthy control repeats one deterministic trajectory. The selected
++weak-loss detection cohort fixes the derived-stream reuse issue, while
++main policy pairs remain empirical comparisons under the original stream
++schedule. The confidence bound is per condition under sampling assumptions,
++not a guarantee over all fault distributions. Earlier failed validations
++remain failures.
++
++Benefit gating approximates sender/phase completion from recent service and
++candidate probes. It assumes access to modeled helper eligibility and
++control-queue state; distributed discovery and uncertainty-aware congestion
++prediction are not implemented. The policy loses time under persistent
++blackhole and weak loss, and the favorable slow-helper case uses a deliberately
++extreme local-link boundary. No idle helper means detection cannot produce
++recovery. Sustained new B$'$ throughput, candidate secondary failure and
++restoration of old B have not been demonstrated.
++
++Execution checks establish logical epochs, prefixes and final-delivery
++accounting. The simulator does not execute tensor reduction, CUDA, HBM or
++compute/communication overlap. There is no completed full LIMER versus
++OptCC/VCCL comparison or 128-rank validation. The earlier UDP and pending-only
++experiments retain separate time bases and are not combined with the new
++loop into additional end-to-end evidence. Real-GPU execution and deployment
++are outside the agreed simulation scope.
++
++\section{Conclusion}
++LIMER now implements a connected RDMA simulation loop for timely impairment
++detection, measured helper-route benefit decisions and coordinated rescue.
++Four selected registered detection cohorts each achieve 60/60 correctly
++localized controller alarms below 100~ms, with a worst per-condition p95 of
++43.12~ms. Matched policy experiments show both the benefit of avoiding an
++expensive helper route and the latency cost of waiting under persistent
++faults. Full denominators, independent replay, the failed first validation
++and explicit measurement assumptions bound these findings. General gray-fault
++coverage, sustained replacement-plane throughput and external full-system
++comparisons remain open simulation work.
++
++\bibliographystyle{ACM-Reference-Format}
++\bibliography{refs}
++\appendix
++
++\section{Historical Standalone Observations and Route Components}
++\label{app:historical-udp}
++This appendix preserves the earlier methods, results and original verdicts.
++Here ``primary detector'' refers to the historical UDP observer, not the
++new RDMA detector in Section~\ref{sec:detection}. The pending-only route
++loop also has a different execution contract from the new epoch-based rescue.
++These campaigns are not pooled with the 640 new runs.
++
++\subsection{Historical UDP Observation Design}
++\label{app:udp-observation-design}
++\subsubsection{Observation Contract}
+ The primary candidate detects delivery impairment from observations
+ available at the two ends of each monitored path. Business packets and
+ probes have separate accepted/delivered counters and independent source
+@@ -205,7 +606,7 @@
+ proving permanent packet loss. The observation identifies a path in the
+ declared one-hop model.
+ 
+-\subsection{Guarded Impairment Decision}
++\subsubsection{Guarded Impairment Decision}
+ A receiver gap persisting for at least 40~ms supplies impairment evidence.
+ Its age is computed at sampling, without counting report transit as extra
+ receiver evidence. Two aligned business-only service windows also detect
+@@ -223,7 +624,7 @@
+ baseline. This shared input permits rule attribution within a campaign;
+ results from different traffic models are not treated as a matched ranking.
+ 
+-\subsection{Representative Probes and Causal Compensation}
++\subsubsection{Representative Probes and Causal Compensation}
+ Representative probes use the business packets' 1500-byte wire size and
+ the same modeled socket, queue, route and application delivery stage.
+ This common fault treatment is an explicit assumption. Same-path small
+@@ -245,7 +646,7 @@
+ probe byte is charged. A constant 35,000-pps representative source is
+ evaluated separately to expose the effect of observation budget.
+ 
+-\subsection{Reporting Cost and Output}
++\subsubsection{Reporting Cost and Output}
+ Source and receiver clocks are aligned in the evaluated model. Reports
+ occupy 96 bytes per copy: 68 payload bytes plus modeled IPv4/UDP overhead,
+ without link-layer overhead on the abstract collector. A separate serialized
+@@ -260,86 +661,8 @@
+ itself. Multiple-episode rearming and arbitrary report loss, management delay
+ or unknown probe treatment remain outside the latest validation.
+ 
+-\section{Route Decisions and Coordinated Execution}
+-\label{sec:recovery-design}
+-The following components study how an impairment decision can be used.
+-They are evaluated separately from the primary detector. The bounded online
+-route loop uses native sender ACK progress, not the representative packet
+-detector in Section~\ref{sec:detection}. This distinction is retained in
+-every performance interpretation.
+-
+-\subsection{Remaining-Work Switch-versus-Stay Heuristic}
+-Let $I_A,I_B$ be launched, unacknowledged bytes and $W_A,W_B$ pending
+-bytes on the two planes. Only pending affected A work can change routes.
+-The current observed ACK service is $r_A$; alternate service $r_B$ is the
+-minimum of its calibrated service and its last positive fully busy sample.
+-Unknown, zero or more-than-20-ms-old alternate service selects stay.
+-Otherwise the sender-service heuristic compares
+-\begin{align*}
+-\widehat T_{\rm stay}&=\max\{(I_A+W_A)/r_A,(I_B+W_B)/r_B\},\\
+-\widehat T_{\rm switch}&=\max\{I_A/r_A,(I_B+W_B+W_A)/r_B\}+c.
+-\end{align*}
+-The registered cost budget is $c=10~\mu$s, exceeding the default modeled
+-transaction cost. A switch requires pending A work and a smaller switch
+-estimate. Remaining work on B is charged because both planes are active.
+-The estimate is a sender-service proxy, not a collective critical-path
+-optimizer or a prediction of future alternate congestion.
+-
+-For this component experiment, native sender ACK credit combines completed
+-flow bytes and active acknowledged bytes. Samples are taken every 2~ms and
+-reports pass through the modeled collection channel. A detector calibrates four positive fully
+-busy samples and alarms after three busy samples below half their reference;
+-idle windows interrupt evidence. These configured-rate development checks
+-do not establish the primary detector's broader weak-loss/idle coverage.
+-Appendix~\ref{app:online} retains the full detector and earlier policy details.
+-
+-\subsection{Versioned Activation and Transfer Ownership}
+-At transfer launch, the SimAI target selects the committed plane, posts
+-one matching receive and retains that transfer's ports and version through
+-completion. A route update changes only pending affected transfers.
+-PREPARE, READY and COMMIT messages coordinate a common version and
+-activation point across all four ranks. The reliable modeled management
+-FIFO charges 64 bytes per message with 1-Gb/s serialization and 1-$\mu$s
+-propagation by default. Its messages are not packetized on the RDMA data
+-network. A missing READY prevents activation; a nonconsecutive version is
+-rejected.
+-
+-Launched transfers retain ownership on their original paths. Consequently,
+-the pending-only mechanism cannot rescue a severely stalled launched
+-transfer. The separate CPU/TCP harness checks frame round, step, route
+-version, payload length and checksum, with explicit ownership of partially
+-read frames. These transport checks are documented in
+-Appendix~\ref{app:execution}; they are not an exactly-once numerical reduction
+-proof and do not imply transparent migration of in-flight work.
+-
+-\section{Evaluation}
+-\subsection{Scope, Metrics and Baselines}
+-We evaluate fast detection first, then its observation cost and attribution,
+-and finally the separate route-utility and execution components. Packet-level
+-experiments use the pinned SimAI network frontend~\cite{simai2025} and ns-3 backend, with
+-separate observation traffic and management models. CPU/Mininet framed-TCP
+-emulation supplies additional implementation and failure evidence; its
+-wall-clock times are not pooled with simulated timings.
+-Appendix~\ref{app:implementation} records the implementation environments.
+-
+-The primary detection metric is the fraction of all registered attempts
+-correctly localized strictly below 100~ms in each condition. We also report
+-late and missed decisions, per-condition p95, control/off-target alarms and
+-actual probe/report bytes. Source, parameters and dependencies are frozen
+-before fresh validation, and independent event replay checks the recorded
+-decisions. Development outcomes are not pooled into acceptance.
+-
+-Detection comparators include a constant representative-probe source and
+-the frozen hybrid rule on the same delivered reports. Earlier TCP and
+-batch-only rules establish specific failure boundaries, not a matched
+-cross-platform leaderboard. Route arms are stay, fixed localized switching
+-requested at startup, oracle-timed switching supplied with fault time and
+-identity, and the observable candidate. Oracle timing does not provide
+-optimal route choice. OptCC and ring compare scheduling in a separate
+-network-only setting; no completed experiment compares full LIMER with OptCC.
+-
+ \subsection{Fast Detection in the Registered Envelope}
+-\label{sec:primary-validation}
++\label{app:udp-primary-validation}
+ The primary validation contains eight independent one-hop UDP paths with
+ 10-Gb/s links, a fixed affected path, 250-ms source activity and observation
+ drain through 600~ms. Six weak-fault conditions use 0.5\% persistent loss:
+@@ -437,6 +760,58 @@
+ FAIL verdicts. Appendix~\ref{app:detection-evidence} retains
+ all earlier detection tables, guard sensitivity, controls and setup failures.
+ 
++\subsection{Historical Pending-Only Route Design}
++\label{app:legacy-recovery-design}
++The following components study how an impairment decision can be used.
++They are evaluated separately from the primary detector. The bounded online
++route loop uses native sender ACK progress, not the representative packet
++detector in Section~\ref{app:udp-observation-design}. This distinction is retained in
++every performance interpretation.
++
++\subsubsection{Remaining-Work Switch-versus-Stay Heuristic}
++Let $I_A,I_B$ be launched, unacknowledged bytes and $W_A,W_B$ pending
++bytes on the two planes. Only pending affected A work can change routes.
++The current observed ACK service is $r_A$; alternate service $r_B$ is the
++minimum of its calibrated service and its last positive fully busy sample.
++Unknown, zero or more-than-20-ms-old alternate service selects stay.
++Otherwise the sender-service heuristic compares
++\begin{align*}
++\widehat T_{\rm stay}&=\max\{(I_A+W_A)/r_A,(I_B+W_B)/r_B\},\\
++\widehat T_{\rm switch}&=\max\{I_A/r_A,(I_B+W_B+W_A)/r_B\}+c.
++\end{align*}
++The registered cost budget is $c=10~\mu$s, exceeding the default modeled
++transaction cost. A switch requires pending A work and a smaller switch
++estimate. Remaining work on B is charged because both planes are active.
++The estimate is a sender-service proxy, not a collective critical-path
++optimizer or a prediction of future alternate congestion.
++
++For this component experiment, native sender ACK credit combines completed
++flow bytes and active acknowledged bytes. Samples are taken every 2~ms and
++reports pass through the modeled collection channel. A detector calibrates four positive fully
++busy samples and alarms after three busy samples below half their reference;
++idle windows interrupt evidence. These configured-rate development checks
++do not establish the primary detector's broader weak-loss/idle coverage.
++Appendix~\ref{app:online} retains the full detector and earlier policy details.
++
++\subsubsection{Versioned Activation and Transfer Ownership}
++At transfer launch, the SimAI target selects the committed plane, posts
++one matching receive and retains that transfer's ports and version through
++completion. A route update changes only pending affected transfers.
++PREPARE, READY and COMMIT messages coordinate a common version and
++activation point across all four ranks. The reliable modeled management
++FIFO charges 64 bytes per message with 1-Gb/s serialization and 1-$\mu$s
++propagation by default. Its messages are not packetized on the RDMA data
++network. A missing READY prevents activation; a nonconsecutive version is
++rejected.
++
++Launched transfers retain ownership on their original paths. Consequently,
++the pending-only mechanism cannot rescue a severely stalled launched
++transfer. The separate CPU/TCP harness checks frame round, step, route
++version, payload length and checksum, with explicit ownership of partially
++read frames. These transport checks are documented in
++Appendix~\ref{app:execution}; they are not an exactly-once numerical reduction
++proof and do not imply transparent migration of in-flight work.
++
+ \subsection{When Localized Switching Helps}
+ \label{sec:route-results}
+ These experiments evaluate route utility separately from the primary
+@@ -466,7 +841,7 @@
+ \end{table}
+ 
+ The bounded online comparison uses the ACK-progress detector and
+-remaining-work heuristic of Section~\ref{sec:recovery-design}. Four ranks
++remaining-work heuristic of Section~\ref{app:legacy-recovery-design}. Four ranks
+ execute fourteen 3-MiB rings with prescribed releases at
+ 0,100,\ldots,1300~ms. At 312~ms, rank-2 A configured egress service falls
+ from 1 to 0.2~Gb/s; B initially supplies either 1 or 0.1~Gb/s. Other
+@@ -523,103 +898,6 @@
+ cases. These checks validate the declared execution contract, not numerical
+ reduction, cancellation/replay or rescue of already-launched stalls.
+ 
+-\subsection{Executable Scheduling Comparator}
+-\label{sec:baseline-reproduction}
+-OptCC and ordinary ring schedules share the same network runner using
+-SimAI and ns-3. The matched setting has one nonblocking switch and one
+-participating GPU per server. Healthy NICs supply 200~Gb/s; the last-rank
+-NIC supplies 100~Gb/s ($L=2$). Both arms use 500-ns propagation,
+-9000-byte payload MTU, DCQCN and 3-$\mu$s launch delay. The setting
+-includes no packet loss, NVLink or PXN. OptCC uses
+-$k=4$, and both schedules transmit $2(p-1)N$ data bytes in aggregate;
+-OptCC synchronization nodes additionally carry 20-byte control payloads.
+-
+-\begin{table}[t]
+-  \caption{Independent network-only replay, $L=2$, $k=4$. Ratio is ring
+-  makespan divided by OptCC makespan. These are reconstructed measurements,
+-  not reproduced paper figures or LIMER results.}
+-  \label{tab:optcc-replay}
+-  \centering
+-  \small
+-  \begin{tabular}{@{}rrrrr@{}}
+-    \toprule
+-    $p$ & $N$ (MiB) & Ring (ms) & OptCC (ms) & Ratio \\
+-    \midrule
+-    5 & 5 & 0.712 & 0.638 & 1.116 \\
+-    5 & 20 & 2.754 & 2.283 & 1.206 \\
+-    16 & 15 & 2.500 & 1.986 & 1.259 \\
+-    16 & 60 & 9.718 & 6.917 & 1.405 \\
+-    \bottomrule
+-  \end{tabular}
+-\end{table}
+-
+-All 24 primary launches pass; three deterministic launches per arm and
+-condition reproduce the same values. OptCC reduces network makespan by
+-10.4--28.8\% relative to ring in these four settings. Four healthy-ring
+-references and two segmentation checks bring the measurement denominator
+-to 30/30. These repeated fixed settings do not provide confidence intervals.
+-
+-The public artifact lacks the original simulator integration and experiment
+-driver, so this is an independent reconstruction, not an exact reproduction
+-of a published performance figure. It omits native collective memory and
+-reduction costs. Appendix~\ref{app:optcc} preserves artifact, transport,
+-scheduler and segmentation checks. The result establishes an executable
+-schedule comparator, not LIMER superiority. The planned common-backend
+-matrix crosses ring/OptCC schedules with stay/fixed-switch/LIMER route
+-policies under identical faults, workload and seeds, charging all recovery
+-cost and retaining failures. That joint comparison remains unrun.
+-
+-\section{Limitations and Remaining Integration}
+-\label{sec:limitations}
+-The primary unresolved task is joint simulation: the representative
+-detector, its actual observation traffic and the dynamic collective
+-controller have not been evaluated together. Passing isolated detection
+-and component route tests does not establish timely or beneficial recovery
+-of a collective. The shorter online detector timings and the 400/400 packet
+-validation cannot be combined into one measured end-to-end result.
+-
+-Detection coverage remains conditional. The latest model has aligned clocks,
+-eight independent one-hop paths, one fixed affected path and configured
+-collector service. Probe size/path/application treatment must expose the
+-business impairment. Smaller-budget selective/application/idle failures
+-remain visible, as do earlier reordering false alarms and delayed-report
+-deadline failures. The latest primary validation does not extend its pass
+-to arbitrary report loss, slow management, correlated faults, simultaneous
+-traffic changes or multiple fault episodes. Synchronous callback computation
+-also omits detector processing latency. General fast gray-fault coverage
+-therefore remains unresolved.
+-
+-Route selection assumes observations can estimate useful alternate service
+-over finite remaining work. The current heuristic cannot optimize the
+-collective critical path or guarantee future service under changing
+-background traffic. Pending-only execution leaves launched stalls on their
+-old routes; unreliable coordination and numerical reduction require further
+-simulation validation. The current bounded ring result does not replace the
+-crossed ring/OptCC route comparison. Expansion to 128 simulated ranks remains
+-unrun; Appendix~\ref{app:cost-diagnostics} records the reporting-budget
+-implication rather than claiming a measured scaling result.
+-
+-These are limits of the simulation evidence. Physical switch/NIC access,
+-real-GPU execution and deployment are outside the agreed study scope and
+-are not prerequisites for completing the joint simulation.
+-
+-\section{Conclusion}
+-Fast confirmation of communication impairment is the primary constraint in
+-LIMER's active-active recovery study. Class-separated observations,
+-representative probes and causal traffic compensation meet the registered
+-per-condition empirical below-100-ms target in a declared 10-Gb/s one-hop
+-model: 400/400 timely faults, largest per-condition p95 75.4~ms and no
+-alarms in the tested controls. Same-report contrasts and retained failures
+-show that observation opportunity, fault treatment and probe cost determine
+-the scope of that result. Separate simulations demonstrate when a local
+-switch helps or hurts and check versioned activation with launched-work
+-ownership. Integrating the primary detector and its costs into that route
+-loop, then completing the matched scheduling/route comparison, remains
+-necessary before claiming a robust simulated recovery system.
+-
+-\bibliographystyle{ACM-Reference-Format}
+-\bibliography{refs}
+-\appendix
+ 
+ \section{Alternative Observation Designs}
+ \label{app:observers}
+@@ -698,7 +976,8 @@
+ The following records retain prior experiments and negative results.
+ The primary candidate and validation are in Sections~\ref{sec:detection}
+ and~\ref{sec:primary-validation}. Cross-model counts below are not pooled
+-into a detector ranking or into the primary 400-fault denominator.
++into a detector ranking, the historical UDP 400-fault denominator, or the
++new RDMA validation.
+ 
+ \subsection{Transport Diagnostics and Earlier Validation}
+ An observation-only TCP retransmission pilot runs three independent
+@@ -1289,6 +1568,21 @@
+ 
+ \section{Implementation Environments}
+ \label{app:implementation}
++\subsection{New RDMA Loop and Reproducibility}
++The 2026-10-28 native backend is compiled with GCC 12.2.0 in an isolated
++Linux container. It is a CPU packet simulation; a logical GPU is a modeled
++endpoint. Each campaign retains its exact registration, generated topology
++and fault inputs, source and native-binary hashes, frozen scorer, raw event
++archive and attempt ledger. Independent replay reconstructs event evidence;
++full archive digests and compact evidence are checked separately. Native
++validation uses 140 unit tests at its execution checkpoint; a later report
++portability review passes 142 tests after adding two rounding-guard tests.
++That review changes only postprocessing: a sub-picosecond tolerance for
++aggregate mean roundoff across Python versions. Per-trial, pair, count and
++p95 checks remain exact; native rules, seeds and registered evidence are
++unchanged. The new report regenerates the same result JSON.
++
++\subsection{Historical Component Environments}
+ The following environment and test counts describe their recorded execution
+ checkpoint, not a newly run verification or a current full-suite count.
+ 
