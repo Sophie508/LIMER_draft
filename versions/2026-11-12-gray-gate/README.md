@@ -60,11 +60,6 @@ path 721 before the 250-ms monitoring horizon. The trial therefore remains a
 miss under the all-affected-paths criterion. This occurs with both the original
 and repaired detector streams; fixing lease cleanup does not fix detection.
 
-[Read-only diagnostics](diagnostics/README.md) identify two forecast concerns:
-fixed service windows mix phases, and one probe's latency can understate
-aggregate pipelined service. Correcting helper windows alone flips none of the
-14 replayed decisions. A paid multi-chunk probe is proposed, **not implemented**.
-
 ## Research question
 
 When a link continues delivering at reduced speed, can the controller choose
