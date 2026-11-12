@@ -146,6 +146,3 @@ must freeze before executing any registered case.
 Use [REPRODUCE.md](REPRODUCE.md) for inspection and fresh-run commands,
 [review/README.md](review/README.md) for the diff scope, and
 [NOVELTY_AUDIT.md](research/NOVELTY_AUDIT.md) for prior-work boundaries.
-Sophie explicitly authorized committing and publishing this reviewed revision
-on 2026-11-12. The publication branch is
-`codex/gray-fault-benefit-gate-2026-11-12`.
