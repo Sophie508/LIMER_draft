@@ -1,0 +1,177 @@
+{
+  "group": "policy-pilot-v2",
+  "run": "weak_loss-G11-pipelined-shared-benefit-s111210016",
+  "policy_log_sha256": "79c98baa57cd54fa7615aa726d74d3d3ea6adeed6db7d912148da100d6e5f172",
+  "pairs": [
+    {
+      "source": 0,
+      "initial": {
+        "timestamp_ns": 88417750,
+        "src": 0,
+        "phase": 3,
+        "stage": "probe_complete",
+        "input": {
+          "a_bytes": 0,
+          "b_bytes": 288,
+          "pending_bytes": 0,
+          "service_a": {
+            "bytes_per_ns": 0.5157136,
+            "age_ns": 0,
+            "known": 1
+          },
+          "service_b": {
+            "bytes_per_ns": 0.5034416,
+            "age_ns": 0,
+            "known": 1
+          },
+          "relay": {
+            "sample_bytes": 65536,
+            "leg_ns": [
+              304,
+              59460,
+              304
+            ],
+            "final_ack_ns": 1007680,
+            "parallel_chunks": 4,
+            "age_ns": 1007680,
+            "known": 1
+          },
+          "setup_ns": 4092160,
+          "helper_ready": 1
+        },
+        "should_switch": 0,
+        "reason": "stay_no_slower",
+        "stay_ns": 572.062380224439,
+        "switch_ns": 5159908,
+        "gain_ns": -5159335.9376197755
+      },
+      "followup": {
+        "timestamp_ns": 94517750,
+        "src": 0,
+        "phase": 3,
+        "stage": "probe_complete",
+        "input": {
+          "a_bytes": 0,
+          "b_bytes": 288,
+          "pending_bytes": 0,
+          "service_a": {
+            "bytes_per_ns": 1.0457316100207437,
+            "age_ns": 0,
+            "known": 1
+          },
+          "service_b": {
+            "bytes_per_ns": 0,
+            "age_ns": 0,
+            "known": 1
+          },
+          "relay": {
+            "sample_bytes": 65536,
+            "leg_ns": [
+              304,
+              59460,
+              304
+            ],
+            "final_ack_ns": 1007680,
+            "parallel_chunks": 4,
+            "age_ns": 1007680,
+            "known": 1
+          },
+          "setup_ns": 4092160,
+          "helper_ready": 1
+        },
+        "should_switch": 1,
+        "reason": "predicted_benefit",
+        "stay_ns": null,
+        "switch_ns": 5159908,
+        "gain_ns": null
+      },
+      "elapsed_ms": 6.1,
+      "remaining_B_bytes_unchanged": true
+    },
+    {
+      "source": 15,
+      "initial": {
+        "timestamp_ns": 88569794,
+        "src": 15,
+        "phase": 3,
+        "stage": "probe_complete",
+        "input": {
+          "a_bytes": 0,
+          "b_bytes": 432,
+          "pending_bytes": 0,
+          "service_a": {
+            "bytes_per_ns": 0.528152,
+            "age_ns": 0,
+            "known": 1
+          },
+          "service_b": {
+            "bytes_per_ns": 0.4608848,
+            "age_ns": 0,
+            "known": 1
+          },
+          "relay": {
+            "sample_bytes": 65536,
+            "leg_ns": [
+              304,
+              61504,
+              304
+            ],
+            "final_ack_ns": 1007680,
+            "parallel_chunks": 4,
+            "age_ns": 1007680,
+            "known": 1
+          },
+          "setup_ns": 4092160,
+          "helper_ready": 1
+        },
+        "should_switch": 0,
+        "reason": "stay_no_slower",
+        "stay_ns": 937.3275057020757,
+        "switch_ns": 5161952,
+        "gain_ns": -5161014.672494298
+      },
+      "followup": {
+        "timestamp_ns": 94669794,
+        "src": 15,
+        "phase": 3,
+        "stage": "probe_complete",
+        "input": {
+          "a_bytes": 0,
+          "b_bytes": 432,
+          "pending_bytes": 0,
+          "service_a": {
+            "bytes_per_ns": 1.0133597229094509,
+            "age_ns": 0,
+            "known": 1
+          },
+          "service_b": {
+            "bytes_per_ns": 0,
+            "age_ns": 0,
+            "known": 1
+          },
+          "relay": {
+            "sample_bytes": 65536,
+            "leg_ns": [
+              304,
+              61504,
+              304
+            ],
+            "final_ack_ns": 1007680,
+            "parallel_chunks": 4,
+            "age_ns": 1007680,
+            "known": 1
+          },
+          "setup_ns": 4092160,
+          "helper_ready": 1
+        },
+        "should_switch": 1,
+        "reason": "predicted_benefit",
+        "stay_ns": null,
+        "switch_ns": 5161952,
+        "gain_ns": null
+      },
+      "elapsed_ms": 6.1,
+      "remaining_B_bytes_unchanged": true
+    }
+  ]
+}

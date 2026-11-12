@@ -1,6 +1,14 @@
 # LIMER CPU-Only Emulation Prototype
 
-> **Latest research version (2026-10-28):** Start at
+> **Latest throughput revision (2026-11-12):** See the
+> [candidate implementation, conditions, results and diff](versions/2026-11-12-throughput/README.md).
+> This adds an explicit shared-helper extension; prior evidence remains preserved.
+
+> **Integration revision (2026-11-12):** See the
+> [meeting diagnosis and phase-scoped recovery change](versions/2026-11-12-integration/README.md).
+> Historical October evidence remains versioned separately.
+
+> **Previous research version (2026-10-28):** Start at
 > [the RDMA detector and switching-benefit release](versions/2026-10-28-rdma/README.md).
 > It contains runnable source, collaborator-relative changes, all registered
 > conditions, 640 new compact run records, the retained failed validation,

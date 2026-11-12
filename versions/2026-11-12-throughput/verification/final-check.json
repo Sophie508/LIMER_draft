@@ -1,0 +1,39 @@
+{
+  "compact_files_verified": 637,
+  "native_builds": {
+    "pilot-v1": {
+      "binary_sha256": "fb7eb946fd47cee4151efd4aa8624f6cf082878175a3170ae64acf42adc9053c",
+      "source_files": 3812
+    },
+    "pilot-v2": {
+      "binary_sha256": "769f0682bada3fa1961222c9d310eaefa3b4bf5882a55be98ebf1df4e211862d",
+      "source_files": 3812
+    },
+    "policy-pilot-v2": {
+      "binary_sha256": "769f0682bada3fa1961222c9d310eaefa3b4bf5882a55be98ebf1df4e211862d",
+      "source_files": 3812
+    },
+    "full-v2": {
+      "binary_sha256": "769f0682bada3fa1961222c9d310eaefa3b4bf5882a55be98ebf1df4e211862d",
+      "source_files": 3812
+    }
+  },
+  "registered_attempts": 24,
+  "execution_valid": 24,
+  "completed": 23,
+  "invalid": 0,
+  "unfinished": 1,
+  "not_run": 0,
+  "retained_raw_archive_hashes_rechecked": 24,
+  "local_source_matches_registrations": true,
+  "regenerated_tables_match": true,
+  "protected_constraint_files_unchanged": 14,
+  "timing_diagnosis_matches_phase_metrics": true,
+  "lending_transactions_checked_at_both_ends": 264,
+  "v2_helper_roles_are_disjoint": true,
+  "recorded_gate_tail_counterexamples_verified": 2,
+  "healthy_reference_unchanged": true,
+  "full_shared_fault_cases": 4,
+  "full_shared_fault_cases_at_least_70_percent": 4,
+  "scope": "Local compact integrity and table re-derivation; raw packet replay and archive hashes verified on otakotak, not repeated on this laptop."
+}

@@ -1,0 +1,5 @@
+phase,start_ns,end_ns,complete,duration_ns,region,aggregate_unique_gbps,A_unique_bytes,B_unique_bytes,Bprime_unique_bytes,new_Bprime_launches,new_Bprime_done,rescued_launches,done_chunks
+0,1000000,16847749,True,15847749,before_fault,271.0143438036531,268435456,268435456,,,,,8192
+1,16847750,32933378,True,16085628,before_fault,267.00650394252557,268435456,268435456,,,,,8192
+2,32933379,57672098,True,24738719,fault_or_diagnosis,173.6131646913488,286457856,249691040,722016,4,4,8,8192
+3,57672099,89646005,True,31973906,after_replacement,134.32726348792042,299237376,234487808,3145728,48,48,,8192

@@ -5,7 +5,8 @@ static unsigned Dest(unsigned s){return s<12?s+4:(s+1)%4;}
 static unsigned Key(unsigned s,unsigned d,unsigned rail){return (s*16+d)*3+rail;}
 static std::string output,method;
 static bool feedback=false,proxy=false;
-static bool serviceMode=false,benefitMode=false;
+static bool serviceMode=false,benefitMode=false,phaseScoped=false,singlePlane=false;
+static unsigned phasesPerRound=30;
 static uint64_t canaryPeriod=2000000,canaryBytes=65536;
 static limer::detection::ServiceDetector serviceDetector;
 static std::ofstream serviceEvents,serviceAlarms,serviceDecisions,policyLog;

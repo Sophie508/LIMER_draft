@@ -1,0 +1,201 @@
+{
+  "scope": "Post hoc analysis of archived development runs; no new simulation or acceptance cohort.",
+  "cases": {
+    "full-ring-blackhole-A_ONLY-always": {
+      "communication_ms": 959.847859,
+      "completed": true,
+      "phases_3_to_29_mean_ms": 31.997805222222222,
+      "detector_delays_ms": {
+        "0": 6.289441,
+        "15": 6.297121
+      },
+      "fresh_proxy_costs": {
+        "completed_routes": 0
+      },
+      "fresh_Bprime_completed": 0,
+      "health_probes": 0,
+      "whole_job_healthy_normalized_goodput_percent": 50.02651654609775
+    },
+    "full-ring-blackhole-G11-always": {
+      "communication_ms": 907.896469,
+      "completed": true,
+      "phases_3_to_29_mean_ms": 31.526827555555556,
+      "detector_delays_ms": {
+        "0": 8.00768,
+        "15": 8.01536
+      },
+      "fresh_proxy_costs": {
+        "completed_routes": 762,
+        "source_local_leg_ms": 0.00031718897637795276,
+        "network_leg_ms": 0.08322503805774278,
+        "destination_local_leg_ms": 0.00030570603674540684,
+        "final_notification_ms": 1.0080442979002626,
+        "route_to_logical_done_ms": 1.0918942309711286
+      },
+      "fresh_Bprime_completed": 762,
+      "health_probes": 56,
+      "helper_wait_mean_ms": 15.989426333333332,
+      "probe_and_setup_mean_ms": 5.175701592592593,
+      "activation_elapsed_mean_ms": 21.165127925925926,
+      "affected_new_allocation_fraction": {
+        "A": 0.9647714120370371,
+        "B": 0.0078125,
+        "Bprime": 0.02741608796296296
+      },
+      "phase3": {
+        "start_ns": 57672099,
+        "end_ns": 88784720,
+        "source0_prepare_ns": 73650000,
+        "source0_activate_ns": 78810493
+      },
+      "whole_job_healthy_normalized_goodput_percent": 52.88911945311244
+    },
+    "full-ring-blackhole-G11-benefit": {
+      "communication_ms": 907.896469,
+      "completed": true,
+      "phases_3_to_29_mean_ms": 31.526827555555556,
+      "detector_delays_ms": {
+        "0": 8.00768,
+        "15": 8.01536
+      },
+      "fresh_proxy_costs": {
+        "completed_routes": 762,
+        "source_local_leg_ms": 0.00031718897637795276,
+        "network_leg_ms": 0.08322503805774278,
+        "destination_local_leg_ms": 0.00030570603674540684,
+        "final_notification_ms": 1.0080442979002626,
+        "route_to_logical_done_ms": 1.0918942309711286
+      },
+      "fresh_Bprime_completed": 762,
+      "health_probes": 56,
+      "whole_job_healthy_normalized_goodput_percent": 52.88911945311244
+    },
+    "full-ring-healthy-G11-benefit": {
+      "communication_ms": 480.178448,
+      "completed": true,
+      "phases_3_to_29_mean_ms": 16.011056925925924,
+      "detector_delays_ms": {},
+      "fresh_proxy_costs": {
+        "completed_routes": 0
+      },
+      "fresh_Bprime_completed": 0,
+      "health_probes": 0,
+      "whole_job_healthy_normalized_goodput_percent": 100.0
+    },
+    "full-ring-blackhole-G11-benefit-persistent": {
+      "communication_ms": 920.652687,
+      "completed": true,
+      "phases_3_to_29_mean_ms": 31.999280074074072,
+      "detector_delays_ms": {
+        "0": 8.00768,
+        "15": 8.01536
+      },
+      "fresh_proxy_costs": {
+        "completed_routes": 1300,
+        "source_local_leg_ms": 0.00036244461538461535,
+        "network_leg_ms": 0.1269400676923077,
+        "destination_local_leg_ms": 0.00031137307692307695,
+        "final_notification_ms": 1.0091794138461538,
+        "route_to_logical_done_ms": 1.1367952992307693
+      },
+      "fresh_Bprime_completed": 1300,
+      "health_probes": 56,
+      "whole_job_healthy_normalized_goodput_percent": 52.156307669582674
+    },
+    "full-ring-weak_loss-G11-always": {
+      "communication_ms": 694.96234,
+      "completed": true,
+      "phases_3_to_29_mean_ms": 23.285184185185184,
+      "detector_delays_ms": {
+        "15": 20.018204,
+        "0": 20.032837
+      },
+      "fresh_proxy_costs": {
+        "completed_routes": 21,
+        "source_local_leg_ms": 0.0005545714285714286,
+        "network_leg_ms": 0.1685445238095238,
+        "destination_local_leg_ms": 0.0003353333333333333,
+        "final_notification_ms": 1.0126179523809524,
+        "route_to_logical_done_ms": 1.1820543809523811
+      },
+      "fresh_Bprime_completed": 21,
+      "health_probes": 56,
+      "whole_job_healthy_normalized_goodput_percent": 69.0941681818327
+    },
+    "full-ring-weak_loss-G11-benefit": {
+      "communication_ms": 975.894384,
+      "completed": true,
+      "phases_3_to_29_mean_ms": 33.6900747037037,
+      "detector_delays_ms": {
+        "15": 20.018204,
+        "0": 20.032837
+      },
+      "fresh_proxy_costs": {
+        "completed_routes": 49,
+        "source_local_leg_ms": 0.0005501224489795918,
+        "network_leg_ms": 0.2067521224489796,
+        "destination_local_leg_ms": 0.0003349183673469388,
+        "final_notification_ms": 1.013008163265306,
+        "route_to_logical_done_ms": 1.2206473265306124
+      },
+      "fresh_Bprime_completed": 49,
+      "health_probes": 132,
+      "whole_job_healthy_normalized_goodput_percent": 49.20393598658111
+    }
+  },
+  "gate_prediction_counterexample": {
+    "phase": 4,
+    "source": 15,
+    "prediction_ns": 118828640,
+    "predicted_stay_remaining_ms": 0.016893679217367136,
+    "subsequent_observation_ns": 124928640,
+    "observed_wait_ms": 6.1,
+    "outstanding_B_bytes_at_both_observations": 15072,
+    "interpretation": "The aggregate recent ACK rate did not predict this stalled tail."
+  },
+  "analytical_credit_ceiling": {
+    "credits_per_helper_nic": 4,
+    "chunk_bytes": 65536,
+    "minimum_final_notification_ns": 1007680,
+    "gbps": 2.0811686249603047,
+    "scope": "Upper bound for a fixed four-credit helper route under the current reservation and final-notification model. It excludes data transfer time, contention and idle-helper waiting. It is not a measured link rate."
+  },
+  "limitations": [
+    "Healthy-normalized goodput uses equal logical payload divided by whole-job communication time. It is not instantaneous NIC bandwidth.",
+    "Phases 3 through 29 are a post hoc descriptive window, not a preregistered acceptance metric.",
+    "A_ONLY moves business traffic from all ranks onto A. Its comparison does not isolate proxy benefit on affected ranks.",
+    "The gate counterexample demonstrates a prediction failure, not the causal allocation of the entire total-time gap.",
+    "Helpers must finish their own current-phase incoming and outgoing work. A phase reset does not heal the physical fault."
+  ],
+  "input_sha256": {
+    "evidence/development-v1/runs/full-ring-blackhole-A_ONLY-always/performance.json": "9298d47d50e0c76212498b2384744a98dca30629273a1e4e89f34215a0caaaae",
+    "evidence/development-v1/runs/full-ring-blackhole-A_ONLY-always/phase_metrics.csv": "0f90fa31784725404a23a9954ce7a62b8addfe5612e3c1f8e435822a0e27b753",
+    "evidence/development-v1/runs/full-ring-blackhole-A_ONLY-always/control_events.csv": "52e1d4564119ba22176afceb12d0b5e9f9a012bb0d2f71d6015b2dcaa7cc8d6a",
+    "evidence/development-v1/runs/full-ring-blackhole-A_ONLY-always/run_status.json": "27b0735c81ebd234df0b9f24c66c976a9d919c106e8379ed85bf07bde09e2a2f",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-always/performance.json": "0a4224aeccb54c4e55759c430c1eeea6f719099b82561790d0f203e1d94402b8",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-always/phase_metrics.csv": "eb817baed3da8301ed8b703d1f57092f00378b834c960b652cfe2be0d64e4be8",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-always/control_events.csv": "83fc8217e20b7376b53f2d6754aee168169640061997974c6fb7dbc8778c238e",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-always/run_status.json": "a86f6ac43998a377801af50e5583cbeb78d89182b40e5724b3a4df2c42a536a2",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-benefit/performance.json": "0a4224aeccb54c4e55759c430c1eeea6f719099b82561790d0f203e1d94402b8",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-benefit/phase_metrics.csv": "eb817baed3da8301ed8b703d1f57092f00378b834c960b652cfe2be0d64e4be8",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-benefit/control_events.csv": "83fc8217e20b7376b53f2d6754aee168169640061997974c6fb7dbc8778c238e",
+    "evidence/development-v1/runs/full-ring-blackhole-G11-benefit/run_status.json": "b302c0766d7b880a68c9a55b546d417873d5fcbdd3cbe42edf4d09f5d6518e1b",
+    "evidence/development-v1/runs/full-ring-healthy-G11-benefit/performance.json": "9ad28c97195b0bc4e43df2ad9055c42789377ea241d9ac607c95f21a83ffdf33",
+    "evidence/development-v1/runs/full-ring-healthy-G11-benefit/phase_metrics.csv": "7e13922b1463eb6bcfe2d6fec3aeebc7c46f4b8a2af59dd0fbc68b96240fa2e8",
+    "evidence/development-v1/runs/full-ring-healthy-G11-benefit/control_events.csv": "5bf33311394e4943588d0a2b28523582f15c04c84fefcac368b682e426b58866",
+    "evidence/development-v1/runs/full-ring-healthy-G11-benefit/run_status.json": "00094082bc09be696aa8258133d731a2cc358cf37730224c11115a1613fa547d",
+    "evidence/lifetime-full-v1/runs/full-ring-blackhole-G11-benefit-persistent/performance.json": "561351a6a0f797e22d5da0bbd24ce51127f973fa81f92c6a5166928750059238",
+    "evidence/lifetime-full-v1/runs/full-ring-blackhole-G11-benefit-persistent/phase_metrics.csv": "4dc3c724b330372170a96d2f8cea8ed17788d4e1e286c7ededa7453e2e8caa69",
+    "evidence/lifetime-full-v1/runs/full-ring-blackhole-G11-benefit-persistent/control_events.csv": "4e3cf1d5f099baa8d3078e7f4f5323f1757a26ed5548dc8771ccef3b9a8796cc",
+    "evidence/lifetime-full-v1/runs/full-ring-blackhole-G11-benefit-persistent/run_status.json": "e515d23a403d950b6b739e33a2f9054c926b9f1d0569493b5bcfc2a3827f846e",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-always/performance.json": "5ee91a91ee627c5757f3ae76fe68a2498ca6ced1fc2816fc374594b245d6d59d",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-always/phase_metrics.csv": "b39c5b20d6ce22fad027a9f5463a0a12d397402db4766bf66d051f82e2979b95",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-always/control_events.csv": "cb082225c388d4b0aaa9c5690942ca40afaebba04065447973fa32611e84a4de",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-always/run_status.json": "fe1f26535f81d69e1894879cfbbca807d2e8df136d3f1cec9ec5eef803a97eb7",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-benefit/performance.json": "efe017519f7895ee335a6725187d1b8f659b287d9f14a9ff82644baa7e25ed12",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-benefit/phase_metrics.csv": "fef420c6660c70dc891eaa54cd91cdf3106a86f1f9efb39294a0264dcd7a130c",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-benefit/control_events.csv": "3a40d46505be8f3e80690d7bf50b4181bd32cef96676ca6c93c1a84e18ab3813",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-benefit/run_status.json": "bf67704a47d4a5bbf882de10453115a05a245b6a2d5e4c39e9b390fcdca91157",
+    "evidence/gray-full-v1/runs/full-ring-weak_loss-G11-benefit/policy_decisions.jsonl": "49f312dd1cc3234786ceade6a242e0a5252da4cc44638978881f8e020183ccdf"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "limer-research-plan-v1",
+  "phase": "development",
+  "name": "Development: actual channel propagation increases by 80 ms; no detector truth access",
+  "cases": [
+    {
+      "name": "development-delay80-service-000-no_proxy",
+      "condition": "delay",
+      "trial": 0,
+      "pair_id": "delay80-service-000",
+      "arm": "no_proxy",
+      "detector": "service",
+      "method": "G10",
+      "family": "delay",
+      "scene": {
+        "family": "delay",
+        "rounds": 2,
+        "chunks_per_phase": 64,
+        "horizon_ns": 400000000,
+        "fault_ns": 38985307,
+        "node": 7,
+        "seed": 102814000,
+        "local_gbps": 2400,
+        "detector": "service",
+        "policy": "always",
+        "canary_period_ns": 2000000,
+        "canary_bytes": 65536,
+        "fault_duration_ns": 0
+      }
+    },
+    {
+      "name": "development-delay80-service-000-always",
+      "condition": "delay",
+      "trial": 0,
+      "pair_id": "delay80-service-000",
+      "arm": "always",
+      "detector": "service",
+      "method": "G11",
+      "family": "delay",
+      "scene": {
+        "family": "delay",
+        "rounds": 2,
+        "chunks_per_phase": 64,
+        "horizon_ns": 400000000,
+        "fault_ns": 38985307,
+        "node": 7,
+        "seed": 102814000,
+        "local_gbps": 2400,
+        "detector": "service",
+        "policy": "always",
+        "canary_period_ns": 2000000,
+        "canary_bytes": 65536,
+        "fault_duration_ns": 0
+      }
+    },
+    {
+      "name": "development-delay80-service-000-benefit",
+      "condition": "delay",
+      "trial": 0,
+      "pair_id": "delay80-service-000",
+      "arm": "benefit",
+      "detector": "service",
+      "method": "G11",
+      "family": "delay",
+      "scene": {
+        "family": "delay",
+        "rounds": 2,
+        "chunks_per_phase": 64,
+        "horizon_ns": 400000000,
+        "fault_ns": 38985307,
+        "node": 7,
+        "seed": 102814000,
+        "local_gbps": 2400,
+        "detector": "service",
+        "policy": "benefit",
+        "canary_period_ns": 2000000,
+        "canary_bytes": 65536,
+        "fault_duration_ns": 0
+      }
+    }
+  ],
+  "hypothesis": {
+    "detector": "Every registered affected B path alarms strictly before 100 ms in at least 95% of trials, separately per primary condition.",
+    "policy": "With identical inputs, observable benefit gating avoids costly replacements while retaining completion under persistent faults."
+  },
+  "scoring": {
+    "deadline_ns": 100000000,
+    "target_rate": 0.95,
+    "unit": "all affected paths within a trial",
+    "confidence": "95% one-sided exact binomial, per condition; no familywise correction",
+    "horizon_ns": 400000000,
+    "monitor_after_job_completion": true,
+    "faults_eligible": [
+      "packet loss",
+      "severe service slowdown",
+      "blackhole"
+    ],
+    "calibration_ns": 20000000,
+    "seed_base": 102800000,
+    "fault_onset_ns": [
+      35000000,
+      55000000
+    ],
+    "scope": "16 GPUs, fixed dual-plane topology and registered traffic/fault distributions; not general grey-fault coverage"
+  }
+}

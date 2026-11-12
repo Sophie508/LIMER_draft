@@ -1,0 +1,32 @@
+{
+  "errors": [],
+  "logical_chunks": 245760,
+  "completed_chunks": 245760,
+  "unique_ack_bytes": 16106127360,
+  "relay_chunks": 228,
+  "relay_leg_transfers": 684,
+  "max_logical_source_credit": 8,
+  "max_physical_nic_credit": 4,
+  "max_helper_buffers": 4,
+  "dual_plane_verified": true,
+  "helper_phase_idle_verified": true,
+  "final_target_completion_verified": true,
+  "physical_wire_totals": {
+    "network_wire_bytes": 19674008340,
+    "probe_wire_bytes": 2295264028,
+    "retransmission_wire_bytes": 24019380,
+    "local_wire_bytes": 29420832,
+    "relay_wire_bytes": 16132464
+  },
+  "m13_causality_verified": false,
+  "active_detector_causality_verified": true,
+  "active_detector": "service",
+  "retired_B_no_new_work_verified": true,
+  "fresh_proxy_chunks": 49,
+  "fresh_proxy_phases": 5,
+  "affected_sources_with_replacement": [
+    0,
+    15
+  ],
+  "pass": true
+}

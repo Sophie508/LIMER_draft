@@ -1,0 +1,654 @@
+--- a/python/limerlab/archive.py
++++ b/python/limerlab/archive.py
+@@ -11,9 +11,9 @@
+     if destination.exists(): raise FileExistsError(destination)
+     hashes = {p.relative_to(source).as_posix(): sha(p) for p in source.rglob('*') if p.is_file()}
+     partial = destination.with_suffix('.partial')
+-    # Higher compression and removal of verified duplicate raw logs keep large
+-    # campaigns within account quotas; evidence content is unchanged.
+-    with tarfile.open(partial, 'w:gz', compresslevel=6) as archive:
++    # Fast lossless compression reduces analysis turnaround. Every archived
++    # member is still hash-verified before pruning duplicate raw logs.
++    with tarfile.open(partial, 'w:gz', compresslevel=1) as archive:
+         for rel in sorted(hashes): archive.add(source / rel, arcname=rel, recursive=False)
+     seen = set()
+     with tarfile.open(partial, 'r|gz') as archive:
+--- a/python/limerlab/audit.py
++++ b/python/limerlab/audit.py
+@@ -32,13 +32,17 @@
+     check(status['physical_planes'] == 2 and not status['extra_rto'], 'protocol metadata changed')
+     fixed = status['method'] in ('G00', 'G01')
+     enabled = status['method'] in ('G01', 'G11')
++    pipelined = status.get('relay_completion', 'final_ack') == 'pipelined'
++    shared_helpers = status.get('helper_mode', 'idle') == 'shared'
++    source_window = 32 if pipelined else 8
++    if 'source_window' in status: check(status['source_window'] == source_window, 'unregistered source window')
+     phase_chunks = status['chunks_per_phase']
+     phase_bytes = phase_chunks * 65536
+     manifest_path = root / 'run_manifest.json'
+     if manifest_path.exists():
+         manifest = json.loads(manifest_path.read_text())
+         check(manifest['scene']['chunks_per_phase'] == phase_chunks, 'registered chunk geometry changed')
+-        for name in ('replacement_lifetime', 'phases_per_round'):
++        for name in ('replacement_lifetime', 'phases_per_round', 'relay_completion', 'helper_mode'):
+             if name in manifest['scene']:
+                 check(status.get(name) == manifest['scene'][name], 'registered '+name+' changed')
+         for name in ('detector','policy'):
+@@ -82,7 +86,7 @@
+             allocations[c] = dict(r)
+             active[r['src']] += 1
+             max_source = max(max_source, active[r['src']])
+-            check(active[r['src']] <= 8, 'logical source credit exceeded')
++            check(active[r['src']] <= source_window, 'logical source credit exceeded')
+         else:
+             check(c in chunks, 'event for unknown chunk')
+             if c not in chunks:
+@@ -130,7 +134,27 @@
+     def idle_time(p, g):
+         return max(finishes[p, g, 'out'] + finishes[p, g, 'in'], default=10**30)
+ 
+-    reservations = {}
++    controls = list(rows(root / 'control_events.csv'))
++    lending, loan_times = {}, {}
++    for record in controls:
++        if record['event'] != 'LEND_ACTIVE': continue
++        key = int(record['phase']), int(record['rank'])
++        requests = [x for x in controls if x['phase'] == record['phase']
++                    and x['version'] == record['version'] and x['event'] in ('LEND_TX','LEND_RX')]
++        check(shared_helpers and len(requests) == 2, 'invalid lending transaction')
++        if len(requests) != 2: continue
++        by_kind = {x['event']:x for x in requests}
++        check(set(by_kind) == {'LEND_TX','LEND_RX'}, 'missing lending participant')
++        if set(by_kind) != {'LEND_TX','LEND_RX'}: continue
++        at = int(record['arrival_ns'])
++        check(int(record['sent_ns']) == at and at == max(int(x['arrival_ns']) for x in requests),
++              'lending applied before requests arrived')
++        hs, hd = int(by_kind['LEND_TX']['rank']), int(by_kind['LEND_RX']['rank'])
++        check(key not in lending, 'duplicate phase lending')
++        lending[key] = (at, hs, hd)
++        loan_times[key[0], hs, 'tx'] = at
++        loan_times[key[0], hd, 'rx'] = at
++    reservations, releases = {}, {}
+     tx, rx, buffers = defaultdict(int), defaultdict(int), defaultdict(int)
+     max_nic = max_buffers = relay_count = 0
+     for raw in rows(root / 'peer_events.csv'):
+@@ -151,13 +175,23 @@
+                     check(r['length']==65536, 'paired recovery policies use different representative probes')
+                 check(r['helper_src'] != r['src'] and r['helper_src'] // 4 == r['src'] // 4, 'source helper outside source server')
+                 check(r['helper_dst'] != r['dst'] and r['helper_dst'] // 4 == r['dst'] // 4, 'target helper outside target server')
+-                check(idle_at(r['phase'], r['helper_src'], t) and idle_at(r['phase'], r['helper_dst'], t), 'helper has unfinished own phase traffic')
++                if shared_helpers:
++                    loan = lending.get((r['phase'], r['src']))
++                    check(loan is not None and loan[0] <= t and loan[1:] == (r['helper_src'],r['helper_dst']), 'relay lacks delivered matching lending authorization')
++                else:
++                    check(idle_at(r['phase'], r['helper_src'], t) and idle_at(r['phase'], r['helper_dst'], t), 'helper has unfinished own phase traffic')
+                 if not r['probe']:
+                     relay_count += 1
+                     check(rid in final_routes, 'resource reservation without proxy launch')
+         else:
+-            check(rid in reservations, 'release without reservation')
++            check(rid in reservations and rid not in releases, 'release without reservation or double release')
++            releases[rid] = t
+         for s, d, nic in edges:
++            if shared_helpers and not r['relay'] and nic == 3 and delta == 1:
++                if loan_times.get((r['phase'],s,'tx'),10**30) <= t:
++                    check(tx[s,nic] < 3, 'own traffic consumed lent TX credit')
++                if loan_times.get((r['phase'],d,'rx'),10**30) <= t:
++                    check(rx[d,nic] < 3, 'own traffic consumed lent RX credit')
+             tx[s, nic] += delta
+             rx[d, nic] += delta
+             check(0 <= tx[s, nic] <= 4 and 0 <= rx[d, nic] <= 4, 'physical NIC credit exceeded')
+@@ -245,6 +279,9 @@
+             rid = int(raw['version'])
+             check((rid, 2) in completed and int(raw['sent_ns']) >= completed[rid, 2], 'final ACK before final target received data')
+             notifications[rid] = int(raw['arrival_ns'])
++    for (p,src), (at,hs,hd) in lending.items():
++        check(alarms.get(src,10**30) <= at, 'lending before diagnosis')
++        check(any(r['event']=='LEND_TX' and r['rank']==str(hs) and r['phase']==str(p) and int(r['sent_ns'])>=alarms.get(src,10**30) for r in controls), 'lending request before diagnosis')
+     if 'control_wire_bytes' in status:
+         check(status['control_wire_bytes'] == control_bytes, 'unaccounted control traffic')
+     # A retired direct B route can drain, but it can never accept a new chunk.
+@@ -302,6 +339,10 @@
+                       and int(report['wire_bytes'])==96
+                       and arrival<=launch['timestamp_ns'],
+                       'proxy consumed a missing, misaddressed, wrong-phase or undelivered health report')
++        if pipelined and (rid,2) in completed:
++            check(releases.get(rid) == completed[rid,2], 'pipelined release differs from final target delivery')
++        elif pipelined:
++            check(rid not in releases, 'pipelined resource release before final target delivery')
+         if c in done:
+             check(rid in notifications and done[c]['timestamp_ns'] == notifications.get(rid), 'logical completion before final notification')
+             check(all((rid, i) in completed for i in range(3)), 'logical completion missing a relay leg')
+@@ -338,7 +379,9 @@
+     return dict(pass_=not errors, errors=errors, logical_chunks=len(chunks), completed_chunks=len(done),
+                 unique_ack_bytes=unique, relay_chunks=relay_count, relay_leg_transfers=sum(rid in final_routes for rid, _ in completed),
+                 max_logical_source_credit=max_source, max_physical_nic_credit=max_nic, max_helper_buffers=max_buffers,
+-                dual_plane_verified=True, helper_phase_idle_verified=True, final_target_completion_verified=True,
++                dual_plane_verified=True, helper_phase_idle_verified=not shared_helpers,
++                helper_shared_capacity_verified=shared_helpers, pipelined_release_verified=pipelined,
++                final_target_completion_verified=True,
+                 physical_wire_totals=dict(wire_totals), m13_causality_verified=status.get('detector_mode','legacy')=='legacy',
+                 active_detector_causality_verified=True, active_detector=status.get('detector_mode','legacy'),
+                 retired_B_no_new_work_verified=True, fresh_proxy_chunks=len(new_proxy),
+--- a/python/limerlab/cli.py
++++ b/python/limerlab/cli.py
+@@ -31,6 +31,8 @@
+     run.add_argument('--canary-period-ns', type=int, default=2000000)
+     run.add_argument('--replacement-lifetime', choices=['phase','persistent'], default='phase')
+     run.add_argument('--phases-per-round', type=int, default=30)
++    run.add_argument('--relay-completion', choices=['final_ack','pipelined'], default='final_ack')
++    run.add_argument('--helper-mode', choices=['idle','shared'], default='idle')
+     run.add_argument('--case', type=Path, help='Exact preregistered case JSON; overrides scalar scenario arguments')
+     run.add_argument('--archive-to', type=Path)
+     run.add_argument('--prune-raw', action='store_true')
+@@ -66,7 +68,7 @@
+                              round(a.fault_ms*1000000), a.node, a.seed, a.local_gbps,
+                              detector=a.detector,policy=a.policy,fault_duration_ns=round(a.fault_duration_ms*1000000),
+                              canary_period_ns=a.canary_period_ns,replacement_lifetime=a.replacement_lifetime,
+-                             phases_per_round=a.phases_per_round)
++                             phases_per_round=a.phases_per_round,relay_completion=a.relay_completion,helper_mode=a.helper_mode)
+         result = run_case(a.build, a.out, method, scene, a.archive_to, not a.prune_raw)
+         print(json.dumps(dict(name=result['name'], status=result['status']['status'],
+                               communication_ms=result['performance']['communication_ms'],
+--- a/python/limerlab/config.py
++++ b/python/limerlab/config.py
+@@ -23,8 +23,16 @@
+ 
+     replacement_lifetime: str = 'phase'
+     phases_per_round: int = 30
++    relay_completion: str = 'final_ack'
++    helper_mode: str = 'idle'
+ 
+     def __post_init__(self):
++        if self.relay_completion not in ('final_ack', 'pipelined'):
++            raise ValueError('Unknown relay completion mode')
++        if self.helper_mode == 'shared' and self.replacement_lifetime != 'phase':
++            raise ValueError('Shared helpers require phase lifetime')
++        if self.helper_mode not in ('idle', 'shared'):
++            raise ValueError('Unknown helper mode')
+         if self.replacement_lifetime not in ('phase', 'persistent'):
+             raise ValueError('Unknown replacement lifetime')
+         if not 1 <= self.phases_per_round <= 30:
+--- a/python/limerlab/runner.py
++++ b/python/limerlab/runner.py
+@@ -35,7 +35,7 @@
+     command = [str(binary), str(out / 'inputs/topology.txt'), str(out / 'inputs/config.txt'), str(out),
+                method, str(scene.rounds), str(scene.horizon_ns), str(out / 'truth/injection.txt'), str(scene.chunks_per_phase),
+                scene.detector, scene.policy, str(scene.canary_period_ns), str(scene.canary_bytes),
+-               scene.replacement_lifetime, str(scene.phases_per_round)]
++               scene.replacement_lifetime, str(scene.phases_per_round),scene.relay_completion,scene.helper_mode]
+     manifest = dict(schema='limer-run-v1', method=method, scene=scene.dictionary(), command=command,
+         binary_sha256=build_record['binary_sha256'], build_sha256=sha(Path(build) / 'build.json'),
+         input_hashes={p.relative_to(out).as_posix(): sha(p) for p in out.rglob('*') if p.is_file()})
+--- a/src/simulator/main.cc
++++ b/src/simulator/main.cc
+@@ -23,9 +23,10 @@
+ 
+ using namespace limer::engine;
+ int main(int argc,char** argv){try{
+- if(argc!=9&&argc!=13&&argc!=15)throw std::runtime_error("topology config out method rounds horizon fault chunks-per-phase [detector policy canary-period canary-bytes]");output=argv[3];method=argv[4];phases=std::stoul(argv[5])*30;horizon=std::stoull(argv[6]);
++ if(argc!=9&&argc!=13&&argc!=15&&argc!=17)throw std::runtime_error("topology config out method rounds horizon fault chunks-per-phase [detector policy canary-period canary-bytes]");output=argv[3];method=argv[4];phases=std::stoul(argv[5])*30;horizon=std::stoull(argv[6]);
+  if(argc>=13){std::string dm=argv[9],pm=argv[10];if(dm!="legacy"&&dm!="service")throw std::runtime_error("detector mode");if(pm!="always"&&pm!="benefit")throw std::runtime_error("policy mode");serviceMode=dm=="service";benefitMode=pm=="benefit";canaryPeriod=std::stoull(argv[11]);canaryBytes=std::stoull(argv[12]);if(canaryPeriod<100000||canaryBytes!=65536)throw std::runtime_error("canary geometry");}
+- if(argc==15){std::string lifetime=argv[13];if(lifetime!="phase"&&lifetime!="persistent")throw std::runtime_error("replacement lifetime");phaseScoped=lifetime=="phase";phasesPerRound=std::stoul(argv[14]);if(phasesPerRound<1||phasesPerRound>30)throw std::runtime_error("phases per round");phases=std::stoul(argv[5])*phasesPerRound;}
++ if(argc>=15){std::string lifetime=argv[13];if(lifetime!="phase"&&lifetime!="persistent")throw std::runtime_error("replacement lifetime");phaseScoped=lifetime=="phase";phasesPerRound=std::stoul(argv[14]);if(phasesPerRound<1||phasesPerRound>30)throw std::runtime_error("phases per round");phases=std::stoul(argv[5])*phasesPerRound;}
++ if(argc==17){std::string cm=argv[15],hm=argv[16];if(cm!="final_ack"&&cm!="pipelined")throw std::runtime_error("relay completion mode");if(hm!="idle"&&hm!="shared")throw std::runtime_error("helper mode");pipelined=cm=="pipelined";sharedHelpers=hm=="shared";if(sharedHelpers&&!phaseScoped)throw std::runtime_error("shared helpers require phase lifetime");}
+  phaseChunks=std::stoul(argv[8]);if(phaseChunks<16||phaseChunks%2)throw std::runtime_error("even phase chunks >=16 required");Bytes=uint64_t(phaseChunks)*ChunkBytes;
+  singlePlane=method=="A_ONLY";feedback=singlePlane||method=="G10"||method=="G11";proxy=method=="G01"||method=="G11";
+  if(method!="G00"&&method!="G10"&&!proxy&&!singlePlane)throw std::runtime_error("unsupported method");
+@@ -49,6 +50,6 @@
+  if(serviceMode){Simulator::Schedule(MilliSeconds(1),&ServiceTick);if(spacingEnd<horizon)Simulator::Schedule(NanoSeconds(spacingEnd),&ReceiverSpacingTick);}else{Simulator::Schedule(MilliSeconds(1),&ProbeTick);Simulator::Schedule(MilliSeconds(10),&ObserveTick);}
+  Simulator::Schedule(NanoSeconds(1050000),&Tick);
+  Simulator::Stop(NanoSeconds(horizon));Simulator::Run();
+- std::ofstream status(output+"/run_status.json");status<<"{\"detector_mode\":\""<<(serviceMode?"service":"legacy")<<"\",\"policy_mode\":\""<<(benefitMode?"benefit":"always")<<"\",\"replacement_lifetime\":\""<<(phaseScoped?"phase":"persistent")<<"\",\"phases_per_round\":"<<phasesPerRound<<",\"monitor_end_ns\":"<<PeerNow()<<",\"status\":\""<<(jobDone?"completed":"task_unfinished")<<"\",\"method\":\""<<method<<"\",\"job_done_ns\":"<<jobDone<<",\"horizon_ns\":"<<horizon<<",\"world_size\":16,\"physical_planes\":2,\"phases_done\":"<<phase<<",\"phases_expected\":"<<phases<<",\"chunks_per_phase\":"<<phaseChunks<<",\"proxy_chunks\":"<<proxyChunks<<",\"new_proxy_chunks\":"<<newProxyChunks<<",\"rescued_chunks\":"<<rescuedChunks<<",\"health_probe_routes\":"<<probeRoutes<<",\"network_wire_bytes\":"<<networkWire<<",\"local_wire_bytes\":"<<localWire<<",\"probe_wire_bytes\":"<<probeWire<<",\"relay_wire_bytes\":"<<rescueWire<<",\"retransmission_wire_bytes\":"<<retransWire<<",\"control_wire_bytes\":"<<control.wire_bytes<<",\"stale_acks\":"<<staleAcks<<",\"extra_rto\":false,\"scope\":\""<<(phaseScoped?"phase-scoped B-prime replacement v3":(serviceMode?"service-driven persistent B-prime replacement v2":"M13-driven persistent B-prime replacement v1"))<<"\"}\n";
++ std::ofstream status(output+"/run_status.json");status<<"{\"relay_completion\":\""<<(pipelined?"pipelined":"final_ack")<<"\",\"helper_mode\":\""<<(sharedHelpers?"shared":"idle")<<"\",\"source_window\":"<<SourceWindow()<<",\"detector_mode\":\""<<(serviceMode?"service":"legacy")<<"\",\"policy_mode\":\""<<(benefitMode?"benefit":"always")<<"\",\"replacement_lifetime\":\""<<(phaseScoped?"phase":"persistent")<<"\",\"phases_per_round\":"<<phasesPerRound<<",\"monitor_end_ns\":"<<PeerNow()<<",\"status\":\""<<(jobDone?"completed":"task_unfinished")<<"\",\"method\":\""<<method<<"\",\"job_done_ns\":"<<jobDone<<",\"horizon_ns\":"<<horizon<<",\"world_size\":16,\"physical_planes\":2,\"phases_done\":"<<phase<<",\"phases_expected\":"<<phases<<",\"chunks_per_phase\":"<<phaseChunks<<",\"proxy_chunks\":"<<proxyChunks<<",\"new_proxy_chunks\":"<<newProxyChunks<<",\"rescued_chunks\":"<<rescuedChunks<<",\"health_probe_routes\":"<<probeRoutes<<",\"network_wire_bytes\":"<<networkWire<<",\"local_wire_bytes\":"<<localWire<<",\"probe_wire_bytes\":"<<probeWire<<",\"relay_wire_bytes\":"<<rescueWire<<",\"retransmission_wire_bytes\":"<<retransWire<<",\"control_wire_bytes\":"<<control.wire_bytes<<",\"stale_acks\":"<<staleAcks<<",\"extra_rto\":false,\"scope\":\""<<(phaseScoped?"phase-scoped B-prime replacement v3":(serviceMode?"service-driven persistent B-prime replacement v2":"M13-driven persistent B-prime replacement v1"))<<"\"}\n";
+  Simulator::Destroy();return jobDone?0:2;
+  }catch(const std::exception& e){std::cerr<<e.what()<<std::endl;return 1;}}
+--- a/src/simulator/recovery/decision.h
++++ b/src/simulator/recovery/decision.h
+@@ -28,7 +28,7 @@
+  double queued=control.free_ns>PeerNow()?control.free_ns-PeerNow():0;
+  x.relay.final_ack_ns=queued+1000000+7680;
+  x.setup_ns=std::string(stage)=="commit"?0:queued+4000000+12*7680;
+- x.helper_ready=Idle(b.hs)&&Idle(b.hd);
++ x.helper_ready=sharedHelpers||(Idle(b.hs)&&Idle(b.hd));
+  auto d=EvaluateBenefit(x);
+  policyLog<<"{\"timestamp_ns\":"<<PeerNow()<<",\"src\":"<<src<<",\"phase\":"<<phase<<",\"stage\":\""<<stage<<"\",\"input\":{\"a_bytes\":"<<x.a_bytes<<",\"b_bytes\":"<<x.b_bytes<<",\"pending_bytes\":"<<x.pending_bytes
+   <<",\"service_a\":{\"bytes_per_ns\":"<<x.service_a.bytes_per_ns<<",\"age_ns\":0,\"known\":"<<x.service_a.known<<"},\"service_b\":{\"bytes_per_ns\":"<<x.service_b.bytes_per_ns<<",\"age_ns\":0,\"known\":"<<x.service_b.known<<"},\"relay\":{\"sample_bytes\":"<<x.relay.sample_bytes<<",\"leg_ns\":["<<x.relay.leg_ns[0]<<','<<x.relay.leg_ns[1]<<','<<x.relay.leg_ns[2]<<"],\"final_ack_ns\":"<<x.relay.final_ack_ns<<",\"parallel_chunks\":4,\"age_ns\":"<<x.relay.age_ns<<",\"known\":"<<x.relay.known<<"},\"setup_ns\":"<<x.setup_ns<<",\"helper_ready\":"<<x.helper_ready<<"},\"should_switch\":"<<d.should_switch<<",\"reason\":\""<<d.reason<<"\",\"stay_ns\":";
+--- a/src/simulator/recovery/proxy.h
++++ b/src/simulator/recovery/proxy.h
+@@ -2,7 +2,7 @@
+ namespace limer { namespace engine {
+ static void Commit(unsigned src,unsigned p,uint64_t version){
+  auto& b=binding[src];if(p!=phase||version!=b.version)return;
+- if(!Idle(b.hs)||!Idle(b.hd)||PeerNow()<b.health||PeerNow()-b.health>Ttl){b.pending=false;return;}
++ if((!sharedHelpers&&(!Idle(b.hs)||!Idle(b.hd)))||PeerNow()<b.health||PeerNow()-b.health>Ttl){b.pending=false;return;}
+  if(!m13[src])throw std::logic_error("replacement without M13 alarm");
+  if(!b.configured&&benefitMode&&!BenefitAllows(src,"commit")){b.pending=false;b.nextAttempt=PeerNow()+5000000;return;}
+  b.ready=true;b.pending=false;b.configured=true;b.disabled=true;
+@@ -43,14 +43,41 @@
+  Configure(r.src);
+ }
+ 
++static void LendReady(unsigned src,unsigned p,uint64_t version){
++ auto& b=binding[src];if(p!=phase||version!=b.version)return;
++ loanTx[b.hs]=true;loanRx[b.hd]=true;b.loanReady=true;b.pending=false;
++ controls<<PeerNow()<<','<<PeerNow()<<",LEND_ACTIVE,"<<src<<','<<phase<<','<<version<<",0\n";
++}
++
++static bool RequestLending(unsigned src){
++ auto& b=binding[src];if(b.lending)return b.loanReady;
++ bool found=false;unsigned hs=0,hd=0;
++ for(unsigned h=src/4*4;h<src/4*4+4&&!found;++h)if(h!=src&&!plannedTx[h]&&!plannedRx[h])
++  for(unsigned d=Dest(src)/4*4;d<Dest(src)/4*4+4;++d)if(d!=Dest(src)&&!plannedRx[d]&&!plannedTx[d]){hs=h;hd=d;found=true;break;}
++ if(!found)return false;
++ b.hs=hs;b.hd=hd;b.lending=true;b.pending=true;b.p=phase;b.version=++serial;
++ plannedTx[hs]=b.version;plannedRx[hd]=b.version;
++ // Lending changes only admission of future own traffic, after paid delivery.
++ // Existing transfers drain normally and all traffic retains physical caps.
++ uint64_t at=Message("LEND_TX",hs,b.version);at=std::max(at,Message("LEND_RX",hd,b.version));
++ Simulator::Schedule(NanoSeconds(at-PeerNow()),&LendReady,src,phase,b.version);
++ return false;
++}
++
+ static void Tick(){
+  if(phase<phases)for(unsigned s=0;s<16;++s){
+   if(binding[s].ready&&PeerNow()-binding[s].health>Ttl)binding[s].ready=false;
+   Pump(s);if(!proxy||!m13[s]||binding[s].ready||binding[s].pending||outDone[s]==phaseChunks||PeerNow()<binding[s].nextAttempt)continue;
+   bool found=false;unsigned hs=0,hd=0;
+-  for(unsigned h=s/4*4;h<s/4*4+4&&!found;++h)if(h!=s&&Idle(h))
+-   for(unsigned d=Dest(s)/4*4;d<Dest(s)/4*4+4;++d)if(d!=Dest(s)&&Idle(d)){
+-    Route r;r.src=s;r.dst=Dest(s);r.hs=h;r.hd=d;r.relay=true;r.rail=1;if(Capacity(r)){hs=h;hd=d;found=true;break;}}
++  if(sharedHelpers){
++   if(!RequestLending(s))continue;
++   hs=binding[s].hs;hd=binding[s].hd;
++   Route r;r.src=s;r.dst=Dest(s);r.hs=hs;r.hd=hd;r.relay=true;r.rail=1;found=Capacity(r);
++  }else{
++   for(unsigned h=s/4*4;h<s/4*4+4&&!found;++h)if(h!=s&&Idle(h))
++    for(unsigned d=Dest(s)/4*4;d<Dest(s)/4*4+4;++d)if(d!=Dest(s)&&Idle(d)){
++     Route r;r.src=s;r.dst=Dest(s);r.hs=h;r.hd=d;r.relay=true;r.rail=1;if(Capacity(r)){hs=h;hd=d;found=true;break;}}
++  }
+   if(!found)continue;
+   auto& b=binding[s];b.hs=hs;b.hd=hd;b.pending=true;b.p=phase;b.version=++serial;
+   controls<<PeerNow()<<','<<PeerNow()<<",M13_REPLACEMENT_PREPARE,"<<s<<','<<phase<<','<<b.version<<",0\n";
+--- a/src/simulator/recovery/resources.h
++++ b/src/simulator/recovery/resources.h
+@@ -6,6 +6,10 @@
+ }
+ 
+ static bool Capacity(const Route& r){
++ if(sharedHelpers&&!r.relay&&r.rail==1){
++  if(loanTx[r.src]&&tx[r.src][3]>=3)return false;
++  if(loanRx[r.dst]&&rx[r.dst][3]>=3)return false;
++ }
+  for(auto e:Edges(r))if(tx[e[0]][e[2]]>=4||rx[e[1]][e[2]]>=4)return false;
+  return !r.relay||(buffers[r.hs]<4&&buffers[r.hd]<4);
+ }
+@@ -21,4 +25,10 @@
+  peers<<PeerNow()<<','<<(add?"RESERVE":"RELEASE")<<','<<r.id<<','<<r.chunk<<','<<r.p<<','<<r.src<<','<<r.dst<<','<<r.hs<<','<<r.hd<<','<<r.rail<<','<<r.relay<<','<<r.probe<<','<<r.length<<'\n';
+ }
+ 
++static void ReleaseDelivered(Route& r){
++ if(!r.relay||r.probe||!r.reserved||r.delivered)throw std::logic_error("invalid relay delivery");
++ r.delivered=PeerNow();
++ if(pipelined)Reserve(r,false);
++}
++
+ }}
+--- a/src/simulator/runtime/completion.h
++++ b/src/simulator/runtime/completion.h
+@@ -4,11 +4,11 @@
+  auto r=routes.at(id);auto& c=chunks.at(r.chunk);
+  if(c.epoch!=r.epoch||c.done)throw std::logic_error("late route completion");
+  Progress(c,ChunkBytes,id);c.done=true;PeerEvent("DONE",c,id);
+- Reserve(routes.at(id),false);--active[c.src];++outDone[c.src];++inDone[c.dst];++finished;
++ if(routes.at(id).reserved)Reserve(routes.at(id),false);--active[c.src];++outDone[c.src];++inDone[c.dst];++finished;
+  if(Idle(c.src)&&!idleAt[c.src])idleAt[c.src]=PeerNow();if(Idle(c.dst)&&!idleAt[c.dst])idleAt[c.dst]=PeerNow();
+  // A rescued suffix is not a fresh B-prime bandwidth sample.
+  unsigned slot=r.relay?2:c.lane;
+- if(!c.migrated)rates[c.src][slot]=r.length*8e9/std::max(uint64_t(1),PeerNow()-r.started);
++ if(!c.migrated)rates[c.src][slot]=r.length*8e9/std::max(uint64_t(1),(pipelined&&r.relay?r.delivered:PeerNow())-r.started);
+  routes.erase(id);
+  if(finished==16*phaseChunks){++phase;if(phase==phases){jobDone=PeerNow();return;}Simulator::Schedule(NanoSeconds(1),&StartPhase);}
+  else Simulator::ScheduleWithContext(c.src,NanoSeconds(1),&Pump,c.src);
+--- a/src/simulator/runtime/state.h
++++ b/src/simulator/runtime/state.h
+@@ -7,6 +7,10 @@
+ static bool feedback=false,proxy=false;
+ static bool serviceMode=false,benefitMode=false,phaseScoped=false,singlePlane=false;
+ static unsigned phasesPerRound=30;
++static bool pipelined=false,sharedHelpers=false;
++static std::array<bool,16> loanTx{},loanRx{};
++static std::array<uint64_t,16> plannedTx{},plannedRx{};
++static unsigned SourceWindow(){return pipelined?32:8;}
+ static uint64_t canaryPeriod=2000000,canaryBytes=65536;
+ static limer::detection::ServiceDetector serviceDetector;
+ static std::ofstream serviceEvents,serviceAlarms,serviceDecisions,policyLog;
+@@ -23,7 +27,7 @@
+ static unsigned staleAcks=0,proxyChunks=0,probeRoutes=0,newProxyChunks=0,rescuedChunks=0;
+ struct PeerChunk {uint64_t id,offset,acked=0,epoch=0,allocated=0;unsigned src,dst,p,lane;bool done=false,migrated=false;uint64_t lastProgress=0;};
+ struct Route {uint64_t id=0,chunk=0,epoch=0,base=0,length=0;unsigned src=0,dst=0,hs=0,hd=0,rail=1,index=0,p=0;
+- bool relay=false,probe=false,reserved=false,service=false;uint64_t started=0,measurement=0,bindingVersion=0;
++ bool relay=false,probe=false,reserved=false,service=false;uint64_t started=0,measurement=0,bindingVersion=0,delivered=0;
+  std::array<double,3> legNs{{0,0,0}};};
+ struct Leg {uint64_t tag,route,started;unsigned src,dst,nic,index;Ptr<RdmaQueuePair> qp;};
+ struct Wire {unsigned path,batch;bool probe;uint64_t seq,submitted;};
+@@ -40,7 +44,7 @@
+ static uint64_t nextOffset[16][2]{};
+ static double rates[16][3]{},credits[16][3]{};
+ static unsigned launches[16][3]{},tx[16][5]{},rx[16][5]{},buffers[16]{};
+-struct Binding {bool pending=false,ready=false,configured=false,disabled=false;unsigned hs=0,hd=0,p=0;uint64_t health=0,version=0,alarm=0,activation=0,nextAttempt=0;
++struct Binding {bool pending=false,ready=false,configured=false,disabled=false,lending=false,loanReady=false;unsigned hs=0,hd=0,p=0;uint64_t health=0,version=0,alarm=0,activation=0,nextAttempt=0;
+  std::array<double,3> probeLegNs{{0,0,0}};uint64_t probeBytes=0;};
+ static std::array<Binding,16> binding;
+ static std::array<bool,16> m13{};
+--- a/src/simulator/scheduling/dispatcher.h
++++ b/src/simulator/scheduling/dispatcher.h
+@@ -16,7 +16,7 @@
+    ++c.epoch;c.migrated=true;++proxyChunks;++rescuedChunks;PeerEvent("MIGRATE",c);Launch(c,true);
+   }
+  }
+- while(offered[src]<Bytes&&active[src]<8){
++ while(offered[src]<Bytes&&active[src]<SourceWindow()){
+   std::vector<unsigned> available;
+   for(unsigned lane=0;lane<2;++lane){
+    if(singlePlane&&lane==1)continue;
+@@ -41,6 +41,7 @@
+ }
+ 
+ static void StartPhase(){
++ loanTx.fill(false);loanRx.fill(false);plannedTx.fill(0);plannedRx.fill(0);
+  phaseStart=PeerNow();finished=0;offered.fill(0);active.fill(0);outDone.fill(0);inDone.fill(0);aFinished.fill(0);idleAt.fill(0);turn.fill(0);
+  for(unsigned s=0;s<16;++s){cohort[s].clear();nextOffset[s][0]=0;nextOffset[s][1]=ChunkBytes;
+   if(phaseScoped){
+--- a/src/simulator/transport/rdma.h
++++ b/src/simulator/transport/rdma.h
+@@ -79,7 +79,11 @@
+    if(serviceMode||benefitMode){auto at=Message("HEALTH_REPORT",r.src,r.id);Simulator::Schedule(NanoSeconds(at-PeerNow()),&HealthDone,r.id);}
+    else HealthDone(r.id);
+   }else{if(r.service)ServiceCompleted(r);routes.erase(r.id);}return;}
+- if(r.relay){auto at=Message("FINAL_ACK",r.src,r.id);Simulator::Schedule(NanoSeconds(at-PeerNow()),&FinalAck,r.id);}
++ if(r.relay){
++  ReleaseDelivered(routes.at(r.id));
++  auto at=Message("FINAL_ACK",r.src,r.id);Simulator::Schedule(NanoSeconds(at-PeerNow()),&FinalAck,r.id);
++  if(pipelined)Simulator::ScheduleWithContext(r.src,NanoSeconds(1),&Pump,r.src);
++ }
+  else FinalAck(r.id);
+ }
+ 
+@@ -103,7 +107,7 @@
+ 
+ static bool CanLaunch(unsigned src,unsigned lane,bool relay){
+  Route r;r.src=src;r.dst=Dest(src);r.rail=lane;r.relay=relay;
+- if(relay){const auto& b=binding[src];if(!b.ready||b.p!=phase||!Idle(b.hs)||!Idle(b.hd)||PeerNow()-b.health>Ttl)return false;r.hs=b.hs;r.hd=b.hd;r.rail=1;}
++ if(relay){const auto& b=binding[src];if(!b.ready||b.p!=phase||(!sharedHelpers&&(!Idle(b.hs)||!Idle(b.hd)))||PeerNow()-b.health>Ttl)return false;r.hs=b.hs;r.hd=b.hd;r.rail=1;}
+  return Capacity(r);
+ }
+ 
+--- a/tests/test_helper_selection.py
++++ b/tests/test_helper_selection.py
+@@ -0,0 +1,61 @@
++"""Use the production helper planner to avoid competing relay directions."""
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++
++ROOT=Path(__file__).resolve().parents[1]
++
++
++def function(path):
++    text=path.read_text();start=text.index('static bool RequestLending(unsigned src){')
++    end=text.index('{',start)+1;depth=1
++    while depth:
++        depth+=(text[end]=='{')-(text[end]=='}');end+=1
++    return text[start:end]
++
++
++class HelperSelectionTests(unittest.TestCase):
++    @unittest.skipUnless(shutil.which('c++'),'requires C++')
++    def test_two_fault_directions_use_disjoint_helpers(self):
++        harness=r'''
++#include <array>
++#include <algorithm>
++#include <cstdint>
++#include <cassert>
++struct Binding {bool lending=false,loanReady=false,pending=false;
++ unsigned hs=0,hd=0,p=0;uint64_t version=0;};
++std::array<Binding,16> binding;
++std::array<uint64_t,16> plannedTx{},plannedRx{};
++unsigned phase=3;uint64_t serial=1;
++unsigned Dest(unsigned s){return s<12?s+4:(s+1)%4;}
++uint64_t PeerNow(){return 100;}
++uint64_t Message(const char*,unsigned,uint64_t){return 1000100;}
++void LendReady(unsigned,unsigned,uint64_t){}
++uint64_t NanoSeconds(uint64_t n){return n;}
++struct Simulator {template<class F>static void Schedule(uint64_t,F,unsigned,unsigned,uint64_t){}};
++'''
++        main=r'''
++int main(){
++ assert(!RequestLending(0));assert(!RequestLending(15));
++ assert(binding[0].hs==1&&binding[0].hd==5);
++ assert(binding[15].hs==12&&binding[15].hd==2);
++ assert(binding[0].hs!=binding[15].hd);
++ assert(binding[0].pending&&!binding[0].loanReady);
++}
++'''
++        files=[(ROOT/'src/simulator/recovery/proxy.h',True)]
++        previous=ROOT.parent/'project-v1/src/simulator/recovery/proxy.h'
++        if previous.exists():files.insert(0,(previous,False))
++        with tempfile.TemporaryDirectory() as tmp:
++            for index,(path,expected) in enumerate(files):
++                cpp=Path(tmp)/f'check{index}.cc';binary=Path(tmp)/f'check{index}'
++                cpp.write_text(harness+function(path)+main)
++                build=subprocess.run(['c++','-std=c++14',str(cpp),'-o',str(binary)],capture_output=True,text=True)
++                self.assertEqual(build.returncode,0,build.stderr)
++                run=subprocess.run([str(binary)],capture_output=True,text=True)
++                self.assertEqual(run.returncode==0,expected,run.stderr)
++
++
++if __name__=='__main__':unittest.main()
+--- a/tests/test_phase_lifecycle.py
++++ b/tests/test_phase_lifecycle.py
+@@ -29,6 +29,8 @@
+ std::array<Binding,16> binding;
+ unsigned phase=1,finished=0;uint64_t phaseStart=0,serial=100;
+ bool phaseScoped=true;
++std::array<bool,16> loanTx{},loanRx{};
++std::array<uint64_t,16> plannedTx{},plannedRx{};
+ std::array<uint64_t,16> offered{},aFinished{},idleAt{};
+ std::array<unsigned,16> active{},outDone{},inDone{},turn{};
+ std::array<std::vector<uint64_t>,16> cohort;
+--- a/tests/test_pipeline_audit.py
++++ b/tests/test_pipeline_audit.py
+@@ -0,0 +1,37 @@
++"""Tampered early release and uncharged helper lending must fail audit."""
++import csv
++import json
++from pathlib import Path
++import tempfile
++import unittest
++from test_audit import fixture,audit_module
++
++
++class PipelineAuditTests(unittest.TestCase):
++    def test_early_release_needs_actual_last_leg(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root=Path(tmp);fixture(root)
++            p=root/'run_status.json';s=json.loads(p.read_text());s['relay_completion']='pipelined';p.write_text(json.dumps(s))
++            checked=audit_module.audit(root)
++            self.assertIn('pipelined release differs from final target delivery',checked['errors'])
++            with (root/'leg_events.csv').open() as f:legs=list(csv.DictReader(f))
++            delivered=next(int(x['timestamp_ns']) for x in legs if x['route']=='1000' and x['index']=='2' and x['event']=='LEG_DONE')
++            p=root/'peer_events.csv'
++            with p.open() as f:r=csv.DictReader(f);names=r.fieldnames;events=list(r)
++            for x in events:
++                if x['route']=='1000' and x['event']=='RELEASE':x['timestamp_ns']=str(delivered)
++            events.sort(key=lambda x:int(x['timestamp_ns']))
++            with p.open('w') as f:w=csv.DictWriter(f,fieldnames=names);w.writeheader();w.writerows(events)
++            checked=audit_module.audit(root);self.assertTrue(checked['pass_'],checked['errors'])
++            # Final delivery is insufficient to declare logical completion.
++            p=root/'control_events.csv';p.write_text('\n'.join(x for x in p.read_text().splitlines() if ',FINAL_ACK,' not in x)+'\n')
++            self.assertIn('logical completion before final notification',audit_module.audit(root)['errors'])
++
++    def test_shared_mode_cannot_skip_lending(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root=Path(tmp);fixture(root)
++            p=root/'run_status.json';s=json.loads(p.read_text());s['helper_mode']='shared';p.write_text(json.dumps(s))
++            self.assertIn('relay lacks delivered matching lending authorization',audit_module.audit(root)['errors'])
++
++
++if __name__=='__main__':unittest.main()
+--- a/tests/test_relay_pipeline.py
++++ b/tests/test_relay_pipeline.py
+@@ -0,0 +1,90 @@
++"""Native resource-lifetime regression using the production header."""
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++import sys
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0,str(ROOT/'python'))
++from limerlab.config import Scenario
++
++
++class PipelineTests(unittest.TestCase):
++    def test_mode_validation(self):
++        for kw in ({'helper_mode':'unbounded'}, {'relay_completion':'skip_ack'},
++                   {'helper_mode':'shared','replacement_lifetime':'persistent'}):
++            with self.assertRaises(ValueError): Scenario(**kw)
++        self.assertEqual(Scenario().relay_completion,'final_ack')
++
++    @unittest.skipUnless(shutil.which('c++'), 'requires C++ compiler')
++    def test_actual_resource_header_preserves_ownership_until_final_ack(self):
++        resources=(ROOT/'src/simulator/recovery/resources.h').as_posix()
++        completion=(ROOT/'src/simulator/runtime/completion.h').as_posix()
++        source=r'''
++#include <array>
++#include <vector>
++#include <map>
++#include <sstream>
++#include <stdexcept>
++#include <algorithm>
++#include <cassert>
++#include <cstdint>
++namespace limer { namespace engine {
++bool pipelined=true,sharedHelpers=false;uint64_t now=100,jobDone=0;
++uint64_t ChunkBytes=65536;unsigned phase=0,phases=30,finished=0,phaseChunks=512;
++std::array<bool,16> loanTx{},loanRx{};
++unsigned tx[16][5]{},rx[16][5]{},buffers[16]{};
++std::array<unsigned,16> active{},outDone{},inDone{};
++std::array<uint64_t,16> idleAt{};double rates[16][3]{};
++std::ostringstream peers;
++struct Route {uint64_t id=1,chunk=1,p=0,epoch=1,length=65536,started=1,delivered=0;
++ unsigned src=0,dst=4,hs=1,hd=5,rail=1;bool relay=true,probe=false,reserved=false;};
++struct Chunk {uint64_t epoch=1;unsigned src=0,dst=4,lane=1;bool done=false,migrated=false;};
++std::map<uint64_t,Route> routes;std::map<uint64_t,Chunk> chunks;
++uint64_t PeerNow(){return now;}
++bool Idle(unsigned){return false;}
++void Progress(Chunk&,uint64_t,uint64_t){}
++void PeerEvent(const char*,const Chunk&,uint64_t){}
++void Pump(unsigned){};void StartPhase(){}
++uint64_t NanoSeconds(unsigned n){return n;}
++struct Simulator {
++template<class F>static void ScheduleWithContext(unsigned,uint64_t,F,unsigned){}
++template<class F>static void Schedule(uint64_t,F){}
++};
++}}
++'''+f'#include "{resources}"\n#include "{completion}"\n'+r'''
++using namespace limer::engine;
++int main(){
++ for(bool mode:{false,true}){
++  pipelined=mode;now=100;routes[1]=Route{};chunks[1]=Chunk{};active[0]=1;
++  Reserve(routes[1],true);assert(tx[1][3]==1&&buffers[1]==1);
++  ReleaseDelivered(routes[1]);
++  assert(!chunks[1].done&&active[0]==1); // Delivery cannot claim logical completion.
++  assert(tx[1][3]==(mode?0:1)&&buffers[1]==(mode?0:1));
++  bool rejected=false;try{ReleaseDelivered(routes[1]);}catch(const std::logic_error&){rejected=true;}
++  assert(rejected); // Duplicate delivery cannot release twice.
++  now=1000100;FinalAck(1);
++  assert(chunks[1].done&&active[0]==0&&routes.empty());
++  assert(tx[1][3]==0&&rx[5][3]==0&&buffers[1]==0&&buffers[5]==0);
++ }
++ sharedHelpers=true;loanTx[1]=true;loanRx[5]=true;
++ Route own;own.relay=false;own.src=1;own.dst=5;
++ tx[1][3]=rx[5][3]=3;
++ assert(!Capacity(own)); // Owner keeps three of four credits during lending.
++ Route relay;
++ assert(Capacity(relay)); // One physical slot remains, not an extra link.
++ tx[1][3]=4;assert(!Capacity(relay));
++}
++'''
++        with tempfile.TemporaryDirectory() as tmp:
++            cpp=Path(tmp)/'regression.cc';binary=Path(tmp)/'regression'
++            cpp.write_text(source)
++            build=subprocess.run(['c++','-std=c++14',str(cpp),'-o',str(binary)],capture_output=True,text=True)
++            self.assertEqual(build.returncode,0,build.stderr)
++            run=subprocess.run([str(binary)],capture_output=True,text=True)
++            self.assertEqual(run.returncode,0,run.stderr)
++
++
++if __name__=='__main__': unittest.main()
+--- a/tools/throughput_campaign.py
++++ b/tools/throughput_campaign.py
+@@ -0,0 +1,57 @@
++"""Register explicit paired throughput development conditions before execution."""
++import argparse
++from pathlib import Path
++import sys
++import time
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'python'))
++from limerlab.config import Scenario
++from limerlab.paths import ROOT,sha,tree_hashes,write_json
++from limerlab.runner import resolve_build
++from integration_campaign import execute
++
++
++def plan(preset):
++    cases=[]
++    def add(family,completion,helper,seed=111210016,policy='always',method='G11'):
++        scene=Scenario(family=family,rounds=1,chunks_per_phase=512,
++            horizon_ns=(400 if preset=='pilot' else 2000)*1000000,fault_ns=40000000,
++            seed=seed,detector='service',policy=policy,replacement_lifetime='phase',
++            phases_per_round=4 if preset=='pilot' else 30,
++            relay_completion=completion,helper_mode=helper)
++        name='{}-{}-{}-{}-{}-s{}'.format(family,method,completion,helper,policy,seed)
++        cases.append(dict(name=name,method=method,scene=scene.dictionary()))
++    if preset=='pilot':
++        for family in ('blackhole','weak_loss','healthy'):
++            add(family,'pipelined','shared')
++    else:
++        for family in ('healthy','blackhole','weak_loss'):
++            add(family,'pipelined','shared')
++        add('blackhole','pipelined','idle')
++        for family in ('healthy','blackhole','weak_loss'):
++            add(family,'pipelined','shared',seed=111212001)
++    return dict(schema='limer-throughput-development-v2',preset=preset,cases=cases,
++        registered_unix=time.time(),run_count=len(cases),
++        role='Paired development and one fresh matched seed, not a population guarantee',
++        changes='Separate relay physical release from logical confirmation; explicit charged shared-helper lending with disjoint helper selection',
++        expectation='Idle-only release may improve throughput but remains late. Shared helpers may recover 70-80% while all physical contention and final ACKs remain charged.',
++        denominator='Healthy useful payload divided by whole-job time for the same workload and seed. Also compare immutable 480.178448-ms healthy reference.',
++        target_retention=[0.70,0.80],all_failed_attempts_retained=True)
++
++
++def register(build,out,preset):
++    out=Path(out);record,_,_=resolve_build(build);out.mkdir(parents=True,exist_ok=False)
++    p=plan(preset);p.update(build=str(Path(build).resolve()),build_sha256=sha(Path(build)/'build.json'),
++        binary_sha256=record['binary_sha256'],source_hashes={d:tree_hashes(ROOT/d) for d in ('src','python','tools')})
++    write_json(out/'registration.json',p)
++    print('Registered {} cases: {}'.format(len(p['cases']),out))
++
++
++if __name__=='__main__':
++    p=argparse.ArgumentParser(description=__doc__);p.add_argument('action',choices=['plan','register','execute'])
++    p.add_argument('--preset',choices=['pilot','full'],default='pilot');p.add_argument('--build',type=Path)
++    p.add_argument('--out',type=Path,required=True);p.add_argument('--workers',type=int,default=2)
++    a=p.parse_args()
++    if not 1<=a.workers<=2:p.error('Use at most two concurrent raw runs within the research quota')
++    if a.action=='plan':write_json(a.out,plan(a.preset))
++    elif a.action=='register':register(a.build,a.out,a.preset)
++    else:execute(a.out,a.workers,'all')

@@ -1,0 +1,11 @@
+{
+  "branch": "codex/phase-scoped-recovery-2026-11-12",
+  "base_commit": "501a0f50f51fd90c9ea9d3582b08e17fee4590ab",
+  "committed": false,
+  "pushed": false,
+  "review_patch": "/Users/sophie/Documents/LIMER_integration_code_review_2026-11-12.patch",
+  "review_patch_bytes": 80237,
+  "new_files": 1019,
+  "compact_evidence_manifest": "evidence/COMPACT_MANIFEST.json",
+  "note": "The patch includes source/tests/docs/tables. Per-run compact data are inspectable in the evidence directory, with hashes checked by verify_compact.py."
+}

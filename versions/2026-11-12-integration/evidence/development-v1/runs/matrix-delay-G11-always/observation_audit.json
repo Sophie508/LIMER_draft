@@ -1,0 +1,24 @@
+{
+  "errors": [],
+  "reports_reconstructed": 6400,
+  "alarms": [
+    [
+      13,
+      48007680,
+      "canary_service"
+    ],
+    [
+      721,
+      48015360,
+      "canary_service"
+    ]
+  ],
+  "source": "canary-service-v4; physical payload gaps/QP/retransmissions/business ACK stalls and charged reports",
+  "truth_accessed": false,
+  "completed_canaries": 6240,
+  "spacing_summaries_reconstructed": 1216,
+  "source_packets_checked": 2671655,
+  "accepted_packets_checked": 2666215,
+  "canary_payload_bytes": 419430400,
+  "pass": true
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "limer-run-v1",
+  "method": "G11",
+  "scene": {
+    "family": "weak_loss",
+    "rounds": 1,
+    "chunks_per_phase": 512,
+    "horizon_ns": 400000000,
+    "fault_ns": 40000000,
+    "node": 0,
+    "seed": 111210016,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "always",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "relay_completion": "final_ack",
+    "helper_mode": "idle"
+  },
+  "command": [
+    "/work/build-v7/backend/build/scratch/ns3.36.1-LimerSimulator-debug",
+    "/work/results/pilot-v1/runs/weak_loss-G11-final_ack-idle-always-s111210016/inputs/topology.txt",
+    "/work/results/pilot-v1/runs/weak_loss-G11-final_ack-idle-always-s111210016/inputs/config.txt",
+    "/work/results/pilot-v1/runs/weak_loss-G11-final_ack-idle-always-s111210016",
+    "G11",
+    "1",
+    "400000000",
+    "/work/results/pilot-v1/runs/weak_loss-G11-final_ack-idle-always-s111210016/truth/injection.txt",
+    "512",
+    "service",
+    "always",
+    "2000000",
+    "65536",
+    "phase",
+    "4",
+    "final_ack",
+    "idle"
+  ],
+  "binary_sha256": "fb7eb946fd47cee4151efd4aa8624f6cf082878175a3170ae64acf42adc9053c",
+  "build_sha256": "5cfb499e8d6d85a33977378b9eb6de3ae0d24bd3a6b07bf6ba3dacc959cf97a8",
+  "input_hashes": {
+    "truth/injection.txt": "a00f55c0fd5d2763a134e6f593de11464b28bf10ff4bf26f69ee0b24ddf70a41",
+    "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/config.txt": "7714e7128d8cbe8a6e6ca35431e175b3a5e1054b29b23cd546abcbf0d5b85db1",
+    "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+    "inputs/input_manifest.json": "b6a6071d18b7c7a0e0eab777c90226421dbff3f8b0a6c77600f705957035b493"
+  }
+}

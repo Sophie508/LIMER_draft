@@ -1,0 +1,19 @@
+{
+  "observations": [
+    {
+      "policy": "always",
+      "health_probe_routes": 56,
+      "control_wire_bytes": 88224,
+      "communication_ms": 694.96234,
+      "fresh_Bprime_completions": 21
+    },
+    {
+      "policy": "benefit",
+      "health_probe_routes": 132,
+      "control_wire_bytes": 96960,
+      "communication_ms": 975.894384,
+      "fresh_Bprime_completions": 49
+    }
+  ],
+  "scope": "Observed cost difference; not a causal attribution of the entire performance gap"
+}

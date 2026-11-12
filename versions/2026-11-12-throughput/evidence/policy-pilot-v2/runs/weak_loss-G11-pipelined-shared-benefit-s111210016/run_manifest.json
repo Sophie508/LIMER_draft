@@ -1,0 +1,52 @@
+{
+  "schema": "limer-run-v1",
+  "method": "G11",
+  "scene": {
+    "family": "weak_loss",
+    "rounds": 1,
+    "chunks_per_phase": 512,
+    "horizon_ns": 400000000,
+    "fault_ns": 40000000,
+    "node": 0,
+    "seed": 111210016,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "benefit",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "relay_completion": "pipelined",
+    "helper_mode": "shared"
+  },
+  "command": [
+    "/work/build-v7/backend/build/scratch/ns3.36.1-LimerSimulator-debug",
+    "/work/results/policy-pilot-v2/runs/weak_loss-G11-pipelined-shared-benefit-s111210016/inputs/topology.txt",
+    "/work/results/policy-pilot-v2/runs/weak_loss-G11-pipelined-shared-benefit-s111210016/inputs/config.txt",
+    "/work/results/policy-pilot-v2/runs/weak_loss-G11-pipelined-shared-benefit-s111210016",
+    "G11",
+    "1",
+    "400000000",
+    "/work/results/policy-pilot-v2/runs/weak_loss-G11-pipelined-shared-benefit-s111210016/truth/injection.txt",
+    "512",
+    "service",
+    "benefit",
+    "2000000",
+    "65536",
+    "phase",
+    "4",
+    "pipelined",
+    "shared"
+  ],
+  "binary_sha256": "769f0682bada3fa1961222c9d310eaefa3b4bf5882a55be98ebf1df4e211862d",
+  "build_sha256": "97e6b9834a824978c3abaac33a099afb4954e743d97af92f7500ddad41f78594",
+  "input_hashes": {
+    "truth/injection.txt": "a00f55c0fd5d2763a134e6f593de11464b28bf10ff4bf26f69ee0b24ddf70a41",
+    "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/config.txt": "15006596b6c6d658646de567d10dd2112a81f745c4c762be687dc8121630c91c",
+    "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+    "inputs/input_manifest.json": "83aa34e48413598d64ff444d7dfb061710c213895583da011a2e5d8a66887def"
+  }
+}

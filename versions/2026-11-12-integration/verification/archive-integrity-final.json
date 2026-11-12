@@ -1,0 +1,212 @@
+{
+  "registered_archives": 41,
+  "all_archive_hashes_rechecked": true,
+  "raw_archives_remain_on_server": true,
+  "checks": [
+    {
+      "case": "pilot-c64-persistent",
+      "sha256": "246ca58bfbbf55735697ec86d8cf4d0f8fb58ab6feb16bbb0148f6e26f6f6e88",
+      "bytes": 60787052
+    },
+    {
+      "case": "pilot-c64-phase",
+      "sha256": "546a139f514fec3f55234a5ac297b4cbf4b65fc035ed6138cb31d6af0a779fe6",
+      "bytes": 61266275
+    },
+    {
+      "case": "pilot-c512-persistent",
+      "sha256": "1c35646d90c589abad92d6eab36bd19db09327c542eda57091501389e1184e17",
+      "bytes": 68183029
+    },
+    {
+      "case": "pilot-c512-phase",
+      "sha256": "246706164772529b5b213ad3a338cb5dd847407ffe27666e607ade0c83aae722",
+      "bytes": 68245175
+    },
+    {
+      "case": "matrix-healthy-G00-always",
+      "sha256": "eb9643634fba8ce715dbc3171ef98d6c84294a33cf145ca05630e1ea2ec66c35",
+      "bytes": 59880592
+    },
+    {
+      "case": "matrix-healthy-G10-always",
+      "sha256": "b4bd793172ab3a13512f248f5f3c3112de23d4ec7131a27b3503cce9b25f68f0",
+      "bytes": 60753367
+    },
+    {
+      "case": "matrix-healthy-G01-always",
+      "sha256": "6aa6af49a1e0cff0427d6db463d416703ec4f3d8bf6df6aac3a0bfe8fc5b98e8",
+      "bytes": 59880611
+    },
+    {
+      "case": "matrix-healthy-G11-always",
+      "sha256": "50375bca9ea16aa06131722ff7900c9b279d55f0b3e9e2329adf89fb7e593713",
+      "bytes": 60753301
+    },
+    {
+      "case": "matrix-healthy-G11-benefit",
+      "sha256": "51b5b21d4811963c363a91f484dc4aaefecba59192433cc0238ea8f2ac8a94d6",
+      "bytes": 60754103
+    },
+    {
+      "case": "matrix-healthy-A_ONLY-always",
+      "sha256": "73d00dac7045b9d17761eb6334a29d01ae8d0c74c43731e473e9a1045727989e",
+      "bytes": 63417752
+    },
+    {
+      "case": "matrix-blackhole-G00-always",
+      "sha256": "fb0b35580ff1feb082e30787afd541e31da94c1c4c5b5daec69f062e37987bc9",
+      "bytes": 47958822
+    },
+    {
+      "case": "matrix-blackhole-G10-always",
+      "sha256": "605cd6e74f3f8226b2c3a86b3a44661a8bdb2a15b265798f382721496d72bf3e",
+      "bytes": 49119504
+    },
+    {
+      "case": "matrix-blackhole-G01-always",
+      "sha256": "011ce107306626ac5b81c2709c8d20913ce63158d9d1f7e2130ca5f6ade4732c",
+      "bytes": 69659992
+    },
+    {
+      "case": "matrix-blackhole-G11-always",
+      "sha256": "ed510b4dbbe3b386c7b1fd20c57e5502a46f58161784a0f29695cec26281419d",
+      "bytes": 68245345
+    },
+    {
+      "case": "matrix-blackhole-G11-benefit",
+      "sha256": "b4bc5b594438a173561cc2ee8ea0f6dccb2a1c75643c5e7a7f30cd471231ce66",
+      "bytes": 68245204
+    },
+    {
+      "case": "matrix-blackhole-A_ONLY-always",
+      "sha256": "12cc3da847822a465e61d92916df73f23b91784cd0521c847639b8beef03d5a3",
+      "bytes": 63672412
+    },
+    {
+      "case": "matrix-quarter-G00-always",
+      "sha256": "7a67c285d6c7d449818c9543869ed627c2517c1e8f79a704ba69c19a960ba8d8",
+      "bytes": 66746133
+    },
+    {
+      "case": "matrix-quarter-G10-always",
+      "sha256": "17c2523555d770c7f34e00c45b43b427c9cff5eb9f1de57ae55be4183918766b",
+      "bytes": 68106644
+    },
+    {
+      "case": "matrix-quarter-G01-always",
+      "sha256": "dc9fd6c0e4bc71f17569e415258995d4358a9e530238afd60628cefe22b7b3ca",
+      "bytes": 69813351
+    },
+    {
+      "case": "matrix-quarter-G11-always",
+      "sha256": "fa1138b719086f467545025a56afc491046e010953a617605fabd02c5ca8dc5c",
+      "bytes": 68714367
+    },
+    {
+      "case": "matrix-quarter-G11-benefit",
+      "sha256": "035cf3d2be4c9eb7568f40f9f3dd76432a094a003f756b8f9654e20d0f3b465a",
+      "bytes": 68726618
+    },
+    {
+      "case": "matrix-quarter-A_ONLY-always",
+      "sha256": "019e1209396fd518228e8e91f7c41f27f963e9071505241f94de5b06439594e1",
+      "bytes": 64039438
+    },
+    {
+      "case": "matrix-weak_loss-G00-always",
+      "sha256": "1759e66a23fb93d7c47224c4a3575b6ce2f891827cf9fa192559792989c341d2",
+      "bytes": 48489657
+    },
+    {
+      "case": "matrix-weak_loss-G10-always",
+      "sha256": "729fbda8df8dd3e66cb37b9b39f98ea7b78f6b93f573cdb674282f7efd39a3e7",
+      "bytes": 49217786
+    },
+    {
+      "case": "matrix-weak_loss-G01-always",
+      "sha256": "11cb76446a3634601fe83b6223bc9ac058b0798aceeae7b4c01670ec03ed166e",
+      "bytes": 67417685
+    },
+    {
+      "case": "matrix-weak_loss-G11-always",
+      "sha256": "e63099661ed5fc42421b6cba5618b7f17d796c5fedcc96939962bbe967a7d325",
+      "bytes": 68141001
+    },
+    {
+      "case": "matrix-weak_loss-G11-benefit",
+      "sha256": "6dafc53baa9a5f74c9cab3c92e4436706fc9b0baf9744e6cbe54acca60e15baa",
+      "bytes": 68228564
+    },
+    {
+      "case": "matrix-weak_loss-A_ONLY-always",
+      "sha256": "0aa08be75b657a9b861d9cf1f0d05c870d36e10b26c8dd744cdde06d8e438975",
+      "bytes": 63522522
+    },
+    {
+      "case": "matrix-delay-G00-always",
+      "sha256": "ff3e1efe7cb38a431eaa2762ff58ed82cee00f847583b2e5ebdfb7a5e2e59d77",
+      "bytes": 48061560
+    },
+    {
+      "case": "matrix-delay-G10-always",
+      "sha256": "70c2e08b37395ecc03fa6ac3cf2d510f6d25499950ffb08a2a96c99158056108",
+      "bytes": 67537014
+    },
+    {
+      "case": "matrix-delay-G01-always",
+      "sha256": "ccb3b47de93ea13cefdf5d684dd8360a34b6eed31f65f1b6385ee1be0557d048",
+      "bytes": 69246149
+    },
+    {
+      "case": "matrix-delay-G11-always",
+      "sha256": "254b610a53d4154cfea6590184a47593329f7be81ac1d925fcfdf847a39b7e0c",
+      "bytes": 68292712
+    },
+    {
+      "case": "matrix-delay-G11-benefit",
+      "sha256": "ba2c29a3131357b3a3ad4eaba592728b5253ca7c228f32d758466e8306e21537",
+      "bytes": 68294638
+    },
+    {
+      "case": "matrix-delay-A_ONLY-always",
+      "sha256": "07c622de195eda9da4f7c034bcc2198e1843496bf7d0d3e55a4e75f93510778d",
+      "bytes": 63711386
+    },
+    {
+      "case": "full-ring-healthy-G11-benefit",
+      "sha256": "2074fec062fe4c2387cec0d8eba7f321ababcd3e65dd0886037ea3873c52be83",
+      "bytes": 442485138
+    },
+    {
+      "case": "full-ring-blackhole-A_ONLY-always",
+      "sha256": "54516f47d2424137fa217d799cee8ab7a77d7036ef98029d2b66bdbe27a11ad1",
+      "bytes": 458388573
+    },
+    {
+      "case": "full-ring-blackhole-G11-always",
+      "sha256": "e2c0cfca88781a176477b0a6a789af9cf42b672162d65f874c887f6685acc482",
+      "bytes": 592862358
+    },
+    {
+      "case": "full-ring-blackhole-G11-benefit",
+      "sha256": "fff3f6c29fb60dc0be0d9b40fbbd58d44b315eaf6556e4d36b68fe3d136f8df3",
+      "bytes": 592875470
+    },
+    {
+      "case": "full-ring-blackhole-G11-benefit-persistent",
+      "sha256": "d9bdfecc53b19aab6d535ba77b9873aaa5441b894040a7cfab58a93b7030b061",
+      "bytes": 590098154
+    },
+    {
+      "case": "full-ring-weak_loss-G11-always",
+      "sha256": "e4830995f3c6a2933aea8774e253c9f23fb6eafdbb1763fe2e30f5e5aef05d07",
+      "bytes": 593607460
+    },
+    {
+      "case": "full-ring-weak_loss-G11-benefit",
+      "sha256": "c0509951dd05687f14e05f45689b939954896d8c4435d2d0f410a2c656e48087",
+      "bytes": 593704617
+    }
+  ]
+}

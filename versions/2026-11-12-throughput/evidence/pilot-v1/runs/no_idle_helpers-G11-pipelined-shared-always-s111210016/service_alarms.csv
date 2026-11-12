@@ -1,0 +1,9 @@
+timestamp_ns,path_id,signal
+48007680,13,canary_service
+48015360,64,canary_service
+48023040,115,canary_service
+48030720,166,canary_service
+48038400,580,canary_service
+48046080,631,canary_service
+48053760,682,canary_service
+48061440,721,canary_service

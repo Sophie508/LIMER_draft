@@ -1,7 +1,7 @@
 """Explicit, validated case configuration shared by CLI and campaigns."""
 from dataclasses import asdict, dataclass
 
-METHODS = ('G00', 'G10', 'G01', 'G11')
+METHODS = ('G00', 'G10', 'G01', 'G11', 'A_ONLY')
 SCENARIOS = ('healthy', 'quarter', 'weak_loss', 'blackhole', 'no_idle_helpers', 'slow_local', 'short_blackhole', 'delay')
 
 
@@ -21,7 +21,14 @@ class Scenario:
     canary_period_ns: int = 2000000
     canary_bytes: int = 65536
 
+    replacement_lifetime: str = 'phase'
+    phases_per_round: int = 30
+
     def __post_init__(self):
+        if self.replacement_lifetime not in ('phase', 'persistent'):
+            raise ValueError('Unknown replacement lifetime')
+        if not 1 <= self.phases_per_round <= 30:
+            raise ValueError('phases_per_round must be between 1 and 30')
         if self.family not in SCENARIOS: raise ValueError('Unknown scenario: ' + self.family)
         if self.rounds < 1: raise ValueError('rounds must be positive')
         if self.chunks_per_phase < 16 or self.chunks_per_phase % 2:

@@ -1,0 +1,3 @@
+name,method,family,policy,lifetime,chunks,phases,horizon_ms,valid,status,completion_ms,restricted_ms,fresh_Bprime_done,fresh_Bprime_phases,fresh_Bprime_bytes,rescued_chunks,alarm_classification,all_paths_delay_ms,detected_below_100ms,phase_resets,error
+full-ring-weak_loss-G11-always,G11,weak_loss,always,phase,512,30,2000.0,True,completed,694.96234,694.96234,21,5,1376256,168,timely,20.032837,True,480,
+full-ring-weak_loss-G11-benefit,G11,weak_loss,benefit,phase,512,30,2000.0,True,completed,975.894384,975.894384,49,5,3211264,179,timely,20.032837,True,480,

@@ -1,0 +1,9 @@
+{
+  "original_zip_dispatcher_sha256": "190c2c8791d67903a29d1f23023fcdcc93d4189a34e1fa067eaebf8e8095cf8a",
+  "october_release_dispatcher_sha256": "190c2c8791d67903a29d1f23023fcdcc93d4189a34e1fa067eaebf8e8095cf8a",
+  "byte_identical": true,
+  "behavior": "StartPhase retains configured/disabled; this predates the benefit gate",
+  "original_source": "LIMER-1027.zip:LIMER-Delivery/src/simulator/scheduling/dispatcher.h",
+  "release_commit": "501a0f50f51fd90c9ea9d3582b08e17fee4590ab",
+  "original_delivery_manifest_hash_matches": true
+}

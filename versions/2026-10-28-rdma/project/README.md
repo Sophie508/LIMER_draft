@@ -1,5 +1,11 @@
 # LIMER
 
+> **2026-11-12 integration revision:** `phase` binding lifetime now resets to
+> A/B eligibility at every scheduler phase; `persistent` retains the October
+> behavior. The default remains 30 phases per round. `A_ONLY` is an added
+> business-traffic control. See [the integration note](../../2026-11-12-integration/README.md).
+> The old release manifest and archived result tables are historical evidence.
+
 > **2026-10-28 research extension:** This working copy adds a versioned
 > canary/retransmission/business-stall/receiver-spacing detector and an observable switching-benefit
 > gate. The 2026-10-27 `reference/` and `validation/` remain historical evidence,

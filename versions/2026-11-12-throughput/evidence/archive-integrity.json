@@ -1,0 +1,197 @@
+{
+  "archives": [
+    {
+      "group": "pilot-v1",
+      "name": "blackhole-G11-final_ack-idle-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/blackhole-G11-final_ack-idle-always-s111210016.tar.gz",
+      "sha256": "db871b9a1ac8e51a4f2bc01f219bd2bf6db46b48eae06b30a34467fe2ba4f826",
+      "bytes": 68245287,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "blackhole-G11-pipelined-idle-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/blackhole-G11-pipelined-idle-always-s111210016.tar.gz",
+      "sha256": "3a58e7f1b1c502137408bdce3a572554d564c6e8b771c2abbd3bad66bbd74e37",
+      "bytes": 68557671,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "blackhole-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/blackhole-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "6b19846c7d7f2cd815e578aec77c90f0232620240dd3a68bb5a7df3f56c503c7",
+      "bytes": 69246742,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "healthy-G11-final_ack-idle-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/healthy-G11-final_ack-idle-always-s111210016.tar.gz",
+      "sha256": "4b92ce12202555618aaf75f1cb1d3c7b3ead4e2964924112a59b28be74f9e42d",
+      "bytes": 60753543,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "healthy-G11-pipelined-idle-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/healthy-G11-pipelined-idle-always-s111210016.tar.gz",
+      "sha256": "4354a41e68c855027ec1343c4e8e3e22e01a00252dab420a3ea3c5faf4813b26",
+      "bytes": 60753497,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "healthy-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/healthy-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "8c14f5f7b6943e9e2ef9fdb06930f2efbddd3c854d41ba669073462dda7dd04e",
+      "bytes": 60753520,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "weak_loss-G11-final_ack-idle-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/weak_loss-G11-final_ack-idle-always-s111210016.tar.gz",
+      "sha256": "4929a0edb4d5d2f85099b36edcdfbaa90c73970d3efc2d745cf4282634d9bba4",
+      "bytes": 67792949,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "weak_loss-G11-pipelined-idle-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/weak_loss-G11-pipelined-idle-always-s111210016.tar.gz",
+      "sha256": "50384d8a98c89c398933ae1b11ce90d03e53e40b7b586b4b36d83d7d4a547d0c",
+      "bytes": 67834412,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "weak_loss-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/weak_loss-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "c76f354fb20a7fc71c39f016b14fa79b4f90a87cb2ee160c4b6c7deea31b9893",
+      "bytes": 68701411,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "quarter-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/quarter-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "df738ca76c1d19bec430632f1fef2b1affc96abc13b3b06db15046e0c6d1cbc4",
+      "bytes": 68789626,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "delay-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/delay-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "481c4bce788243def2242cbdae318a8fe8f5dbdcad343ccf341a52dc878724c9",
+      "bytes": 69312289,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v1",
+      "name": "no_idle_helpers-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/results/pilot-v1/archives/no_idle_helpers-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "8a528497a1e7fb05dd23d12fc7389187bfc30e5d117d8f13708213592566ecc7",
+      "bytes": 47564532,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v2",
+      "name": "blackhole-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/pilot-v2/archives/blackhole-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "dc4dfb25631c444278dc2073de8e1da18d9812b35d2979a2df293835a0c0a440",
+      "bytes": 90596816,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v2",
+      "name": "weak_loss-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/pilot-v2/archives/weak_loss-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "3269abee5d69055187538868a962b7b504a9a244d581d74054ffbe3abb1c470e",
+      "bytes": 89492066,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "pilot-v2",
+      "name": "healthy-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/pilot-v2/archives/healthy-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "0e93721880a2c64a863f052875e01aed3a2cdd4516e5dedc6716a0fef9333565",
+      "bytes": 78928869,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "policy-pilot-v2",
+      "name": "blackhole-G11-pipelined-shared-benefit-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/policy-pilot-v2/archives/blackhole-G11-pipelined-shared-benefit-s111210016.tar.gz",
+      "sha256": "1fc6ae09aa0ae6cc0d69e4728048cece8ddb0abe8b43e115d1040698a935b697",
+      "bytes": 90597804,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "policy-pilot-v2",
+      "name": "weak_loss-G11-pipelined-shared-benefit-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/policy-pilot-v2/archives/weak_loss-G11-pipelined-shared-benefit-s111210016.tar.gz",
+      "sha256": "053578eafd24ca7c51a0db015186bff6115d510a836b3d2106f6c5c7a9eb5398",
+      "bytes": 88518972,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "full-v2",
+      "name": "healthy-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/healthy-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "ced1f35c2e72c28100704858e3cbe29c5a0da105d53ca3513e46dc7bdbcae4b2",
+      "bytes": 577094428,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "full-v2",
+      "name": "blackhole-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/blackhole-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "96fa07a1023513a28ac193efc038402e2a4faeffff0867109b8c4965dae22f31",
+      "bytes": 813528621,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "full-v2",
+      "name": "weak_loss-G11-pipelined-shared-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/weak_loss-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "46e050a71ef505d99333c46628881820c9bc5cd639b0a6ce113e334951afd996",
+      "bytes": 809121771,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "full-v2",
+      "name": "blackhole-G11-pipelined-idle-always-s111210016",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/blackhole-G11-pipelined-idle-always-s111210016.tar.gz",
+      "sha256": "41691514cadf4fb1ad4ed0cf71018533a07ea584aab57ae9106745792ff7efc3",
+      "bytes": 786351667,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "full-v2",
+      "name": "healthy-G11-pipelined-shared-always-s111212001",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/healthy-G11-pipelined-shared-always-s111212001.tar.gz",
+      "sha256": "d52441f45ebbfa435defa5d4f81c5684832f0c1079ee0ff764aeeb62689c1a91",
+      "bytes": 577094338,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "full-v2",
+      "name": "blackhole-G11-pipelined-shared-always-s111212001",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/blackhole-G11-pipelined-shared-always-s111212001.tar.gz",
+      "sha256": "2a8e27cad2c72424c66cc827fbc0f4cf479e550e0dbdba4cba56c048cb4ba2dd",
+      "bytes": 813528506,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "full-v2",
+      "name": "weak_loss-G11-pipelined-shared-always-s111212001",
+      "path": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/weak_loss-G11-pipelined-shared-always-s111212001.tar.gz",
+      "sha256": "dbc6f1c89fc7c0daa4073e878371c47da0e855d496ba80ca8488ffbfdeb11cd5",
+      "bytes": 808294404,
+      "all_member_hashes_verified": true
+    }
+  ],
+  "all_archive_hashes_rechecked": true
+}

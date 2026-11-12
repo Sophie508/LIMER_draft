@@ -1,0 +1,95 @@
+{
+  "base": "Prior phase-integration source, preserved unchanged during this throughput work",
+  "files": [
+    {
+      "file": "python/limerlab/archive.py",
+      "added": 3,
+      "removed": 3
+    },
+    {
+      "file": "python/limerlab/audit.py",
+      "added": 49,
+      "removed": 6
+    },
+    {
+      "file": "python/limerlab/cli.py",
+      "added": 3,
+      "removed": 1
+    },
+    {
+      "file": "python/limerlab/config.py",
+      "added": 8,
+      "removed": 0
+    },
+    {
+      "file": "python/limerlab/runner.py",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "file": "src/simulator/main.cc",
+      "added": 4,
+      "removed": 3
+    },
+    {
+      "file": "src/simulator/recovery/decision.h",
+      "added": 1,
+      "removed": 1
+    },
+    {
+      "file": "src/simulator/recovery/proxy.h",
+      "added": 31,
+      "removed": 4
+    },
+    {
+      "file": "src/simulator/recovery/resources.h",
+      "added": 10,
+      "removed": 0
+    },
+    {
+      "file": "src/simulator/runtime/completion.h",
+      "added": 2,
+      "removed": 2
+    },
+    {
+      "file": "src/simulator/runtime/state.h",
+      "added": 6,
+      "removed": 2
+    },
+    {
+      "file": "src/simulator/scheduling/dispatcher.h",
+      "added": 2,
+      "removed": 1
+    },
+    {
+      "file": "src/simulator/transport/rdma.h",
+      "added": 6,
+      "removed": 2
+    },
+    {
+      "file": "tests/test_helper_selection.py",
+      "added": 61,
+      "removed": 0
+    },
+    {
+      "file": "tests/test_phase_lifecycle.py",
+      "added": 2,
+      "removed": 0
+    },
+    {
+      "file": "tests/test_pipeline_audit.py",
+      "added": 37,
+      "removed": 0
+    },
+    {
+      "file": "tests/test_relay_pipeline.py",
+      "added": 90,
+      "removed": 0
+    },
+    {
+      "file": "tools/throughput_campaign.py",
+      "added": 57,
+      "removed": 0
+    }
+  ]
+}

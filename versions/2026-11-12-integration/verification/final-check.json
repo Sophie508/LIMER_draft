@@ -1,0 +1,15 @@
+{
+  "compact_files_verified": 988,
+  "native_source_files_match_build": 3766,
+  "local_source_matches_registrations": true,
+  "table_replay_matches": true,
+  "registered_runs": 41,
+  "execution_valid": 41,
+  "communication_completed": 36,
+  "unfinished_jobs_retained": 5,
+  "original_B_reallocated_each_phase_verified": true,
+  "fresh_Bprime_payload_and_completion_verified": true,
+  "A_ONLY_business_verified": true,
+  "archived_packet_runs_hash_rechecked_on_server": 41,
+  "scope": "Local compact integrity and table re-derivation; retained server raw-replay/hash receipts. No raw packet replay on this laptop."
+}

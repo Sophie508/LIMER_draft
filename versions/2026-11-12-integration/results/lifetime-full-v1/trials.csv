@@ -1,0 +1,2 @@
+name,method,family,policy,lifetime,chunks,phases,horizon_ms,valid,status,completion_ms,restricted_ms,fresh_Bprime_done,fresh_Bprime_phases,fresh_Bprime_bytes,rescued_chunks,alarm_classification,all_paths_delay_ms,detected_below_100ms,phase_resets,error
+full-ring-blackhole-G11-benefit-persistent,G11,blackhole,benefit,persistent,512,30,2000.0,True,completed,920.652687,920.652687,1300,28,85196800,8,timely,8.01536,True,0,

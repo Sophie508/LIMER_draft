@@ -19,6 +19,7 @@ static void Pump(unsigned src){
  while(offered[src]<Bytes&&active[src]<8){
   std::vector<unsigned> available;
   for(unsigned lane=0;lane<2;++lane){
+   if(singlePlane&&lane==1)continue;
    bool relay=lane==1&&binding[src].disabled;
    if(!feedback&&nextOffset[src][lane]>=Bytes)continue;
    if(CanLaunch(src,lane,relay))available.push_back(lane);
@@ -41,9 +42,19 @@ static void Pump(unsigned src){
 
 static void StartPhase(){
  phaseStart=PeerNow();finished=0;offered.fill(0);active.fill(0);outDone.fill(0);inDone.fill(0);aFinished.fill(0);idleAt.fill(0);turn.fill(0);
- for(unsigned s=0;s<16;++s){cohort[s].clear();nextOffset[s][0]=0;nextOffset[s][1]=ChunkBytes;binding[s].ready=false;binding[s].pending=false;
-  // One bounded fresh B-prime exploration per phase after idle helpers become ready.
-  if(binding[s].disabled)launches[s][2]=0;}
+ for(unsigned s=0;s<16;++s){cohort[s].clear();nextOffset[s][0]=0;nextOffset[s][1]=ChunkBytes;
+  if(phaseScoped){
+   // Retire the phase's binding, not the physical B link for the whole job.
+   // A fresh version also invalidates callbacks from an old health probe.
+   binding[s]=Binding{};binding[s].p=phase;binding[s].version=++serial;
+   for(unsigned lane=0;lane<3;++lane){launches[s][lane]=0;credits[s][lane]=0;}
+   rates[s][2]=0;
+   controls<<PeerNow()<<','<<PeerNow()<<",RESET_TO_AB,"<<s<<','<<phase<<','<<binding[s].version<<",0\n";
+  }else{
+   binding[s].ready=false;binding[s].pending=false;
+   // Preserve the original persistent replacement mode as an explicit control.
+   if(binding[s].disabled)launches[s][2]=0;
+  }}
  statusLog<<PeerNow()<<",PHASE,"<<phase<<'\n';for(unsigned s=0;s<16;++s)Simulator::ScheduleWithContext(s,NanoSeconds(0),&Pump,s);
 }
 

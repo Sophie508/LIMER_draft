@@ -1,0 +1,105 @@
+LIMER meeting briefing: system, contributions and results
+Evidence date: 2026-11-12. This is an analysis of existing development runs.
+
+1. SYSTEM AND DEMO
+Suggested slide title: Detection and helper-based recovery
+Show one logical sender and receiver using A and B. Each server has other
+logical GPUs. After B degrades, A continues its work. Once suitable helpers
+on the two servers finish their own current-phase work, the system probes
+the three-leg relay route and coordinates its activation. B-prime then
+rescues incomplete B chunks and may carry newly allocated chunks.
+At each scheduler phase boundary, the binding resets to A/B eligibility.
+This does not heal the fault or erase the received alarm.
+
+Demo cue: show the first alarm, helper availability, activation, fresh data
+on B-prime, and the final phase barrier. Use the same diagram throughout.
+Any conceptual animation must say it is an illustration. An actual trace
+replay must cite its recorded case. The old public demo describes an older
+system and must not be presented as a recording of this integration.
+
+Simple speaking line:
+"We start with two active paths. If B becomes unhealthy, A keeps sending.
+An available GPU on each server can form a relay path. After checking that
+path, we use it to finish blocked transfers and send some new chunks."
+
+2. CONTRIBUTIONS RELATIVE TO THE COLLABORATOR VERSION
+Suggested slide title: What this integration adds
+The collaborator version already had adaptive chunk allocation and GPU
+proxy recovery. Do not claim either was first introduced by this revision.
+This revision connects the service detector to the recovery loop, makes
+route bindings explicit at each phase, and evaluates the choice to wait or
+replace using observed progress and charged setup costs.
+The benefit gate is an implemented research variant whose current
+weak-loss result is worse than direct recovery. A lifecycle repair is an
+engineering correction, not by itself a literature novelty claim.
+Candidate research question: when should a degraded active path borrow
+healthy helper capacity, and does that reduce the collective tail after
+paying the cost of doing so?
+No new literature novelty survey was performed for this briefing.
+
+3. RESULTS THAT THE EVIDENCE SUPPORTS
+Suggested slide title: The recovery path works, but remains near A-only speed
+Use completion_comparison.png or its editable SVG.
+All five plotted rows have the same 16-rank, 30-phase, 15-GiB workload size.
+Healthy A+B: 480.18 ms.
+Blackhole A-only: 959.85 ms.
+Blackhole direct recovery: 907.90 ms, 762 new B-prime chunks over 28 phases.
+Weak-loss direct recovery: 694.96 ms.
+Weak-loss benefit gate: 975.89 ms.
+Healthy-normalized whole-job goodput is 480.18 / completion time. It is
+52.9% for blackhole direct recovery, not a measured 52.9% NIC line rate.
+The direct blackhole case is 5.4% faster than the all-rank A-only control.
+That comparison does not isolate the proxy's causal benefit: unaffected
+ranks still use both planes in the recovery arm.
+The current related development suite has 34/34 timely fault-arm checks,
+but shared inputs mean these are not a new independent 95% acceptance study.
+Total job time and the <100-ms detection target measure different things.
+No numerical tensor reduction or real GPU throughput is measured.
+
+4. WHY HEALTHY PERFORMANCE HAS NOT RETURNED
+Suggested slide title: Late helper availability and slow completion credit
+Use phase_timing.png or its editable SVG.
+In post-onset phases 3 through 29, healthy phases average 16.01 ms.
+Direct blackhole phases average 31.53 ms. Helpers become available at
+about 15.99 ms and the probe/report/coordination adds 5.18 ms, so the new
+route activates around 21.17 ms into the phase.
+Only 2.74% of new allocations from the two affected sources go to B-prime
+in that window. A carries 96.48%; original B receives 0.78% exploration.
+These shares describe fresh allocation, not rescued bytes.
+
+For a fresh B-prime chunk, mean local-copy legs total 0.000623 ms, the
+network leg takes 0.083225 ms, and the final source notification takes
+1.008044 ms. Notification occupies about 92.3% of the full 1.091894-ms
+route-to-logical-completion cycle. Four helper credits remain reserved
+until that notification. Even ignoring data transit and contention, that
+model caps a fixed helper route below about 2.08 Gb/s, despite its 10-Gb/s
+network link. This is an analytical ceiling, not measured throughput.
+The four-credit limit, control-channel latency and release-at-final-ACK
+semantics are present in the collaborator source as well.
+
+The benefit gate also has a concrete prediction failure. At time
+118.828640 ms in phase 4, source 15 predicts that its remaining 15,072 B
+bytes will finish in 0.016894 ms and chooses to wait. At 124.928640 ms,
+6.1 ms later, exactly those 15,072 bytes remain. Its recent average ACK
+rate overestimates progress of a stalled tail. This observation identifies
+a model error; it does not attribute the entire gated slowdown to one cause.
+
+NEXT DIAGNOSTIC CHANGES, NOT COMPLETED RESULTS
+First separate physical resource release from logical completion, while
+retaining explicit correctness tracking, bounded in-flight work and stale
+ACK protection. Establish whether the 1-ms final notification is a
+deliberate requirement or a conservative control-channel modeling choice.
+Run any alternate model as a declared sensitivity condition, preserving
+the original result. Do not set its cost to zero and call that a fix.
+Then make the gate aware of per-chunk progress age and stalled-tail risk,
+and evaluate the real phase completion time, including delayed retries.
+Finally assess whether helper setup can overlap existing work while
+respecting helper NIC/buffer capacity and the requested phase boundaries.
+Helpers that are required to wait until a healthy phase is essentially
+finished cannot reproduce healthy dual-plane timing from phase start.
+An objective of nearly healthy steady service may require a different
+helper-availability/scheduling design, not just a faster detector.
+
+All numeric evidence and input SHA256s are in analysis.json.
+No simulator parameters, original results, Git commit or push changed
+while creating this diagnostic briefing.

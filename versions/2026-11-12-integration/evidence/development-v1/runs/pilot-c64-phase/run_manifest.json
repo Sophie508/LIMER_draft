@@ -1,0 +1,48 @@
+{
+  "schema": "limer-run-v1",
+  "method": "G11",
+  "scene": {
+    "family": "blackhole",
+    "rounds": 1,
+    "chunks_per_phase": 64,
+    "horizon_ns": 400000000,
+    "fault_ns": 40000000,
+    "node": 0,
+    "seed": 111200000,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "benefit",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 30
+  },
+  "command": [
+    "/work/build-v7/backend/build/scratch/ns3.36.1-LimerSimulator-debug",
+    "/work/results/development-v1/runs/pilot-c64-phase/inputs/topology.txt",
+    "/work/results/development-v1/runs/pilot-c64-phase/inputs/config.txt",
+    "/work/results/development-v1/runs/pilot-c64-phase",
+    "G11",
+    "1",
+    "400000000",
+    "/work/results/development-v1/runs/pilot-c64-phase/truth/injection.txt",
+    "64",
+    "service",
+    "benefit",
+    "2000000",
+    "65536",
+    "phase",
+    "30"
+  ],
+  "binary_sha256": "aefcda29e97ed6d020dfd5ad7f015c01d60bfe03b64557847edcc22a9939bb77",
+  "build_sha256": "c16b17960f09d5c28fa12adf9d95dbd97c2dda9fe6d14a279847510118707387",
+  "input_hashes": {
+    "truth/injection.txt": "b68b3f1602ca89e5669cf0804731246d7a09c4a7bd80437cf068a33869452cf2",
+    "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/config.txt": "9cf6143459e691d941c68d715c893156b5eea007b33b00f0acce9744f83ab5b3",
+    "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+    "inputs/input_manifest.json": "f2750c005ec7bc2b696b00ebbf7c70c64caeb7db36873a2d8b520d7f90020420"
+  }
+}

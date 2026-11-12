@@ -38,6 +38,9 @@ def audit(root):
     if manifest_path.exists():
         manifest = json.loads(manifest_path.read_text())
         check(manifest['scene']['chunks_per_phase'] == phase_chunks, 'registered chunk geometry changed')
+        for name in ('replacement_lifetime', 'phases_per_round'):
+            if name in manifest['scene']:
+                check(status.get(name) == manifest['scene'][name], 'registered '+name+' changed')
         for name in ('detector','policy'):
             if name in manifest['scene']:
                 check(status.get(name+'_mode') == manifest['scene'][name], 'registered '+name+' changed')
@@ -48,8 +51,10 @@ def audit(root):
                 local[int(u)].append(rate)
         check(all(local[g] == [str(manifest['scene']['local_gbps']) + 'Gbps'] for g in range(16)),
               'registered intra-server bandwidth changed')
+    phase_scoped = status.get('replacement_lifetime', 'persistent') == 'phase'
     expected_scope=('service-driven persistent B-prime replacement v2' if status.get('detector_mode')=='service'
                     else 'M13-driven persistent B-prime replacement v1')
+    if phase_scoped: expected_scope = 'phase-scoped B-prime replacement v3'
     check(status['scope'] == expected_scope, 'wrong protocol')
     chunks = {}
     done = {}
@@ -71,6 +76,7 @@ def audit(root):
             check(r['dst'] == (r['src'] + 4 if r['src'] < 12 else (r['src'] + 1) % 4), 'logical destination changed')
             if fixed:
                 check(r['lane'] == (r['offset'] // 65536) % 2, 'fixed B work reassigned to A')
+            if status['method'] == 'A_ONLY': check(r['lane'] == 0, 'A-only control used B business')
             check(r['acked'] == 0, 'new chunk starts acknowledged')
             intervals[r['phase'], r['src']].append(r['offset'])
             allocations[c] = dict(r)
@@ -195,6 +201,7 @@ def audit(root):
             alarms[src] = int(row['timestamp_ns'])
     controls = list(rows(root / 'control_events.csv'))
     first_activation = {}
+    first_phase_activation = {}
     control_bytes = 0
     for raw in controls:
         control_bytes += int(raw['wire_bytes'])
@@ -212,7 +219,8 @@ def audit(root):
             by_event = defaultdict(list)
             for r in matching:
                 by_event[r['event']].append(r)
-            if src not in first_activation:
+            activation_key = (p, src) if phase_scoped else src
+            if activation_key not in first_phase_activation:
                 for name in ['PREPARE', 'READY', 'COMMIT']:
                     check(len(by_event[name]) == 4, 'missing initial coordination participants')
                 if all(by_event[n] for n in ['PREPARE', 'READY', 'COMMIT']):
@@ -228,6 +236,7 @@ def audit(root):
                       max((int(r['arrival_ns']) for r in by_event['HELPER_READY']), default=-1) == at,
                       'phase reuse without charged helper confirmation')
             first_activation.setdefault(src, at)
+            first_phase_activation.setdefault(activation_key, at)
         check(raw['event'] != 'PHASE_LAG_TRIGGER', 'unregistered tail fallback enabled')
         if raw['event'] == 'M13_REPLACEMENT_PREPARE':
             src = int(raw['rank'])
@@ -240,8 +249,23 @@ def audit(root):
         check(status['control_wire_bytes'] == control_bytes, 'unaccounted control traffic')
     # A retired direct B route can drain, but it can never accept a new chunk.
     for launch in direct_routes.values():
-        if launch['lane'] == 1 and launch['src'] in first_activation:
-            check(launch['timestamp_ns'] < first_activation[launch['src']], 'new work sent on retired B')
+        key = (launch['phase'], launch['src']) if phase_scoped else launch['src']
+        if launch['lane'] == 1 and key in first_phase_activation:
+            check(launch['timestamp_ns'] < first_phase_activation[key], 'new work sent on retired B')
+    if phase_scoped:
+        phase_starts = list(rows(root / 'phase_events.csv'))
+        check([int(r['phase']) for r in phase_starts] == list(range(len(phase_starts))), 'phase sequence changed')
+        resets = defaultdict(list)
+        for r in controls:
+            if r['event'] == 'RESET_TO_AB': resets[int(r['phase'])].append(r)
+        for row in phase_starts:
+            p, at = int(row['phase']), int(row['timestamp_ns'])
+            group = resets[p]
+            check(len(group) == 16 and {int(r['rank']) for r in group} == set(range(16)), 'missing phase binding reset')
+            check(all(int(r['sent_ns']) == int(r['arrival_ns']) == at and int(r['wire_bytes']) == 0 for r in group), 'noncausal phase binding reset')
+            if p:
+                previous = [r for r in done.values() if r['phase'] == p-1]
+                check(len(previous) == 16*phase_chunks and max((r['timestamp_ns'] for r in previous), default=at) < at, 'next phase started before previous completion')
     for r in reservations.values():
         if r['relay']:
             check(alarms.get(r['src'], 10**30) <= r['timestamp_ns'], 'proxy probe/data before M13 diagnosis')

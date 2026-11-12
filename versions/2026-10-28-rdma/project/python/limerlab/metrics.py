@@ -15,10 +15,15 @@ def calculate(root):
             starts[int(r['phase'])] = int(r['timestamp_ns'])
     end = status['job_done_ns'] or status['horizon_ns']
     activation = {}
+    phase_activation, phase_resets = {}, {}
+    phase_scoped = status.get("replacement_lifetime") == "phase"
     with (root / 'control_events.csv').open() as f:
         for r in csv.DictReader(f):
             if r['event'] == 'ACTIVATE':
                 activation.setdefault(int(r['rank']), int(r['arrival_ns']))
+                phase_activation.setdefault((int(r['phase']),int(r['rank'])),int(r['arrival_ns']))
+            elif r['event'] == 'RESET_TO_AB':
+                phase_resets[int(r['phase']),int(r['rank'])]=int(r['arrival_ns'])
     alarms = {}
     with (root / 'detector_events.csv').open() as f:
         for r in csv.DictReader(f):
@@ -36,14 +41,19 @@ def calculate(root):
     nodes = set(range(4)) if scene['family'] == 'no_idle_helpers' else {scene['node']}
     affected = {s for s in range(16) if s in nodes or (s+4 if s < 12 else (s+1) % 4) in nodes}
     allocation_windows = defaultdict(lambda: defaultdict(int))
+    lifecycle = defaultdict(lambda: defaultdict(int))
     with (root / 'logical_events.csv').open() as f:
         for r in csv.DictReader(f):
             c, p, s, t = (int(r[k]) for k in ['chunk_id', 'phase', 'src', 'timestamp_ns'])
             if r['event'] == 'ALLOC':
                 allocated[c] = (t, p, s, int(r['lane']))
+                lane = 'Bprime' if int(r['epoch']) else 'A' if r['lane']=='0' else 'B'
+                lifecycle[p,s][lane+'_new_bytes']+=int(r['length'])
+                if lane=='B': lifecycle[p,s].setdefault('first_B_allocation_ns',t)
                 if fault_ns is not None and s in affected:
+                    switched = phase_activation.get((p,s)) if phase_scoped else activation.get(s)
                     region = ('before_fault' if t < fault_ns else
-                              'after_replacement' if s in activation and t >= activation[s] else
+                              'after_replacement' if switched is not None and t >= switched else
                               'before_diagnosis' if s not in alarms or t < alarms[s] else 'preparing')
                     lane = 'Bprime' if int(r['epoch']) else 'A' if r['lane'] == '0' else 'B'
                     allocation_windows[region][lane + '_new_bytes'] += 65536
@@ -68,6 +78,8 @@ def calculate(root):
                 totals[p]['end_ns'] = max(totals[p]['end_ns'], t)
                 if c not in migrated and route_type[c] == 'Bprime':
                     totals[p]['new_Bprime_done'] += 1
+                    lifecycle[p,s]['fresh_Bprime_done']+=1
+                    lifecycle[p,s]['fresh_Bprime_payload_bytes']+=int(r['length'])
     rows = []
     last_activation = max(activation.values(), default=None)
     for p, start in sorted(starts.items()):
@@ -79,6 +91,7 @@ def calculate(root):
                    **{k: v for k, v in x.items() if k != 'end_ns'})
         row['region'] = ('healthy' if fault_ns is None else 'before_fault' if stop <= fault_ns else
                          'after_replacement' if last_activation and start > last_activation else 'fault_or_diagnosis')
+        if phase_scoped and any(key[0]==p for key in phase_activation): row['region']='phase_replacement'
         row['aggregate_unique_gbps'] = sum(x.get(k + '_unique_bytes', 0) for k in ['A', 'B', 'Bprime']) * 8 / max(1, duration)
         rows.append(row)
     with (root / 'phase_metrics.csv').open('w', newline='') as f:
@@ -105,6 +118,17 @@ def calculate(root):
         unique_payload_bytes=sum(progress.values()),
         recovery_observed=bool(activation) and status['status'] == 'completed',
         sustained_new_proxy_observed=sum(r.get('new_Bprime_done', 0) > 0 for r in rows) >= 2)
+    phase_lifecycles=[]
+    for (p,s),counts in sorted(lifecycle.items()):
+        if fault_ns is not None and s not in affected: continue
+        at=phase_activation.get((p,s))
+        allocated_at=sum(65536 for t,cp,cs,lane in allocated.values() if cp==p and cs==s and at is not None and t<=at)
+        phase_lifecycles.append(dict(phase=p,src=s,reset_to_AB_ns=phase_resets.get((p,s)),
+            activation_ns=at,unallocated_bytes_at_activation=(status['chunks_per_phase']*65536-allocated_at if at is not None else None),**counts))
+    result['replacement_lifetime']=status.get('replacement_lifetime','persistent')
+    result['phase_route_lifecycles']=phase_lifecycles
+    result['fresh_Bprime_payload_bytes']=sum(r.get('fresh_Bprime_payload_bytes',0) for r in lifecycle.values())
+    result['phase_binding_resets']=len(phase_resets)
     result['scored_affected_sources'] = sorted(affected) if fault_ns is not None else []
     result['affected_source_new_allocations_by_region'] = dict(allocation_windows)
     result['healthy_alarm_observed'] = scene['family'] == 'healthy' and any(t <= end for t in alarms.values())

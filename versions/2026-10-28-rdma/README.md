@@ -1,5 +1,10 @@
 # LIMER 2026-10-28：RDMA 检测与换路收益版本
 
+> **Working-branch revision, 2026-11-12:** Source below is being repaired for
+> phase-scoped recovery. Read the [integration note](../2026-11-12-integration/README.md).
+> Tables below describe the immutable October release, not results for changed
+> source; its release-hash verifier is only applicable at commit `501a0f50`.
+
 这是在合作者 **LIMER-1027.zip** 上继续实现、冻结实验并复核后的交接版本。
 不需要再取得该 ZIP 就能检查代码或从源码构建新的模拟器。全部仿真在 CPU 上运行。
 

@@ -34,7 +34,8 @@ def run_case(build, out, method, scene, archive_to=None, keep_raw=True, timeout=
     inject(out / 'truth', scene)
     command = [str(binary), str(out / 'inputs/topology.txt'), str(out / 'inputs/config.txt'), str(out),
                method, str(scene.rounds), str(scene.horizon_ns), str(out / 'truth/injection.txt'), str(scene.chunks_per_phase),
-               scene.detector, scene.policy, str(scene.canary_period_ns), str(scene.canary_bytes)]
+               scene.detector, scene.policy, str(scene.canary_period_ns), str(scene.canary_bytes),
+               scene.replacement_lifetime, str(scene.phases_per_round)]
     manifest = dict(schema='limer-run-v1', method=method, scene=scene.dictionary(), command=command,
         binary_sha256=build_record['binary_sha256'], build_sha256=sha(Path(build) / 'build.json'),
         input_hashes={p.relative_to(out).as_posix(): sha(p) for p in out.rglob('*') if p.is_file()})

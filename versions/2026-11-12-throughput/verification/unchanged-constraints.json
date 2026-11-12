@@ -1,0 +1,20 @@
+{
+  "prior_source": "versions/2026-10-28-rdma/project",
+  "candidate_source": "versions/2026-11-12-throughput/project",
+  "identical_files": {
+    "configs/topologies/dual_plane_16gpu.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+    "configs/transport.conf": "68f2199d062ca102a46a348ae79191ff2fc64787193be2c19a81be7b6699240a",
+    "python/limerlab/inputs.py": "aef443b328446ad9f4cb6bdde110e5ee518ec3bf56faa0a70c1bb60d1f3bc4c6",
+    "src/simulator/control/channel.h": "f355393c5fc2d32e151ec7271897fa978b623939240bd72b4163eb5463c07e5c",
+    "src/simulator/detection/m13_batch_deficit_observer.h": "acad6f2d3095d9b6053a1e9f7b97707626da8ca5f082e5f23f3f685e618a4a4a",
+    "src/simulator/detection/monitor.h": "bc9243a1a2138910dbd0c6fcebe8a8328c737cec6f22caf43f2cf2b74f3a9ff6",
+    "src/simulator/detection/observer.h": "2ee353fb0fca046a705a1501b50992f36165eba16c809609b1f213e05f9a2824",
+    "src/simulator/detection/probe_budget.h": "2040abd1f5a061af2ea7181105a1caa8ec5f0ba25fa32fc6a19bd6992f7fc1fa",
+    "src/simulator/detection/service_detector.h": "49b1376296e7242196bbb0542b3226d8673fbc23a47a3eb29ad3eeacfa04f51f",
+    "src/simulator/detection/spacing.h": "8da2908408cb1add7725ec3604a0ea06e55efa7351eb474b2f41c468f79aaff0",
+    "src/simulator/experiment/faults.h": "35df57952a85796318c4f31a3b1c0133f8256f8d0b6ab6e9cc6e8867a0fd5b1c",
+    "src/simulator/network/bootstrap.h": "60030889f733e4a3d530e08a02dfd914f3e6d5f3b9d13de49ab9c689b988585d",
+    "src/simulator/network/topology.h": "b81e1f7912d80126d65380e1577dc56305bb96e72666413c2180d73220739adb",
+    "src/simulator/recovery/benefit_policy.h": "1773716fbd8c5e130545302e6daa96723f841e4ed2524518742bfc49368ed88d"
+  }
+}

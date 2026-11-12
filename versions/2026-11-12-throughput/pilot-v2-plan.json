@@ -1,0 +1,86 @@
+{
+  "schema": "limer-throughput-development-v2",
+  "preset": "pilot",
+  "cases": [
+    {
+      "name": "blackhole-G11-pipelined-shared-always-s111210016",
+      "method": "G11",
+      "scene": {
+        "family": "blackhole",
+        "rounds": 1,
+        "chunks_per_phase": 512,
+        "horizon_ns": 400000000,
+        "fault_ns": 40000000,
+        "node": 0,
+        "seed": 111210016,
+        "local_gbps": 2400,
+        "detector": "service",
+        "policy": "always",
+        "fault_duration_ns": 0,
+        "canary_period_ns": 2000000,
+        "canary_bytes": 65536,
+        "replacement_lifetime": "phase",
+        "phases_per_round": 4,
+        "relay_completion": "pipelined",
+        "helper_mode": "shared"
+      }
+    },
+    {
+      "name": "weak_loss-G11-pipelined-shared-always-s111210016",
+      "method": "G11",
+      "scene": {
+        "family": "weak_loss",
+        "rounds": 1,
+        "chunks_per_phase": 512,
+        "horizon_ns": 400000000,
+        "fault_ns": 40000000,
+        "node": 0,
+        "seed": 111210016,
+        "local_gbps": 2400,
+        "detector": "service",
+        "policy": "always",
+        "fault_duration_ns": 0,
+        "canary_period_ns": 2000000,
+        "canary_bytes": 65536,
+        "replacement_lifetime": "phase",
+        "phases_per_round": 4,
+        "relay_completion": "pipelined",
+        "helper_mode": "shared"
+      }
+    },
+    {
+      "name": "healthy-G11-pipelined-shared-always-s111210016",
+      "method": "G11",
+      "scene": {
+        "family": "healthy",
+        "rounds": 1,
+        "chunks_per_phase": 512,
+        "horizon_ns": 400000000,
+        "fault_ns": 40000000,
+        "node": 0,
+        "seed": 111210016,
+        "local_gbps": 2400,
+        "detector": "service",
+        "policy": "always",
+        "fault_duration_ns": 0,
+        "canary_period_ns": 2000000,
+        "canary_bytes": 65536,
+        "replacement_lifetime": "phase",
+        "phases_per_round": 4,
+        "relay_completion": "pipelined",
+        "helper_mode": "shared"
+      }
+    }
+  ],
+  "registered_unix": 1794458304.119616,
+  "run_count": 3,
+  "role": "Paired development and one fresh matched seed, not a population guarantee",
+  "changes": "Separate relay physical release from logical confirmation; explicit charged shared-helper lending with disjoint helper selection",
+  "expectation": "Idle-only release may improve throughput but remains late. Shared helpers may recover 70-80% while all physical contention and final ACKs remain charged.",
+  "denominator": "Healthy useful payload divided by whole-job time for the same workload and seed. Also compare immutable 480.178448-ms healthy reference.",
+  "target_retention": [
+    0.7,
+    0.8
+  ],
+  "all_failed_attempts_retained": true
+}

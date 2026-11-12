@@ -1,0 +1,826 @@
+{
+  "name": "pilot-c64-phase",
+  "method": "G11",
+  "family": "blackhole",
+  "scene": {
+    "family": "blackhole",
+    "rounds": 1,
+    "chunks_per_phase": 64,
+    "horizon_ns": 400000000,
+    "fault_ns": 40000000,
+    "node": 0,
+    "seed": 111200000,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "benefit",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 30
+  },
+  "status": {
+    "detector_mode": "service",
+    "policy_mode": "benefit",
+    "replacement_lifetime": "phase",
+    "phases_per_round": 30,
+    "monitor_end_ns": 400000000,
+    "status": "completed",
+    "method": "G11",
+    "job_done_ns": 159312505,
+    "horizon_ns": 400000000,
+    "world_size": 16,
+    "physical_planes": 2,
+    "phases_done": 30,
+    "phases_expected": 30,
+    "chunks_per_phase": 64,
+    "proxy_chunks": 88,
+    "new_proxy_chunks": 0,
+    "rescued_chunks": 88,
+    "health_probe_routes": 24,
+    "network_wire_bytes": 2632371376,
+    "local_wire_bytes": 15677792,
+    "probe_wire_bytes": 457596288,
+    "relay_wire_bytes": 18426000,
+    "retransmission_wire_bytes": 0,
+    "control_wire_bytes": 36288,
+    "stale_acks": 0,
+    "extra_rto": false,
+    "scope": "phase-scoped B-prime replacement v3"
+  },
+  "audit": {
+    "errors": [],
+    "logical_chunks": 30720,
+    "completed_chunks": 30720,
+    "unique_ack_bytes": 2013265920,
+    "relay_chunks": 88,
+    "relay_leg_transfers": 264,
+    "max_logical_source_credit": 8,
+    "max_physical_nic_credit": 4,
+    "max_helper_buffers": 4,
+    "dual_plane_verified": true,
+    "helper_phase_idle_verified": true,
+    "final_target_completion_verified": true,
+    "physical_wire_totals": {
+      "network_wire_bytes": 2632371376,
+      "probe_wire_bytes": 457596288,
+      "local_wire_bytes": 15677792,
+      "relay_wire_bytes": 18426000
+    },
+    "m13_causality_verified": false,
+    "active_detector_causality_verified": true,
+    "active_detector": "service",
+    "retired_B_no_new_work_verified": true,
+    "fresh_proxy_chunks": 0,
+    "fresh_proxy_phases": 0,
+    "affected_sources_with_replacement": [
+      0,
+      15
+    ],
+    "pass": true
+  },
+  "observation_audit": {
+    "errors": [],
+    "reports_reconstructed": 6400,
+    "alarms": [
+      [
+        13,
+        48007680,
+        "canary_service"
+      ],
+      [
+        721,
+        48015360,
+        "canary_service"
+      ]
+    ],
+    "source": "canary-service-v4; physical payload gaps/QP/retransmissions/business ACK stalls and charged reports",
+    "truth_accessed": false,
+    "completed_canaries": 6040,
+    "spacing_summaries_reconstructed": 1216,
+    "source_packets_checked": 2546780,
+    "accepted_packets_checked": 2516397,
+    "canary_payload_bytes": 419430400,
+    "pass": true,
+    "policy_replay": {
+      "pass": true,
+      "errors": [],
+      "decisions_checked": 46,
+      "initial_activations_checked": 22,
+      "truth_accessed": false,
+      "same_timestamp_order": "matching causal prefix; logs have no cross-file sequence",
+      "checks": [
+        "pure policy",
+        "logical remaining bytes",
+        "direct ACK service",
+        "physical candidate probes",
+        "charged delivered health reports",
+        "control FIFO/current cost estimate",
+        "initial commit authorization"
+      ]
+    }
+  },
+  "performance": {
+    "task_completed": true,
+    "communication_ms": 158.312505,
+    "restricted_communication_ms": 158.312505,
+    "alarms_ns": {
+      "0": 48007680,
+      "15": 48015360
+    },
+    "first_activations_ns": {
+      "0": 59313120,
+      "15": 59343840
+    },
+    "detector_delays_ms": {
+      "0": 8.00768,
+      "15": 8.01536
+    },
+    "alarm_to_activation_ms": {
+      "0": 11.30544,
+      "15": 11.32848
+    },
+    "new_Bprime_launches": 0,
+    "new_Bprime_completions": 0,
+    "new_Bprime_phases": 0,
+    "post_replacement_complete_phases": 0,
+    "post_replacement_mean_phase_ms": null,
+    "unique_payload_bytes": 2013265920,
+    "recovery_observed": true,
+    "sustained_new_proxy_observed": false,
+    "replacement_lifetime": "phase",
+    "phase_route_lifecycles": [
+      {
+        "phase": 0,
+        "src": 0,
+        "reset_to_AB_ns": 1000000,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 1000000
+      },
+      {
+        "phase": 0,
+        "src": 15,
+        "reset_to_AB_ns": 1000000,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 1000000
+      },
+      {
+        "phase": 1,
+        "src": 0,
+        "reset_to_AB_ns": 3003668,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 3003668
+      },
+      {
+        "phase": 1,
+        "src": 15,
+        "reset_to_AB_ns": 3003668,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 3003668
+      },
+      {
+        "phase": 2,
+        "src": 0,
+        "reset_to_AB_ns": 5021544,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 5021544
+      },
+      {
+        "phase": 2,
+        "src": 15,
+        "reset_to_AB_ns": 5021544,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 5021544
+      },
+      {
+        "phase": 3,
+        "src": 0,
+        "reset_to_AB_ns": 7035768,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 7035768
+      },
+      {
+        "phase": 3,
+        "src": 15,
+        "reset_to_AB_ns": 7035768,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 7035768
+      },
+      {
+        "phase": 4,
+        "src": 0,
+        "reset_to_AB_ns": 9049992,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 9049992
+      },
+      {
+        "phase": 4,
+        "src": 15,
+        "reset_to_AB_ns": 9049992,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 9049992
+      },
+      {
+        "phase": 5,
+        "src": 0,
+        "reset_to_AB_ns": 11063291,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 11063291
+      },
+      {
+        "phase": 5,
+        "src": 15,
+        "reset_to_AB_ns": 11063291,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 11063291
+      },
+      {
+        "phase": 6,
+        "src": 0,
+        "reset_to_AB_ns": 13056215,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 13056215
+      },
+      {
+        "phase": 6,
+        "src": 15,
+        "reset_to_AB_ns": 13056215,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 13056215
+      },
+      {
+        "phase": 7,
+        "src": 0,
+        "reset_to_AB_ns": 15066523,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 15066523
+      },
+      {
+        "phase": 7,
+        "src": 15,
+        "reset_to_AB_ns": 15066523,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 15066523
+      },
+      {
+        "phase": 8,
+        "src": 0,
+        "reset_to_AB_ns": 17079866,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 17079866
+      },
+      {
+        "phase": 8,
+        "src": 15,
+        "reset_to_AB_ns": 17079866,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 17079866
+      },
+      {
+        "phase": 9,
+        "src": 0,
+        "reset_to_AB_ns": 19093209,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 19093209
+      },
+      {
+        "phase": 9,
+        "src": 15,
+        "reset_to_AB_ns": 19093209,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 19093209
+      },
+      {
+        "phase": 10,
+        "src": 0,
+        "reset_to_AB_ns": 21106552,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 21106552
+      },
+      {
+        "phase": 10,
+        "src": 15,
+        "reset_to_AB_ns": 21106552,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 21106552
+      },
+      {
+        "phase": 11,
+        "src": 0,
+        "reset_to_AB_ns": 23119895,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 23119895
+      },
+      {
+        "phase": 11,
+        "src": 15,
+        "reset_to_AB_ns": 23119895,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 23119895
+      },
+      {
+        "phase": 12,
+        "src": 0,
+        "reset_to_AB_ns": 25133238,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 25133238
+      },
+      {
+        "phase": 12,
+        "src": 15,
+        "reset_to_AB_ns": 25133238,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 25133238
+      },
+      {
+        "phase": 13,
+        "src": 0,
+        "reset_to_AB_ns": 27146581,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 27146581
+      },
+      {
+        "phase": 13,
+        "src": 15,
+        "reset_to_AB_ns": 27146581,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 27146581
+      },
+      {
+        "phase": 14,
+        "src": 0,
+        "reset_to_AB_ns": 29159924,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 29159924
+      },
+      {
+        "phase": 14,
+        "src": 15,
+        "reset_to_AB_ns": 29159924,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 29159924
+      },
+      {
+        "phase": 15,
+        "src": 0,
+        "reset_to_AB_ns": 31173267,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 31173267
+      },
+      {
+        "phase": 15,
+        "src": 15,
+        "reset_to_AB_ns": 31173267,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 31173267
+      },
+      {
+        "phase": 16,
+        "src": 0,
+        "reset_to_AB_ns": 33186610,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 33186610
+      },
+      {
+        "phase": 16,
+        "src": 15,
+        "reset_to_AB_ns": 33186610,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 33186610
+      },
+      {
+        "phase": 17,
+        "src": 0,
+        "reset_to_AB_ns": 35199953,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 35199953
+      },
+      {
+        "phase": 17,
+        "src": 15,
+        "reset_to_AB_ns": 35199953,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 35199953
+      },
+      {
+        "phase": 18,
+        "src": 0,
+        "reset_to_AB_ns": 37213296,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 37213296
+      },
+      {
+        "phase": 18,
+        "src": 15,
+        "reset_to_AB_ns": 37213296,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 2097152,
+        "B_new_bytes": 2097152,
+        "first_B_allocation_ns": 37213296
+      },
+      {
+        "phase": 19,
+        "src": 0,
+        "reset_to_AB_ns": 39226639,
+        "activation_ns": 59313120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3145728,
+        "B_new_bytes": 1048576,
+        "first_B_allocation_ns": 39226639
+      },
+      {
+        "phase": 19,
+        "src": 15,
+        "reset_to_AB_ns": 39226639,
+        "activation_ns": 59343840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3145728,
+        "B_new_bytes": 1048576,
+        "first_B_allocation_ns": 39226639
+      },
+      {
+        "phase": 20,
+        "src": 0,
+        "reset_to_AB_ns": 61788832,
+        "activation_ns": 68963120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 61788832
+      },
+      {
+        "phase": 20,
+        "src": 15,
+        "reset_to_AB_ns": 61788832,
+        "activation_ns": 68993840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 61788832
+      },
+      {
+        "phase": 21,
+        "src": 0,
+        "reset_to_AB_ns": 71562506,
+        "activation_ns": 78763120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 71562506
+      },
+      {
+        "phase": 21,
+        "src": 15,
+        "reset_to_AB_ns": 71562506,
+        "activation_ns": 78793840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 71562506
+      },
+      {
+        "phase": 22,
+        "src": 0,
+        "reset_to_AB_ns": 81312506,
+        "activation_ns": 88513120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 81312506
+      },
+      {
+        "phase": 22,
+        "src": 15,
+        "reset_to_AB_ns": 81312506,
+        "activation_ns": 88543840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 81312506
+      },
+      {
+        "phase": 23,
+        "src": 0,
+        "reset_to_AB_ns": 91062506,
+        "activation_ns": 98226087,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 91062506
+      },
+      {
+        "phase": 23,
+        "src": 15,
+        "reset_to_AB_ns": 91062506,
+        "activation_ns": 98256807,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 91062506
+      },
+      {
+        "phase": 24,
+        "src": 0,
+        "reset_to_AB_ns": 100762506,
+        "activation_ns": 107963120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 100762506
+      },
+      {
+        "phase": 24,
+        "src": 15,
+        "reset_to_AB_ns": 100762506,
+        "activation_ns": 107993840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 100762506
+      },
+      {
+        "phase": 25,
+        "src": 0,
+        "reset_to_AB_ns": 110512506,
+        "activation_ns": 117713120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 110512506
+      },
+      {
+        "phase": 25,
+        "src": 15,
+        "reset_to_AB_ns": 110512506,
+        "activation_ns": 117743840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 110512506
+      },
+      {
+        "phase": 26,
+        "src": 0,
+        "reset_to_AB_ns": 120321385,
+        "activation_ns": 127513120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 120321385
+      },
+      {
+        "phase": 26,
+        "src": 15,
+        "reset_to_AB_ns": 120321385,
+        "activation_ns": 127543840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 120321385
+      },
+      {
+        "phase": 27,
+        "src": 0,
+        "reset_to_AB_ns": 130072266,
+        "activation_ns": 137263120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 130072266
+      },
+      {
+        "phase": 27,
+        "src": 15,
+        "reset_to_AB_ns": 130072266,
+        "activation_ns": 137293840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 130072266
+      },
+      {
+        "phase": 28,
+        "src": 0,
+        "reset_to_AB_ns": 139812506,
+        "activation_ns": 147013120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 139812506
+      },
+      {
+        "phase": 28,
+        "src": 15,
+        "reset_to_AB_ns": 139812506,
+        "activation_ns": 147043840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 139812506
+      },
+      {
+        "phase": 29,
+        "src": 0,
+        "reset_to_AB_ns": 149554399,
+        "activation_ns": 156763120,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 149554399
+      },
+      {
+        "phase": 29,
+        "src": 15,
+        "reset_to_AB_ns": 149554399,
+        "activation_ns": 156793840,
+        "unallocated_bytes_at_activation": 0,
+        "A_new_bytes": 3932160,
+        "B_new_bytes": 262144,
+        "first_B_allocation_ns": 149554399
+      }
+    ],
+    "fresh_Bprime_payload_bytes": 0,
+    "phase_binding_resets": 480,
+    "scored_affected_sources": [
+      0,
+      15
+    ],
+    "affected_source_new_allocations_by_region": {
+      "before_fault": {
+        "A_new_bytes": 81788928,
+        "B_new_bytes": 81788928
+      },
+      "before_diagnosis": {
+        "A_new_bytes": 4194304
+      },
+      "preparing": {
+        "A_new_bytes": 78643200,
+        "B_new_bytes": 5242880
+      }
+    },
+    "healthy_alarm_observed": false,
+    "healthy_proxy_observed": false,
+    "alarms_before_injected_fault": {},
+    "fresh_proxy_costs": {
+      "completed_routes": 0
+    }
+  },
+  "archive": {
+    "archive": "/work/results/development-v1/archives/pilot-c64-phase.tar.gz",
+    "sha256": "546a139f514fec3f55234a5ac297b4cbf4b65fc035ed6138cb31d6af0a779fe6",
+    "bytes": 61266275,
+    "files": {
+      "audit.json": "e0de16042095fe72e822cf5e162db6b0961e28f9d3049bce1eda66aa679fb279",
+      "performance.json": "52fae8c49476a9a3753048e525f76b9f6c0565f0d99c668cad5d9cb081cfe283",
+      "run_manifest.json": "0959ee795552a0708fb1d8eff47526b6b7460212f01377814d66a4335161993f",
+      "m13_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "m13_baseline.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "peer_events.csv": "5a6a844eb1d18083eb3fd970de0b261893af860da943a47be70bf68179472353",
+      "run_status.json": "2d7d322465631c06aa0e9d90a62f35a2a1c539ba108a24b1a47ff677ae18d54b",
+      "packet_events.csv": "84f3fd2f42ab1801dced9854290e7ef9ef896679cdebcda1e0da445929e72b25",
+      "control_events.csv": "532a02b1e93ccd6eb06791c68fdf8f148565443e4ee63a4ec99ff59e774306fa",
+      "detector_events.csv": "50bcb0ca20bdccb59a6c2ebe268af0d640595350cdfd0fb193da33a39b436e7c",
+      "wire_events.csv": "657a8e8b600b13f133a99c888cfd35040ae14b76ab0d7a03274de8ce25e7be1f",
+      "leg_events.csv": "36dabfeb613a18ef6d3d06d26815a74f135d1cde9f5335a8b40619d344811f74",
+      "simulator.log": "39dcc32aebe581f397ae55290e6b28ef9473a263dd3a24692328ae4583a061e6",
+      "send.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "service_alarms.csv": "bb6b8753be247dddcb71392bec9d992a40c2162e437287e1da2bbc816246e42b",
+      "metrics.log": "d333acfbec467eb5f56dbebc0552a7385338e38f0e76d030ac67f0b6fc750c17",
+      "policy_decisions.jsonl": "d4c0182402ba69fe100f97e876b7c233bb795d8c46c71cdf6e365e7891eea8f7",
+      "audit.log": "efb893191b038cd0842f393c39c183f2c36167199412bef9748e8b68ff78088e",
+      "throughput_10ms.json": "31e41570f9a7191721d54212e1d895039e6bfa7cb1b3d5ebdef94de769dae520",
+      "fault_events.csv": "8c1149c2f9b6895b8730e9a852687eed144b2480ada904f2eb695fb165ce84c6",
+      "phase_events.csv": "2fcb2156e7312f288709687b77be42d307eab6a4ca921b8fe0a59fc94c50942b",
+      "service_events.csv": "6f4e1686696d8de821c45418f56a4771ae01fd0497ae208fc873a31719f14550",
+      "logical_events.csv": "e256cbfaedbfcae011fe73e05f8a5ac04439ff7c9ae9ca8c39df8eb296234fd2",
+      "phase_metrics.csv": "e85d7529a0db80d49f6ef7b3d8125a751b4c8ee578354754a6a63b53da85f77d",
+      "replay.log": "3a3c6458375bd7ecbf39d678165248731d21ac1fc147da35bda08283911a0207",
+      "service_decisions.jsonl": "45a84b864b2d1d3a0720831c755b460c95bb2963c83699be195fd448024b5d7b",
+      "observations.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observation_audit.json": "de29943e4a16eab51a40d1d4401e6537200b8abcf642ca534bc7487f205fb8c0",
+      "truth/injection.txt": "b68b3f1602ca89e5669cf0804731246d7a09c4a7bd80437cf068a33869452cf2",
+      "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "inputs/fct_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "inputs/config.txt": "9cf6143459e691d941c68d715c893156b5eea007b33b00f0acce9744f83ab5b3",
+      "inputs/trace_output_file.txt": "d7129b22077315f649daa0033c49b17c4896330fcbea422f978da6a599ac13d6",
+      "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+      "inputs/input_manifest.json": "f2750c005ec7bc2b696b00ebbf7c70c64caeb7db36873a2d8b520d7f90020420",
+      "inputs/pfc_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "all_content_hashes_verified": true
+  },
+  "wall_seconds": 124.03316619619727
+}

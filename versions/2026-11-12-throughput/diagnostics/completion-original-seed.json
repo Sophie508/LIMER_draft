@@ -1,0 +1,149 @@
+{
+  "run": "blackhole-G11-pipelined-shared-always-s111210016",
+  "raw_archive": "/home/suliu/data/LIMER_THROUGHPUT_2026-11-12/iteration-v2/results/full-v2/archives/blackhole-G11-pipelined-shared-always-s111210016.tar.gz",
+  "phases": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "metric": "Time from phase start to each rank completing its own outgoing payload, including final notifications.",
+  "mean_phase_completion_ms": 21.975101259259258,
+  "per_rank": {
+    "0": {
+      "mean_outbound_complete_ms": 20.770437814814816,
+      "min_ms": 20.619063,
+      "max_ms": 21.010751,
+      "fresh_relay_chunks": 5165,
+      "critical_phase_count": 0
+    },
+    "1": {
+      "mean_outbound_complete_ms": 21.953268962962962,
+      "min_ms": 21.84589,
+      "max_ms": 22.128356,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 20
+    },
+    "2": {
+      "mean_outbound_complete_ms": 16.099423444444444,
+      "min_ms": 15.846455,
+      "max_ms": 16.413454,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "3": {
+      "mean_outbound_complete_ms": 15.917764518518519,
+      "min_ms": 15.808969,
+      "max_ms": 15.946619,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "4": {
+      "mean_outbound_complete_ms": 15.899275888888889,
+      "min_ms": 15.830736,
+      "max_ms": 15.943846,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "5": {
+      "mean_outbound_complete_ms": 16.509737666666666,
+      "min_ms": 15.907092,
+      "max_ms": 17.359959,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "6": {
+      "mean_outbound_complete_ms": 15.922966925925927,
+      "min_ms": 15.854506,
+      "max_ms": 15.963031,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "7": {
+      "mean_outbound_complete_ms": 15.932916148148148,
+      "min_ms": 15.887252,
+      "max_ms": 15.973984,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "8": {
+      "mean_outbound_complete_ms": 16.010033074074073,
+      "min_ms": 15.871234,
+      "max_ms": 16.157146,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "9": {
+      "mean_outbound_complete_ms": 15.869538703703704,
+      "min_ms": 15.792333,
+      "max_ms": 15.944749,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "10": {
+      "mean_outbound_complete_ms": 15.920736111111111,
+      "min_ms": 15.778484,
+      "max_ms": 16.001141,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "11": {
+      "mean_outbound_complete_ms": 15.912474444444445,
+      "min_ms": 15.811065,
+      "max_ms": 15.944749,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "12": {
+      "mean_outbound_complete_ms": 21.886209703703702,
+      "min_ms": 21.721513,
+      "max_ms": 22.055455,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 7
+    },
+    "13": {
+      "mean_outbound_complete_ms": 21.692533148148147,
+      "min_ms": 21.518865,
+      "max_ms": 21.845756,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "14": {
+      "mean_outbound_complete_ms": 16.02486588888889,
+      "min_ms": 15.919286,
+      "max_ms": 16.085628,
+      "fresh_relay_chunks": 0,
+      "critical_phase_count": 0
+    },
+    "15": {
+      "mean_outbound_complete_ms": 20.906981259259258,
+      "min_ms": 20.687359,
+      "max_ms": 21.041832,
+      "fresh_relay_chunks": 5117,
+      "critical_phase_count": 0
+    }
+  }
+}

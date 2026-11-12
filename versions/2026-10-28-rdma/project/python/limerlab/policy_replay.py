@@ -241,9 +241,10 @@ def replay_policy(root):
             if r['event'] != 'ACTIVATE':
                 continue
             source, phase, at = int(r['rank']), int(r['phase']), int(r['sent_ns'])
-            if source in activated:
+            activation_key = (source, phase) if status.get('replacement_lifetime') == 'phase' else source
+            if activation_key in activated:
                 continue
-            activated.add(source)
+            activated.add(activation_key)
             commits = [d for d in decisions if int(d['src']) == source and int(d['phase']) == phase
                        and d['stage'] == 'commit' and int(d['timestamp_ns']) <= at]
             check(bool(commits) and bool(commits[-1]['should_switch']),

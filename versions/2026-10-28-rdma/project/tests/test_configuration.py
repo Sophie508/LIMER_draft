@@ -10,6 +10,13 @@ from limerlab.inputs import generate
 
 
 class ConfigurationTests(unittest.TestCase):
+    def test_phase_lifecycle_and_workload_defaults(self):
+        self.assertEqual(Scenario().replacement_lifetime, 'phase')
+        self.assertEqual(Scenario().phases_per_round, 30)
+        self.assertEqual(Scenario(replacement_lifetime='persistent').replacement_lifetime, 'persistent')
+        for kw in [dict(replacement_lifetime='forever'),dict(phases_per_round=0),dict(phases_per_round=31)]:
+            with self.assertRaises(ValueError): Scenario(**kw)
+
     def test_invalid_workload_geometry_rejected(self):
         for n in [0, 15, 17]:
             with self.assertRaises(ValueError): Scenario(chunks_per_phase=n)

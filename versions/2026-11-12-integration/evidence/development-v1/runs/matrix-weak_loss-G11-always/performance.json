@@ -1,0 +1,138 @@
+{
+  "task_completed": true,
+  "communication_ms": 94.568947,
+  "restricted_communication_ms": 94.568947,
+  "alarms_ns": {
+    "15": 60026205,
+    "0": 66018156
+  },
+  "first_activations_ns": {
+    "15": 65211954,
+    "0": 71211954
+  },
+  "detector_delays_ms": {
+    "15": 20.026205,
+    "0": 26.018156
+  },
+  "alarm_to_activation_ms": {
+    "15": 5.185749,
+    "0": 5.193798
+  },
+  "new_Bprime_launches": 0,
+  "new_Bprime_completions": 0,
+  "new_Bprime_phases": 0,
+  "post_replacement_complete_phases": 0,
+  "post_replacement_mean_phase_ms": null,
+  "unique_payload_bytes": 2147483648,
+  "recovery_observed": true,
+  "sustained_new_proxy_observed": false,
+  "replacement_lifetime": "phase",
+  "phase_route_lifecycles": [
+    {
+      "phase": 0,
+      "src": 0,
+      "reset_to_AB_ns": 1000000,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 1000000
+    },
+    {
+      "phase": 0,
+      "src": 15,
+      "reset_to_AB_ns": 1000000,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 1000000
+    },
+    {
+      "phase": 1,
+      "src": 0,
+      "reset_to_AB_ns": 16847750,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 16847750
+    },
+    {
+      "phase": 1,
+      "src": 15,
+      "reset_to_AB_ns": 16847750,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 16847750
+    },
+    {
+      "phase": 2,
+      "src": 0,
+      "reset_to_AB_ns": 32933379,
+      "activation_ns": 71211954,
+      "unallocated_bytes_at_activation": 0,
+      "A_new_bytes": 16908288,
+      "B_new_bytes": 16646144,
+      "first_B_allocation_ns": 32933379
+    },
+    {
+      "phase": 2,
+      "src": 15,
+      "reset_to_AB_ns": 32933379,
+      "activation_ns": 65211954,
+      "unallocated_bytes_at_activation": 0,
+      "A_new_bytes": 19660800,
+      "B_new_bytes": 13893632,
+      "first_B_allocation_ns": 32933379
+    },
+    {
+      "phase": 3,
+      "src": 0,
+      "reset_to_AB_ns": 72234463,
+      "activation_ns": 93395554,
+      "unallocated_bytes_at_activation": 0,
+      "A_new_bytes": 19529728,
+      "B_new_bytes": 14024704,
+      "first_B_allocation_ns": 72234463
+    },
+    {
+      "phase": 3,
+      "src": 15,
+      "reset_to_AB_ns": 72234463,
+      "activation_ns": 93364834,
+      "unallocated_bytes_at_activation": 0,
+      "A_new_bytes": 19464192,
+      "B_new_bytes": 14090240,
+      "first_B_allocation_ns": 72234463
+    }
+  ],
+  "fresh_Bprime_payload_bytes": 0,
+  "phase_binding_resets": 64,
+  "scored_affected_sources": [
+    0,
+    15
+  ],
+  "affected_source_new_allocations_by_region": {
+    "before_fault": {
+      "A_new_bytes": 82051072,
+      "B_new_bytes": 82051072
+    },
+    "before_diagnosis": {
+      "B_new_bytes": 15597568,
+      "A_new_bytes": 21626880
+    },
+    "preparing": {
+      "A_new_bytes": 38993920,
+      "B_new_bytes": 28114944
+    }
+  },
+  "healthy_alarm_observed": false,
+  "healthy_proxy_observed": false,
+  "alarms_before_injected_fault": {},
+  "fresh_proxy_costs": {
+    "completed_routes": 0
+  }
+}

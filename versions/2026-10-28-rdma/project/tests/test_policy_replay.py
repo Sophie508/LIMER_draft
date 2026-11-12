@@ -117,6 +117,15 @@ class PolicyReplayTests(unittest.TestCase):
         self.check_mutation(lambda root: (root/'control_events.csv').write_text(
             (root/'control_events.csv').read_text().replace('ACTIVATE,0,0,', 'ACTIVATE,0,1,')))
 
+    def test_next_phase_cannot_inherit_previous_benefit_authorization(self):
+        def mutate(root):
+            path=root/'run_status.json'
+            value=json.loads(path.read_text());value['replacement_lifetime']='phase'
+            path.write_text(json.dumps(value))
+            path=root/'control_events.csv'
+            path.write_text(path.read_text()+'35000000,35000000,ACTIVATE,0,1,2,0\n')
+        self.check_mutation(mutate)
+
     def test_current_control_cost_cannot_be_omitted(self):
         def mutate(root):
             path = root/'control_events.csv'

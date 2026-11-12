@@ -1,0 +1,319 @@
+{
+  "name": "weak_loss-G11-pipelined-shared-always-s111210016",
+  "started_unix": 1794461725.8421724,
+  "valid": true,
+  "result": {
+    "name": "weak_loss-G11-pipelined-shared-always-s111210016",
+    "method": "G11",
+    "family": "weak_loss",
+    "scene": {
+      "family": "weak_loss",
+      "rounds": 1,
+      "chunks_per_phase": 512,
+      "horizon_ns": 400000000,
+      "fault_ns": 40000000,
+      "node": 0,
+      "seed": 111210016,
+      "local_gbps": 2400,
+      "detector": "service",
+      "policy": "always",
+      "fault_duration_ns": 0,
+      "canary_period_ns": 2000000,
+      "canary_bytes": 65536,
+      "replacement_lifetime": "phase",
+      "phases_per_round": 4,
+      "relay_completion": "pipelined",
+      "helper_mode": "shared"
+    },
+    "status": {
+      "relay_completion": "pipelined",
+      "helper_mode": "shared",
+      "source_window": 32,
+      "detector_mode": "service",
+      "policy_mode": "always",
+      "replacement_lifetime": "phase",
+      "phases_per_round": 4,
+      "monitor_end_ns": 400000000,
+      "status": "completed",
+      "method": "G11",
+      "job_done_ns": 87900553,
+      "horizon_ns": 400000000,
+      "world_size": 16,
+      "physical_planes": 2,
+      "phases_done": 4,
+      "phases_expected": 4,
+      "chunks_per_phase": 512,
+      "proxy_chunks": 289,
+      "new_proxy_chunks": 277,
+      "rescued_chunks": 12,
+      "health_probe_routes": 4,
+      "network_wire_bytes": 2771328712,
+      "local_wire_bytes": 40212224,
+      "probe_wire_bytes": 454328956,
+      "relay_wire_bytes": 59469888,
+      "retransmission_wire_bytes": 1632236,
+      "control_wire_bytes": 33696,
+      "stale_acks": 0,
+      "extra_rto": false,
+      "scope": "phase-scoped B-prime replacement v3"
+    },
+    "audit": {
+      "errors": [],
+      "logical_chunks": 32768,
+      "completed_chunks": 32768,
+      "unique_ack_bytes": 2147483648,
+      "relay_chunks": 289,
+      "relay_leg_transfers": 867,
+      "max_logical_source_credit": 26,
+      "max_physical_nic_credit": 4,
+      "max_helper_buffers": 4,
+      "dual_plane_verified": true,
+      "helper_phase_idle_verified": false,
+      "helper_shared_capacity_verified": true,
+      "pipelined_release_verified": true,
+      "final_target_completion_verified": true,
+      "physical_wire_totals": {
+        "network_wire_bytes": 2771328712,
+        "probe_wire_bytes": 454328956,
+        "retransmission_wire_bytes": 1632236,
+        "local_wire_bytes": 40212224,
+        "relay_wire_bytes": 59469888
+      },
+      "m13_causality_verified": false,
+      "active_detector_causality_verified": true,
+      "active_detector": "service",
+      "retired_B_no_new_work_verified": true,
+      "fresh_proxy_chunks": 277,
+      "fresh_proxy_phases": 1,
+      "affected_sources_with_replacement": [
+        0,
+        15
+      ],
+      "pass": true
+    },
+    "observation_audit": {
+      "errors": [],
+      "reports_reconstructed": 6400,
+      "alarms": [
+        [
+          721,
+          60018204,
+          "canary_service"
+        ],
+        [
+          13,
+          60032837,
+          "canary_service"
+        ]
+      ],
+      "source": "canary-service-v4; physical payload gaps/QP/retransmissions/business ACK stalls and charged reports",
+      "truth_accessed": false,
+      "completed_canaries": 6398,
+      "spacing_summaries_reconstructed": 1216,
+      "source_packets_checked": 2702465,
+      "accepted_packets_checked": 2702335,
+      "canary_payload_bytes": 419430400,
+      "pass": true
+    },
+    "performance": {
+      "task_completed": true,
+      "communication_ms": 86.900553,
+      "restricted_communication_ms": 86.900553,
+      "alarms_ns": {
+        "15": 60018204,
+        "0": 60032837
+      },
+      "first_activations_ns": {
+        "0": 66259910,
+        "15": 66290630
+      },
+      "detector_delays_ms": {
+        "15": 20.018204,
+        "0": 20.032837
+      },
+      "alarm_to_activation_ms": {
+        "0": 6.227073,
+        "15": 6.272426
+      },
+      "new_Bprime_launches": 277,
+      "new_Bprime_completions": 277,
+      "new_Bprime_phases": 1,
+      "post_replacement_complete_phases": 0,
+      "post_replacement_mean_phase_ms": null,
+      "unique_payload_bytes": 2147483648,
+      "recovery_observed": true,
+      "sustained_new_proxy_observed": false,
+      "replacement_lifetime": "phase",
+      "phase_route_lifecycles": [
+        {
+          "phase": 0,
+          "src": 0,
+          "reset_to_AB_ns": 1000000,
+          "activation_ns": null,
+          "unallocated_bytes_at_activation": null,
+          "A_new_bytes": 16777216,
+          "B_new_bytes": 16777216,
+          "first_B_allocation_ns": 1000000
+        },
+        {
+          "phase": 0,
+          "src": 15,
+          "reset_to_AB_ns": 1000000,
+          "activation_ns": null,
+          "unallocated_bytes_at_activation": null,
+          "A_new_bytes": 16777216,
+          "B_new_bytes": 16777216,
+          "first_B_allocation_ns": 1000000
+        },
+        {
+          "phase": 1,
+          "src": 0,
+          "reset_to_AB_ns": 16847750,
+          "activation_ns": null,
+          "unallocated_bytes_at_activation": null,
+          "A_new_bytes": 16777216,
+          "B_new_bytes": 16777216,
+          "first_B_allocation_ns": 16847750
+        },
+        {
+          "phase": 1,
+          "src": 15,
+          "reset_to_AB_ns": 16847750,
+          "activation_ns": null,
+          "unallocated_bytes_at_activation": null,
+          "A_new_bytes": 16777216,
+          "B_new_bytes": 16777216,
+          "first_B_allocation_ns": 16847750
+        },
+        {
+          "phase": 2,
+          "src": 0,
+          "reset_to_AB_ns": 32933379,
+          "activation_ns": 66259910,
+          "unallocated_bytes_at_activation": 0,
+          "A_new_bytes": 16842752,
+          "B_new_bytes": 16711680,
+          "first_B_allocation_ns": 32933379
+        },
+        {
+          "phase": 2,
+          "src": 15,
+          "reset_to_AB_ns": 32933379,
+          "activation_ns": 66290630,
+          "unallocated_bytes_at_activation": 0,
+          "A_new_bytes": 17170432,
+          "B_new_bytes": 16384000,
+          "first_B_allocation_ns": 32933379
+        },
+        {
+          "phase": 3,
+          "src": 0,
+          "reset_to_AB_ns": 67354665,
+          "activation_ns": 73916634,
+          "unallocated_bytes_at_activation": 19398656,
+          "A_new_bytes": 17432576,
+          "B_new_bytes": 7012352,
+          "first_B_allocation_ns": 67354665,
+          "Bprime_new_bytes": 9109504,
+          "fresh_Bprime_done": 139,
+          "fresh_Bprime_payload_bytes": 9109504
+        },
+        {
+          "phase": 3,
+          "src": 15,
+          "reset_to_AB_ns": 67354665,
+          "activation_ns": 73947354,
+          "unallocated_bytes_at_activation": 19333120,
+          "A_new_bytes": 17432576,
+          "B_new_bytes": 7077888,
+          "first_B_allocation_ns": 67354665,
+          "Bprime_new_bytes": 9043968,
+          "fresh_Bprime_done": 138,
+          "fresh_Bprime_payload_bytes": 9043968
+        }
+      ],
+      "fresh_Bprime_payload_bytes": 18153472,
+      "phase_binding_resets": 64,
+      "scored_affected_sources": [
+        0,
+        15
+      ],
+      "affected_source_new_allocations_by_region": {
+        "before_fault": {
+          "A_new_bytes": 82051072,
+          "B_new_bytes": 82051072
+        },
+        "before_diagnosis": {
+          "B_new_bytes": 18153472,
+          "A_new_bytes": 19070976
+        },
+        "preparing": {
+          "A_new_bytes": 14286848,
+          "B_new_bytes": 14090240
+        },
+        "after_replacement": {
+          "A_new_bytes": 20578304,
+          "Bprime_new_bytes": 18153472
+        }
+      },
+      "healthy_alarm_observed": false,
+      "healthy_proxy_observed": false,
+      "alarms_before_injected_fault": {},
+      "fresh_proxy_costs": {
+        "completed_routes": 277,
+        "source_local_leg_ms": 0.0003412671480144404,
+        "network_leg_ms": 0.24162338628158844,
+        "destination_local_leg_ms": 0.0003408519855595668,
+        "final_notification_ms": 1.009883104693141,
+        "route_to_logical_done_ms": 1.2521906101083031
+      }
+    },
+    "archive": {
+      "archive": "/work/results/pilot-v2/archives/weak_loss-G11-pipelined-shared-always-s111210016.tar.gz",
+      "sha256": "3269abee5d69055187538868a962b7b504a9a244d581d74054ffbe3abb1c470e",
+      "bytes": 89492066,
+      "files": {
+        "audit.json": "f57ba3d41db7d7ae232dcbcdb9e8bcff05142cc513fc998ea26bfa7aa9d5f0be",
+        "performance.json": "2fa09278031d2b72ff638de3bb2fa2e1388734e7e27e52199d934d30a13e4820",
+        "run_manifest.json": "778d971de891454945974c1b47d524b761df5ff434ce494a310a0218efaa175b",
+        "m13_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "m13_baseline.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "peer_events.csv": "04841552366c06b8cc1b1150c01481457174688b67a3c0c9ed36a253c8b45cc5",
+        "run_status.json": "a22f6d6d4f71874942e0da6a26f650bd77630726aa0f84bdc79b296302f2382c",
+        "packet_events.csv": "0b4183f4c6b102b83769d5c0b7700f986dce269e6e4a1bd38a2f2e15a52ba88e",
+        "control_events.csv": "690c98c5c120f9bbbe9d6844f22a5b2c0c9ddd442a42bbfa4d380c8905963466",
+        "detector_events.csv": "edad077c6e913f2bf4477ecb743ec1ff4ee5be62d2cdd9bf8c1ad25da2c917b0",
+        "wire_events.csv": "c6354e1143890f7cbe32884e96afc36b1ceb4ba29b1421a46db1a30feafa1a90",
+        "leg_events.csv": "d672193044fe89d87871e0dc69653c44b4eff0554118d5bf83d1b468ce45d3be",
+        "simulator.log": "39dcc32aebe581f397ae55290e6b28ef9473a263dd3a24692328ae4583a061e6",
+        "send.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "service_alarms.csv": "66fc92b680e2443d2f059f788f0912c6cdb8b58b97a014a6539e9b7ae6cc65d1",
+        "metrics.log": "8d29c690d0be167545949d93111af71e7bdfd361355f83a8f1198eadb7fced2d",
+        "policy_decisions.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "audit.log": "00ec62943252ceead3f5e74176a42973cfee254308ed1c8f4043585015f81f93",
+        "throughput_10ms.json": "30be1ec670fe9a8a9d48b16e6df70f215e002f6abb57ed623b6d1a6ae7f13961",
+        "fault_events.csv": "7006e28a34990b61b02df760d2f295aaea085c17444f51356a2c9a8447470708",
+        "phase_events.csv": "e1ae2a021f9b7618e83cab0eec0a379ae3f34730c087c7e8bca4e1da08f901fd",
+        "service_events.csv": "0678c6b19172a45f9fef3a6ed0bbe6467d11662c167f07a4807856e4ab438486",
+        "logical_events.csv": "f6747a7ee54dbf1bc80fcaf24a33c51d64ae83c5e59743f1836af01e38b8d9bf",
+        "phase_metrics.csv": "3ebe3bcc7bf7603792f64c879054c780b6640d78a61a197cd21133d4dc009737",
+        "replay.log": "f4c971f25a427a0a0ef6ef4362cac8e53432b7dc8e6d3448e1f49d7a07710e7f",
+        "service_decisions.jsonl": "0a42c3ecfb1e452487ef21ac40f979c2832899b4c2c17da9ae20dfc54d8eda93",
+        "observations.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observation_audit.json": "bed607ef4d26396d975bd26a30a14e0239b033d7c1e324fd0ebddd2b730b5de5",
+        "truth/injection.txt": "a00f55c0fd5d2763a134e6f593de11464b28bf10ff4bf26f69ee0b24ddf70a41",
+        "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "inputs/fct_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "inputs/config.txt": "624fc99b2e2d0569697f8cccfddc5c01c99af8365201530df170f3d8f56b3d61",
+        "inputs/trace_output_file.txt": "d7129b22077315f649daa0033c49b17c4896330fcbea422f978da6a599ac13d6",
+        "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+        "inputs/input_manifest.json": "461b9d4c237d0780d85b802570c818bd032af37a7ffb5984810d22a9edc8d573",
+        "inputs/pfc_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "all_content_hashes_verified": true
+    },
+    "wall_seconds": 110.90828992892057
+  },
+  "elapsed_seconds": 111.09271883964539
+}

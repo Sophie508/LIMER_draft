@@ -16,7 +16,7 @@ def main():
     run = commands.add_parser('run', help='Run and independently audit one immutable case')
     run.add_argument('--build', type=Path, required=True)
     run.add_argument('--out', type=Path, required=True)
-    run.add_argument('--method', choices=['G00', 'G10', 'G01', 'G11'], default='G11')
+    run.add_argument('--method', choices=['G00', 'G10', 'G01', 'G11', 'A_ONLY'], default='G11')
     run.add_argument('--scenario', default='healthy')
     run.add_argument('--rounds', type=int, default=2)
     run.add_argument('--chunks', type=int, default=64)
@@ -29,6 +29,8 @@ def main():
     run.add_argument('--policy', choices=['always','benefit'], default='always')
     run.add_argument('--fault-duration-ms', type=float, default=0)
     run.add_argument('--canary-period-ns', type=int, default=2000000)
+    run.add_argument('--replacement-lifetime', choices=['phase','persistent'], default='phase')
+    run.add_argument('--phases-per-round', type=int, default=30)
     run.add_argument('--case', type=Path, help='Exact preregistered case JSON; overrides scalar scenario arguments')
     run.add_argument('--archive-to', type=Path)
     run.add_argument('--prune-raw', action='store_true')
@@ -63,7 +65,8 @@ def main():
             scene = Scenario(a.scenario, a.rounds, a.chunks, round(a.horizon_ms*1000000),
                              round(a.fault_ms*1000000), a.node, a.seed, a.local_gbps,
                              detector=a.detector,policy=a.policy,fault_duration_ns=round(a.fault_duration_ms*1000000),
-                             canary_period_ns=a.canary_period_ns)
+                             canary_period_ns=a.canary_period_ns,replacement_lifetime=a.replacement_lifetime,
+                             phases_per_round=a.phases_per_round)
         result = run_case(a.build, a.out, method, scene, a.archive_to, not a.prune_raw)
         print(json.dumps(dict(name=result['name'], status=result['status']['status'],
                               communication_ms=result['performance']['communication_ms'],

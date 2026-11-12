@@ -1,0 +1,41 @@
+{
+  "errors": [],
+  "reports_reconstructed": 6400,
+  "alarms": [
+    [
+      721,
+      60026205,
+      "canary_service"
+    ],
+    [
+      13,
+      66018156,
+      "canary_service"
+    ]
+  ],
+  "source": "canary-service-v4; physical payload gaps/QP/retransmissions/business ACK stalls and charged reports",
+  "truth_accessed": false,
+  "completed_canaries": 6395,
+  "spacing_summaries_reconstructed": 1216,
+  "source_packets_checked": 2665602,
+  "accepted_packets_checked": 2665423,
+  "canary_payload_bytes": 419430400,
+  "pass": true,
+  "policy_replay": {
+    "pass": true,
+    "errors": [],
+    "decisions_checked": 12,
+    "initial_activations_checked": 4,
+    "truth_accessed": false,
+    "same_timestamp_order": "matching causal prefix; logs have no cross-file sequence",
+    "checks": [
+      "pure policy",
+      "logical remaining bytes",
+      "direct ACK service",
+      "physical candidate probes",
+      "charged delivered health reports",
+      "control FIFO/current cost estimate",
+      "initial commit authorization"
+    ]
+  }
+}

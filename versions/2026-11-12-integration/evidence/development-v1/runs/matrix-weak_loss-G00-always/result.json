@@ -1,0 +1,256 @@
+{
+  "name": "matrix-weak_loss-G00-always",
+  "method": "G00",
+  "family": "weak_loss",
+  "scene": {
+    "family": "weak_loss",
+    "rounds": 1,
+    "chunks_per_phase": 512,
+    "horizon_ns": 400000000,
+    "fault_ns": 40000000,
+    "node": 0,
+    "seed": 111200000,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "always",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4
+  },
+  "status": {
+    "detector_mode": "service",
+    "policy_mode": "always",
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "monitor_end_ns": 400000000,
+    "status": "task_unfinished",
+    "method": "G00",
+    "job_done_ns": 0,
+    "horizon_ns": 400000000,
+    "world_size": 16,
+    "physical_planes": 2,
+    "phases_done": 2,
+    "phases_expected": 4,
+    "chunks_per_phase": 512,
+    "proxy_chunks": 0,
+    "new_proxy_chunks": 0,
+    "rescued_chunks": 0,
+    "health_probe_routes": 0,
+    "network_wire_bytes": 2191425368,
+    "local_wire_bytes": 0,
+    "probe_wire_bytes": 453445964,
+    "relay_wire_bytes": 0,
+    "retransmission_wire_bytes": 1298264,
+    "control_wire_bytes": 192,
+    "stale_acks": 0,
+    "extra_rto": false,
+    "scope": "phase-scoped B-prime replacement v3"
+  },
+  "audit": {
+    "errors": [],
+    "logical_chunks": 24576,
+    "completed_chunks": 24573,
+    "unique_ack_bytes": 1610612304,
+    "relay_chunks": 0,
+    "relay_leg_transfers": 0,
+    "max_logical_source_credit": 8,
+    "max_physical_nic_credit": 4,
+    "max_helper_buffers": 0,
+    "dual_plane_verified": true,
+    "helper_phase_idle_verified": true,
+    "final_target_completion_verified": true,
+    "physical_wire_totals": {
+      "network_wire_bytes": 2191425368,
+      "probe_wire_bytes": 453445964,
+      "retransmission_wire_bytes": 1298264
+    },
+    "m13_causality_verified": false,
+    "active_detector_causality_verified": true,
+    "active_detector": "service",
+    "retired_B_no_new_work_verified": true,
+    "fresh_proxy_chunks": 0,
+    "fresh_proxy_phases": 0,
+    "affected_sources_with_replacement": [],
+    "pass": true
+  },
+  "observation_audit": {
+    "errors": [],
+    "reports_reconstructed": 6400,
+    "alarms": [
+      [
+        721,
+        56033317,
+        "canary_service"
+      ],
+      [
+        13,
+        58017267,
+        "canary_service"
+      ]
+    ],
+    "source": "canary-service-v4; physical payload gaps/QP/retransmissions/business ACK stalls and charged reports",
+    "truth_accessed": false,
+    "completed_canaries": 6394,
+    "spacing_summaries_reconstructed": 1216,
+    "source_packets_checked": 2106368,
+    "accepted_packets_checked": 2106324,
+    "canary_payload_bytes": 419430400,
+    "pass": true
+  },
+  "performance": {
+    "task_completed": false,
+    "communication_ms": null,
+    "restricted_communication_ms": 399.0,
+    "alarms_ns": {
+      "15": 56033317,
+      "0": 58017267
+    },
+    "first_activations_ns": {},
+    "detector_delays_ms": {
+      "15": 16.033317,
+      "0": 18.017267
+    },
+    "alarm_to_activation_ms": {},
+    "new_Bprime_launches": 0,
+    "new_Bprime_completions": 0,
+    "new_Bprime_phases": 0,
+    "post_replacement_complete_phases": 0,
+    "post_replacement_mean_phase_ms": null,
+    "unique_payload_bytes": 1610612304,
+    "recovery_observed": false,
+    "sustained_new_proxy_observed": false,
+    "replacement_lifetime": "phase",
+    "phase_route_lifecycles": [
+      {
+        "phase": 0,
+        "src": 0,
+        "reset_to_AB_ns": 1000000,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 1000000
+      },
+      {
+        "phase": 0,
+        "src": 15,
+        "reset_to_AB_ns": 1000000,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 1000000
+      },
+      {
+        "phase": 1,
+        "src": 0,
+        "reset_to_AB_ns": 16858683,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 16858683
+      },
+      {
+        "phase": 1,
+        "src": 15,
+        "reset_to_AB_ns": 16858683,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 16858683
+      },
+      {
+        "phase": 2,
+        "src": 0,
+        "reset_to_AB_ns": 32944312,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 32944312
+      },
+      {
+        "phase": 2,
+        "src": 15,
+        "reset_to_AB_ns": 32944312,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 32944312
+      }
+    ],
+    "fresh_Bprime_payload_bytes": 0,
+    "phase_binding_resets": 48,
+    "scored_affected_sources": [
+      0,
+      15
+    ],
+    "affected_source_new_allocations_by_region": {
+      "before_fault": {
+        "A_new_bytes": 82116608,
+        "B_new_bytes": 82116608
+      },
+      "before_diagnosis": {
+        "A_new_bytes": 18546688,
+        "B_new_bytes": 18546688
+      }
+    },
+    "healthy_alarm_observed": false,
+    "healthy_proxy_observed": false,
+    "alarms_before_injected_fault": {},
+    "fresh_proxy_costs": {
+      "completed_routes": 0
+    }
+  },
+  "archive": {
+    "archive": "/work/results/development-v1/archives/matrix-weak_loss-G00-always.tar.gz",
+    "sha256": "1759e66a23fb93d7c47224c4a3575b6ce2f891827cf9fa192559792989c341d2",
+    "bytes": 48489657,
+    "files": {
+      "audit.json": "ea2a1b8d88d6cd7dec185c30ff051a089f10fd190ee42aef6798f57fe065ff64",
+      "performance.json": "5257f9e892166ea95f5a00fd8e1afeeb149ba51bb78430f287ee13ec084a5aee",
+      "run_manifest.json": "cb91dbe97df124eb63b3118461469cbb59f97597a6d77ee22873eeb3218aa3e2",
+      "m13_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "m13_baseline.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "peer_events.csv": "3af81a2c0670a6b5fcf978dc7bb2e634add80cf1423b3d2aa69989bf589d2785",
+      "run_status.json": "a37bab150f625d284c27e4f4209f09341069e4efb93b361bb6219b3bac0f4baa",
+      "packet_events.csv": "ee99ebbdfa9f825aabbaccae46c1415af7a3dab87df62fe6e9139e8e8f5b75b1",
+      "control_events.csv": "beab1cefa8df331a5fde6d32ba0ab40820fee95c00d18ebbb4c916f115126bfd",
+      "detector_events.csv": "56a5486c47b2484ff9be72dd6fbdf3da6d6adaf3030fb006839339658c06e862",
+      "wire_events.csv": "7f5e57cc854afe1e87fa0a6c07bc61f671219c1b71d4d7afa6a13f098fba3c8f",
+      "leg_events.csv": "ef7c0b1984adb9d31c9ba1bdf4350fd81fc28639c92476a6111394dbf08d3b6d",
+      "simulator.log": "39dcc32aebe581f397ae55290e6b28ef9473a263dd3a24692328ae4583a061e6",
+      "send.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "service_alarms.csv": "e6d44957edc9fb31da9cfe89322eaed2bda8096830c9ece198b6b8a5ba349fe7",
+      "metrics.log": "b3be37e6cf68591b2c61da5212066a9087934c514472d3cd3b43269ab7198546",
+      "policy_decisions.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "audit.log": "ac81d42af5b2375e762f9a12726689f4cef2737645736d8171a6c5b0815ab72b",
+      "throughput_10ms.json": "4ea45caf0dda2bf2f3e94f0185a20f094b94e736da24acb4ba089d8eb5cd9002",
+      "fault_events.csv": "7006e28a34990b61b02df760d2f295aaea085c17444f51356a2c9a8447470708",
+      "phase_events.csv": "94b070cea5584265f3292809ddcf1ec97ce08ba5ba6a1238b8c8f0bca1bf774d",
+      "service_events.csv": "7d767e9edae1042af8b8eb929e9deb21f69f7780b448d48e8c5d971760ad84a4",
+      "logical_events.csv": "83cd53261eaf61c382d0a2b1dc1087ae212cab86949b05cff07576c4f97ac518",
+      "phase_metrics.csv": "43c840355054ad36ba144e72a4982d2fceb2cd587db188b0b282c2443cebd75d",
+      "replay.log": "94047f02497be61a2ce40324c8daba75d210ff89623ab2a0aad0de4c41342467",
+      "service_decisions.jsonl": "b6ee59c488ed66a2db0fb45fde11099eee0f6e886f852433a3c0e99db412bc7e",
+      "observations.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observation_audit.json": "4bd7b051edd8f0ea2997661e461a2d5b08d51aed4241adfc328dbe3c9e064a13",
+      "truth/injection.txt": "dcbdf628c328ae6deee0a8f3c96a4450d02885353d68d5f219b1f6fd0d00cc50",
+      "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "inputs/fct_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "inputs/config.txt": "4c90caa797c285b9673a7c00e6ca88add31422e966c9facb017d3b5a797b4a0d",
+      "inputs/trace_output_file.txt": "d7129b22077315f649daa0033c49b17c4896330fcbea422f978da6a599ac13d6",
+      "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+      "inputs/input_manifest.json": "dfdbfc2e46f6bb2f7e87f03cc38f6c1da1dc67e4d8de44924d4ff82777c07ff3",
+      "inputs/pfc_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "all_content_hashes_verified": true
+  },
+  "wall_seconds": 93.58099812548608
+}
