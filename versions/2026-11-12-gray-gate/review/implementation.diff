@@ -1,0 +1,2528 @@
+--- previous/project/README.md
++++ candidate/project/README.md
+@@ -1,7 +1,6 @@
+-> **Throughput candidate v2 (2026-11-12):** Start at [the candidate README](../README.md)
+-> and [audited results](../RESULTS.md). Pipelined completion and shared helpers
+-> are explicit modes. Historical manifests and evidence described below refer
+-> to their original versions, not certification of this modified source.
++> **Gray-fault benefit-gate candidate (2026-11-12):** Start at [the candidate README](../README.md).
++> This working source adds an explicit `benefit_v2` research policy. Historical
++> manifests and evidence below certify their original versions only.
+ 
+ # LIMER
+ 
+--- previous/project/python/limerlab/audit.py
++++ candidate/project/python/limerlab/audit.py
+@@ -9,6 +9,146 @@
+ def rows(path):
+     with path.open() as f:
+         yield from csv.DictReader(f)
++
++
++def audit_helper_reports(root):
++    """Independently reconstruct paid helper observations from logical ACKs."""
++    root = Path(root)
++    errors = []
++    def check(ok, message):
++        if not ok and len(errors) < 100: errors.append(message)
++    path = root / 'helper_reports.jsonl'
++    if not path.exists():
++        return dict(pass_=False, **{'pass':False}, errors=['missing paid helper reports file'], delivered=0)
++    reports = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
++    status = json.loads((root/'run_status.json').read_text())
++    phase_bytes = status['chunks_per_phase'] * 65536
++    controls = list(rows(root/'control_events.csv'))
++    index = defaultdict(list)
++    for row in controls:
++        index[row['event'],int(row['phase']),int(row['version'])].append(row)
++    # Accumulate increments, not repeated prefixes; migration never re-ACKs a byte.
++    old, phase_progress, own_progress = {}, defaultdict(list), defaultdict(list)
++    own_event_phases = defaultdict(list)
++    phase_sum, own_sum = defaultdict(int), defaultdict(int)
++    for row in rows(root/'logical_events.csv'):
++        c, src, p, t = (int(row[k]) for k in ('chunk_id','src','phase','timestamp_ns'))
++        if row['event'] == 'ALLOC': old[c] = 0
++        elif row['event'] == 'ACK_PROGRESS':
++            ack = int(row['acked']);delta = ack-old.get(c,0);old[c] = ack
++            phase_sum[p,src] += delta;own_sum[src] += delta
++            phase_progress[p,src].append((t,phase_sum[p,src]))
++            own_progress[src].append((t,own_sum[src]))
++            own_event_phases[src].append(p)
++    def cumulative(values,t,inclusive=True):
++        at = bisect_right(values,(t,10**30 if inclusive else -1))-1
++        return values[at][1] if at >= 0 else 0
++    sent, delivered = {}, {}
++    for row in reports:
++        ident = row['report_id'];src=row['source'];p=row['phase'];slot=row['slot']
++        check(slot in (0,1),'helper snapshot slot invalid')
++        if slot not in (0,1): continue
++        kind = 'RX' if slot else 'TX'
++        if row['event'] == 'SENT':
++            check(ident not in sent,'duplicate helper snapshot ID')
++            sent[ident] = row
++            check(row['timestamp_ns']==row['sampled_ns'],'helper snapshot was not sampled at send')
++            query = index['HELPER_QUERY_'+kind,p,ident]
++            response = index['HELPER_REPORT_'+kind,p,ident]
++            check(len(query)==len(response)==1,'helper snapshot missing paid query/report')
++            if len(query)==len(response)==1:
++                query,response = query[0],response[0]
++                check(int(query['rank'])==row['rank'] and int(query['arrival_ns'])==row['sampled_ns']
++                      and int(query['wire_bytes'])==96 and int(query['arrival_ns'])>=int(query['sent_ns'])+1000000,
++                      'helper snapshot sampled before matching paid query')
++                check(int(response['rank'])==src and int(response['sent_ns'])==row['sampled_ns']
++                      and int(response['arrival_ns'])==row['delivered_ns'] and int(response['wire_bytes'])==96
++                      and row['delivered_ns']>=row['sampled_ns']+1000000,
++                      'helper snapshot report cost/address missing')
++            lease = index['LEND_ACTIVE',p,row['lease_id']]
++            participant = index['LEND_'+kind,p,row['lease_id']]
++            check(len(lease)==1 and int(lease[0]['rank'])==src
++                  and int(lease[0]['arrival_ns'])<=row['sampled_ns']
++                  and len(participant)==1 and int(participant[0]['rank'])==row['rank'],
++                  'helper snapshot has no matching active lease')
++            # Files lack a global event sequence. A query can run before an ACK
++            # at the exact same nanosecond. Require ONE shared causal prefix for
++            # remaining bytes and service, never independently mix two prefixes.
++            rank,t=row['rank'],row['sampled_ns'];progress=own_progress[rank]
++            first=bisect_right(progress,(t,-1));last=bisect_right(progress,(t,10**30))
++            current=cumulative(phase_progress[p,rank],t,False)
++            total=progress[first-1][1] if first else 0
++            before_window=cumulative(progress,t-10000000,False)
++            candidates=[(phase_bytes-current,(total-before_window)/10000000.)]
++            for i in range(first,last):
++                delta=progress[i][1]-total;total=progress[i][1]
++                if own_event_phases[rank][i]==p: current+=delta
++                candidates.append((phase_bytes-current,(total-before_window)/10000000.))
++            check(any(row['own_remaining_bytes']==amount for amount,_ in candidates),
++                  'helper snapshot remaining bytes differ from local ACKs')
++            check(any(abs(row['own_bytes_per_ns']-rate)<=1e-12 for _,rate in candidates),
++                  'helper snapshot service differs from local ACK window')
++            check(any(row['own_remaining_bytes']==amount and abs(row['own_bytes_per_ns']-rate)<=1e-12
++                      for amount,rate in candidates),'helper snapshot mixes incompatible causal ACK prefixes')
++            check(bool(row['known']),'delivered local helper observation marked unknown')
++            prepare=index['M13_REPLACEMENT_PREPARE',p,row['version']]
++            check(len(prepare)==1 and int(prepare[0]['rank'])==src
++                  and int(prepare[0]['sent_ns'])<=row['sampled_ns'],
++                  'helper snapshot has no matching prepared binding')
++        elif row['event'] in ('DELIVERED','STALE'):
++            check(ident in sent and ident not in delivered,'helper snapshot delivery has no unique send')
++            if ident not in sent: continue
++            reference = sent[ident]
++            check(all(row.get(k)==v for k,v in reference.items() if k not in ('event','timestamp_ns')),
++                  'helper snapshot changed in transit')
++            check(row['timestamp_ns']==row['delivered_ns'],'helper snapshot delivered at wrong time')
++            delivered[ident] = row
++            if row['event']=='DELIVERED':
++                check(not any(x['event']=='RESET_TO_AB' and int(x['phase'])>p
++                              and int(x['arrival_ns'])<=row['delivered_ns'] for x in controls),
++                      'stale helper snapshot delivered after phase reset')
++                check(not any(x['event']=='LEND_RELEASED' and int(x['phase'])==p
++                              and int(x['rank'])==src and int(x['version'])==row['lease_id']
++                              and int(x['arrival_ns'])<=row['delivered_ns'] for x in controls),
++                      'released lease snapshot consumed')
++                check(not any(x['event']=='M13_REPLACEMENT_PREPARE' and int(x['phase'])==p
++                              and int(x['rank'])==src and int(x['version'])!=row['version']
++                              and row['sampled_ns']<int(x['sent_ns'])<=row['delivered_ns'] for x in controls),
++                      'superseded helper binding snapshot consumed')
++        else: check(False,'unknown helper snapshot event')
++    for ident,row in sent.items():
++        check(ident in delivered or row['delivered_ns']>=status.get('monitor_end_ns',status['horizon_ns']),
++              'helper snapshot disappeared before monitor end')
++    return dict(pass_=not errors, **{'pass':not errors},errors=errors,delivered=sum(r['event']=='DELIVERED' for r in delivered.values()),
++                stale=sum(r['event']=='STALE' for r in delivered.values()))
++
++
++def audit_explicit_lease_drains(controls, reservations, releases):
++    """Only actual lease release events require physical reservations to drain.
++
++    A phase boundary resets admission eligibility, but does not release physical
++    route credits. Those survive until their separately logged RELEASE event.
++    The main resource replay checks the same physical counters across phases.
++    """
++    errors = []
++    participants = defaultdict(dict)
++    for row in controls:
++        if row['event'] in ('LEND_TX', 'LEND_RX'):
++            participants[int(row['phase']), int(row['version'])][row['event']] = int(row['rank'])
++    for row in controls:
++        if row['event'] != 'LEND_RELEASED': continue
++        p, src, lease, at = (int(row[k]) for k in ('phase','rank','version','arrival_ns'))
++        endpoints = participants.get((p,lease), {})
++        if set(endpoints) != {'LEND_TX','LEND_RX'}:
++            # The main transaction audit reports missing/invalid participants.
++            continue
++        hs,hd=endpoints['LEND_TX'],endpoints['LEND_RX']
++        if any(r['relay'] and r['phase']==p and r['src']==src
++               and (r['helper_src'],r['helper_dst'])==(hs,hd)
++               and r['timestamp_ns'] < at < releases.get(rid,10**30)
++               for rid,r in reservations.items()):
++            errors.append('lease release erased live relay ownership')
++    return errors
+ 
+ 
+ def audit(root):
+@@ -135,10 +275,15 @@
+         return max(finishes[p, g, 'out'] + finishes[p, g, 'in'], default=10**30)
+ 
+     controls = list(rows(root / 'control_events.csv'))
+-    lending, loan_times = {}, {}
++    lending, loan_times = defaultdict(list), defaultdict(list)
++    lease_records = {}
++    v2 = status.get('policy_mode') == 'benefit_v2'
++    reset_times = sorted({(int(x['phase']), int(x['arrival_ns'])) for x in controls
++                          if x['event'] == 'RESET_TO_AB'})
+     for record in controls:
+         if record['event'] != 'LEND_ACTIVE': continue
+-        key = int(record['phase']), int(record['rank'])
++        p, source, lease = int(record['phase']), int(record['rank']), int(record['version'])
++        key = p, source
+         requests = [x for x in controls if x['phase'] == record['phase']
+                     and x['version'] == record['version'] and x['event'] in ('LEND_TX','LEND_RX')]
+         check(shared_helpers and len(requests) == 2, 'invalid lending transaction')
+@@ -150,10 +295,46 @@
+         check(int(record['sent_ns']) == at and at == max(int(x['arrival_ns']) for x in requests),
+               'lending applied before requests arrived')
+         hs, hd = int(by_kind['LEND_TX']['rank']), int(by_kind['LEND_RX']['rank'])
+-        check(key not in lending, 'duplicate phase lending')
+-        lending[key] = (at, hs, hd)
+-        loan_times[key[0], hs, 'tx'] = at
+-        loan_times[key[0], hd, 'rx'] = at
++        check(v2 or not lending[key], 'duplicate phase lending')
++        release = [x for x in controls if x['event'] == 'LEND_RELEASED'
++                   and int(x['phase']) == p and int(x['rank']) == source
++                   and int(x['version']) == lease]
++        check(len(release) <= 1, 'duplicate lease release')
++        stop = min((t for phase_id,t in reset_times if phase_id > p), default=10**30)
++        if release:
++            check(v2, 'legacy policy released helper lending')
++            record_release = release[0]
++            released = int(record_release['arrival_ns'])
++            release_requests = [x for x in controls if x['event'] in ('RELEASE_TX','RELEASE_RX')
++                                and int(x['phase']) == p and int(x['version']) == lease]
++            check(len(release_requests) == 2, 'lease release missing charged requests')
++            check(int(record_release['sent_ns']) == released and released >= at,
++                  'noncausal lease release')
++            if len(release_requests) == 2:
++                actual = {(x['event'],int(x['rank'])) for x in release_requests}
++                check(actual == {('RELEASE_TX',hs),('RELEASE_RX',hd)}, 'wrong release participants')
++                check(all(at <= int(x['sent_ns']) <= int(x['arrival_ns']) <= released
++                          for x in release_requests), 'lease released before requests arrived')
++            check(released < stop, 'stale release applied after phase reset')
++            stop = min(stop,released)
++        item = (at,stop,hs,hd,lease)
++        lending[key].append(item)
++        lease_records[p,source,lease] = item
++        loan_times[p,hs,'tx'].append((at,stop))
++        loan_times[p,hd,'rx'].append((at,stop))
++    # Leases cannot overlap even when a helper changes between TX and RX roles.
++    helper_intervals = defaultdict(list)
++    for (p,source),items in lending.items():
++        for at,stop,hs,hd,lease in items:
++            for helper in (hs,hd): helper_intervals[p,helper].append((at,stop,lease))
++    for intervals_for_helper in helper_intervals.values():
++        intervals_for_helper.sort()
++        check(all(old[1] <= new[0] for old,new in zip(intervals_for_helper,intervals_for_helper[1:])),
++              'overlapping helper leases')
++    for record in controls:
++        if record['event'] != 'LEND_RELEASED': continue
++        check((int(record['phase']),int(record['rank']),int(record['version'])) in lease_records,
++              'release does not identify an active lease')
+     reservations, releases = {}, {}
+     tx, rx, buffers = defaultdict(int), defaultdict(int), defaultdict(int)
+     max_nic = max_buffers = relay_count = 0
+@@ -176,8 +357,8 @@
+                 check(r['helper_src'] != r['src'] and r['helper_src'] // 4 == r['src'] // 4, 'source helper outside source server')
+                 check(r['helper_dst'] != r['dst'] and r['helper_dst'] // 4 == r['dst'] // 4, 'target helper outside target server')
+                 if shared_helpers:
+-                    loan = lending.get((r['phase'], r['src']))
+-                    check(loan is not None and loan[0] <= t and loan[1:] == (r['helper_src'],r['helper_dst']), 'relay lacks delivered matching lending authorization')
++                    loans = lending.get((r['phase'], r['src']),[])
++                    check(any(a <= t < z and (hs,hd) == (r['helper_src'],r['helper_dst']) for a,z,hs,hd,_ in loans), 'relay lacks delivered matching lending authorization')
+                 else:
+                     check(idle_at(r['phase'], r['helper_src'], t) and idle_at(r['phase'], r['helper_dst'], t), 'helper has unfinished own phase traffic')
+                 if not r['probe']:
+@@ -188,9 +369,9 @@
+             releases[rid] = t
+         for s, d, nic in edges:
+             if shared_helpers and not r['relay'] and nic == 3 and delta == 1:
+-                if loan_times.get((r['phase'],s,'tx'),10**30) <= t:
++                if any(a <= t < z for a,z in loan_times.get((r['phase'],s,'tx'),[])):
+                     check(tx[s,nic] < 3, 'own traffic consumed lent TX credit')
+-                if loan_times.get((r['phase'],d,'rx'),10**30) <= t:
++                if any(a <= t < z for a,z in loan_times.get((r['phase'],d,'rx'),[])):
+                     check(rx[d,nic] < 3, 'own traffic consumed lent RX credit')
+             tx[s, nic] += delta
+             rx[d, nic] += delta
+@@ -201,7 +382,7 @@
+                 buffers[g] += delta
+                 check(0 <= buffers[g] <= 4, 'helper buffering exceeded')
+                 max_buffers = max(max_buffers, buffers[g])
+-    starts, completed, cancelled = {}, {}, set()
++    starts, completed, cancelled, cancel_times = {}, {}, set(), {}
+     for raw in rows(root / 'leg_events.csv'):
+         name = raw['event']
+         r = {k: int(v) for k, v in raw.items() if k != 'event'}
+@@ -224,6 +405,27 @@
+         elif name == 'LEG_CANCEL':
+             check(tag in starts, 'unknown leg cancelled')
+             cancelled.add(tag)
++            cancel_times[tag] = r['timestamp_ns']
++    aborted = {}
++    for record in controls:
++        if record['event'] != 'PROBE_ABORT': continue
++        rid,t = int(record['version']),int(record['sent_ns'])
++        check(v2 and rid in reservations and rid not in aborted,'invalid or duplicate probe abort')
++        if rid not in reservations: continue
++        probe = reservations[rid];aborted[rid]=t
++        check(probe['relay']==1 and probe['probe']==1,'probe timeout targeted logical payload')
++        check(int(record['rank'])==probe['src'] and int(record['phase'])==probe['phase'],
++              'probe abort identity differs from owned reservation')
++        check(t==int(record['arrival_ns'])==probe['timestamp_ns']+20000000,
++              'candidate probe deadline changed')
++        check(releases.get(rid)==t,'probe abort failed to release exact reservation')
++        for tag,leg in starts.items():
++            if leg['route']!=rid: continue
++            check(leg['timestamp_ns']<t,'probe leg launched after its deadline')
++            if (rid,leg['index']) not in completed:
++                check(cancel_times.get(tag)==t,'probe abort left a transport leg active')
++            else:
++                check(completed[rid,leg['index']]<=t,'aborted probe reported later completion')
+     notifications = {}
+     activated = defaultdict(list)
+     alarms = {}
+@@ -279,9 +481,32 @@
+             rid = int(raw['version'])
+             check((rid, 2) in completed and int(raw['sent_ns']) >= completed[rid, 2], 'final ACK before final target received data')
+             notifications[rid] = int(raw['arrival_ns'])
+-    for (p,src), (at,hs,hd) in lending.items():
+-        check(alarms.get(src,10**30) <= at, 'lending before diagnosis')
+-        check(any(r['event']=='LEND_TX' and r['rank']==str(hs) and r['phase']==str(p) and int(r['sent_ns'])>=alarms.get(src,10**30) for r in controls), 'lending request before diagnosis')
++    for (p,src), loans in lending.items():
++        for at,stop,hs,hd,lease in loans:
++            check(alarms.get(src,10**30) <= at, 'lending before diagnosis')
++            check(any(r['event']=='LEND_TX' and r['rank']==str(hs) and r['phase']==str(p) and int(r['version'])==lease and int(r['sent_ns'])>=alarms.get(src,10**30) for r in controls), 'lending request before diagnosis')
++    for error in audit_explicit_lease_drains(controls,reservations,releases): check(False,error)
++    if v2:
++        helper_result = audit_helper_reports(root)
++        for error in helper_result['errors']: check(False,error)
++        decisions_path = root / 'policy_decisions.jsonl'
++        decisions = [json.loads(line) for line in decisions_path.read_text().splitlines()] if decisions_path.exists() else []
++        for decision in decisions:
++            if decision.get('should_switch') or not shared_helpers: continue
++            p,src,at = decision['phase'],decision['src'],decision['timestamp_ns']
++            matches = [x for x in lending.get((p,src),[]) if x[0] <= at < x[1]]
++            for loan in matches:
++                lease = loan[4]
++                sent = [r for r in controls if r['event'] in ('RELEASE_TX','RELEASE_RX')
++                        and int(r['phase'])==p and int(r['version'])==lease]
++                check(len(sent)==2 and all(int(r['sent_ns'])==at for r in sent),
++                      'rejected v2 gate retained helper lease without paid release')
++                arrival = max((int(r['arrival_ns']) for r in sent),default=10**30)
++                stop = loan[1]
++                check(stop <= arrival or arrival >= status.get('monitor_end_ns',status['horizon_ns'])
++                      or any(r['relay'] and r['src']==src and r['phase']==p and r['timestamp_ns']<=arrival
++                             and releases.get(rid,10**30)>arrival for rid,r in reservations.items()),
++                      'rejected helper lease leaked after delivered release')
+     if 'control_wire_bytes' in status:
+         check(status['control_wire_bytes'] == control_bytes, 'unaccounted control traffic')
+     # A retired direct B route can drain, but it can never accept a new chunk.
+@@ -309,7 +534,7 @@
+     health_index = defaultdict(list)
+     health_reports={int(r['version']):r for r in controls if r['event']=='HEALTH_REPORT'}
+     require_health_report=(status.get('detector_mode')=='service' or
+-                           status.get('policy_mode')=='benefit')
++                           status.get('policy_mode') in ('benefit','benefit_v2'))
+     health_keys = ['phase', 'src', 'dst', 'helper_src', 'helper_dst']
+     for qid, q in reservations.items():
+         if q['relay'] and q['probe'] and (qid, 2) in completed:
+@@ -381,6 +606,7 @@
+                 max_logical_source_credit=max_source, max_physical_nic_credit=max_nic, max_helper_buffers=max_buffers,
+                 dual_plane_verified=True, helper_phase_idle_verified=not shared_helpers,
+                 helper_shared_capacity_verified=shared_helpers, pipelined_release_verified=pipelined,
++                helper_snapshot_causality_verified=v2, helper_lease_release_verified=v2,
+                 final_target_completion_verified=True,
+                 physical_wire_totals=dict(wire_totals), m13_causality_verified=status.get('detector_mode','legacy')=='legacy',
+                 active_detector_causality_verified=True, active_detector=status.get('detector_mode','legacy'),
+--- previous/project/python/limerlab/benefit_policy.py
++++ candidate/project/python/limerlab/benefit_policy.py
+@@ -140,3 +140,123 @@
+                   reason="predicted_benefit" if should_switch else
+                   ("benefit_below_margin" if gain > 0 else "stay_no_slower"))
+     return result
++
++
++@dataclass
++class HelperSample:
++    """Paid endpoint report of its own outgoing workload, not remote truth."""
++    own_remaining_bytes: int = 0
++    own_bytes_per_ns: float = 0.0
++    age_ns: int = 0
++    known: bool = False
++
++
++@dataclass
++class BenefitInputV2(BenefitInput):
++    b_no_progress_ns: int = 0
++    tail_debounce_ns: int = 2_000_000
++    source_window: int = 32
++    pipelined: bool = True
++    helpers: Tuple[HelperSample, HelperSample] = (None, None)
++
++
++def evaluate_benefit_v2(x):
++    """Local source/helper completion forecast, not a whole-job optimizer.
++
++    Tail persistence uses elapsed time since the oldest unfinished B chunk's
++    last progress. After the existing 2-ms observation cadence, that elapsed
++    time is a forecast of another wait of similar duration, NOT a guaranteed
++    bound on its future completion or knowledge of recovery time.
++
++    Physical relay resources can be released before the final logical ACK.
++    Data credits and the sender's confirmation window therefore constrain
++    different cycles. A whole first relay/ACK cycle is always charged.
++
++    A helper's observed own service forecasts its remaining work. Forwarding
++    assigned bytes adds equal-byte opportunity cost to that helper while it
++    has own work; this deliberately simple fluid model does not model all
++    other ranks, tensor compute, or distinguish its A/B service headroom.
++    """
++    # Retain the original validator and original policy byte-for-byte above.
++    evaluate_benefit(x)
++    if any(type(v) is not int or v < 0 for v in
++           (x.b_no_progress_ns, x.tail_debounce_ns, x.source_window)):
++        raise ValueError('invalid v2 tail/window input')
++    if not x.source_window or len(x.helpers) != 2:
++        raise ValueError('v2 requires a positive sender window and two helpers')
++    for h in x.helpers:
++        if h is None:
++            continue
++        if (type(h.own_remaining_bytes) is not int or h.own_remaining_bytes < 0
++                or type(h.age_ns) is not int or h.age_ns < 0
++                or not math.isfinite(h.own_bytes_per_ns) or h.own_bytes_per_ns < 0):
++            raise ValueError('invalid helper report')
++    d = dict(should_switch=False, probe_required=False,
++             reason='insufficient_service_evidence', stay_ns=math.inf,
++             switch_ns=math.inf, gain_ns=0., relay_bytes_per_ns=0.,
++             source_stay_ns=math.inf, source_switch_ns=math.inf,
++             helper_stay_ns=math.inf, helper_switch_ns=math.inf,
++             relay_assigned_bytes=0., tail_forecast_ns=0.)
++    if x.a_bytes + x.b_bytes + x.pending_bytes == 0:
++        d.update(reason='no_remaining_work', stay_ns=0., switch_ns=0.,
++                 source_stay_ns=0., source_switch_ns=0.,
++                 helper_stay_ns=0., helper_switch_ns=0.)
++        return d
++    if (not x.service_a.known or not x.service_b.known
++            or x.service_a.age_ns > x.max_age_ns
++            or x.service_b.age_ns > x.max_age_ns):
++        return d
++    source_stay = finish_time(x.a_bytes, x.b_bytes, x.pending_bytes,
++                             x.service_a.bytes_per_ns, x.service_b.bytes_per_ns)
++    tail = (float(x.b_no_progress_ns) if x.b_bytes and
++            x.b_no_progress_ns >= x.tail_debounce_ns else 0.)
++    source_stay = max(source_stay, tail)
++    d.update(stay_ns=source_stay, source_stay_ns=source_stay,
++             tail_forecast_ns=tail)
++    if not x.helper_ready:
++        d['reason'] = 'helpers_not_ready'
++        return d
++    if any(h is None or not h.known or h.age_ns > x.max_age_ns for h in x.helpers):
++        d['reason'] = 'paid_helper_reports_required'
++        return d
++    helper_base = [h.own_remaining_bytes / h.own_bytes_per_ns
++                   if h.own_remaining_bytes and h.own_bytes_per_ns > 0
++                   else math.inf if h.own_remaining_bytes else 0.
++                   for h in x.helpers]
++    d['helper_stay_ns'] = max(helper_base)
++    d['stay_ns'] = max(source_stay, d['helper_stay_ns'])
++    if not math.isfinite(d['helper_stay_ns']):
++        d['reason'] = 'helper_service_unresolved'
++        return d
++    if (not x.relay.known or x.relay.age_ns > x.max_age_ns
++            or x.relay.sample_bytes < x.chunk_bytes or min(x.relay.leg_ns) <= 0):
++        d.update(reason='representative_probe_required', probe_required=True)
++        return d
++    data_cycle = sum(x.relay.leg_ns)
++    full_cycle = data_cycle + x.relay.final_ack_ns
++    physical_cycle = data_cycle if x.pipelined else full_cycle
++    relay_rate = min(x.chunk_bytes / max(x.relay.leg_ns),
++                     x.relay.parallel_chunks * x.chunk_bytes / physical_cycle,
++                     x.source_window * x.chunk_bytes / full_cycle)
++    startup = max(0., full_cycle - x.chunk_bytes / relay_rate)
++    source_change = finish_time(x.a_bytes, x.b_bytes, x.pending_bytes,
++                                x.service_a.bytes_per_ns, relay_rate,
++                                x.setup_ns + startup)
++    if x.b_bytes:
++        source_change = max(source_change, x.setup_ns + full_cycle)
++    a_free = max(0., source_change * x.service_a.bytes_per_ns - x.a_bytes)
++    relay_work = x.b_bytes + max(0., x.pending_bytes - a_free)
++    helper_change = max(base + relay_work / h.own_bytes_per_ns
++                        if h.own_remaining_bytes else 0.
++                        for base, h in zip(helper_base, x.helpers))
++    change = max(source_change, helper_change)
++    stay = d['stay_ns']
++    gain = stay - change if math.isfinite(change) else 0.
++    threshold = max(x.min_gain_ns, x.min_gain_fraction * stay)
++    switch = math.isfinite(change) and (not math.isfinite(stay) or gain > threshold)
++    d.update(switch_ns=change, gain_ns=gain, relay_bytes_per_ns=relay_rate,
++             source_switch_ns=source_change, helper_switch_ns=helper_change,
++             relay_assigned_bytes=relay_work, should_switch=switch,
++             reason='predicted_benefit_v2' if switch else
++             ('benefit_below_margin' if gain > 0 else 'stay_no_slower'))
++    return d
+--- previous/project/python/limerlab/cli.py
++++ candidate/project/python/limerlab/cli.py
+@@ -26,7 +26,9 @@
+     run.add_argument('--seed', type=int, default=100001)
+     run.add_argument('--local-gbps', type=int, default=2400)
+     run.add_argument('--detector', choices=['legacy','service'], default='legacy')
+-    run.add_argument('--policy', choices=['always','benefit'], default='always')
++    run.add_argument('--policy', choices=['always','benefit','benefit_v2'], default='always')
++    run.add_argument('--slowdown-fraction', type=float, default=0.25,
++                     help='Remaining capacity for the lossless slowdown scenario')
+     run.add_argument('--fault-duration-ms', type=float, default=0)
+     run.add_argument('--canary-period-ns', type=int, default=2000000)
+     run.add_argument('--replacement-lifetime', choices=['phase','persistent'], default='phase')
+@@ -68,7 +70,8 @@
+                              round(a.fault_ms*1000000), a.node, a.seed, a.local_gbps,
+                              detector=a.detector,policy=a.policy,fault_duration_ns=round(a.fault_duration_ms*1000000),
+                              canary_period_ns=a.canary_period_ns,replacement_lifetime=a.replacement_lifetime,
+-                             phases_per_round=a.phases_per_round,relay_completion=a.relay_completion,helper_mode=a.helper_mode)
++                             phases_per_round=a.phases_per_round,relay_completion=a.relay_completion,helper_mode=a.helper_mode,
++                             slowdown_fraction=a.slowdown_fraction)
+         result = run_case(a.build, a.out, method, scene, a.archive_to, not a.prune_raw)
+         print(json.dumps(dict(name=result['name'], status=result['status']['status'],
+                               communication_ms=result['performance']['communication_ms'],
+--- previous/project/python/limerlab/config.py
++++ candidate/project/python/limerlab/config.py
+@@ -1,8 +1,9 @@
+ """Explicit, validated case configuration shared by CLI and campaigns."""
+ from dataclasses import asdict, dataclass
++import math
+ 
+ METHODS = ('G00', 'G10', 'G01', 'G11', 'A_ONLY')
+-SCENARIOS = ('healthy', 'quarter', 'weak_loss', 'blackhole', 'no_idle_helpers', 'slow_local', 'short_blackhole', 'delay')
++SCENARIOS = ('healthy', 'quarter', 'weak_loss', 'blackhole', 'no_idle_helpers', 'slow_local', 'short_blackhole', 'delay', 'slowdown')
+ 
+ 
+ @dataclass(frozen=True)
+@@ -25,8 +26,20 @@
+     phases_per_round: int = 30
+     relay_completion: str = 'final_ack'
+     helper_mode: str = 'idle'
++    slowdown_fraction: float = 0.25
+ 
+     def __post_init__(self):
++        if self.policy == 'benefit_v2' and (self.detector != 'service'
++                or self.replacement_lifetime != 'phase'
++                or self.relay_completion != 'pipelined' or self.helper_mode != 'shared'):
++            raise ValueError('benefit_v2 requires service, phase, pipelined, shared modes')
++        if (not isinstance(self.slowdown_fraction, (int, float))
++                or isinstance(self.slowdown_fraction, bool)
++                or not math.isfinite(self.slowdown_fraction)
++                or not 0 < self.slowdown_fraction <= 1):
++            raise ValueError('Slowdown capacity fraction must be in (0, 1]')
++        if self.family != 'slowdown' and self.slowdown_fraction != 0.25:
++            raise ValueError('Custom slowdown fraction requires the slowdown family')
+         if self.relay_completion not in ('final_ack', 'pipelined'):
+             raise ValueError('Unknown relay completion mode')
+         if self.helper_mode == 'shared' and self.replacement_lifetime != 'phase':
+@@ -45,7 +58,7 @@
+             raise ValueError('Require 1ms <= fault time < observation horizon')
+         if not 0 <= self.node < 16 or self.seed < 0 or self.local_gbps <= 0:
+             raise ValueError('Invalid node, random stream or local bandwidth')
+-        if self.detector not in ('legacy', 'service') or self.policy not in ('always', 'benefit'):
++        if self.detector not in ('legacy', 'service') or self.policy not in ('always', 'benefit', 'benefit_v2'):
+             raise ValueError('Unknown detector or replacement policy')
+         if self.fault_duration_ns < 0 or self.canary_period_ns < 100000 or self.canary_bytes != 65536:
+             raise ValueError('Invalid duration or representative canary geometry')
+--- previous/project/python/limerlab/inputs.py
++++ candidate/project/python/limerlab/inputs.py
+@@ -27,7 +27,8 @@
+ def inject(destination, scene):
+     destination = Path(destination)
+     destination.mkdir(exist_ok=False)
+-    fraction, loss = ((.25, 0) if scene.family == 'quarter' else
++    fraction, loss = ((scene.slowdown_fraction, 0) if scene.family == 'slowdown' else
++                      (.25, 0) if scene.family == 'quarter' else
+                       (1, .005) if scene.family == 'weak_loss' else (1, 1))
+     nodes = range(4) if scene.family == 'no_idle_helpers' else [scene.node]
+     end = min(scene.horizon_ns, scene.fault_ns + scene.fault_duration_ns) if scene.fault_duration_ns else scene.horizon_ns
+--- previous/project/python/limerlab/policy_replay.py
++++ candidate/project/python/limerlab/policy_replay.py
+@@ -12,7 +12,8 @@
+ import math
+ from pathlib import Path
+ 
+-from .benefit_policy import BenefitInput, RelaySample, ServiceSample, evaluate_benefit
++from .benefit_policy import (BenefitInput, BenefitInputV2, HelperSample, RelaySample,
++    ServiceSample, evaluate_benefit, evaluate_benefit_v2)
+ 
+ 
+ def _rows(path):
+@@ -44,6 +45,18 @@
+         check(all(int(a['timestamp_ns']) <= int(b['timestamp_ns']) for a, b in zip(decisions, decisions[1:])),
+               'policy decisions are not time ordered')
+         chunks_per_phase = int(status['chunks_per_phase'])
++        v2 = status.get('policy_mode') == 'benefit_v2'
++        delivered_helpers = {}
++        if v2:
++            from .audit import audit_helper_reports
++            report_audit = audit_helper_reports(root)
++            check(report_audit.get('pass', report_audit.get('pass_', False)), 'paid helper snapshot audit failed: '+str(report_audit.get('errors', [])))
++            for line in (root/'helper_reports.jsonl').read_text().splitlines():
++                report = json.loads(line)
++                if report['event'] == 'DELIVERED':
++                    key = int(report['source']), int(report['slot']), int(report['report_id'])
++                    check(key not in delivered_helpers, 'duplicate delivered helper report')
++                    delivered_helpers[key] = report
+         chunk_bytes = 65536
+         total = chunks_per_phase*chunk_bytes
+         adaptive = status['method'] in ('G10', 'G11')
+@@ -113,6 +126,7 @@
+         outstanding = defaultdict(int)
+         offered = defaultdict(int)
+         chunks = {}
++        chunk_progress = {}
+         samples = defaultdict(deque)
+ 
+         def apply(r):
+@@ -124,6 +138,7 @@
+                 length = int(r['length'])
+                 check(ident not in chunks, 'duplicate allocation in policy evidence')
+                 chunks[ident] = (ack, key, length)
++                chunk_progress[ident] = t
+                 outstanding[key] += length-ack
+                 offered[key] += length
+             elif event == 'ACK_PROGRESS':
+@@ -134,9 +149,12 @@
+                     check(delta >= 0, 'logical ACK regressed')
+                     outstanding[key] -= delta
+                     chunks[ident] = (ack, key, previous[2])
++                    if delta > 0:
++                        chunk_progress[ident] = t
+                     if int(r['epoch']) == 0 and delta > 0:
+                         samples[source, lane].append((t, delta))
+             elif event == 'DONE':
++                chunk_progress.pop(ident, None)
+                 previous = chunks.pop(ident, None)
+                 if previous:
+                     outstanding[key] -= previous[2]-previous[0]
+@@ -162,7 +180,9 @@
+                     if canary and canary[0]+20_000_000 >= t:
+                         rate = min(1.25, canary[2]/max(1, canary[1]))
+                 rates.append(rate)
+-            return owned, pending, rates
++            b_age = max((t-chunk_progress[ident] for ident, value in chunks.items()
++                         if value[1] == (source, phase, 1)), default=0)
++            return owned, pending, rates, b_age
+ 
+         logical = iter(_rows(root/'logical_events.csv'))
+         following = next(logical, None)
+@@ -196,16 +216,51 @@
+                 for obj in (a, b, relay):
+                     obj['known'] = bool(obj['known'])
+                 raw['helper_ready'] = bool(raw['helper_ready'])
+-                x = BenefitInput(service_a=ServiceSample(**a), service_b=ServiceSample(**b),
+-                                 relay=RelaySample(**relay), **raw)
+-                predicted = evaluate_benefit(x)
++                if v2:
++                    raw['helpers'] = tuple(HelperSample(**h) for h in raw['helpers'])
++                    raw['pipelined'] = bool(raw['pipelined'])
++                    x = BenefitInputV2(service_a=ServiceSample(**a), service_b=ServiceSample(**b),
++                                       relay=RelaySample(**relay), **raw)
++                    predicted = evaluate_benefit_v2(x)
++                    check(decision.get('policy_version') == 2, label+'wrong policy version')
++                    check(x.pipelined == (status.get('relay_completion') == 'pipelined')
++                          and x.source_window == int(status['source_window']),
++                          label+'sender confirmation window/completion mode differs')
++                    check(x.tail_debounce_ns == 2_000_000, label+'tail cadence differs')
++                    metadata = decision.get('helper_reports', [])
++                    check(len(metadata) == 2, label+'two helper report identities required')
++                    for slot, meta in enumerate(metadata):
++                        report = delivered_helpers.get((int(decision['src']), slot, int(meta['report_id'])))
++                        check(report is not None, label+'helper report was not delivered')
++                        if report is None:
++                            continue
++                        check(all(meta[k] == report[k] for k in
++                                  ('report_id', 'rank', 'phase', 'version', 'lease_id', 'sampled_ns', 'delivered_ns')),
++                              label+'helper report identity differs')
++                        h = x.helpers[slot]
++                        check(int(report['phase']) == int(decision['phase'])
++                              and int(report['delivered_ns']) <= t
++                              and h.age_ns == t-int(report['sampled_ns'])
++                              and bool(h.known) == bool(report['known'])
++                              and h.own_remaining_bytes == int(report['own_remaining_bytes'])
++                              and _close(h.own_bytes_per_ns, report['own_bytes_per_ns']),
++                              label+'helper policy input differs from paid delivered snapshot')
++                    for name in ('source_stay_ns', 'source_switch_ns', 'helper_stay_ns',
++                                 'helper_switch_ns', 'relay_assigned_bytes', 'tail_forecast_ns',
++                                 'relay_bytes_per_ns'):
++                        check(_close(decision[name], predicted[name]), label+'v2 component differs: '+name)
++                else:
++                    x = BenefitInput(service_a=ServiceSample(**a), service_b=ServiceSample(**b),
++                                     relay=RelaySample(**relay), **raw)
++                    predicted = evaluate_benefit(x)
+                 for name in ('should_switch', 'reason', 'stay_ns', 'switch_ns', 'gain_ns'):
+                     equal = (decision[name] == predicted[name] if name in ('should_switch', 'reason')
+                              else _close(decision[name], predicted[name]))
+                     check(equal, label+'native/Python policy differs: '+name)
+                 check(decision['stage'] in ('probe_complete', 'commit'), label+'unknown policy stage')
+                 matches = [s for s in possible[i] if s[0] == [x.a_bytes, x.b_bytes] and s[1] == x.pending_bytes
+-                           and all(_close(s[2][lane], (x.service_a, x.service_b)[lane].bytes_per_ns) for lane in (0, 1))]
++                           and all(_close(s[2][lane], (x.service_a, x.service_b)[lane].bytes_per_ns) for lane in (0, 1))
++                           and (not v2 or s[3] == x.b_no_progress_ns)]
+                 check(bool(matches), label+'remaining bytes/direct ACK service differ from logical causal prefixes')
+                 check(x.service_a.age_ns == x.service_b.age_ns == 0
+                       and x.service_a.known == x.service_b.known == (t >= 20_000_000),
+@@ -215,6 +270,10 @@
+                 check(evidence is not None, label+'candidate lacks completed three-leg physical probe')
+                 if evidence:
+                     reservation, legs = evidence
++                    if v2:
++                        check([int(h['rank']) for h in decision.get('helper_reports', [])] ==
++                              [int(reservation['helper_src']), int(reservation['helper_dst'])],
++                              label+'paid helpers differ from the physical probe route')
+                     check(x.relay.known and x.relay.sample_bytes == int(reservation['length'])
+                           and all(legs[j][1] == x.relay.sample_bytes for j in range(3)),
+                           label+'candidate probe byte count differs')
+@@ -254,7 +313,9 @@
+                 'same_timestamp_order': 'matching causal prefix; logs have no cross-file sequence',
+                 'checks': ['pure policy', 'logical remaining bytes', 'direct ACK service',
+                            'physical candidate probes', 'charged delivered health reports' if require_health_report else 'legacy health-report compatibility',
+-                           'control FIFO/current cost estimate', 'initial commit authorization']}
++                           'control FIFO/current cost estimate', 'initial commit authorization']
++                           + (['chunk-local no-progress age', 'paid helper reports and causal workload audit',
++                               'physical and logical pipeline windows'] if v2 else [])}
+     except (OSError, ValueError, KeyError, TypeError, OverflowError) as exc:
+         errors.append('invalid policy evidence: '+str(exc))
+         return {'pass': False, 'errors': errors[:100], 'decisions_checked': 0, 'truth_accessed': False}
+--- previous/project/python/limerlab/replay.py
++++ candidate/project/python/limerlab/replay.py
+@@ -12,7 +12,7 @@
+     if scene.get('detector')=='service':
+         from .service_replay import replay_service
+         result=replay_service(root);result['pass']=result.pop('pass_')
+-        if scene.get('policy')=='benefit':
++        if scene.get('policy') in ('benefit', 'benefit_v2'):
+             from .policy_replay import replay_policy
+             policy=replay_policy(root)
+             result['policy_replay']=policy
+--- previous/project/src/simulator/main.cc
++++ candidate/project/src/simulator/main.cc
+@@ -24,9 +24,10 @@
+ using namespace limer::engine;
+ int main(int argc,char** argv){try{
+  if(argc!=9&&argc!=13&&argc!=15&&argc!=17)throw std::runtime_error("topology config out method rounds horizon fault chunks-per-phase [detector policy canary-period canary-bytes]");output=argv[3];method=argv[4];phases=std::stoul(argv[5])*30;horizon=std::stoull(argv[6]);
+- if(argc>=13){std::string dm=argv[9],pm=argv[10];if(dm!="legacy"&&dm!="service")throw std::runtime_error("detector mode");if(pm!="always"&&pm!="benefit")throw std::runtime_error("policy mode");serviceMode=dm=="service";benefitMode=pm=="benefit";canaryPeriod=std::stoull(argv[11]);canaryBytes=std::stoull(argv[12]);if(canaryPeriod<100000||canaryBytes!=65536)throw std::runtime_error("canary geometry");}
++ if(argc>=13){std::string dm=argv[9],pm=argv[10];if(dm!="legacy"&&dm!="service")throw std::runtime_error("detector mode");if(pm!="always"&&pm!="benefit"&&pm!="benefit_v2")throw std::runtime_error("policy mode");serviceMode=dm=="service";benefitMode=pm!="always";benefitV2=pm=="benefit_v2";canaryPeriod=std::stoull(argv[11]);canaryBytes=std::stoull(argv[12]);if(canaryPeriod<100000||canaryBytes!=65536)throw std::runtime_error("canary geometry");}
+  if(argc>=15){std::string lifetime=argv[13];if(lifetime!="phase"&&lifetime!="persistent")throw std::runtime_error("replacement lifetime");phaseScoped=lifetime=="phase";phasesPerRound=std::stoul(argv[14]);if(phasesPerRound<1||phasesPerRound>30)throw std::runtime_error("phases per round");phases=std::stoul(argv[5])*phasesPerRound;}
+  if(argc==17){std::string cm=argv[15],hm=argv[16];if(cm!="final_ack"&&cm!="pipelined")throw std::runtime_error("relay completion mode");if(hm!="idle"&&hm!="shared")throw std::runtime_error("helper mode");pipelined=cm=="pipelined";sharedHelpers=hm=="shared";if(sharedHelpers&&!phaseScoped)throw std::runtime_error("shared helpers require phase lifetime");}
++ if(benefitV2&&(!serviceMode||!phaseScoped||!pipelined||!sharedHelpers))throw std::runtime_error("benefit_v2 requires service phase pipelined shared");
+  phaseChunks=std::stoul(argv[8]);if(phaseChunks<16||phaseChunks%2)throw std::runtime_error("even phase chunks >=16 required");Bytes=uint64_t(phaseChunks)*ChunkBytes;
+  singlePlane=method=="A_ONLY";feedback=singlePlane||method=="G10"||method=="G11";proxy=method=="G01"||method=="G11";
+  if(method!="G00"&&method!="G10"&&!proxy&&!singlePlane)throw std::runtime_error("unsupported method");
+@@ -43,6 +44,7 @@
+  serviceEvents.open(output+"/service_events.csv");serviceEvents<<"timestamp_ns,event,path_id,token,bytes,last_progress_ns,spacing_ns,sample_count\n";
+  serviceAlarms.open(output+"/service_alarms.csv");serviceAlarms<<"timestamp_ns,path_id,signal\n";
+  serviceDecisions.open(output+"/service_decisions.jsonl");policyLog.open(output+"/policy_decisions.jsonl");policyLog<<std::setprecision(17);
++ helperReports.open(output+"/helper_reports.jsonl");helperReports<<std::setprecision(17);
+  detector.open(output+"/m13_alarms.jsonl",output+"/m13_baseline.jsonl");detector.onAlarm=Alarm;
+  for(unsigned s=0;s<16;++s){ports[s]=10000;auto hw=n.Get(s)->GetObject<RdmaDriver>()->m_rdma;hw->m_qpCompleteCallback=MakeCallback(&Completed);hw->m_sendCompleteCallback=MakeCallback(&Sent);}
+  limer_experiment::Load(argv[7],output+"/fault_events.csv",n);
+@@ -50,6 +52,6 @@
+  if(serviceMode){Simulator::Schedule(MilliSeconds(1),&ServiceTick);if(spacingEnd<horizon)Simulator::Schedule(NanoSeconds(spacingEnd),&ReceiverSpacingTick);}else{Simulator::Schedule(MilliSeconds(1),&ProbeTick);Simulator::Schedule(MilliSeconds(10),&ObserveTick);}
+  Simulator::Schedule(NanoSeconds(1050000),&Tick);
+  Simulator::Stop(NanoSeconds(horizon));Simulator::Run();
+- std::ofstream status(output+"/run_status.json");status<<"{\"relay_completion\":\""<<(pipelined?"pipelined":"final_ack")<<"\",\"helper_mode\":\""<<(sharedHelpers?"shared":"idle")<<"\",\"source_window\":"<<SourceWindow()<<",\"detector_mode\":\""<<(serviceMode?"service":"legacy")<<"\",\"policy_mode\":\""<<(benefitMode?"benefit":"always")<<"\",\"replacement_lifetime\":\""<<(phaseScoped?"phase":"persistent")<<"\",\"phases_per_round\":"<<phasesPerRound<<",\"monitor_end_ns\":"<<PeerNow()<<",\"status\":\""<<(jobDone?"completed":"task_unfinished")<<"\",\"method\":\""<<method<<"\",\"job_done_ns\":"<<jobDone<<",\"horizon_ns\":"<<horizon<<",\"world_size\":16,\"physical_planes\":2,\"phases_done\":"<<phase<<",\"phases_expected\":"<<phases<<",\"chunks_per_phase\":"<<phaseChunks<<",\"proxy_chunks\":"<<proxyChunks<<",\"new_proxy_chunks\":"<<newProxyChunks<<",\"rescued_chunks\":"<<rescuedChunks<<",\"health_probe_routes\":"<<probeRoutes<<",\"network_wire_bytes\":"<<networkWire<<",\"local_wire_bytes\":"<<localWire<<",\"probe_wire_bytes\":"<<probeWire<<",\"relay_wire_bytes\":"<<rescueWire<<",\"retransmission_wire_bytes\":"<<retransWire<<",\"control_wire_bytes\":"<<control.wire_bytes<<",\"stale_acks\":"<<staleAcks<<",\"extra_rto\":false,\"scope\":\""<<(phaseScoped?"phase-scoped B-prime replacement v3":(serviceMode?"service-driven persistent B-prime replacement v2":"M13-driven persistent B-prime replacement v1"))<<"\"}\n";
++ std::ofstream status(output+"/run_status.json");status<<"{\"relay_completion\":\""<<(pipelined?"pipelined":"final_ack")<<"\",\"helper_mode\":\""<<(sharedHelpers?"shared":"idle")<<"\",\"source_window\":"<<SourceWindow()<<",\"detector_mode\":\""<<(serviceMode?"service":"legacy")<<"\",\"policy_mode\":\""<<(benefitV2?"benefit_v2":benefitMode?"benefit":"always")<<"\",\"replacement_lifetime\":\""<<(phaseScoped?"phase":"persistent")<<"\",\"phases_per_round\":"<<phasesPerRound<<",\"monitor_end_ns\":"<<PeerNow()<<",\"status\":\""<<(jobDone?"completed":"task_unfinished")<<"\",\"method\":\""<<method<<"\",\"job_done_ns\":"<<jobDone<<",\"horizon_ns\":"<<horizon<<",\"world_size\":16,\"physical_planes\":2,\"phases_done\":"<<phase<<",\"phases_expected\":"<<phases<<",\"chunks_per_phase\":"<<phaseChunks<<",\"proxy_chunks\":"<<proxyChunks<<",\"new_proxy_chunks\":"<<newProxyChunks<<",\"rescued_chunks\":"<<rescuedChunks<<",\"health_probe_routes\":"<<probeRoutes<<",\"network_wire_bytes\":"<<networkWire<<",\"local_wire_bytes\":"<<localWire<<",\"probe_wire_bytes\":"<<probeWire<<",\"relay_wire_bytes\":"<<rescueWire<<",\"retransmission_wire_bytes\":"<<retransWire<<",\"control_wire_bytes\":"<<control.wire_bytes<<",\"stale_acks\":"<<staleAcks<<",\"extra_rto\":false,\"scope\":\""<<(phaseScoped?"phase-scoped B-prime replacement v3":(serviceMode?"service-driven persistent B-prime replacement v2":"M13-driven persistent B-prime replacement v1"))<<"\"}\n";
+  Simulator::Destroy();return jobDone?0:2;
+  }catch(const std::exception& e){std::cerr<<e.what()<<std::endl;return 1;}}
+--- previous/project/src/simulator/recovery/benefit_policy.h
++++ candidate/project/src/simulator/recovery/benefit_policy.h
+@@ -96,4 +96,85 @@
+  return d;
+ }
+ 
++
++// V2 separates physical data credits from logical confirmation credits and
++// compares the affected sender with paid observations of the two helpers.
++// Other ranks, future faults and tensor computation remain unmodelled.
++struct HelperSample {
++ uint64_t own_remaining_bytes=0; double own_bytes_per_ns=0;
++ uint64_t age_ns=0; bool known=false;
++};
++struct BenefitInputV2 : BenefitInput {
++ uint64_t b_no_progress_ns=0,tail_debounce_ns=2000000;
++ unsigned source_window=32; bool pipelined=true;
++ std::array<HelperSample,2> helpers;
++};
++struct BenefitDecisionV2 : BenefitDecision {
++ double source_stay_ns=std::numeric_limits<double>::infinity();
++ double source_switch_ns=std::numeric_limits<double>::infinity();
++ double helper_stay_ns=std::numeric_limits<double>::infinity();
++ double helper_switch_ns=std::numeric_limits<double>::infinity();
++ double relay_assigned_bytes=0,tail_forecast_ns=0;
++};
++inline BenefitDecisionV2 EvaluateBenefitV2(const BenefitInputV2& x){
++ // Reuse validation without altering the legacy calculation or outputs.
++ EvaluateBenefit(x);
++ if(!x.source_window)throw std::invalid_argument("invalid sender window");
++ for(const auto& h:x.helpers)if(!std::isfinite(h.own_bytes_per_ns)||h.own_bytes_per_ns<0)
++  throw std::invalid_argument("invalid helper service");
++ BenefitDecisionV2 d;
++ if(!x.a_bytes&&!x.b_bytes&&!x.pending_bytes){
++  d.reason="no_remaining_work";d.stay_ns=d.switch_ns=0;
++  d.source_stay_ns=d.source_switch_ns=d.helper_stay_ns=d.helper_switch_ns=0;return d;}
++ if(!x.service_a.known||!x.service_b.known||x.service_a.age_ns>x.max_age_ns||
++    x.service_b.age_ns>x.max_age_ns)return d;
++ d.source_stay_ns=FinishTime(x.a_bytes,x.b_bytes,x.pending_bytes,
++                            x.service_a.bytes_per_ns,x.service_b.bytes_per_ns);
++ // A persistence forecast after one observation cadence, NOT a lower bound
++ // on future completion: progress may resume immediately after this sample.
++ if(x.b_bytes&&x.b_no_progress_ns>=x.tail_debounce_ns)
++  d.tail_forecast_ns=x.b_no_progress_ns;
++ d.source_stay_ns=std::max(d.source_stay_ns,d.tail_forecast_ns);
++ d.stay_ns=d.source_stay_ns;
++ if(!x.helper_ready){d.reason="helpers_not_ready";return d;}
++ for(const auto& h:x.helpers)if(!h.known||h.age_ns>x.max_age_ns){
++  d.reason="paid_helper_reports_required";return d;}
++ std::array<double,2> helperBase{{0,0}};
++ for(unsigned i=0;i<2;++i){const auto& h=x.helpers[i];
++  if(h.own_remaining_bytes)helperBase[i]=h.own_bytes_per_ns>0?
++   h.own_remaining_bytes/h.own_bytes_per_ns:std::numeric_limits<double>::infinity();}
++ d.helper_stay_ns=std::max(helperBase[0],helperBase[1]);
++ d.stay_ns=std::max(d.stay_ns,d.helper_stay_ns);
++ if(!std::isfinite(d.helper_stay_ns)){d.reason="helper_service_unresolved";return d;}
++ if(!x.relay.known||x.relay.age_ns>x.max_age_ns||x.relay.sample_bytes<x.chunk_bytes||
++    *std::min_element(x.relay.leg_ns.begin(),x.relay.leg_ns.end())<=0){
++  d.reason="representative_probe_required";d.probe_required=true;return d;}
++ double dataCycle=0,largest=0;
++ for(auto t:x.relay.leg_ns){dataCycle+=t;largest=std::max(largest,t);}
++ double fullCycle=dataCycle+x.relay.final_ack_ns;
++ double physicalCycle=x.pipelined?dataCycle:fullCycle;
++ d.relay_bytes_per_ns=std::min({x.chunk_bytes/largest,
++  x.relay.parallel_chunks*double(x.chunk_bytes)/physicalCycle,
++  x.source_window*double(x.chunk_bytes)/fullCycle});
++ double startup=std::max(0.,fullCycle-x.chunk_bytes/d.relay_bytes_per_ns);
++ d.source_switch_ns=FinishTime(x.a_bytes,x.b_bytes,x.pending_bytes,
++  x.service_a.bytes_per_ns,d.relay_bytes_per_ns,x.setup_ns+startup);
++ if(x.b_bytes)d.source_switch_ns=std::max(d.source_switch_ns,x.setup_ns+fullCycle);
++ double aFree=std::max(0.,d.source_switch_ns*x.service_a.bytes_per_ns-x.a_bytes);
++ d.relay_assigned_bytes=x.b_bytes+std::max(0.,x.pending_bytes-aFree);
++ d.helper_switch_ns=0;
++ for(unsigned i=0;i<2;++i){const auto& h=x.helpers[i];
++  // Equal-byte opportunity-cost approximation over the helper's aggregate
++  // observed own service. A/B headroom and other ranks are not inferred.
++  if(h.own_remaining_bytes)d.helper_switch_ns=std::max(d.helper_switch_ns,
++   helperBase[i]+d.relay_assigned_bytes/h.own_bytes_per_ns);}
++ d.switch_ns=std::max(d.source_switch_ns,d.helper_switch_ns);
++ d.gain_ns=std::isfinite(d.switch_ns)?d.stay_ns-d.switch_ns:0;
++ double margin=std::max(x.min_gain_ns,x.min_gain_fraction*d.stay_ns);
++ d.should_switch=std::isfinite(d.switch_ns)&&(!std::isfinite(d.stay_ns)||d.gain_ns>margin);
++ d.reason=d.should_switch?"predicted_benefit_v2":
++  (d.gain_ns>0?"benefit_below_margin":"stay_no_slower");
++ return d;
++}
++
+ }}
+--- previous/project/src/simulator/recovery/decision.h
++++ candidate/project/src/simulator/recovery/decision.h
+@@ -15,7 +15,54 @@
+ 
+ static void JsonNumber(std::ostream& out,double x){if(std::isfinite(x))out<<x;else out<<"null";}
+ 
++static bool BenefitAllowsV2(unsigned src,const char* stage){
++ using namespace limer::recovery;auto& b=binding[src];BenefitInputV2 x;
++ for(auto id:cohort[src]){const auto& c=chunks.at(id);if(c.done)continue;
++  (c.lane?x.b_bytes:x.a_bytes)+=ChunkBytes-c.acked;
++  if(c.lane)x.b_no_progress_ns=std::max(x.b_no_progress_ns,
++   PeerNow()-(c.lastProgress?c.lastProgress:c.allocated));}
++ uint64_t remaining=Bytes-offered[src];
++ if(feedback)x.pending_bytes=remaining;
++ else for(unsigned lane=0;lane<2;++lane)for(uint64_t off=nextOffset[src][lane];off<Bytes;off+=2*ChunkBytes)(lane?x.b_bytes:x.a_bytes)+=ChunkBytes;
++ x.service_a={RecentService(src,0,x.a_bytes),0,PeerNow()>=20000000};
++ x.service_b={RecentService(src,1,x.b_bytes),0,PeerNow()>=20000000};
++ x.relay.sample_bytes=b.probeBytes;x.relay.leg_ns=b.probeLegNs;
++ x.relay.age_ns=PeerNow()-b.health;x.relay.known=b.health>0;
++ double queued=control.free_ns>PeerNow()?control.free_ns-PeerNow():0;
++ x.relay.final_ack_ns=queued+1000000+7680;
++ x.setup_ns=std::string(stage)=="commit"?0:queued+4000000+12*7680;
++ x.helper_ready=sharedHelpers?(b.lending&&b.loanReady&&!b.releasing):(Idle(b.hs)&&Idle(b.hd));
++ x.source_window=SourceWindow();x.pipelined=pipelined;
++ for(unsigned i=0;i<2;++i){const auto& report=b.helperReports[i];auto& h=x.helpers[i];
++  h.own_remaining_bytes=report.own_remaining_bytes;h.own_bytes_per_ns=report.own_bytes_per_ns;
++  h.age_ns=PeerNow()>=report.sampled_ns?PeerNow()-report.sampled_ns:UINT64_MAX;
++  h.known=report.known&&report.sampled_ns<=report.delivered_ns&&report.delivered_ns<=PeerNow()
++   &&report.phase==phase&&report.version==b.version&&report.lease_id==b.leaseId
++   &&report.rank==(i?b.hd:b.hs);}
++ auto d=EvaluateBenefitV2(x);
++ policyLog<<"{\"policy_version\":2,\"timestamp_ns\":"<<PeerNow()<<",\"src\":"<<src<<",\"phase\":"<<phase<<",\"stage\":\""<<stage<<"\",\"input\":{\"a_bytes\":"<<x.a_bytes<<",\"b_bytes\":"<<x.b_bytes<<",\"pending_bytes\":"<<x.pending_bytes
++  <<",\"service_a\":{\"bytes_per_ns\":"<<x.service_a.bytes_per_ns<<",\"age_ns\":0,\"known\":"<<x.service_a.known<<"},\"service_b\":{\"bytes_per_ns\":"<<x.service_b.bytes_per_ns<<",\"age_ns\":0,\"known\":"<<x.service_b.known<<"},\"relay\":{\"sample_bytes\":"<<x.relay.sample_bytes<<",\"leg_ns\":["<<x.relay.leg_ns[0]<<','<<x.relay.leg_ns[1]<<','<<x.relay.leg_ns[2]<<"],\"final_ack_ns\":"<<x.relay.final_ack_ns<<",\"parallel_chunks\":4,\"age_ns\":"<<x.relay.age_ns<<",\"known\":"<<x.relay.known<<"},\"setup_ns\":"<<x.setup_ns<<",\"helper_ready\":"<<x.helper_ready
++  <<",\"b_no_progress_ns\":"<<x.b_no_progress_ns<<",\"tail_debounce_ns\":"<<x.tail_debounce_ns<<",\"source_window\":"<<x.source_window<<",\"pipelined\":"<<x.pipelined<<",\"helpers\":[";
++ for(unsigned i=0;i<2;++i){const auto& h=x.helpers[i];if(i)policyLog<<',';
++  policyLog<<"{\"own_remaining_bytes\":"<<h.own_remaining_bytes<<",\"own_bytes_per_ns\":"<<h.own_bytes_per_ns<<",\"age_ns\":"<<h.age_ns<<",\"known\":"<<h.known<<'}';}
++ policyLog<<"]},\"helper_reports\":[";
++ for(unsigned i=0;i<2;++i){const auto& h=b.helperReports[i];if(i)policyLog<<',';
++  policyLog<<"{\"report_id\":"<<h.report_id<<",\"rank\":"<<h.rank<<",\"phase\":"<<h.phase<<",\"version\":"<<h.version<<",\"lease_id\":"<<h.lease_id<<",\"sampled_ns\":"<<h.sampled_ns<<",\"delivered_ns\":"<<h.delivered_ns<<'}';}
++ policyLog<<"],\"should_switch\":"<<d.should_switch<<",\"reason\":\""<<d.reason<<"\",\"stay_ns\":";
++ JsonNumber(policyLog,d.stay_ns);policyLog<<",\"switch_ns\":";JsonNumber(policyLog,d.switch_ns);
++ policyLog<<",\"gain_ns\":";JsonNumber(policyLog,d.gain_ns);
++ policyLog<<",\"source_stay_ns\":";JsonNumber(policyLog,d.source_stay_ns);
++ policyLog<<",\"source_switch_ns\":";JsonNumber(policyLog,d.source_switch_ns);
++ policyLog<<",\"helper_stay_ns\":";JsonNumber(policyLog,d.helper_stay_ns);
++ policyLog<<",\"helper_switch_ns\":";JsonNumber(policyLog,d.helper_switch_ns);
++ policyLog<<",\"relay_assigned_bytes\":";JsonNumber(policyLog,d.relay_assigned_bytes);
++ policyLog<<",\"tail_forecast_ns\":";JsonNumber(policyLog,d.tail_forecast_ns);
++ policyLog<<",\"relay_bytes_per_ns\":";JsonNumber(policyLog,d.relay_bytes_per_ns);policyLog<<"}\n";
++ return d.should_switch;
++}
++
+ static bool BenefitAllows(unsigned src,const char* stage){
++ if(benefitV2)return BenefitAllowsV2(src,stage);
+  using namespace limer::recovery;auto& b=binding[src];BenefitInput x;
+  for(auto id:cohort[src]){const auto& c=chunks.at(id);if(!c.done)(c.lane?x.b_bytes:x.a_bytes)+=ChunkBytes-c.acked;}
+  uint64_t remaining=Bytes-offered[src];
+--- previous/project/src/simulator/recovery/proxy.h
++++ candidate/project/src/simulator/recovery/proxy.h
+@@ -1,29 +1,30 @@
+ #pragma once
+ namespace limer { namespace engine {
+ static void Commit(unsigned src,unsigned p,uint64_t version){
+- auto& b=binding[src];if(p!=phase||version!=b.version)return;
+- if((!sharedHelpers&&(!Idle(b.hs)||!Idle(b.hd)))||PeerNow()<b.health||PeerNow()-b.health>Ttl){b.pending=false;return;}
++ auto& b=binding[src];if(p!=phase||version!=b.version||(benefitV2&&b.releasing))return;
++ if((!sharedHelpers&&(!Idle(b.hs)||!Idle(b.hd)))||PeerNow()<b.health||PeerNow()-b.health>Ttl){
++  b.pending=false;if(benefitV2){b.nextAttempt=PeerNow()+5000000;if(!b.configured)ReleaseLendingV2(src);}return;}
+  if(!m13[src])throw std::logic_error("replacement without M13 alarm");
+- if(!b.configured&&benefitMode&&!BenefitAllows(src,"commit")){b.pending=false;b.nextAttempt=PeerNow()+5000000;return;}
++ if(!b.configured&&benefitMode&&!BenefitAllows(src,"commit")){b.pending=false;b.nextAttempt=PeerNow()+5000000;if(benefitV2)ReleaseLendingV2(src);return;}
+  b.ready=true;b.pending=false;b.configured=true;b.disabled=true;
+  if(!b.activation){b.activation=PeerNow();rates[src][2]=0;credits[src][2]=0;launches[src][2]=0;}
+  controls<<PeerNow()<<','<<PeerNow()<<",ACTIVATE,"<<src<<','<<phase<<','<<version<<",0\n";Pump(src);
+ }
+ 
+ static void SendCommit(unsigned src,unsigned p,uint64_t v){
+- auto& b=binding[src];if(p!=phase||v!=b.version)return;
++ auto& b=binding[src];if(p!=phase||v!=b.version||(benefitV2&&b.releasing))return;
+  uint64_t at=PeerNow();for(auto rank:{src,Dest(src),b.hs,b.hd})at=std::max(at,Message("COMMIT",rank,v));
+  Simulator::Schedule(NanoSeconds(at-PeerNow()),&Commit,src,p,v);
+ }
+ 
+ static void SendReady(unsigned src,unsigned p,uint64_t v){
+- auto& b=binding[src];if(p!=phase||v!=b.version)return;
++ auto& b=binding[src];if(p!=phase||v!=b.version||(benefitV2&&b.releasing))return;
+  uint64_t at=PeerNow();for(auto rank:{src,Dest(src),b.hs,b.hd})at=std::max(at,Message("READY",rank,v));
+  Simulator::Schedule(NanoSeconds(at-PeerNow()),&SendCommit,src,p,v);
+ }
+ 
+ static void Configure(unsigned src){
+- auto& b=binding[src];if(b.p!=phase)return;
++ auto& b=binding[src];if(b.p!=phase||(benefitV2&&b.releasing))return;
+  uint64_t at=PeerNow();
+  // Messages are enqueued at their actual causal send times, without reserving future FIFO gaps.
+  if(!b.configured){
+@@ -36,15 +37,17 @@
+ }
+ 
+ static void HealthDone(uint64_t id){
++ if(benefitV2&&abortedProbes.count(id))return;
+  auto r=routes.at(id);Reserve(routes.at(id),false);routes.erase(id);
+  auto& b=binding[r.src];if(r.p!=phase||b.version!=r.bindingVersion||b.hs!=r.hs||b.hd!=r.hd)return;
+  b.health=r.measurement;b.probeBytes=r.length;b.probeLegNs=r.legNs;
++ if(benefitV2&&!b.configured){CollectHelperReports(r.src);return;}
+  if(benefitMode&&!b.configured&&!BenefitAllows(r.src,"probe_complete")){b.pending=false;b.nextAttempt=PeerNow()+5000000;return;}
+  Configure(r.src);
+ }
+ 
+ static void LendReady(unsigned src,unsigned p,uint64_t version){
+- auto& b=binding[src];if(p!=phase||version!=b.version)return;
++ auto& b=binding[src];if(p!=phase||version!=b.version||(benefitV2&&b.releasing))return;
+  loanTx[b.hs]=true;loanRx[b.hd]=true;b.loanReady=true;b.pending=false;
+  controls<<PeerNow()<<','<<PeerNow()<<",LEND_ACTIVE,"<<src<<','<<phase<<','<<version<<",0\n";
+ }
+@@ -64,13 +67,123 @@
+  return false;
+ }
+ 
++// V2 leases have their own identity: a fresh probe may change binding.version.
++// A rejected decision releases only future admission reservations; route credits
++// remain owned by Reserve/ReleaseDelivered/FinalAck and are never cleared here.
++static void ReleaseLendingDone(unsigned src,unsigned p,uint64_t lease){
++ auto& b=binding[src];if(p!=phase||b.p!=p||lease!=b.leaseId||!b.releasing)return;
++ for(const auto& item:routes)if(item.second.relay&&item.second.src==src&&item.second.p==p&&item.second.reserved){
++  Simulator::Schedule(NanoSeconds(50000),&ReleaseLendingDone,src,p,lease);return;}
++ if(plannedTx[b.hs]==lease){plannedTx[b.hs]=0;loanTx[b.hs]=false;}
++ if(plannedRx[b.hd]==lease){plannedRx[b.hd]=0;loanRx[b.hd]=false;}
++ b.releasing=false;b.lending=false;b.loanReady=false;b.pending=false;b.leaseId=0;
++ b.helperReportsReady=0;b.helperReports={};
++ controls<<PeerNow()<<','<<PeerNow()<<",LEND_RELEASED,"<<src<<','<<p<<','<<lease<<",0\n";
++ // Freed admission can help the helpers' own work immediately.
++ Pump(b.hs);Pump(b.hd);
++}
++
++static void ReleaseLendingV2(unsigned src){
++ auto& b=binding[src];if(!benefitV2||!sharedHelpers||!b.lending||b.releasing)return;
++ b.releasing=true;b.pending=false;b.ready=false;
++ uint64_t at=Message("RELEASE_TX",b.hs,b.leaseId);
++ at=std::max(at,Message("RELEASE_RX",b.hd,b.leaseId));
++ Simulator::Schedule(NanoSeconds(at-PeerNow()),&ReleaseLendingDone,src,phase,b.leaseId);
++}
++
++static void LendReadyV2(unsigned src,unsigned p,uint64_t lease){
++ auto& b=binding[src];if(p!=phase||b.p!=p||lease!=b.leaseId||b.releasing||
++  plannedTx[b.hs]!=lease||plannedRx[b.hd]!=lease)return;
++ loanTx[b.hs]=true;loanRx[b.hd]=true;b.loanReady=true;b.pending=false;
++ controls<<PeerNow()<<','<<PeerNow()<<",LEND_ACTIVE,"<<src<<','<<phase<<','<<lease<<",0\n";
++}
++
++static bool RequestLendingV2(unsigned src){
++ auto& b=binding[src];if(b.releasing)return false;if(b.lending)return b.loanReady;
++ bool found=false;unsigned hs=0,hd=0;
++ for(unsigned h=src/4*4;h<src/4*4+4&&!found;++h)if(h!=src&&!plannedTx[h]&&!plannedRx[h])
++  for(unsigned d=Dest(src)/4*4;d<Dest(src)/4*4+4;++d)if(d!=Dest(src)&&!plannedRx[d]&&!plannedTx[d]){hs=h;hd=d;found=true;break;}
++ if(!found)return false;
++ b.hs=hs;b.hd=hd;b.lending=true;b.pending=true;b.p=phase;b.version=++serial;b.leaseId=b.version;
++ b.helperReportsReady=0;b.helperReports={};
++ plannedTx[hs]=b.leaseId;plannedRx[hd]=b.leaseId;
++ uint64_t at=Message("LEND_TX",hs,b.leaseId);at=std::max(at,Message("LEND_RX",hd,b.leaseId));
++ Simulator::Schedule(NanoSeconds(at-PeerNow()),&LendReadyV2,src,phase,b.leaseId);
++ return false;
++}
++
++static void LogHelperSnapshot(const char* event,unsigned src,unsigned slot,const HelperSnapshot& x){
++ helperReports<<"{\"event\":\""<<event<<"\",\"timestamp_ns\":"<<PeerNow()<<",\"source\":"<<src
++  <<",\"slot\":"<<slot<<",\"rank\":"<<x.rank<<",\"phase\":"<<x.phase<<",\"version\":"<<x.version
++  <<",\"lease_id\":"<<x.lease_id<<",\"report_id\":"<<x.report_id<<",\"sampled_ns\":"<<x.sampled_ns
++  <<",\"delivered_ns\":"<<x.delivered_ns<<",\"own_remaining_bytes\":"<<x.own_remaining_bytes
++  <<",\"own_bytes_per_ns\":"<<x.own_bytes_per_ns<<",\"known\":"<<x.known<<"}\n";
++}
++
++static void DeliverHelperSnapshot(unsigned src,unsigned slot,HelperSnapshot x){
++ auto& b=binding[src];
++ if(x.phase!=phase||b.p!=x.phase||b.version!=x.version||b.leaseId!=x.lease_id||b.releasing){
++  LogHelperSnapshot("STALE",src,slot,x);return;}
++ b.helperReports[slot]=x;b.helperReportsReady|=1u<<slot;LogHelperSnapshot("DELIVERED",src,slot,x);
++ if(b.helperReportsReady!=3)return;
++ if(!BenefitAllows(src,"probe_complete")){
++  b.pending=false;b.nextAttempt=PeerNow()+5000000;ReleaseLendingV2(src);return;}
++ Configure(src);
++}
++
++static void SampleHelperSnapshot(unsigned src,unsigned slot,unsigned p,uint64_t version,uint64_t lease,uint64_t request){
++ auto& b=binding[src];if(p!=phase||b.p!=p||b.version!=version||b.leaseId!=lease||b.releasing)return;
++ unsigned helper=slot?b.hd:b.hs;HelperSnapshot x;x.rank=helper;x.phase=p;x.version=version;
++ x.lease_id=lease;x.report_id=request;x.sampled_ns=PeerNow();x.known=true;
++ // These are local sender observations at the helper, never injector state.
++ x.own_remaining_bytes=Bytes-offered[helper];
++ for(auto id:cohort[helper]){const auto& c=chunks.at(id);if(!c.done)x.own_remaining_bytes+=ChunkBytes-c.acked;}
++ auto& samples=helperOwnAckSamples[helper];
++ while(!samples.empty()&&samples.front().first+10000000<PeerNow())samples.pop_front();
++ uint64_t acknowledged=0;for(const auto& value:samples)acknowledged+=value.second;
++ x.own_bytes_per_ns=acknowledged/10000000.;
++ x.delivered_ns=Message(slot?"HELPER_REPORT_RX":"HELPER_REPORT_TX",src,request);
++ LogHelperSnapshot("SENT",src,slot,x);
++ Simulator::Schedule(NanoSeconds(x.delivered_ns-PeerNow()),&DeliverHelperSnapshot,src,slot,x);
++}
++
++static void CollectHelperReports(unsigned src){
++ auto& b=binding[src];b.helperReportsReady=0;b.helperReports={};
++ // Requests reach each helper before sampling; the source waits for both replies.
++ for(unsigned slot=0;slot<2;++slot){uint64_t request=++serial;
++  uint64_t at=Message(slot?"HELPER_QUERY_RX":"HELPER_QUERY_TX",slot?b.hd:b.hs,request);
++  Simulator::Schedule(NanoSeconds(at-PeerNow()),&SampleHelperSnapshot,src,slot,phase,b.version,b.leaseId,request);}
++}
++
++static void AbortProbeV2(uint64_t id){
++ if(!benefitV2)return;auto found=routes.find(id);if(found==routes.end())return;
++ auto r=found->second;if(!r.relay||!r.probe)throw std::logic_error("probe timeout targeted payload");
++ abortedProbes.emplace(id,r);
++ std::vector<uint64_t> tags;for(const auto& item:legs)if(item.second.route==id)tags.push_back(item.first);
++ for(auto tag:tags){auto leg=legs.at(tag);abortedProbeLegs.emplace(tag,leg);
++  auto hw=n.Get(leg.src)->GetObject<RdmaDriver>()->m_rdma;
++  hw->CancelRto(leg.qp);leg.qp->m_limerState=LIMER_RDMA_QP_ERROR;hw->DeleteQueuePair(leg.qp);
++  legsLog<<PeerNow()<<",LEG_CANCEL,"<<id<<','<<tag<<','<<leg.index<<','<<leg.src<<','<<leg.dst<<','<<leg.nic<<','<<r.length<<'\n';
++  // Keep packet identities for exact accounting if a send was already issued.
++  legs.erase(tag);
++ }
++ if(routes.at(id).reserved)Reserve(routes.at(id),false);routes.erase(id);
++ controls<<PeerNow()<<','<<PeerNow()<<",PROBE_ABORT,"<<r.src<<','<<r.p<<','<<id<<",0\n";
++ auto& b=binding[r.src];if(r.p!=phase||b.p!=r.p||b.version!=r.bindingVersion)return;
++ b.pending=false;b.ready=false;b.nextAttempt=PeerNow()+5000000;
++ // A configured route retains its participants and retries health. Only an
++ // uncommitted loan or a source with no remaining work may be relinquished.
++ if(!b.configured||outDone[r.src]==phaseChunks)ReleaseLendingV2(r.src);
++}
++
+ static void Tick(){
+  if(phase<phases)for(unsigned s=0;s<16;++s){
++  if(benefitV2&&binding[s].lending&&outDone[s]==phaseChunks)ReleaseLendingV2(s);
+   if(binding[s].ready&&PeerNow()-binding[s].health>Ttl)binding[s].ready=false;
+   Pump(s);if(!proxy||!m13[s]||binding[s].ready||binding[s].pending||outDone[s]==phaseChunks||PeerNow()<binding[s].nextAttempt)continue;
+   bool found=false;unsigned hs=0,hd=0;
+   if(sharedHelpers){
+-   if(!RequestLending(s))continue;
++   if(!(benefitV2?RequestLendingV2(s):RequestLending(s)))continue;
+    hs=binding[s].hs;hd=binding[s].hd;
+    Route r;r.src=s;r.dst=Dest(s);r.hs=hs;r.hd=hd;r.relay=true;r.rail=1;found=Capacity(r);
+   }else{
+@@ -84,6 +197,7 @@
+   Route r;r.id=++serial;r.src=s;r.dst=Dest(s);r.hs=hs;r.hd=hd;r.p=phase;r.relay=true;r.probe=true;r.length=(serviceMode||benefitMode)?ChunkBytes:1024;r.started=PeerNow();
+   r.bindingVersion=b.version;
+   routes.emplace(r.id,r);Reserve(routes.at(r.id),true);++probeRoutes;StartLeg(r.id);
++  if(benefitV2)Simulator::Schedule(NanoSeconds(Ttl),&AbortProbeV2,r.id);
+  }
+  if(PeerNow()+50000<horizon)Simulator::Schedule(NanoSeconds(50000),&Tick);
+ }
+--- previous/project/src/simulator/runtime/declarations.h
++++ candidate/project/src/simulator/runtime/declarations.h
+@@ -23,6 +23,8 @@
+ static void SendReady(unsigned src,unsigned p,uint64_t v);
+ static void Configure(unsigned src);
+ static void HealthDone(uint64_t id);
++static void ReleaseLendingV2(unsigned src);
++static void CollectHelperReports(unsigned src);
+ static void Completed(Ptr<RdmaQueuePair> q);
+ static void StartLeg(uint64_t id);
+ static void Launch(PeerChunk& c,bool relay);
+--- previous/project/src/simulator/runtime/state.h
++++ candidate/project/src/simulator/runtime/state.h
+@@ -5,7 +5,7 @@
+ static unsigned Key(unsigned s,unsigned d,unsigned rail){return (s*16+d)*3+rail;}
+ static std::string output,method;
+ static bool feedback=false,proxy=false;
+-static bool serviceMode=false,benefitMode=false,phaseScoped=false,singlePlane=false;
++static bool serviceMode=false,benefitMode=false,benefitV2=false,phaseScoped=false,singlePlane=false;
+ static unsigned phasesPerRound=30;
+ static bool pipelined=false,sharedHelpers=false;
+ static std::array<bool,16> loanTx{},loanRx{};
+@@ -13,9 +13,10 @@
+ static unsigned SourceWindow(){return pipelined?32:8;}
+ static uint64_t canaryPeriod=2000000,canaryBytes=65536;
+ static limer::detection::ServiceDetector serviceDetector;
+-static std::ofstream serviceEvents,serviceAlarms,serviceDecisions,policyLog;
++static std::ofstream serviceEvents,serviceAlarms,serviceDecisions,policyLog,helperReports;
+ static std::map<unsigned,std::deque<std::pair<uint64_t,uint64_t>>> ackSamples;
+ static std::map<unsigned,std::pair<uint64_t,uint64_t>> canarySamples;
++static std::array<std::deque<std::pair<uint64_t,uint64_t>>,16> helperOwnAckSamples;
+ static unsigned phase=0,phases=60,finished=0,phaseChunks=64;
+ static uint64_t horizon=500000000,jobDone=0,serial=0,phaseStart=0;
+ static uint64_t Bytes=4194304;
+@@ -35,6 +36,9 @@
+ static std::map<uint64_t,PeerChunk> chunks;
+ static std::map<uint64_t,Route> routes;
+ static std::map<uint64_t,Leg> legs;
++// Exact probe tombstones preserve accounting for already-issued wire callbacks.
++static std::map<uint64_t,Route> abortedProbes;
++static std::map<uint64_t,Leg> abortedProbeLegs;
+ static std::map<unsigned,Count> counts;
+ static std::map<std::pair<uint64_t,uint64_t>,Wire> identities;
+ static std::set<std::pair<uint64_t,unsigned>> sentWire;
+@@ -44,8 +48,14 @@
+ static uint64_t nextOffset[16][2]{};
+ static double rates[16][3]{},credits[16][3]{};
+ static unsigned launches[16][3]{},tx[16][5]{},rx[16][5]{},buffers[16]{};
++struct HelperSnapshot {
++ uint64_t own_remaining_bytes=0,sampled_ns=0,delivered_ns=0,version=0,lease_id=0,report_id=0;
++ double own_bytes_per_ns=0;bool known=false;unsigned rank=0,phase=0;
++};
+ struct Binding {bool pending=false,ready=false,configured=false,disabled=false,lending=false,loanReady=false;unsigned hs=0,hd=0,p=0;uint64_t health=0,version=0,alarm=0,activation=0,nextAttempt=0;
+- std::array<double,3> probeLegNs{{0,0,0}};uint64_t probeBytes=0;};
++ std::array<double,3> probeLegNs{{0,0,0}};uint64_t probeBytes=0;
++ bool releasing=false;uint64_t leaseId=0;unsigned helperReportsReady=0;
++ std::array<HelperSnapshot,2> helperReports;};
+ static std::array<Binding,16> binding;
+ static std::array<bool,16> m13{};
+ static void Pump(unsigned);
+--- previous/project/src/simulator/transport/rdma.h
++++ candidate/project/src/simulator/transport/rdma.h
+@@ -24,7 +24,8 @@
+ 
+ extern "C" bool limer_joint_encode(void* opaque,unsigned char* data,unsigned size){
+  if(size!=24)throw std::logic_error("wire size");auto q=static_cast<RdmaQueuePair*>(opaque);
+- auto leg=legs.at(q->GetTag());auto r=routes.at(leg.route);auto k=std::make_pair(q->GetTag(),q->snd_nxt);
++ auto leg=benefitV2&&abortedProbeLegs.count(q->GetTag())?abortedProbeLegs.at(q->GetTag()):legs.at(q->GetTag());
++ auto r=benefitV2&&abortedProbes.count(leg.route)?abortedProbes.at(leg.route):routes.at(leg.route);auto k=std::make_pair(q->GetTag(),q->snd_nxt);
+  auto it=identities.find(k);
+  if(it==identities.end()){
+   unsigned path=Key(leg.src,leg.dst,leg.nic==1?2:leg.nic-2);auto& c=counts[path];
+@@ -35,7 +36,9 @@
+ }
+ 
+ extern "C" void limer_joint_wire_tx(void* opaque,unsigned sequence,unsigned size){
+- auto q=static_cast<RdmaQueuePair*>(opaque);auto leg=legs.at(q->GetTag());auto r=routes.at(leg.route);
++ auto q=static_cast<RdmaQueuePair*>(opaque);
++ auto leg=benefitV2&&abortedProbeLegs.count(q->GetTag())?abortedProbeLegs.at(q->GetTag()):legs.at(q->GetTag());
++ auto r=benefitV2&&abortedProbes.count(leg.route)?abortedProbes.at(leg.route):routes.at(leg.route);
+  if(q->m_activeNicIdx!=leg.nic)throw std::logic_error("physical NIC mismatch");
+  bool repeat=!sentWire.insert({q->GetTag(),sequence}).second;
+  if(repeat&&r.service){unsigned path=Key(r.src,r.dst,r.rail);
+@@ -59,6 +62,8 @@
+  if(prefix<=c.acked)return;if(prefix>ChunkBytes||c.done)throw std::logic_error("invalid logical ACK");
+  if(!routes.at(route).relay){auto& samples=ackSamples[Key(c.src,c.dst,c.lane)];samples.emplace_back(PeerNow(),prefix-c.acked);
+   while(!samples.empty()&&samples.front().first+10000000<PeerNow())samples.pop_front();}
++ if(benefitV2){auto& own=helperOwnAckSamples[c.src];own.emplace_back(PeerNow(),prefix-c.acked);
++  while(!own.empty()&&own.front().first+10000000<PeerNow())own.pop_front();}
+  c.acked=prefix;c.lastProgress=PeerNow();PeerEvent("ACK_PROGRESS",c,route);
+ }
+ 
+@@ -69,6 +74,7 @@
+ }
+ 
+ static void Completed(Ptr<RdmaQueuePair> q){
++ if(benefitV2&&abortedProbeLegs.count(q->GetTag()))return;
+  auto leg=legs.at(q->GetTag());auto r=routes.at(leg.route);
+  legsLog<<PeerNow()<<",LEG_DONE,"<<r.id<<','<<leg.tag<<','<<leg.index<<','<<leg.src<<','<<leg.dst<<','<<leg.nic<<','<<r.length<<'\n';
+  Forget(leg.tag);
+@@ -88,6 +94,7 @@
+ }
+ 
+ static void StartLeg(uint64_t id){
++ if(benefitV2&&abortedProbes.count(id))return;
+  auto& r=routes.at(id);auto edge=Edges(r).at(r.index);unsigned port=ports[edge[0]]++;
+  if(port>=65535)throw std::runtime_error("port budget exhausted");uint64_t tag=++serial;
+  legs.emplace(tag,Leg{tag,id,PeerNow(),edge[0],edge[1],edge[2],r.index,nullptr});
+--- previous/project/tests/test_benefit_policy_v2.py
++++ candidate/project/tests/test_benefit_policy_v2.py
+@@ -0,0 +1,227 @@
++import dataclasses
++import math
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++
++from limerlab.benefit_policy import (BenefitInputV2, HelperSample, RelaySample,
++    ServiceSample, evaluate_benefit, evaluate_benefit_v2)
++
++
++class BenefitPolicyV2Tests(unittest.TestCase):
++    def case(self, **changes):
++        value = BenefitInputV2(0, 8_000_000, 0,
++            ServiceSample(.5, known=True), ServiceSample(.01, known=True),
++            RelaySample(65536, (304., 59460., 304.), 1007680., known=True),
++            setup_ns=4092160., helpers=(HelperSample(known=True), HelperSample(known=True)))
++        return dataclasses.replace(value, **changes)
++
++    def test_observed_tail_persistence_overrides_misleading_aggregate_ack_rate(self):
++        x = self.case(b_bytes=288, b_no_progress_ns=8_000_000,
++                      service_b=ServiceSample(.5034416, known=True))
++        old, new = evaluate_benefit(x), evaluate_benefit_v2(x)
++        self.assertLess(old['stay_ns'], 1000.)
++        self.assertFalse(old['should_switch'])
++        self.assertEqual(new['source_stay_ns'], 8_000_000.)
++        self.assertTrue(new['should_switch'])
++
++    def test_resumed_chunk_progress_clears_stall_forecast(self):
++        x = self.case(b_bytes=288, b_no_progress_ns=100_000,
++                      service_b=ServiceSample(.5034416, known=True))
++        new = evaluate_benefit_v2(x)
++        self.assertEqual(new['tail_forecast_ns'], 0.)
++        self.assertLess(new['stay_ns'], 1000.)
++        self.assertFalse(new['should_switch'])
++
++    def test_zero_remaining_work_does_not_need_helper_reports(self):
++        self.assertEqual(evaluate_benefit_v2(self.case(
++            b_bytes=0, helpers=(None, None)))['reason'], 'no_remaining_work')
++
++    def test_pipelined_physical_release_does_not_wait_for_final_ack(self):
++        x = self.case()
++        new, old = evaluate_benefit_v2(x), evaluate_benefit(x)
++        self.assertAlmostEqual(new['relay_bytes_per_ns'], 65536 / 59460.)
++        self.assertGreater(new['relay_bytes_per_ns'], 4*old['relay_bytes_per_ns'])
++        legacy_release = evaluate_benefit_v2(dataclasses.replace(x, pipelined=False))
++        self.assertEqual(legacy_release['relay_bytes_per_ns'], old['relay_bytes_per_ns'])
++
++    def test_source_confirmation_window_still_limits_long_ack_cycles(self):
++        result = evaluate_benefit_v2(self.case(relay=RelaySample(
++            65536, (304., 59460., 304.), 10_000_000., known=True)))
++        self.assertAlmostEqual(result['relay_bytes_per_ns'], 32*65536 / 10060068.)
++
++    def test_first_chunk_and_subchunk_always_pay_complete_cycle(self):
++        for size in (144, 65536):
++            result = evaluate_benefit_v2(self.case(b_bytes=size, setup_ns=0.,
++                service_b=ServiceSample(0., known=True)))
++            self.assertAlmostEqual(result['switch_ns'], 1067748.)
++            self.assertTrue(result['should_switch'])
++
++    def test_helper_critical_work_can_reverse_source_only_benefit(self):
++        x = self.case(b_bytes=8_000_000,
++            helpers=(HelperSample(500_000_000, .5, known=True), HelperSample(known=True)))
++        result = evaluate_benefit_v2(x)
++        self.assertLess(result['source_switch_ns'], result['source_stay_ns'])
++        self.assertGreater(result['helper_switch_ns'], result['helper_stay_ns'])
++        self.assertFalse(result['should_switch'])
++
++    def test_zero_work_helper_has_no_invented_background_burden(self):
++        result = evaluate_benefit_v2(self.case())
++        self.assertEqual(result['helper_stay_ns'], 0.)
++        self.assertEqual(result['helper_switch_ns'], 0.)
++        self.assertTrue(result['should_switch'])
++
++    def test_paid_known_fresh_reports_required(self):
++        for report in (None, HelperSample(), HelperSample(age_ns=20_000_001, known=True)):
++            result = evaluate_benefit_v2(self.case(helpers=(report, HelperSample(known=True))))
++            self.assertEqual(result['reason'], 'paid_helper_reports_required')
++            self.assertFalse(result['should_switch'])
++
++    def test_unresolved_helper_work_is_not_free_capacity(self):
++        result = evaluate_benefit_v2(self.case(helpers=(
++            HelperSample(1, 0., known=True), HelperSample(known=True))))
++        self.assertEqual(result['reason'], 'helper_service_unresolved')
++        self.assertFalse(result['should_switch'])
++
++    def test_no_loss_moving_short_work_can_stay(self):
++        result = evaluate_benefit_v2(self.case(b_bytes=65536,
++            service_b=ServiceSample(.25, known=True), b_no_progress_ns=500_000))
++        self.assertFalse(result['should_switch'])
++
++    def test_no_loss_long_slow_work_can_switch(self):
++        result = evaluate_benefit_v2(self.case(b_bytes=16_000_000,
++            service_b=ServiceSample(.25, known=True), b_no_progress_ns=500_000))
++        self.assertTrue(result['should_switch'])
++
++    def test_observed_recovered_service_can_stay(self):
++        result = evaluate_benefit_v2(self.case(b_bytes=65536,
++            service_b=ServiceSample(1.2, known=True), b_no_progress_ns=0))
++        self.assertFalse(result['should_switch'])
++
++    def test_missing_representative_probe_fails_closed(self):
++        result = evaluate_benefit_v2(self.case(relay=RelaySample()))
++        self.assertFalse(result['should_switch'])
++        self.assertTrue(result['probe_required'])
++
++    def test_a_can_finish_pending_work_during_coordination(self):
++        result = evaluate_benefit_v2(self.case(b_bytes=288, pending_bytes=65536,
++            b_no_progress_ns=8_000_000, service_b=ServiceSample(.5, known=True)))
++        self.assertEqual(result['relay_assigned_bytes'], 288.)
++
++    def test_invalid_v2_parameters_rejected(self):
++        for changes in (dict(source_window=0), dict(b_no_progress_ns=-1),
++                        dict(helpers=(HelperSample(-1), HelperSample()))):
++            with self.assertRaises(ValueError):
++                evaluate_benefit_v2(self.case(**changes))
++
++    def test_native_decision_rejects_stale_or_unleased_paid_reports(self):
++        compiler = shutil.which('c++')
++        if not compiler:
++            self.skipTest('C++ compiler unavailable')
++        root = Path(__file__).resolve().parents[1]
++        program = r'''#include "src/simulator/recovery/benefit_policy.h"
++#include <deque>
++#include <map>
++#include <vector>
++#include <sstream>
++#include <iostream>
++namespace limer { namespace engine {
++uint64_t PeerNow(){return 100000000;} unsigned Dest(unsigned s){return s+4;}
++unsigned Key(unsigned s,unsigned d,unsigned l){return (s*16+d)*3+l;}
++unsigned SourceWindow(){return 32;}bool Idle(unsigned){return true;}
++bool benefitV2=true,feedback=true,sharedHelpers=true,pipelined=true;
++unsigned phase=0;uint64_t Bytes=65536,ChunkBytes=65536,canaryBytes=65536;
++struct Chunk{bool done=false;unsigned lane=1;uint64_t acked=65248,lastProgress=92000000,allocated=80000000;};
++struct Report{uint64_t own_remaining_bytes=0;double own_bytes_per_ns=0;
++ uint64_t sampled_ns=95000000,delivered_ns=96000000,version=7,lease_id=5,report_id=10;
++ bool known=true;unsigned rank=1,phase=0;};
++struct Binding{unsigned hs=1,hd=5;uint64_t probeBytes=65536,health=99000000,version=7,leaseId=5;
++ bool lending=true,loanReady=true,releasing=false;
++ std::array<double,3> probeLegNs{{304,59460,304}};std::array<Report,2> helperReports;};
++std::array<Binding,16> binding;std::array<std::vector<uint64_t>,16> cohort;
++std::map<uint64_t,Chunk> chunks;std::array<uint64_t,16> offered;
++uint64_t nextOffset[16][2]{};struct Control{uint64_t free_ns=0;}control;
++std::map<unsigned,std::deque<std::pair<uint64_t,uint64_t>>> ackSamples;
++std::map<unsigned,std::pair<uint64_t,uint64_t>> canarySamples;
++std::ostringstream policyLog;
++}}
++#include "src/simulator/recovery/decision.h"
++int main(){using namespace limer::engine;
++ cohort[0]={1};chunks[1]=Chunk{};offered[0]=Bytes;
++ ackSamples[Key(0,4,0)].push_back({95000000,5000000});
++ ackSamples[Key(0,4,1)].push_back({95000000,5000000});
++ for(unsigned i=0;i<10;++i){binding[0]=Binding{};auto& b=binding[0];b.helperReports[1].rank=5;
++  if(i==1)b.helperReports[0].lease_id=6;
++  if(i==2)b.helperReports[0].rank=2;
++  if(i==3)b.helperReports[0].delivered_ns=100000001;
++  if(i==4)b.helperReports[0].sampled_ns=97000000;
++  if(i==5)b.releasing=true;if(i==6)b.loanReady=false;if(i==7)b.lending=false;
++  if(i==8)b.helperReports[0].phase=1;if(i==9)b.helperReports[0].version=8;
++  std::cout<<BenefitAllows(0,"probe_complete")<<"\n";
++ }
++}'''
++        with tempfile.TemporaryDirectory() as tmp:
++            source=Path(tmp)/'decision.cc';binary=Path(tmp)/'decision'
++            source.write_text(program)
++            subprocess.run([compiler,'-std=c++14','-I',str(root),str(source),'-o',str(binary)],
++                           check=True,capture_output=True,text=True)
++            rows=subprocess.run([str(binary)],check=True,capture_output=True,text=True).stdout.splitlines()
++        self.assertEqual(rows,['1']+['0']*9)
++
++    def test_native_reference_matches_all_v2_components(self):
++        compiler = shutil.which('c++')
++        if not compiler:
++            self.skipTest('C++ compiler unavailable')
++        root = Path(__file__).resolve().parents[1]
++        fields = ('stay_ns', 'switch_ns', 'gain_ns', 'relay_bytes_per_ns',
++                  'source_stay_ns', 'source_switch_ns', 'helper_stay_ns',
++                  'helper_switch_ns', 'relay_assigned_bytes', 'tail_forecast_ns')
++        cases = [self.case(a_bytes=65536*(i%3), b_bytes=144 if i%3 else 8_000_000,
++            pending_bytes=1_000_000 if i%5 else 0,
++            service_b=ServiceSample(.01*i if i%4 else 0., known=i!=3),
++            b_no_progress_ns=i*1_000_000, source_window=8 if i%2 else 32,
++            pipelined=not bool(i%2),
++            helpers=(HelperSample(i*1_000_000, .5, known=i!=7),
++                     HelperSample(known=True))) for i in range(20)]
++        program = ['#include "src/simulator/recovery/benefit_policy.h"',
++                   '#include <iostream>', '#include <iomanip>',
++                   'int main(){using namespace limer::recovery;std::cout<<std::setprecision(17);']
++        for x in cases:
++            program.append('{BenefitInputV2 x;')
++            for name in ('a_bytes','b_bytes','pending_bytes','b_no_progress_ns',
++                         'source_window','setup_ns'):
++                program.append('x.{}={};'.format(name, getattr(x, name)))
++            program.append('x.pipelined={};'.format(int(x.pipelined)))
++            for name in ('service_a','service_b'):
++                value=getattr(x,name)
++                program.append('x.{}={{{},{},{}}};'.format(name, value.bytes_per_ns,
++                    value.age_ns, int(value.known)))
++            program.append('x.relay.sample_bytes=65536;x.relay.leg_ns={{304.,59460.,304.}};'
++                           'x.relay.final_ack_ns=1007680.;x.relay.known=true;')
++            for i,h in enumerate(x.helpers):
++                program.append('x.helpers[{}]={{{},{},{},{}}};'.format(i,
++                    h.own_remaining_bytes,h.own_bytes_per_ns,h.age_ns,int(h.known)))
++            program.append('auto d=EvaluateBenefitV2(x);std::cout<<d.should_switch<<" "<<d.reason')
++            program.append(''.join('<<" "<<d.'+key for key in fields)+'<<"\\n";}')
++        program.append('}')
++        with tempfile.TemporaryDirectory() as tmp:
++            source=Path(tmp)/'policy.cc';binary=Path(tmp)/'policy'
++            source.write_text('\n'.join(program))
++            subprocess.run([compiler,'-std=c++14','-I',str(root),str(source),'-o',str(binary)],
++                           check=True,capture_output=True,text=True)
++            rows=subprocess.run([str(binary)],check=True,capture_output=True,text=True).stdout.splitlines()
++        for x,row in zip(cases,rows):
++            expected=evaluate_benefit_v2(x);values=row.split()
++            self.assertEqual(bool(int(values[0])),expected['should_switch'])
++            self.assertEqual(values[1],expected['reason'])
++            for key,raw in zip(fields,values[2:]):
++                actual=float(raw)
++                if math.isinf(expected[key]): self.assertEqual(actual,expected[key])
++                else: self.assertAlmostEqual(actual,expected[key],delta=max(1e-8,abs(actual)*1e-12))
++        self.assertEqual(len(rows),len(cases))
++
++
++if __name__ == '__main__':
++    unittest.main()
+--- previous/project/tests/test_gray_configuration.py
++++ candidate/project/tests/test_gray_configuration.py
+@@ -0,0 +1,51 @@
++"""Lossless degradation inputs and policy-mode registration boundaries."""
++from pathlib import Path
++import sys
++import tempfile
++import unittest
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'python'))
++from limerlab.config import Scenario
++from limerlab.inputs import inject
++
++
++class GrayConfigurationTests(unittest.TestCase):
++    def test_lossless_slowdown_and_recovery_are_explicit_injector_inputs(self):
++        scene = Scenario(family='slowdown', slowdown_fraction=.5,
++                         fault_ns=24_000_000, fault_duration_ns=20_000_000,
++                         policy='benefit_v2', detector='service',
++                         relay_completion='pipelined', helper_mode='shared')
++        with tempfile.TemporaryDirectory() as temp:
++            path = Path(temp) / 'truth'
++            inject(path, scene)
++            fields = (path / 'injection.txt').read_text().split()
++        self.assertEqual(fields[:5], ['24000000', '44000000', '0', '0.5', '0'])
++        self.assertEqual(scene.dictionary()['policy'], 'benefit_v2')
++
++    def test_previous_quarter_definition_stays_fixed(self):
++        with tempfile.TemporaryDirectory() as temp:
++            path = Path(temp) / 'truth'
++            inject(path, Scenario(family='quarter'))
++            self.assertEqual((path / 'injection.txt').read_text().split()[3:5], ['0.25', '0'])
++        with self.assertRaises(ValueError):
++            Scenario(family='quarter', slowdown_fraction=.5)
++
++    def test_v2_requires_the_registered_observation_and_resource_modes(self):
++        valid = dict(policy='benefit_v2', detector='service',
++                     replacement_lifetime='phase', relay_completion='pipelined',
++                     helper_mode='shared')
++        Scenario(**valid)
++        for name, value in (('detector', 'legacy'), ('replacement_lifetime', 'persistent'),
++                            ('relay_completion', 'final_ack'), ('helper_mode', 'idle')):
++            with self.subTest(name=name), self.assertRaises(ValueError):
++                Scenario(**dict(valid, **{name: value}))
++
++    def test_invalid_capacity_and_policy_are_rejected(self):
++        for value in (0, -1, 1.01, float('nan'), float('inf'), True, '0.5'):
++            with self.subTest(value=value), self.assertRaises(ValueError):
++                Scenario(family='slowdown', slowdown_fraction=value)
++        with self.assertRaises(ValueError):
++            Scenario(policy='oracle')
++
++
++if __name__ == '__main__':
++    unittest.main()
+--- previous/project/tests/test_gray_gate_campaign.py
++++ candidate/project/tests/test_gray_gate_campaign.py
+@@ -0,0 +1,153 @@
++"""Guard policy matching, preregistration and adverse-outcome denominators."""
++from copy import deepcopy
++import importlib.util
++import json
++from pathlib import Path
++import sys
++import tempfile
++import unittest
++from unittest.mock import patch
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'tools'))
++spec = importlib.util.spec_from_file_location('gray_gate_campaign', ROOT / 'tools/gray_gate_campaign.py')
++campaign = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(campaign)
++
++
++class GrayGateCampaignTests(unittest.TestCase):
++    def test_frozen_presets_are_bounded_and_use_disjoint_seeds(self):
++        pilot, confirmation = (campaign.make_plan(p) for p in ('pilot', 'confirmation'))
++        self.assertEqual(len(pilot['cases']), 20)
++        self.assertEqual(len(confirmation['cases']), 30)
++        self.assertEqual(pilot, campaign.make_plan('pilot'))
++        self.assertTrue({c['scene']['seed'] for c in pilot['cases']}.isdisjoint(
++            {c['scene']['seed'] for c in confirmation['cases']}))
++        self.assertTrue(all(c['scene']['fault_ns'] >= 21_000_000 for c in pilot['cases']))
++        self.assertTrue(all(c['scene']['horizon_ns'] == 250_000_000 for c in pilot['cases']))
++        self.assertEqual(pilot['lifecycle_revision']['probe_timeout_ns'], 20_000_000)
++        self.assertEqual(pilot['lifecycle_revision']['policy'], 'benefit_v2')
++
++    def test_primary_arms_differ_only_in_method_and_policy(self):
++        plan = campaign.make_plan()
++        for condition in campaign.PRIMARY:
++            members = [c for c in plan['cases'] if c['condition'] == condition]
++            self.assertEqual({c['arm'] for c in members}, set(campaign.ARMS))
++            reference = deepcopy(members[0]['scene']); reference.pop('policy')
++            for case in members:
++                scene = deepcopy(case['scene']); scene.pop('policy')
++                self.assertEqual(reference, scene)
++        changed = deepcopy(plan)
++        changed['cases'][5]['scene']['chunks_per_phase'] = 1024
++        with self.assertRaisesRegex(ValueError, 'Matched arms differ'):
++            campaign.validate_plan(changed)
++
++    def test_quarter_stays_25_percent_and_confirmation_explicitly_sweeps(self):
++        plan = campaign.make_plan('confirmation')
++        half = [c for c in plan['cases'] if c['condition'] == 'sustained_50_early']
++        self.assertEqual(len(half), 4)
++        self.assertTrue(all(c['scene']['family'] == 'slowdown' and
++                            c['scene']['slowdown_fraction'] == .5 for c in half))
++        self.assertTrue(all(c['scene']['slowdown_fraction'] == .25 for c in plan['cases']
++                            if c['scene']['family'] == 'quarter'))
++        self.assertTrue(all(c['scene']['fault_duration_ns'] == 20_000_000 for c in plan['cases']
++                            if c['condition'] == 'transient_25_20ms'))
++
++    def test_missing_matched_healthy_and_early_fault_are_rejected(self):
++        plan = campaign.make_plan('confirmation')
++        plan['cases'] = [c for c in plan['cases'] if c['condition'] != 'healthy_local_1gbps']
++        with self.assertRaisesRegex(ValueError, 'No matched healthy reference'):
++            campaign.validate_plan(plan)
++        plan = campaign.make_plan()
++        plan['cases'][4]['scene']['fault_ns'] = 4_000_000
++        with self.assertRaisesRegex(ValueError, 'calibration'):
++            campaign.validate_plan(plan)
++
++    def test_result_summary_retains_pending_invalid_and_unfinished(self):
++        plan = campaign.make_plan()
++        registration = dict(plan=plan, plan_sha256='test-plan')
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp); (root / 'attempts').mkdir(); (root / 'runs').mkdir()
++            healthy = next(c for c in plan['cases'] if c['condition'] == 'healthy' and c['arm'] == 'candidate_gate')
++            fault = next(c for c in plan['cases'] if c['condition'] == 'sustained_25_early' and c['arm'] == 'candidate_gate')
++            invalid = next(c for c in plan['cases'] if c['condition'] == 'sustained_25_early' and c['arm'] == 'direct')
++            unfinished = next(c for c in plan['cases'] if c['condition'] == 'blackhole' and c['arm'] == 'candidate_gate')
++            finished_pair = next(c for c in plan['cases'] if c['condition'] == 'blackhole' and c['arm'] == 'direct')
++            for case in (healthy, fault, invalid, unfinished, finished_pair):
++                run = root / 'runs' / case['name']; run.mkdir()
++                result = dict(method=case['method'], scene=case['scene'],
++                              status=dict(status='unfinished' if case == unfinished else 'completed'),
++                              performance=dict(communication_ms=None if case == unfinished else 40 if case == healthy else 50))
++                (run / 'result.json').write_text(json.dumps(result))
++                (root / 'attempts' / (case['name'] + '.json')).write_text(json.dumps(
++                    dict(valid=case != invalid, error='retained audit failure')))
++            score = dict(valid=True, classification='timely', all_paths_timely_success=True,
++                         all_paths_delay_ms=10, healthy_false_alarm=False)
++            with patch.object(campaign.research, 'validate_registration', return_value=registration), \
++                 patch.object(campaign.research, 'score_run', return_value=score):
++                report = campaign.summarize(root)
++            rows = {r['name']: r for r in report['rows']}
++            self.assertEqual(report['registered'], 20)
++            self.assertEqual(report['attempted'], 5)
++            self.assertEqual(report['completed'], 3)
++            self.assertEqual(report['valid'], 4)
++            self.assertFalse(report['complete'])
++            self.assertAlmostEqual(rows[fault['name']]['healthy_ratio'], .8)
++            self.assertIsNone(rows[invalid['name']]['communication_ms'])
++            self.assertIsNone(rows[invalid['name']]['capped_ms'])
++            self.assertIsNone(rows[unfinished['name']]['communication_ms'])
++            self.assertEqual(rows[unfinished['name']]['capped_ms'], 249)
++            self.assertEqual(sum(r['classification'] == 'not_run' for r in report['rows']), 15)
++            self.assertTrue(all(r['capped_ms'] is None for r in report['rows'] if not r['attempted']))
++            invalid_pair = next(p for p in report['pairs'] if p['pair_id'] == fault['pair_id'] and p['comparator'] == 'direct')
++            self.assertFalse(invalid_pair['both_valid'])
++            self.assertIsNone(invalid_pair['candidate_minus_baseline_capped_ms'])
++            self.assertIsNone(invalid_pair['candidate_minus_baseline_ms'])
++            capped_pair = next(p for p in report['pairs'] if p['pair_id'] == unfinished['pair_id'])
++            self.assertTrue(capped_pair['both_valid'])
++            self.assertFalse(capped_pair['both_completed'])
++            self.assertEqual(capped_pair['candidate_minus_baseline_capped_ms'], 199)
++            self.assertIsNone(capped_pair['candidate_minus_baseline_ms'])
++
++    def test_runner_keeps_failed_attempts_and_bounds_workers(self):
++        for workers in (0, 3):
++            with self.assertRaisesRegex(ValueError, 'one or two workers'):
++                campaign.execute(Path('/unused'), workers=workers)
++        registration = dict(plan=campaign.make_plan())
++        with patch.object(campaign.research, 'validate_registration', return_value=registration), \
++             patch.object(campaign.research, 'execute') as run, \
++             patch.object(campaign, 'summarize', return_value={'registered': 20}):
++            campaign.execute(Path('/unused'), resume=True, only_conditions=['weak_loss'])
++        run.assert_called_once_with(Path('/unused'), workers=1, resume=True,
++                                    only_conditions=['weak_loss'])
++
++    def test_malformed_attempt_remains_visible_in_partial_summary(self):
++        plan = campaign.make_plan()
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp); (root / 'attempts').mkdir()
++            (root / 'attempts' / (plan['cases'][0]['name'] + '.json')).write_text('{broken')
++            with patch.object(campaign.research, 'validate_registration', return_value=dict(plan=plan, plan_sha256='test')):
++                result = campaign.summarize(root)
++            self.assertEqual(result['registered'], 20)
++            self.assertEqual(result['attempted'], 1)
++            self.assertEqual(result['valid'], 0)
++            self.assertEqual(result['rows'][0]['classification'], 'error')
++
++    def test_control_costs_count_wire_bytes_and_do_not_infer_counterfactual_harm(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp)
++            (root / 'control_events.csv').write_text(
++                'sent_ns,arrival_ns,event,rank,phase,version,wire_bytes\n'
++                '1,2,LEND_TX,1,0,2,96\n'
++                '2,2,LEND_ACTIVE,0,0,2,0\n'
++                '3,4,RELEASE_TX,1,0,2,96\n'
++                '4,4,ACTIVATE,0,0,2,0\n')
++            cost = campaign.cost_summary(root, dict(performance={'fresh_Bprime_payload_bytes': 0}))
++            self.assertEqual(cost['control_wire_bytes'], 192)
++            self.assertEqual(cost['activations'], 1)
++            self.assertTrue(cost['no_fresh_payload_activation'])
++            self.assertNotIn('harmful_switch', cost)
++
++
++if __name__ == '__main__':
++    unittest.main()
+--- previous/project/tests/test_helper_lease_v2.py
++++ candidate/project/tests/test_helper_lease_v2.py
+@@ -0,0 +1,117 @@
++"""Exercise production V2 lease callbacks and paid helper report transport."""
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def function(text, signature):
++    start=text.index(signature);end=text.index('{',start)+1;depth=1
++    while depth:
++        depth+=(text[end]=='{')-(text[end]=='}');end+=1
++    return text[start:end]
++
++
++class HelperLeaseV2Tests(unittest.TestCase):
++    @unittest.skipUnless(shutil.which('c++'), 'requires C++ compiler')
++    def test_release_report_reacquisition_and_phase_guards(self):
++        state=(ROOT/'src/simulator/runtime/state.h').read_text()
++        structures=state[state.index('struct HelperSnapshot'):state.index('static std::array<Binding,16> binding;')]
++        proxy=(ROOT/'src/simulator/recovery/proxy.h').read_text()
++        selected=['static void ReleaseLendingDone(', 'static void ReleaseLendingV2(',
++                  'static void LendReadyV2(', 'static bool RequestLendingV2(',
++                  'static void LogHelperSnapshot(', 'static void DeliverHelperSnapshot(',
++                  'static void SampleHelperSnapshot(', 'static void CollectHelperReports(']
++        source=r'''
++#include <array>
++#include <deque>
++#include <map>
++#include <vector>
++#include <sstream>
++#include <algorithm>
++#include <cassert>
++#include <cstdint>
++#include <functional>
++#include <queue>
++#include <string>
++'''+structures+r'''
++std::array<Binding,16> binding;
++bool benefitV2=true,sharedHelpers=true,allow=false;
++unsigned phase=2,gateCalls=0,configured=0,pumps=0;uint64_t serial=1,now=100000000;
++std::array<bool,16> loanTx{},loanRx{};
++std::array<uint64_t,16> plannedTx{},plannedRx{},offered{};
++std::array<std::vector<uint64_t>,16> cohort;
++std::array<std::deque<std::pair<uint64_t,uint64_t>>,16> helperOwnAckSamples;
++uint64_t Bytes=65536*16,ChunkBytes=65536;
++struct Route{bool relay=true,reserved=true;unsigned src=0,p=2;};
++struct Chunk{bool done=false;uint64_t acked=0;};
++std::map<uint64_t,Route> routes;std::map<uint64_t,Chunk> chunks;
++std::ostringstream controls,helperReports;
++uint64_t PeerNow(){return now;}uint64_t NanoSeconds(uint64_t n){return n;}
++unsigned Dest(unsigned s){return s<12?s+4:(s+1)%4;}
++uint64_t Message(const char* event,unsigned rank,uint64_t version){
++ uint64_t at=now+1007680;controls<<now<<','<<at<<','<<event<<','<<rank<<','<<phase<<','<<version<<",96\n";return at;}
++void Pump(unsigned){++pumps;}
++bool BenefitAllows(unsigned,const char*){++gateCalls;return allow;}
++void Configure(unsigned){++configured;}
++struct Event{uint64_t at,order;std::function<void()> fn;
++ bool operator<(const Event& b)const{return at>b.at||(at==b.at&&order>b.order);}};
++std::priority_queue<Event> events;uint64_t order=0;
++struct Simulator{template<class F,class... Args>static void Schedule(uint64_t dt,F f,Args... args){
++ events.push(Event{now+dt,++order,std::bind(f,args...)});}};
++void runUntil(uint64_t t){while(!events.empty()&&events.top().at<=t){auto e=events.top();events.pop();now=e.at;e.fn();}now=t;}
++'''+ '\n'.join(function(proxy,signature) for signature in selected)+r'''
++int main(){
++ // Lending cannot become visible before both paid requests arrive.
++ assert(!RequestLendingV2(0));auto lease=binding[0].leaseId;
++ assert(!loanTx[1]&&!loanRx[5]&&binding[0].pending);
++ runUntil(now+1007679);assert(!loanTx[1]);runUntil(now+1);
++ assert(loanTx[1]&&loanRx[5]&&binding[0].loanReady);
++ binding[0].version=++serial;binding[0].pending=true;
++ offered[1]=65536;cohort[1].push_back(100);chunks[100]={false,32768};
++ helperOwnAckSamples[1].push_back({now,32768});
++ auto start=now;CollectHelperReports(0);
++ assert(gateCalls==0&&binding[0].helperReportsReady==0);
++ runUntil(start+1007680); // Helpers sampled, reports still in transit.
++ assert(gateCalls==0&&binding[0].helperReportsReady==0);
++ chunks[100].acked=65536; // Later local progress cannot alter the sent payload.
++ runUntil(start+2015360);
++ assert(gateCalls==1&&binding[0].releasing&&loanTx[1]);
++ assert(binding[0].helperReports[0].own_remaining_bytes==Bytes-32768);
++ assert(binding[0].helperReports[0].own_bytes_per_ns==32768/10000000.);
++ assert(binding[0].helperReports[0].lease_id==lease);
++ // A live route is never erased by an admission lease release.
++ routes[77]=Route{};runUntil(now+1007680);
++ assert(binding[0].releasing&&loanTx[1]&&routes[77].reserved);
++ routes[77].reserved=false;runUntil(now+50000);
++ assert(!binding[0].releasing&&!binding[0].lending&&!loanTx[1]&&!loanRx[5]);
++ assert(plannedTx[1]==0&&plannedRx[5]==0&&routes.count(77));
++ assert(helperReports.str().find("DELIVERED")!=std::string::npos);
++ assert(controls.str().find("LEND_RELEASED")!=std::string::npos);
++ // Old callbacks cannot release or enable a newly acquired lease.
++ assert(!RequestLendingV2(0));auto replacement=binding[0].leaseId;assert(replacement!=lease);
++ runUntil(now+1007680);ReleaseLendingDone(0,phase,lease);
++ assert(binding[0].leaseId==replacement&&loanTx[1]);
++ auto stale=binding[0].helperReports[0];stale.phase=phase;stale.version=binding[0].version;
++ stale.lease_id=lease;stale.delivered_ns=now;stale.report_id=999;
++ DeliverHelperSnapshot(0,0,stale);assert(binding[0].helperReportsReady==0);
++ // A phase reset makes both report and release callbacks harmless.
++ unsigned oldPhase=phase++;binding[0]=Binding{};binding[0].p=phase;
++ loanTx.fill(false);loanRx.fill(false);plannedTx.fill(0);plannedRx.fill(0);
++ LendReadyV2(0,oldPhase,replacement);ReleaseLendingDone(0,oldPhase,replacement);
++ DeliverHelperSnapshot(0,0,stale);
++ assert(!loanTx[1]&&!loanRx[5]&&binding[0].helperReportsReady==0);
++ assert(helperReports.str().find("STALE")!=std::string::npos);
++}
++'''
++        with tempfile.TemporaryDirectory() as tmp:
++            cpp=Path(tmp)/'lease.cc';binary=Path(tmp)/'lease';cpp.write_text(source)
++            compiled=subprocess.run(['c++','-std=c++14',str(cpp),'-o',str(binary)],capture_output=True,text=True)
++            self.assertEqual(compiled.returncode,0,compiled.stderr)
++            run=subprocess.run([str(binary)],capture_output=True,text=True)
++            self.assertEqual(run.returncode,0,run.stderr)
++
++if __name__=='__main__':unittest.main()
+--- previous/project/tests/test_helper_phase_drain_audit.py
++++ candidate/project/tests/test_helper_phase_drain_audit.py
+@@ -0,0 +1,61 @@
++"""Retain the native pilot's phase/report race without weakening explicit release."""
++import unittest
++from limerlab.audit import audit_explicit_lease_drains
++
++
++def controls():
++    # Exact identities and timestamps from retained pilot-v1 blackhole candidate.
++    entries = [
++        ('LEND_TX',1,2,50981,41_650_000,42_657_680,96),
++        ('LEND_RX',5,2,50981,41_650_000,42_665_360,96),
++        ('LEND_ACTIVE',0,2,50981,42_665_360,42_665_360,0),
++        ('LEND_TX',12,2,50982,41_650_000,42_673_040,96),
++        ('LEND_RX',2,2,50982,41_650_000,42_680_720,96),
++        ('LEND_ACTIVE',15,2,50982,42_680_720,42_680_720,0),
++        ('HEALTH_REPORT',0,2,76618,63_160_070,64_167_750,96),
++        ('HEALTH_REPORT',15,2,76623,63_262_114,64_269_794,96),
++        ('RELEASE_TX',1,2,50981,63_500_000,64_507_680,96),
++        ('RELEASE_RX',5,2,50981,63_500_000,64_515_360,96),
++        ('RESET_TO_AB',0,3,76627,63_637_881,63_637_881,0),
++    ]
++    return [dict(zip(('event','rank','phase','version','sent_ns','arrival_ns','wire_bytes'),r)) for r in entries]
++
++
++def reservations():
++    return {76618:dict(relay=1,probe=1,phase=2,src=0,helper_src=1,helper_dst=5,timestamp_ns=63_100_000),
++            76623:dict(relay=1,probe=1,phase=2,src=15,helper_src=12,helper_dst=2,timestamp_ns=63_200_000)}
++
++
++def explicit(src,lease,at):
++    return dict(event='LEND_RELEASED',rank=src,phase=2,version=lease,sent_ns=at,arrival_ns=at,wire_bytes=0)
++
++
++class HelperPhaseDrainAuditTests(unittest.TestCase):
++    def test_real_phase_boundary_does_not_release_pending_health_reservations(self):
++        actual_release={76618:64_167_750,76623:64_269_794}
++        self.assertEqual(audit_explicit_lease_drains(controls(),reservations(),actual_release),[])
++
++    def test_explicit_release_of_live_probe_still_fails(self):
++        actual_release={76618:64_167_750,76623:64_269_794}
++        for src,lease in ((0,50981),(15,50982)):
++            with self.subTest(source=src):
++                result=audit_explicit_lease_drains(controls()+[explicit(src,lease,63_600_000)],
++                                                  reservations(),actual_release)
++                self.assertEqual(result,['lease release erased live relay ownership'])
++
++    def test_explicit_release_without_physical_release_still_fails(self):
++        result=audit_explicit_lease_drains(controls()+[explicit(0,50981,63_600_000)],reservations(),{})
++        self.assertEqual(result,['lease release erased live relay ownership'])
++
++    def test_live_business_reservation_is_not_exempted(self):
++        owned=reservations();owned[76618]['probe']=0
++        result=audit_explicit_lease_drains(controls()+[explicit(0,50981,63_600_000)],owned,
++                                          {76618:64_167_750,76623:64_269_794})
++        self.assertEqual(result,['lease release erased live relay ownership'])
++
++    def test_explicit_release_after_its_physical_drain_passes(self):
++        result=audit_explicit_lease_drains(controls()+[explicit(0,50981,63_600_000)],reservations(),
++                                          {76618:63_500_000,76623:64_269_794})
++        self.assertEqual(result,[])
++
++if __name__=='__main__':unittest.main()
+--- previous/project/tests/test_helper_reports_v2.py
++++ candidate/project/tests/test_helper_reports_v2.py
+@@ -0,0 +1,105 @@
++"""Counterexamples for free, stale, or fabricated helper workload evidence."""
++import csv
++import json
++from pathlib import Path
++import tempfile
++import unittest
++from limerlab.audit import audit_helper_reports
++
++
++def write_csv(path, columns, values):
++    with path.open('w', newline='') as f:
++        writer=csv.DictWriter(f,fieldnames=columns);writer.writeheader();writer.writerows(values)
++
++
++def fixture(root):
++    (root/'run_status.json').write_text(json.dumps(dict(chunks_per_phase=16,horizon_ns=40_000_000)))
++    columns=['timestamp_ns','event','chunk_id','src','phase','acked']
++    write_csv(root/'logical_events.csv',columns,[
++        dict(zip(columns,[1_000_000,'ALLOC',10,1,0,0])),
++        dict(zip(columns,[10_000_000,'ACK_PROGRESS',10,1,0,1000])),
++        dict(zip(columns,[15_000_000,'ACK_PROGRESS',10,1,0,4000])),
++        dict(zip(columns,[20_000_000,'ACK_PROGRESS',10,1,0,5000]))])
++    columns=['sent_ns','arrival_ns','event','rank','phase','version','wire_bytes']
++    entries=[(1_000_000,2_007_680,'LEND_TX',1,0,100,96),
++             (1_007_680,2_015_360,'LEND_RX',5,0,100,96),
++             (2_015_360,2_015_360,'LEND_ACTIVE',0,0,100,0),
++             (3_000_000,3_000_000,'M13_REPLACEMENT_PREPARE',0,0,101,0),
++             (18_992_320,20_000_000,'HELPER_QUERY_TX',1,0,102,96),
++             (20_000_000,21_007_680,'HELPER_REPORT_TX',0,0,102,96)]
++    write_csv(root/'control_events.csv',columns,[dict(zip(columns,x)) for x in entries])
++    row=dict(event='SENT',timestamp_ns=20_000_000,source=0,slot=0,rank=1,phase=0,version=101,
++             lease_id=100,report_id=102,sampled_ns=20_000_000,delivered_ns=21_007_680,
++             own_remaining_bytes=16*65536-5000,own_bytes_per_ns=5000/10_000_000,known=True)
++    write_reports(root,[row,dict(row,event='DELIVERED',timestamp_ns=row['delivered_ns'])])
++
++
++def write_reports(root, records):
++    (root/'helper_reports.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in records))
++
++
++class HelperReportV2Tests(unittest.TestCase):
++    def run_case(self, mutation=None, error=None):
++        with tempfile.TemporaryDirectory() as tmp:
++            root=Path(tmp);fixture(root)
++            result=audit_helper_reports(root)
++            self.assertTrue(result['pass_'],result)
++            if mutation:
++                mutation(root);result=audit_helper_reports(root)
++                self.assertFalse(result['pass_'],result)
++                if error:self.assertTrue(any(error in msg for msg in result['errors']),result)
++
++    def mutate(self, root, change):
++        data=[json.loads(x) for x in (root/'helper_reports.jsonl').read_text().splitlines()]
++        change(data);write_reports(root,data)
++
++    def controls(self, root, change):
++        with (root/'control_events.csv').open() as f:
++            reader=csv.DictReader(f);columns=reader.fieldnames;data=list(reader)
++        change(data);write_csv(root/'control_events.csv',columns,data)
++
++    def test_exact_ten_ms_boundary_is_included(self):self.run_case()
++
++    def test_same_timestamp_before_ack_is_valid(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root=Path(tmp);fixture(root)
++            self.mutate(root,lambda data:[x.update(own_remaining_bytes=16*65536-4000,
++                                                  own_bytes_per_ns=4000/10_000_000) for x in data])
++            result=audit_helper_reports(root);self.assertTrue(result['pass_'],result)
++
++    def test_cannot_mix_two_same_timestamp_prefixes(self):
++        self.run_case(lambda root:self.mutate(root,lambda data:[x.update(own_remaining_bytes=16*65536-4000) for x in data]),'incompatible causal')
++
++    def test_cannot_fabricate_remaining_bytes(self):
++        self.run_case(lambda root:self.mutate(root,lambda data:[x.update(own_remaining_bytes=0) for x in data]),'remaining bytes')
++
++    def test_cannot_use_later_progress_in_sample(self):
++        self.run_case(lambda root:self.mutate(root,lambda data:[x.update(own_bytes_per_ns=1.25) for x in data]),'service')
++
++    def test_cannot_change_payload_in_transit(self):
++        self.run_case(lambda root:self.mutate(root,lambda data:data[1].update(own_remaining_bytes=0)),'in transit')
++
++    def test_cannot_sample_before_query_arrival(self):
++        self.run_case(lambda root:self.controls(root,lambda data:next(x for x in data if x['event']=='HELPER_QUERY_TX').update(arrival_ns='20000001')),'paid query')
++
++    def test_cannot_omit_report_cost(self):
++        self.run_case(lambda root:self.controls(root,lambda data:next(x for x in data if x['event']=='HELPER_REPORT_TX').update(wire_bytes='0')),'cost')
++
++    def test_cannot_misaddress_report(self):
++        self.run_case(lambda root:self.controls(root,lambda data:next(x for x in data if x['event']=='HELPER_REPORT_TX').update(rank='9')),'address')
++
++    def test_cannot_consume_snapshot_after_phase_reset(self):
++        self.run_case(lambda root:self.controls(root,lambda data:data.append(dict(sent_ns='20500000',arrival_ns='20500000',event='RESET_TO_AB',rank='0',phase='1',version='200',wire_bytes='0'))),'phase reset')
++
++    def test_cannot_consume_released_lease_report(self):
++        self.run_case(lambda root:self.controls(root,lambda data:data.append(dict(sent_ns='20500000',arrival_ns='20500000',event='LEND_RELEASED',rank='0',phase='0',version='100',wire_bytes='0'))),'released lease')
++
++    def test_stale_callback_is_logged_but_not_consumed(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root=Path(tmp);fixture(root)
++            self.controls(root,lambda data:data.append(dict(sent_ns='20500000',arrival_ns='20500000',event='RESET_TO_AB',rank='0',phase='1',version='200',wire_bytes='0')))
++            self.mutate(root,lambda data:data[1].update(event='STALE'))
++            result=audit_helper_reports(root);self.assertTrue(result['pass_'],result)
++            self.assertEqual((result['delivered'],result['stale']),(0,1))
++
++if __name__=='__main__':unittest.main()
+--- previous/project/tests/test_helper_selection.py
++++ candidate/project/tests/test_helper_selection.py
+@@ -46,7 +46,9 @@
+ }
+ '''
+         files=[(ROOT/'src/simulator/recovery/proxy.h',True)]
+-        previous=ROOT.parent/'project-v1/src/simulator/recovery/proxy.h'
++        # The negative control is the original throughput-v1 helper selector.
++        # A sibling gray-gate project-v1 has a different, already-correct selector.
++        previous=ROOT.parent.parent/'2026-11-12-throughput/project-v1/src/simulator/recovery/proxy.h'
+         if previous.exists():files.insert(0,(previous,False))
+         with tempfile.TemporaryDirectory() as tmp:
+             for index,(path,expected) in enumerate(files):
+--- previous/project/tests/test_policy_replay_v2.py
++++ candidate/project/tests/test_policy_replay_v2.py
+@@ -0,0 +1,142 @@
++import csv
++import dataclasses
++import json
++import math
++from pathlib import Path
++import tempfile
++import unittest
++
++from limerlab.benefit_policy import BenefitInputV2, HelperSample, evaluate_benefit_v2
++from limerlab.policy_replay import replay_policy
++from test_policy_replay import fixture, table
++
++
++def fixture_v2(root):
++    fixture(root)
++    status=json.loads((root/'run_status.json').read_text())
++    status.update(policy_mode='benefit_v2',relay_completion='pipelined',source_window=32,
++                  horizon_ns=100_000_000,detector_mode='service')
++    (root/'run_status.json').write_text(json.dumps(status))
++    path=root/'logical_events.csv'
++    with path.open() as stream:
++        reader=csv.DictReader(stream);header=reader.fieldnames;logical=list(reader)
++    logical=[r for r in logical if r['event']!='MIGRATE']
++    for helper in (1,5):
++        for i in range(16):
++            row=dict(timestamp_ns=1_000_000,event='ALLOC',chunk_id=helper*100+i,
++                     phase=0,src=helper,dst=helper+4,offset=i*65536,length=65536,
++                     acked=0,epoch=0,lane=i%2,route=helper*100+i)
++            logical.append(row)
++            logical.append(dict(row,timestamp_ns=20_000_000,event='ACK_PROGRESS',acked=65536))
++            logical.append(dict(row,timestamp_ns=20_000_000,event='DONE',acked=65536))
++    logical.sort(key=lambda r:int(r['timestamp_ns']))
++    table(root,'logical_events.csv',','.join(header),[[r[k] for k in header] for r in logical])
++    controls=[
++        [25_000_000,26_007_680,'LEND_TX',1,0,76,96],
++        [25_000_000,26_015_360,'LEND_RX',5,0,76,96],
++        [26_015_360,26_015_360,'LEND_ACTIVE',0,0,76,0],
++        [28_700_000,28_700_000,'M13_REPLACEMENT_PREPARE',0,0,77,0],
++        [30_000_000,31_007_680,'HEALTH_REPORT',0,0,900,96],
++        [31_007_680,32_015_360,'HELPER_QUERY_TX',1,0,1001,96],
++        [31_007_680,32_023_040,'HELPER_QUERY_RX',5,0,1002,96],
++        [32_015_360,33_023_040,'HELPER_REPORT_TX',0,0,1001,96],
++        [32_023_040,33_030_720,'HELPER_REPORT_RX',0,0,1002,96],
++        [37_300_000,37_300_000,'ACTIVATE',0,0,77,0]]
++    table(root,'control_events.csv','sent_ns,arrival_ns,event,rank,phase,version,wire_bytes',controls)
++    reports=[]
++    for slot,rank,sampled,delivered in ((0,1,32_015_360,33_023_040),(1,5,32_023_040,33_030_720)):
++        report=dict(event='SENT',timestamp_ns=sampled,source=0,slot=slot,rank=rank,
++                    phase=0,version=77,lease_id=76,report_id=1001+slot,sampled_ns=sampled,
++                    delivered_ns=delivered,own_remaining_bytes=0,own_bytes_per_ns=0.,known=1)
++        reports.extend([report,dict(report,event='DELIVERED',timestamp_ns=delivered)])
++    reports.sort(key=lambda r:r['timestamp_ns'])
++    (root/'helper_reports.jsonl').write_text('\n'.join(json.dumps(r) for r in reports)+'\n')
++    decisions=[json.loads(line) for line in (root/'policy_decisions.jsonl').read_text().splitlines()]
++    for decision,at in zip(decisions,(33_100_000,37_300_000)):
++        raw=decision['input'];raw['relay']['age_ns']=at-30_000_000
++        raw.update(b_no_progress_ns=at-1_000_000,tail_debounce_ns=2_000_000,
++                   source_window=32,pipelined=True,helpers=[])
++        metadata=[]
++        for slot in (0,1):
++            report=next(r for r in reports if r['slot']==slot and r['event']=='DELIVERED')
++            raw['helpers'].append(dict(own_remaining_bytes=0,own_bytes_per_ns=0.,
++                                      age_ns=at-report['sampled_ns'],known=True))
++            metadata.append({k:report[k] for k in ('report_id','rank','phase','version',
++                                                  'lease_id','sampled_ns','delivered_ns')})
++        decision.update(timestamp_ns=at,policy_version=2,helper_reports=metadata)
++        recompute(decision)
++    write_decisions(root,decisions)
++
++
++def recompute(decision):
++    from limerlab.benefit_policy import ServiceSample,RelaySample
++    raw=dict(decision['input'])
++    for name in ('service_a','service_b'):raw[name]=ServiceSample(**raw[name])
++    raw['relay']=RelaySample(**raw['relay'])
++    raw['helpers']=tuple(HelperSample(**h) for h in raw['helpers'])
++    predicted=evaluate_benefit_v2(BenefitInputV2(**raw))
++    for key,value in predicted.items():
++        decision[key]=None if isinstance(value,float) and math.isinf(value) else value
++
++
++def write_decisions(root,decisions):
++    (root/'policy_decisions.jsonl').write_text('\n'.join(json.dumps(d) for d in decisions)+'\n')
++
++
++class PolicyReplayV2Tests(unittest.TestCase):
++    def check_mutation(self,mutation=None):
++        with tempfile.TemporaryDirectory() as tmp:
++            root=Path(tmp);fixture_v2(root)
++            valid=replay_policy(root);self.assertTrue(valid['pass'],valid)
++            if mutation:
++                mutation(root)
++                result=replay_policy(root);self.assertFalse(result['pass'],result)
++            return valid
++
++    def mutate_decision(self,root,change):
++        decisions=[json.loads(line) for line in (root/'policy_decisions.jsonl').read_text().splitlines()]
++        change(decisions[0]);recompute(decisions[0]);write_decisions(root,decisions)
++
++    def test_independent_replay_checks_v2_paid_reports_and_tail(self):
++        result=self.check_mutation()
++        self.assertEqual(result['decisions_checked'],2)
++        self.assertIn('chunk-local no-progress age',result['checks'])
++
++    def test_recomputed_tail_age_tamper_rejected(self):
++        self.check_mutation(lambda root:self.mutate_decision(root,
++            lambda d:d['input'].update(b_no_progress_ns=123)))
++
++    def test_recomputed_helper_work_tamper_rejected(self):
++        self.check_mutation(lambda root:self.mutate_decision(root,
++            lambda d:d['input']['helpers'][0].update(own_remaining_bytes=65536)))
++
++    def test_wrong_physical_helper_report_rejected(self):
++        self.check_mutation(lambda root:self.mutate_decision(root,
++            lambda d:d['helper_reports'][0].update(rank=2)))
++
++    def test_invented_sender_window_rejected(self):
++        self.check_mutation(lambda root:self.mutate_decision(root,
++            lambda d:d['input'].update(source_window=999)))
++
++    def test_unsent_helper_report_rejected(self):
++        def change(root):
++            p=root/'helper_reports.jsonl'
++            rows=[json.loads(line) for line in p.read_text().splitlines()]
++            rows=[r for r in rows if r['event']!='SENT']
++            p.write_text('\n'.join(json.dumps(r) for r in rows))
++        self.check_mutation(change)
++
++    def test_unpaid_helper_report_rejected(self):
++        self.check_mutation(lambda root:(root/'control_events.csv').write_text(
++            (root/'control_events.csv').read_text().replace('HELPER_REPORT_TX,0,0,1001,96','HELPER_REPORT_TX,0,0,1001,0')))
++
++    def test_helper_snapshot_tamper_rejected_from_logical_acks(self):
++        def change(root):
++            p=root/'helper_reports.jsonl'
++            rows=[json.loads(line) for line in p.read_text().splitlines()]
++            for r in rows:r['own_remaining_bytes']=1
++            p.write_text('\n'.join(json.dumps(r) for r in rows))
++        self.check_mutation(change)
++
++
++if __name__=='__main__': unittest.main()
+--- previous/project/tests/test_probe_timeout_v2.py
++++ candidate/project/tests/test_probe_timeout_v2.py
+@@ -0,0 +1,143 @@
++"""Production probe cancellation preserves data routes and late wire accounting."""
++from pathlib import Path
++import shutil
++import subprocess
++import tempfile
++import unittest
++from test_helper_lease_v2 import function
++
++ROOT=Path(__file__).resolve().parents[1]
++
++
++class ProbeTimeoutV2Tests(unittest.TestCase):
++    @unittest.skipUnless(shutil.which('c++'),'requires C++')
++    def test_each_leg_health_reply_and_phase_retirement(self):
++        state=(ROOT/'src/simulator/runtime/state.h').read_text()
++        structures=state[state.index('struct HelperSnapshot'):state.index('static std::array<Binding,16> binding;')]
++        proxy=(ROOT/'src/simulator/recovery/proxy.h').read_text()
++        rdma=(ROOT/'src/simulator/transport/rdma.h').read_text()
++        source=r'''
++#include <array>
++#include <vector>
++#include <map>
++#include <set>
++#include <string>
++#include <sstream>
++#include <stdexcept>
++#include <algorithm>
++#include <cassert>
++#include <cstdint>
++#include <memory>
++#include <functional>
++template<class T>using Ptr=std::shared_ptr<T>;
++static const unsigned LIMER_RDMA_QP_ERROR=9;
++struct RdmaQueuePair{uint64_t tag=99;unsigned m_limerState=0,m_activeNicIdx=3;
++ uint64_t GetTag(){return tag;}};
++struct Hardware{unsigned cancelled=0,deleted=0,added=0;
++ void CancelRto(Ptr<RdmaQueuePair>){++cancelled;}void DeleteQueuePair(Ptr<RdmaQueuePair>){++deleted;}
++ template<class... Args>void AddQueuePair(Args...){++added;}
++ Ptr<RdmaQueuePair> GetQp(unsigned,unsigned,unsigned){return std::make_shared<RdmaQueuePair>();}};
++struct RdmaDriver{Ptr<Hardware> m_rdma=std::make_shared<Hardware>();};
++struct Node{Ptr<RdmaDriver> driver=std::make_shared<RdmaDriver>();
++ template<class T>Ptr<T> GetObject(){return driver;}};
++struct Nodes{std::array<Ptr<Node>,16> all;Nodes(){for(auto& x:all)x=std::make_shared<Node>();}
++ Ptr<Node> Get(unsigned x){return all[x];}}n;
++struct Address{unsigned Get(){return 0;}};std::array<Address,16> serverAddress;
++struct Route{uint64_t id=77,chunk=0,epoch=0,base=0,length=65536,started=0,measurement=0,bindingVersion=10;
++ unsigned src=0,dst=4,hs=1,hd=5,rail=1,index=0,p=2;bool relay=true,probe=true,reserved=true,service=false;
++ std::array<double,3> legNs{};};
++struct Leg{uint64_t tag,route,started;unsigned src,dst,nic,index;Ptr<RdmaQueuePair> qp;};
++std::map<uint64_t,Route> routes,abortedProbes;std::map<uint64_t,Leg> legs,abortedProbeLegs;
++'''+structures+r'''
++std::array<Binding,16> binding;
++bool benefitV2=true,benefitMode=true,serviceMode=true,sharedHelpers=true,pipelined=true;
++unsigned phase=2,phases=4,phaseChunks=16,released=0,releaseRequests=0,configured=0,staleAcks=0,probeRoutes=0;
++const uint64_t Ttl=20000000,ChunkBytes=65536;uint64_t horizon=20000001;bool proxy=false;
++std::array<bool,16> m13{};double rates[16][3]{},credits[16][3]{};unsigned launches[16][3]{};
++uint64_t now=20000000,serial=100;
++std::array<unsigned,16> outDone{},ports{};
++std::ostringstream legsLog,controls,wireLog,serviceEvents;
++uint64_t networkWire=0,localWire=0,probeWire=0,rescueWire=0,retransWire=0;
++std::set<std::pair<uint64_t,unsigned>> sentWire;
++struct Detector{void retransmit(unsigned,uint64_t,uint64_t){}}serviceDetector;
++uint64_t PeerNow(){return now;}uint64_t NanoSeconds(uint64_t t){return t;}
++unsigned Dest(unsigned s){return s<12?s+4:(s+1)%4;}
++unsigned Key(unsigned s,unsigned d,unsigned rail){return (s*16+d)*3+rail;}
++struct Simulator{template<class... Args>static void Schedule(Args...){}
++ template<class... Args>static void ScheduleWithContext(Args...){} };
++template<class T>T MakeCallback(T f){return f;}
++void Noop(){}void Pump(unsigned){}
++void Reserve(Route& r,bool add){assert(!add&&r.reserved);r.reserved=false;++released;}
++void ReleaseLendingV2(unsigned){++releaseRequests;}
++void Configure(unsigned){++configured;}
++bool Idle(unsigned){return true;}bool Capacity(const Route&){return false;}
++bool RequestLendingV2(unsigned){return false;}bool RequestLending(unsigned){return false;}
++bool BenefitAllows(unsigned,const char*){return true;}
++void CollectHelperReports(unsigned){++configured;}
++void Forget(uint64_t tag){legs.erase(tag);}
++void ServiceCompleted(const Route&){}
++void ReleaseDelivered(Route&){throw std::logic_error("payload callback invoked");}
++void FinalAck(uint64_t){throw std::logic_error("payload completion invoked");}
++static void StartLeg(uint64_t);static void HealthDone(uint64_t);
++uint64_t Message(const char*,unsigned,uint64_t){return now+1007680;}
++std::vector<std::array<unsigned,3>> Edges(const Route& r){return {{r.src,r.hs,1},{r.hs,r.hd,3},{r.hd,r.dst,1}};}
++'''+ '\n'.join([function(proxy,'static void AbortProbeV2('),
++               function(proxy,'static void HealthDone('),
++               function(rdma,'static void Completed('),
++               function(rdma,'static void StartLeg('),
++               function(rdma,'extern "C" void limer_joint_wire_tx('),
++               function(proxy,'static void Commit('),function(proxy,'static void Tick(')])+r'''
++int main(){
++ // Expired temporary health releases; configured refresh keeps participants.
++ binding[0].p=phase;binding[0].version=10;binding[0].lending=true;binding[0].pending=true;
++ binding[0].health=0;now=Ttl+1;unsigned initial=releaseRequests;
++ Commit(0,phase,10);assert(releaseRequests==initial+1&&!binding[0].pending);
++ binding[0].configured=true;binding[0].pending=true;initial=releaseRequests;
++ Commit(0,phase,10);assert(releaseRequests==initial&&!binding[0].pending);
++ // Completed owners release before Tick's ready/pending/outDone early exits.
++ binding[0].ready=true;binding[0].pending=true;binding[0].health=now;
++ outDone[0]=phaseChunks;Tick();assert(releaseRequests==initial+1);outDone[0]=0;
++ // Test timeouts with each physical leg active and with only health reply pending.
++ for(unsigned stage=0;stage<4;++stage){
++  routes.clear();legs.clear();abortedProbes.clear();abortedProbeLegs.clear();
++  Route probe;probe.index=std::min(stage,2u);routes[77]=probe;
++  Route payload;payload.id=88;payload.probe=false;routes[88]=payload;
++  auto qp=std::make_shared<RdmaQueuePair>();qp->tag=99+stage;
++  if(stage<3)legs[qp->tag]={qp->tag,77,0,1,5,3,stage,qp};
++  binding[0]=Binding{};binding[0].p=phase;binding[0].version=10;
++  binding[0].lending=true;binding[0].pending=true;
++  unsigned prior=released,requests=releaseRequests;
++  AbortProbeV2(77);
++  assert(!routes.count(77)&&routes.count(88)&&routes[88].reserved);
++  assert(released==prior+1&&releaseRequests==requests+1);
++  assert(!binding[0].pending&&abortedProbes.count(77));
++  if(stage<3){
++   assert(qp->m_limerState==LIMER_RDMA_QP_ERROR&&abortedProbeLegs.count(qp->tag));
++   Completed(qp); // The callback is ignored only for an explicitly aborted tag.
++   uint64_t oldWire=networkWire;limer_joint_wire_tx(qp.get(),0,1048);
++   assert(networkWire==oldWire+1048); // Late issued traffic remains charged.
++  }
++  auto before=configured;StartLeg(77);HealthDone(77);assert(configured==before);
++  AbortProbeV2(77);assert(released==prior+1); // No double release.
++ }
++ // Active bindings retain participants when only a refresh probe times out.
++ routes[77]=Route{};binding[0].configured=true;binding[0].pending=true;
++ unsigned requests=releaseRequests;AbortProbeV2(77);assert(releaseRequests==requests);
++ // The same active lease is released once the source has finished its work.
++ routes[77]=Route{};outDone[0]=phaseChunks;AbortProbeV2(77);assert(releaseRequests==requests+1);
++ // Old-phase probe reservation is retired without touching a new-phase binding.
++ routes[77]=Route{};++phase;binding[0].p=phase;binding[0].version=1000;
++ requests=releaseRequests;AbortProbeV2(77);assert(releaseRequests==requests);
++ // Arbitrary missing route IDs still surface a bug; guards are not blanket ignores.
++ bool rejected=false;try{HealthDone(123456);}catch(const std::out_of_range&){rejected=true;}assert(rejected);
++ assert(controls.str().find("PROBE_ABORT")!=std::string::npos);
++}
++'''
++        with tempfile.TemporaryDirectory() as tmp:
++            cpp=Path(tmp)/'probe.cc';binary=Path(tmp)/'probe';cpp.write_text(source)
++            build=subprocess.run(['c++','-std=c++14',str(cpp),'-o',str(binary)],capture_output=True,text=True)
++            self.assertEqual(build.returncode,0,build.stderr)
++            run=subprocess.run([str(binary)],capture_output=True,text=True)
++            self.assertEqual(run.returncode,0,run.stderr)
++
++if __name__=='__main__':unittest.main()
+--- previous/project/tools/gray_gate_campaign.py
++++ candidate/project/tools/gray_gate_campaign.py
+@@ -0,0 +1,307 @@
++"""Freeze matched gray-fault gate experiments and preserve every registered attempt.
++
++This module uses the existing frozen-toolchain runner. It does not inject truth
++into policy observations, change detector thresholds, or launch remote work.
++"""
++import argparse
++from collections import Counter, defaultdict
++import csv
++from copy import deepcopy
++import json
++import math
++from pathlib import Path
++import sys
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'python'))
++from limerlab.config import Scenario
++import research_campaign as research
++
++ARMS = {'adaptive': ('G10', 'always'), 'direct': ('G11', 'always'),
++        'legacy_gate': ('G11', 'benefit'), 'candidate_gate': ('G11', 'benefit_v2')}
++SEEDS = {'pilot': 111213001, 'confirmation': 111213033}
++PRIMARY = ('sustained_25_early', 'sustained_25_late', 'transient_25_20ms')
++
++
++def make_plan(preset='pilot'):
++    if preset not in SEEDS:
++        raise ValueError('Unknown preset: ' + preset)
++    cases = []
++    seed = SEEDS[preset]
++
++    def add(condition, family, arms=None, fault_ns=24_000_000,
++            duration_ns=0, local_gbps=2400, fraction=.25):
++        for arm in arms or ARMS:
++            method, policy = ARMS[arm]
++            scene = dict(family=family, rounds=1, chunks_per_phase=512,
++                         horizon_ns=250_000_000, fault_ns=fault_ns, node=0,
++                         seed=seed, local_gbps=local_gbps, detector='service',
++                         policy=policy, fault_duration_ns=duration_ns,
++                         replacement_lifetime='phase', phases_per_round=4,
++                         relay_completion='pipelined', helper_mode='shared')
++            # Keep fixed-quarter semantics. Only the explicit new family sweeps rate.
++            if family == 'slowdown':
++                scene['slowdown_fraction'] = fraction
++            scene = Scenario(**scene).dictionary()
++            cases.append(dict(name=f'{condition}-{arm}-s{seed}', condition=condition,
++                              family=family, arm=arm, method=method, scene=scene,
++                              detector='service', trial=0,
++                              pair_id=f'{condition}-s{seed}'))
++
++    add('healthy', 'healthy')
++    add('sustained_25_early', 'quarter')
++    add('sustained_25_late', 'quarter', fault_ns=40_000_000)
++    add('transient_25_20ms', 'quarter', duration_ns=20_000_000)
++    for family in ('blackhole', 'weak_loss'):
++        add(family, family, ('direct', 'candidate_gate'))
++    if preset == 'confirmation':
++        add('sustained_50_early', 'slowdown', fraction=.5)
++        add('no_healthy_helper', 'no_idle_helpers', ('direct', 'candidate_gate'))
++        add('healthy_local_1gbps', 'healthy', ('direct', 'candidate_gate'), local_gbps=1)
++        add('slow_helper_25', 'quarter', ('direct', 'candidate_gate'), local_gbps=1)
++    plan = dict(schema='limer-gray-gate-plan-v1', preset=preset,
++                phase='development' if preset == 'pilot' else 'confirmation',
++                source_baseline_commit='191f4349da2eb7ed3e7990835792c18d8ade7ec0',
++                cases=cases, run_count=len(cases), default_workers=1, maximum_workers=2,
++                parallelism_rule='A second worker requires measured first-attempt raw/archive budgets and quota headroom of at least two raw budgets plus 10 GiB; root decides before launch.',
++                changes='Versioned benefit_v2 gates initial activation in each phase using stalled-tail, relay-pipeline and paid-helper estimates. Unconfigured temporary loans are released after rejection, expired initial health or failed probe; source completion also releases its lease. Configured bindings keep the same helpers while refreshing health. V2 alone applies a 20-ms probe timeout with safe cancellation.',
++                expectation='The candidate may reject unprofitable initial late/transient/slow-helper switches while retaining useful sustained-fault recovery. Probe cancellation and release should bound stranded unconfigured reservations without erasing business completion or charging a timeout as successful recovery. An active binding refreshes health without continuous route reoptimization. Failure is an allowed outcome.',
++                lifecycle_revision=dict(policy='benefit_v2', probe_timeout_ns=20_000_000,
++                                        gate_scope='Initial activation in each phase; not continuous candidate optimization.',
++                                        probe_timeout_action='Cancel only the timed-out health probe safely and retain elapsed costs. Release through charged messages only when the binding is unconfigured or the source has completed; otherwise keep the configured helper pair and retry health.',
++                                        temporary_release_triggers=['gate_rejection', 'expired_initial_health_evidence', 'probe_timeout'],
++                                        configured_binding='Retain the same helpers during health refresh until source completion or phase reset; no repeated candidate selection after initial activation.',
++                                        terminal_release_triggers=['source_completed', 'phase_reset'],
++                                        comparison_scope='Candidate-versus-direct or legacy includes these lifecycle changes and paid reports; it is not an estimator-only ablation.'),
++                denominator='All registered cases including invalid, unfinished and unrun attempts; no replacement seeds or silent retries.',
++                calibration='Faults begin at 24 or 40 ms, after the unchanged 1-21 ms detector calibration.',
++                confirmation_rule='The confirmation preset and its seed are frozen before pilot outcomes. Any source fix after seeing confirmation results requires a new separately labelled campaign.',
++                frozen_seed_roles=deepcopy(SEEDS),
++                scoring=dict(primary_conditions=list(PRIMARY),
++                             scope='Finite CPU simulation with 16 logical GPUs and four scheduler phases; no hardware or population coverage claim.'),
++                metrics=dict(primary='Whole-job communication completion time, candidate minus each matched comparator',
++                             throughput='Matched healthy time / fault time for identical useful payload; whole-job useful throughput, not instantaneous link capacity',
++                             detection='All affected paths strictly below 100 ms; retain late, missed, pre-fault, unaffected and healthy alarms',
++                             costs='Paid control bytes, probe routes, activations, fresh B-prime payload, helper reports/releases and physical relay/final-ACK costs',
++                             not_a_claim='A small finite pilot does not establish 95% general detection or optimal switching.'),
++                preregistered_interpretation=dict(
++                    sustained='Positive gate value requires lower whole-job time than direct recovery or adaptive-only on matched conditions, not merely a predicted gain.',
++                    transient='Classify alarm timing relative to recovery after the run; the controller cannot access future fault duration.',
++                    unnecessary_switch='Whole-run harmful switch means a switching arm is slower than paired adaptive-only; no-fresh-payload activation alone is not proof of harm because it can rescue in-flight chunks.',
++                    failure='Retain every registered attempt. Only valid unfinished runs receive a horizon cap; invalid/unrun times and pair differences involving them remain null. Caps are not exact completion times.'))
++    validate_plan(plan)
++    return plan
++
++
++def validate_plan(plan):
++    names = [c['name'] for c in plan['cases']]
++    if len(names) != len(set(names)) or any(Path(n).name != n for n in names):
++        raise ValueError('Case names must be unique simple filenames')
++    groups = defaultdict(list)
++    for case in plan['cases']:
++        scene = Scenario(**case['scene']).dictionary()
++        if (case['method'], scene['policy']) != ARMS.get(case['arm']):
++            raise ValueError('Arm method/policy mismatch')
++        if scene['fault_ns'] < 21_000_000:
++            raise ValueError('Primary fault overlaps detector calibration')
++        if scene['fault_ns'] + 100_000_000 >= scene['horizon_ns']:
++            raise ValueError('Insufficient post-fault detection horizon')
++        groups[case['pair_id']].append(case)
++    for pair, members in groups.items():
++        scenes = []
++        for case in members:
++            scene = deepcopy(case['scene']); scene.pop('policy')
++            scenes.append(scene)
++        if any(scene != scenes[0] for scene in scenes):
++            raise ValueError('Matched arms differ in scene: ' + pair)
++        if len({c['arm'] for c in members}) != len(members):
++            raise ValueError('Duplicate arm in pair: ' + pair)
++    healthy = [c for c in plan['cases'] if c['scene']['family'] == 'healthy']
++    for case in plan['cases']:
++        if not any(healthy_key(h) == healthy_key(case) for h in healthy):
++            raise ValueError('No matched healthy reference: ' + case['name'])
++    return True
++
++
++def healthy_key(case):
++    """Fault timing/rate/duration are inert in a healthy run; all else must match."""
++    scene = deepcopy(case['scene'])
++    for key in ('family', 'fault_ns', 'fault_duration_ns', 'slowdown_fraction'):
++        scene.pop(key, None)
++    return (case['method'], json.dumps(scene, sort_keys=True))
++
++
++def register(build, out, preset='pilot'):
++    plan = make_plan(preset)
++    return research.register(plan, build, out)
++
++
++def cost_summary(directory, result):
++    directory = Path(directory)
++    counts, charged = Counter(), Counter()
++    controls = directory / 'control_events.csv'
++    if controls.exists():
++        with controls.open(newline='') as stream:
++            for row in csv.DictReader(stream):
++                counts[row['event']] += 1
++                charged[row['event']] += int(row['wire_bytes'])
++    reports, snapshots = Counter(), []
++    report_file = directory / 'helper_reports.jsonl'
++    if report_file.exists():
++        for line in report_file.read_text().splitlines():
++            if not line.strip():
++                continue
++            row = json.loads(line); reports[row['event']] += 1
++            if row['event'] == 'DELIVERED':
++                snapshots.append({key: row[key] for key in (
++                    'source', 'slot', 'rank', 'phase', 'lease_id', 'report_id',
++                    'sampled_ns', 'delivered_ns', 'own_remaining_bytes',
++                    'own_bytes_per_ns', 'known') if key in row})
++    performance, status = result.get('performance', {}), result.get('status', {})
++    return dict(control_events=dict(counts), control_wire_bytes_by_event=dict(charged),
++                control_wire_bytes=sum(charged.values()),
++                probe_routes=status.get('health_probe_routes'),
++                probe_wire_bytes=status.get('probe_wire_bytes'),
++                relay_wire_bytes=status.get('relay_wire_bytes'),
++                network_wire_bytes=status.get('network_wire_bytes'),
++                local_wire_bytes=status.get('local_wire_bytes'),
++                helper_report_events=dict(reports), delivered_helper_snapshots=snapshots,
++                helper_leases_activated=counts.get('LEND_ACTIVE', 0),
++                helper_leases_released=counts.get('LEND_RELEASED', 0),
++                activations=counts.get('ACTIVATE', 0),
++                new_Bprime_completions=performance.get('new_Bprime_completions'),
++                fresh_Bprime_payload_bytes=performance.get('fresh_Bprime_payload_bytes'),
++                fresh_proxy_costs=performance.get('fresh_proxy_costs'),
++                no_fresh_payload_activation=bool(counts.get('ACTIVATE', 0)
++                                                and not performance.get('fresh_Bprime_payload_bytes')),
++                helper_burden_scope='Actual contention is included in whole-job time; per-helper counterfactual slowdown is not inferred from control-event counts.')
++
++
++def summarize(out):
++    out = Path(out)
++    registration = research.validate_registration(out)
++    plan = registration['plan']; validate_plan(plan)
++    rows, by_name = [], {}
++    for case in plan['cases']:
++        path = out / 'attempts' / (case['name'] + '.json')
++        directory = out / 'runs' / case['name']
++        attempt, result, error = None, {}, None
++        try:
++            attempt = research.read_json(path) if path.exists() else None
++            result = research.read_json(directory / 'result.json') if (directory / 'result.json').exists() else {}
++        except (ValueError, OSError) as exc:
++            error = str(exc)
++        score = dict(valid=False, classification='not_run', all_paths_timely_success=False,
++                     all_paths_delay_ms=None, healthy_false_alarm=False)
++        if path.exists():
++            try:
++                if error:
++                    raise ValueError(error)
++                if result.get('scene') != case['scene'] or result.get('method') != case['method']:
++                    raise ValueError('Result identity differs from registered case')
++                score = dict(research.score_run(directory, case))
++                if not attempt['valid']:
++                    raise ValueError(attempt.get('error', 'Retained invalid attempt'))
++            except Exception as exc:
++                error = str(exc); score.update(valid=False, classification='error',
++                                               all_paths_timely_success=False)
++        completed = bool(score['valid'] and result.get('status', {}).get('status') == 'completed')
++        actual = result.get('performance', {}).get('communication_ms') if completed else None
++        try:
++            costs = cost_summary(directory, result)
++            if completed and (not isinstance(actual, (int, float)) or not math.isfinite(actual) or actual <= 0):
++                raise ValueError('Completed run has no finite positive communication time')
++        except (KeyError, ValueError, TypeError, OSError) as exc:
++            error = str(exc); costs = dict(error=error)
++            score.update(valid=False, classification='error', all_paths_timely_success=False)
++            completed, actual = False, None
++        row = dict(name=case['name'], condition=case['condition'], arm=case['arm'],
++                   method=case['method'], pair_id=case['pair_id'], seed=case['scene']['seed'],
++                   attempted=path.exists(), valid=score['valid'], completed=completed,
++                   classification=score['classification'], error=error,
++                   communication_ms=actual,
++                   capped_ms=actual if completed else ((case['scene']['horizon_ns'] - 1_000_000) / 1e6 if score['valid'] else None),
++                   all_paths_timely=score['all_paths_timely_success'],
++                   all_paths_delay_ms=score['all_paths_delay_ms'],
++                   healthy_false_alarm=score['healthy_false_alarm'],
++                   policy_decision_counts=score.get('policy_decision_counts', {}),
++                   costs=costs, healthy_ratio=None,
++                   audit_scope='Passed execution and observation audits' if score['valid'] else 'Invalid, absent or unfinished validation')
++        if case['scene']['fault_duration_ns'] and row['all_paths_delay_ms'] is not None:
++            row['all_paths_alarm_after_fault_ended'] = row['all_paths_delay_ms'] * 1e6 > case['scene']['fault_duration_ns']
++        rows.append(row); by_name[case['name']] = row
++    healthy = {healthy_key(c): by_name[c['name']] for c in plan['cases'] if c['scene']['family'] == 'healthy'}
++    for case in plan['cases']:
++        row, reference = by_name[case['name']], healthy[healthy_key(case)]
++        row['healthy_reference'] = reference['name']
++        if row['completed'] and reference['completed']:
++            row['healthy_ratio'] = reference['communication_ms'] / row['communication_ms']
++    groups = defaultdict(dict)
++    for row in rows:
++        groups[row['pair_id']][row['arm']] = row
++    pairs = []
++    for pair_id, arms in sorted(groups.items()):
++        candidate = arms.get('candidate_gate')
++        if not candidate:
++            continue
++        for arm, baseline in sorted(arms.items()):
++            if arm == 'candidate_gate':
++                continue
++            both = candidate['completed'] and baseline['completed']
++            both_valid = candidate['valid'] and baseline['valid']
++            pairs.append(dict(pair_id=pair_id, comparator=arm,
++                              both_valid=both_valid,
++                              both_completed=both,
++                              candidate_minus_baseline_ms=candidate['communication_ms'] - baseline['communication_ms'] if both else None,
++                              candidate_minus_baseline_capped_ms=candidate['capped_ms'] - baseline['capped_ms'] if both_valid else None,
++                              improvement_fraction=1 - candidate['communication_ms'] / baseline['communication_ms'] if both else None))
++    report = dict(schema='limer-gray-gate-summary-v1', preset=plan['preset'],
++                  authority='This gray-gate summary is authoritative for this study; research_summary.json uses historical arm names and acceptance logic.',
++                  plan_sha256=registration['plan_sha256'], registered=len(rows),
++                  attempted=sum(r['attempted'] for r in rows), valid=sum(r['valid'] for r in rows),
++                  completed=sum(r['completed'] for r in rows),
++                  complete=all(r['attempted'] for r in rows), rows=rows, pairs=pairs,
++                  limitations=['Development and frozen-condition regression confirmation are finite diagnostics, not 95% population acceptance.',
++                               'The changed seed gives new stochastic evidence only for weak loss; deterministic rate/healthy/blackhole repeats do not add independent random trials.',
++                               'Only valid unfinished runs have capped time; invalid or unrun records have no performance value. A cap is not an observed completion time.',
++                               'Every policy is a LIMER ablation; none is a reproduction of R2CC.',
++                               'Actual helper contention is paid, but this summary does not claim a causal per-helper burden estimate.',
++                               'No-fresh-payload activations can still rescue in-flight work; classify harm using paired whole-job outcomes.'])
++    research.write_json(out / 'gray_gate_summary.json', report)
++    return report
++
++
++def execute(out, workers=1, resume=False, only_conditions=None):
++    if workers not in (1, 2):
++        raise ValueError('Current preregistration permits one or two workers')
++    registration = research.validate_registration(out)
++    validate_plan(registration['plan'])
++    # The established runner skips every recorded failed attempt when resuming.
++    research.execute(out, workers=workers, resume=resume, only_conditions=only_conditions)
++    return summarize(out)
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('action', choices=('plan', 'register', 'execute', 'summarize'))
++    parser.add_argument('--preset', choices=tuple(SEEDS), default='pilot')
++    parser.add_argument('--out', type=Path, required=True)
++    parser.add_argument('--build', type=Path)
++    parser.add_argument('--workers', type=int, default=1)
++    parser.add_argument('--resume', action='store_true')
++    parser.add_argument('--only-condition', action='append')
++    args = parser.parse_args()
++    if args.action == 'plan':
++        research.write_json(args.out, make_plan(args.preset))
++    elif args.action == 'register':
++        if args.build is None:
++            parser.error('--build is required for registration')
++        print(json.dumps(register(args.build, args.out, args.preset)))
++    elif args.action == 'execute':
++        execute(args.out, args.workers, args.resume, args.only_condition)
++    else:
++        result = summarize(args.out)
++        print(json.dumps({key: result[key] for key in ('registered', 'attempted', 'valid', 'completed')}))
++
++
++if __name__ == '__main__':
++    main()

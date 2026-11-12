@@ -1,0 +1,3 @@
+timestamp_ns,path_id,signal
+44017267,13,canary_service
+66007680,721,business_ack_stall

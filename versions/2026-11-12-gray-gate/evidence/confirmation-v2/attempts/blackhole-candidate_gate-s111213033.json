@@ -1,0 +1,43 @@
+{
+  "name": "blackhole-candidate_gate-s111213033",
+  "valid": true,
+  "status": "completed",
+  "exit_code": 0,
+  "archive_sha256": "1f1dcfc7e04475f459c6de4d0ac674eaaedff99f0f3c5b96ff5bf2b2fb2ba2a2",
+  "score": {
+    "classification": "timely",
+    "valid": true,
+    "affected_path_ids": [
+      13,
+      721
+    ],
+    "observed_affected_path_ids": [
+      13,
+      721
+    ],
+    "delays_ms": {
+      "13": 8.00768,
+      "721": 8.01536
+    },
+    "all_paths_delay_ms": 8.01536,
+    "first_incident_delay_ms": 8.00768,
+    "observed_all_paths_delay_ms": 8.01536,
+    "all_paths_timely_success": true,
+    "first_incident_timely_success": true,
+    "pre_fault_alarms": [],
+    "unaffected_alarms": [],
+    "healthy_false_alarm": false,
+    "alarm_events": 2,
+    "healthy_exposure_ms": 0,
+    "monitor_end_ns": 250000000,
+    "monitoring_complete": true,
+    "detector_evidence": {
+      "file": "service_alarms.csv",
+      "sha256": "22a8fa73bd4a5f0d04576c79fb04b1b70d36d2dc74f93283e6d9b4e51c3e0663"
+    },
+    "policy_decision_counts": {
+      "switch:predicted_benefit_v2": 12
+    },
+    "policy_evidence_sha256": "b840ad01dcec8a807ceb4b21f24096b39e1c46ebe3e4d521c7395be86899a3b9"
+  }
+}

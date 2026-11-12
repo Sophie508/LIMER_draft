@@ -1,0 +1,12 @@
+{
+  "status": "partial_registered_cases_remaining",
+  "attempted": 10,
+  "expected": 30,
+  "registered_cases_remaining": 20,
+  "selected_conditions": [
+    "blackhole",
+    "healthy",
+    "sustained_50_early"
+  ],
+  "updated_utc": "2026-11-12T08:26:31.775679+00:00"
+}

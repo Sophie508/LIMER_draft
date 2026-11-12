@@ -1,5 +1,10 @@
 # LIMER CPU-Only Emulation Prototype
 
+> **Gray-fault gate research (2026-11-12):** See the
+> [implementation, paired results, retained failures and review diff](versions/2026-11-12-gray-gate/README.md).
+> The short-workload study has mixed results; it does not replace the longer
+> direct-recovery throughput release below or establish general gate superiority.
+
 > **Latest throughput revision (2026-11-12):** See the
 > [candidate implementation, conditions, results and diff](versions/2026-11-12-throughput/README.md).
 > This adds an explicit shared-helper extension; prior evidence remains preserved.

@@ -1,0 +1,45 @@
+{
+  "base_commit": "191f4349da2eb7ed3e7990835792c18d8ade7ec0",
+  "changed_or_added": [
+    "README.md",
+    "python/limerlab/audit.py",
+    "python/limerlab/benefit_policy.py",
+    "python/limerlab/cli.py",
+    "python/limerlab/config.py",
+    "python/limerlab/inputs.py",
+    "python/limerlab/policy_replay.py",
+    "python/limerlab/replay.py",
+    "src/simulator/main.cc",
+    "src/simulator/recovery/benefit_policy.h",
+    "src/simulator/recovery/decision.h",
+    "src/simulator/recovery/proxy.h",
+    "src/simulator/runtime/declarations.h",
+    "src/simulator/runtime/state.h",
+    "src/simulator/transport/rdma.h",
+    "tests/test_benefit_policy_v2.py",
+    "tests/test_gray_configuration.py",
+    "tests/test_gray_gate_campaign.py",
+    "tests/test_helper_lease_v2.py",
+    "tests/test_helper_phase_drain_audit.py",
+    "tests/test_helper_reports_v2.py",
+    "tests/test_helper_selection.py",
+    "tests/test_policy_replay_v2.py",
+    "tests/test_probe_timeout_v2.py",
+    "tools/gray_gate_campaign.py"
+  ],
+  "audit_only_revision_files": [
+    "python/limerlab/audit.py",
+    "tests/test_helper_phase_drain_audit.py",
+    "tests/test_helper_selection.py"
+  ],
+  "unit_suite": {
+    "command": "python3 limer.py check",
+    "tests": 209,
+    "result": "OK",
+    "elapsed_seconds": 9.376
+  },
+  "native_binary_sha256": "289d08e36084cff75d5a931a18aee8a6203609458ccddbaa36525235ddeacef4",
+  "native_unchanged_between_revisions": true,
+  "registered_performance": "50 attempted; 49 valid (47 completed, 2 unfinished), 1 retained invalid terminal cleanup; mixed gate benefit",
+  "whitespace_check": "passed, preserving existing CRLF"
+}

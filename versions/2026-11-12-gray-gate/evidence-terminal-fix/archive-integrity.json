@@ -1,0 +1,94 @@
+{
+  "archives": [
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "healthy-adaptive-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/healthy-adaptive-s111213033.tar.gz",
+      "sha256": "9b290f2cb4d7ecff1f814561a5ac6d0e9ec701f68f625a2e5f2c4449a0a41977",
+      "bytes": 76058118,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "healthy-direct-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/healthy-direct-s111213033.tar.gz",
+      "sha256": "e1c39b928649bd59f658a137b5b3b69c3c4a422314be6ab84fe57f9e2495cc74",
+      "bytes": 76058095,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "healthy-legacy_gate-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/healthy-legacy_gate-s111213033.tar.gz",
+      "sha256": "836db922aff6cd8c153fd29274514a148a547860e58ff8fc511648e504f9c7c9",
+      "bytes": 76058325,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "healthy-candidate_gate-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/healthy-candidate_gate-s111213033.tar.gz",
+      "sha256": "b8f6ce0a7d8edb1733db71add686bb408544c94c0f0baac0c66058c11a0392c3",
+      "bytes": 76058568,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "blackhole-direct-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/blackhole-direct-s111213033.tar.gz",
+      "sha256": "8e409d75bfe9815839caf4de223d491c959ca61b6610956969f6d40337a0ed3c",
+      "bytes": 95085329,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "blackhole-candidate_gate-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/blackhole-candidate_gate-s111213033.tar.gz",
+      "sha256": "53cff7a37e5df50455ad9ff6ceb23bacb05b1ef84fa1f6c70ec5ce08497c486a",
+      "bytes": 94907088,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "sustained_50_early-adaptive-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/sustained_50_early-adaptive-s111213033.tar.gz",
+      "sha256": "b36fac37a8d84404f67c13784653780194a80f797bf703b37b4de83ca93abd31",
+      "bytes": 91933240,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "sustained_50_early-direct-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/sustained_50_early-direct-s111213033.tar.gz",
+      "sha256": "4579b14fbd6fadca0ce104071a293e17668ab17d044a7aa0fdf44b745d144ee1",
+      "bytes": 93663266,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "sustained_50_early-legacy_gate-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/sustained_50_early-legacy_gate-s111213033.tar.gz",
+      "sha256": "fcaca8d5f260c319fa02406f2e9d98f286ce862bb03f9297ee132c9facb8f193",
+      "bytes": 92519398,
+      "all_member_hashes_verified": true
+    },
+    {
+      "group": "confirmation-terminal-fix",
+      "name": "sustained_50_early-candidate_gate-s111213033",
+      "path": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-terminal-fix/archives/sustained_50_early-candidate_gate-s111213033.tar.gz",
+      "sha256": "ad3931859f009ff08f196774325c7f883698b8ae50f151ff31cf3d96751041af",
+      "bytes": 92431408,
+      "all_member_hashes_verified": true
+    }
+  ],
+  "all_archive_hashes_rechecked": true,
+  "failed_raw_inventories": [],
+  "campaign_inventory": {
+    "confirmation-terminal-fix": {
+      "registered": 30,
+      "attempted": 10,
+      "valid": 10,
+      "archives": 10
+    }
+  }
+}

@@ -1,0 +1,5 @@
+condition,registered,timely,classifications,p95_ms,max_ms,exact_one_sided_95_lower,unique_derived_loss_stream_pairs,campaign,invalid
+blackhole,60,60,{'timely': 60},8.638846,8.807439,0.9512970866899025,,validation-v2,0
+quarter,60,60,{'timely': 60},29.817308,30.017382,0.9512970866899025,,validation-v2,0
+weak_loss,60,60,{'timely': 60},43.115947,47.633741,0.9512970866899025,60,validation-loss-independent-v4,0
+delay,60,60,{'timely': 60},8.656175,8.724189,0.9512970866899025,,validation-v2,0

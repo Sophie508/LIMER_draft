@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/work/results/confirmation-v2/tooling/limer.py", line 10, in <module>
+    main()
+  File "/work/results/confirmation-v2/tooling/python/limerlab/cli.py", line 75, in main
+    result = run_case(a.build, a.out, method, scene, a.archive_to, not a.prune_raw)
+  File "/work/results/confirmation-v2/tooling/python/limerlab/runner.py", line 57, in run_case
+    raise RuntimeError('Validation failed: ' + str(out / (stage + '.log')))
+RuntimeError: Validation failed: /work/results/confirmation-v2/runs/sustained_50_early-candidate_gate-s111213033/audit.log

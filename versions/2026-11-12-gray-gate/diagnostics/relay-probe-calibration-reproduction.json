@@ -1,0 +1,741 @@
+{
+  "run": "sustained_25_early-direct-s111213001",
+  "archive_sha256": "f29f229cb40f15e2ba0a6da2b00a3c15ff999c993eff0dd1aa5647a122388278",
+  "accepted_attempt": {
+    "valid": true,
+    "status": "completed",
+    "exit_code": 0,
+    "score_valid": true,
+    "archive_sha256": "f29f229cb40f15e2ba0a6da2b00a3c15ff999c993eff0dd1aa5647a122388278"
+  },
+  "analysis_script_sha256": "5ebb3e310ca2e6a4b99eb4b4ea61cb0cb1948afca6417aee501f955d6318b69e",
+  "reference_comparison": {
+    "pass_": true,
+    "byte_identical": true,
+    "reference_sha256": "0bfd87ed3b51000140af441ea1ba88d685200125de92d4903ad53371732e4d81",
+    "reproduced_sha256": "0bfd87ed3b51000140af441ea1ba88d685200125de92d4903ad53371732e4d81"
+  },
+  "document_sha256": "d56ce6de83d4b221fd03755a4c7d4cc71a27fac11f29a6f362261da15b6bce50",
+  "scope_checks": {
+    "original_scope_passed": true,
+    "negative_cases": [
+      {
+        "case": "scene_family",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "family"
+            ],
+            "value": "healthy"
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "family"
+            ],
+            "value": "healthy"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_fault_ns",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "fault_ns"
+            ],
+            "value": 48000000
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "fault_ns"
+            ],
+            "value": 48000000
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_chunks_per_phase",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "chunks_per_phase"
+            ],
+            "value": 256
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "chunks_per_phase"
+            ],
+            "value": 256
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_rounds",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "rounds"
+            ],
+            "value": 2
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "rounds"
+            ],
+            "value": 2
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_phases_per_round",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "phases_per_round"
+            ],
+            "value": 8
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "phases_per_round"
+            ],
+            "value": 8
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_policy",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "policy"
+            ],
+            "value": "benefit_v2"
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "policy"
+            ],
+            "value": "benefit_v2"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_relay_completion",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "relay_completion"
+            ],
+            "value": "serial"
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "relay_completion"
+            ],
+            "value": "serial"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_helper_mode",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "helper_mode"
+            ],
+            "value": "idle"
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "helper_mode"
+            ],
+            "value": "idle"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_node",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "node"
+            ],
+            "value": 1
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "node"
+            ],
+            "value": 1
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_seed",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "seed"
+            ],
+            "value": 111213002
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "seed"
+            ],
+            "value": 111213002
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_canary_bytes",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "canary_bytes"
+            ],
+            "value": 32768
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "canary_bytes"
+            ],
+            "value": 32768
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_fault_duration_ns",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "fault_duration_ns"
+            ],
+            "value": 20000000
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "fault_duration_ns"
+            ],
+            "value": 20000000
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "scene_slowdown_fraction",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "scene",
+              "slowdown_fraction"
+            ],
+            "value": 0.5
+          },
+          {
+            "path": [
+              1,
+              "scene",
+              "slowdown_fraction"
+            ],
+            "value": 0.5
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed quarter/24-ms scenario"
+      },
+      {
+        "case": "method",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "method"
+            ],
+            "value": "G10"
+          },
+          {
+            "path": [
+              1,
+              "method"
+            ],
+            "value": "G10"
+          },
+          {
+            "path": [
+              2,
+              "method"
+            ],
+            "value": "G10"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: G11 method"
+      },
+      {
+        "case": "status_world_size",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "world_size"
+            ],
+            "value": 8
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "world_size"
+            ],
+            "value": 8
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.world_size"
+      },
+      {
+        "case": "status_phases_done",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "phases_done"
+            ],
+            "value": 3
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "phases_done"
+            ],
+            "value": 3
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.phases_done"
+      },
+      {
+        "case": "status_chunks_per_phase",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "chunks_per_phase"
+            ],
+            "value": 256
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "chunks_per_phase"
+            ],
+            "value": 256
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.chunks_per_phase"
+      },
+      {
+        "case": "status_physical_planes",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "physical_planes"
+            ],
+            "value": 1
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "physical_planes"
+            ],
+            "value": 1
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.physical_planes"
+      },
+      {
+        "case": "status_source_window",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "source_window"
+            ],
+            "value": 64
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "source_window"
+            ],
+            "value": 64
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.source_window"
+      },
+      {
+        "case": "status_policy_mode",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "policy_mode"
+            ],
+            "value": "benefit"
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "policy_mode"
+            ],
+            "value": "benefit"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.policy_mode"
+      },
+      {
+        "case": "status_relay_completion",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "relay_completion"
+            ],
+            "value": "serial"
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "relay_completion"
+            ],
+            "value": "serial"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.relay_completion"
+      },
+      {
+        "case": "status_helper_mode",
+        "mutations": [
+          {
+            "path": [
+              2,
+              "helper_mode"
+            ],
+            "value": "idle"
+          },
+          {
+            "path": [
+              1,
+              "status",
+              "helper_mode"
+            ],
+            "value": "idle"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: status.helper_mode"
+      },
+      {
+        "case": "attempt_valid",
+        "mutations": [
+          {
+            "path": [
+              3,
+              "valid"
+            ],
+            "value": false
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: valid accepted attempt"
+      },
+      {
+        "case": "attempt_status",
+        "mutations": [
+          {
+            "path": [
+              3,
+              "status"
+            ],
+            "value": "failed"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: valid accepted attempt"
+      },
+      {
+        "case": "attempt_exit_code",
+        "mutations": [
+          {
+            "path": [
+              3,
+              "exit_code"
+            ],
+            "value": 1
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: valid accepted attempt"
+      },
+      {
+        "case": "attempt_archive_sha256",
+        "mutations": [
+          {
+            "path": [
+              3,
+              "archive_sha256"
+            ],
+            "value": "0000000000000000000000000000000000000000000000000000000000000000"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: accepted archive identity"
+      },
+      {
+        "case": "attempt_score_invalid",
+        "mutations": [
+          {
+            "path": [
+              3,
+              "score",
+              "valid"
+            ],
+            "value": false
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: valid accepted attempt"
+      },
+      {
+        "case": "name",
+        "mutations": [
+          {
+            "path": [
+              1,
+              "name"
+            ],
+            "value": "another-run"
+          },
+          {
+            "path": [
+              3,
+              "name"
+            ],
+            "value": "another-run"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: run identity"
+      },
+      {
+        "case": "topology",
+        "mutations": [
+          {
+            "path": [
+              0,
+              "input_hashes",
+              "inputs/topology.txt"
+            ],
+            "value": "0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "path": [
+              4,
+              "files",
+              "inputs/topology.txt"
+            ],
+            "value": "0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "path": [
+              1,
+              "archive",
+              "files",
+              "inputs/topology.txt"
+            ],
+            "value": "0000000000000000000000000000000000000000000000000000000000000000"
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: fixed 16-rank topology"
+      },
+      {
+        "case": "chunk_bytes",
+        "mutations": [
+          {
+            "path": [
+              1,
+              "audit",
+              "unique_ack_bytes"
+            ],
+            "value": 1073741824
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: accepted 512-by-64-KiB workload"
+      },
+      {
+        "case": "audit_invalid",
+        "mutations": [
+          {
+            "path": [
+              1,
+              "audit",
+              "pass"
+            ],
+            "value": false
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: accepted 512-by-64-KiB workload"
+      },
+      {
+        "case": "observation_invalid",
+        "mutations": [
+          {
+            "path": [
+              1,
+              "observation_audit",
+              "pass"
+            ],
+            "value": false
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: observation audit"
+      },
+      {
+        "case": "affected_sources",
+        "mutations": [
+          {
+            "path": [
+              1,
+              "performance",
+              "scored_affected_sources"
+            ],
+            "value": [
+              0,
+              1
+            ]
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: completed run and fixed affected sources"
+      },
+      {
+        "case": "archive_not_verified",
+        "mutations": [
+          {
+            "path": [
+              4,
+              "all_content_hashes_verified"
+            ],
+            "value": false
+          },
+          {
+            "path": [
+              1,
+              "archive",
+              "all_content_hashes_verified"
+            ],
+            "value": false
+          }
+        ],
+        "rejected": true,
+        "message": "unsupported calibration input: accepted archive identity"
+      }
+    ],
+    "rejected_count": 34
+  },
+  "reproduction_command": "ssh otakotak \"python3 - /home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/pilot-v2/archives/sustained_25_early-direct-s111213001.tar.gz /home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/pilot-v2/runs/sustained_25_early-direct-s111213001\" < relay_probe_calibration.py > /tmp/limer-relay-calibration-reproduced.json",
+  "native_executed": false,
+  "original_inputs_modified": false,
+  "note": "The scope guard is intentionally limited to this accepted run. Data JSON and report prose are unchanged; the guard executes before archive streaming."
+}

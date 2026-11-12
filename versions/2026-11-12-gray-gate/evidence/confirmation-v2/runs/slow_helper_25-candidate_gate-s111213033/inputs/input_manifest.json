@@ -1,0 +1,13 @@
+{
+  "world_size": 16,
+  "gpus_per_server": 4,
+  "physical_planes": 2,
+  "access_gbps": 10,
+  "local_gbps": 1,
+  "hashes": {
+    "trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "config.txt": "2736482902e1ebfaec6e2cd579055b57c8b81cf3730a62f0d028753d2f58cbee",
+    "topology.txt": "59751da5f84870056cd7197ec75f4a8b59719bdc3be2dd12145942075c221748"
+  }
+}

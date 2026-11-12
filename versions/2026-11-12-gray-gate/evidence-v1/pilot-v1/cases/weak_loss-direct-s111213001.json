@@ -1,0 +1,30 @@
+{
+  "name": "weak_loss-direct-s111213001",
+  "condition": "weak_loss",
+  "family": "weak_loss",
+  "arm": "direct",
+  "method": "G11",
+  "scene": {
+    "family": "weak_loss",
+    "rounds": 1,
+    "chunks_per_phase": 512,
+    "horizon_ns": 250000000,
+    "fault_ns": 24000000,
+    "node": 0,
+    "seed": 111213001,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "always",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "relay_completion": "pipelined",
+    "helper_mode": "shared",
+    "slowdown_fraction": 0.25
+  },
+  "detector": "service",
+  "trial": 0,
+  "pair_id": "weak_loss-s111213001"
+}

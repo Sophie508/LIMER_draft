@@ -1,0 +1,2536 @@
+{
+  "schema": "limer-helper-window-shadow-v1",
+  "scope": "offline same-realized-trajectory prediction shadow; not an intervention, new native run, or implemented online policy",
+  "campaign": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/pilot-v2",
+  "run": "sustained_25_early-candidate_gate-s111213001",
+  "attempt_valid": true,
+  "archive_sha256": "941bb4bcb7fc86ce18c017ec9d5c1d754929d655af27a0c7064bdd5c47d0cad2",
+  "logical_archive_member": "logical_events.csv",
+  "policy_sha256": "aa214804dbfef24317476214dd2b9f95a24f40baea3fb798a1560d715064df15",
+  "frozen_policy_source_sha256": "44176b99aaff915230cd8252e774a30a032781a18d52b6d22c78ffcb8facec43",
+  "change": "helper ACK window intersected with current phase; both numerator and denominator rebuilt; report age not subtracted; every other input and threshold unchanged",
+  "thresholds": {
+    "min_gain_ns": 1000000,
+    "min_gain_fraction": 0.1,
+    "max_age_ns": 20000000,
+    "tail_debounce_ns": 2000000
+  },
+  "decisions": [
+    {
+      "index": 0,
+      "timestamp_ns": 35430573,
+      "src": 0,
+      "phase": 1,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 192848,
+        "b_bytes": 102080,
+        "pending_bytes": 4653056,
+        "service_a": {
+          "bytes_per_ns": 1.0482832,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1481664,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            199243,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 291260,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.7659872,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.7642304,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 192848,
+        "b_bytes": 102080,
+        "pending_bytes": 4653056,
+        "service_a": {
+          "bytes_per_ns": 1.0482832,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1481664,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            199243,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 291260,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.7659872,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.7642304,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 1,
+          "report_id": 49676,
+          "phase": 1,
+          "phase_start_ns": 16847750,
+          "sampled_ns": 34415213,
+          "delivered_ns": 35422893,
+          "decision_ns": 35430573,
+          "old_window_start_ns": 24415213,
+          "new_window_start_ns": 24415213,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 17659872,
+          "new_ack_bytes": 17659872,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 24415946,
+          "last_current_window_ack_ns": 32826724,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 1.7659872,
+          "shadow_bytes_per_ns": 1.7659872
+        },
+        {
+          "slot": 1,
+          "rank": 5,
+          "report_id": 49677,
+          "phase": 1,
+          "phase_start_ns": 16847750,
+          "sampled_ns": 34422893,
+          "delivered_ns": 35430573,
+          "decision_ns": 35430573,
+          "old_window_start_ns": 24422893,
+          "new_window_start_ns": 24422893,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 17642304,
+          "new_ack_bytes": 17642304,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 24423042,
+          "last_current_window_ack_ns": 32798931,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 1.7642304,
+          "shadow_bytes_per_ns": 1.7642304
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 4135555.730889124,
+        "switch_ns": 5410792.3212890625,
+        "gain_ns": -1275236.5903999386,
+        "relay_bytes_per_ns": 0.3289249810532867,
+        "source_stay_ns": 4135555.730889124,
+        "source_switch_ns": 5410792.3212890625,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 102080.0,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 4135555.730889124,
+        "switch_ns": 5410792.3212890625,
+        "gain_ns": -1275236.5903999386,
+        "relay_bytes_per_ns": 0.3289249810532867,
+        "source_stay_ns": 4135555.730889124,
+        "source_switch_ns": 5410792.3212890625,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 102080.0,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 1,
+      "timestamp_ns": 35522026,
+      "src": 15,
+      "phase": 1,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 224080,
+        "b_bytes": 224080,
+        "pending_bytes": 3342336,
+        "service_a": {
+          "bytes_per_ns": 1.0438912,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2466256,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            240696,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 631715,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.7616928,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.74432,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 224080,
+        "b_bytes": 224080,
+        "pending_bytes": 3342336,
+        "service_a": {
+          "bytes_per_ns": 1.0438912,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2466256,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            240696,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 631715,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.7616928,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 1.74432,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 12,
+          "report_id": 49693,
+          "phase": 1,
+          "phase_start_ns": 16847750,
+          "sampled_ns": 34506666,
+          "delivered_ns": 35514346,
+          "decision_ns": 35522026,
+          "old_window_start_ns": 24506666,
+          "new_window_start_ns": 24506666,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 17616928,
+          "new_ack_bytes": 17616928,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 24507248,
+          "last_current_window_ack_ns": 32933378,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 1.7616928,
+          "shadow_bytes_per_ns": 1.7616928
+        },
+        {
+          "slot": 1,
+          "rank": 2,
+          "report_id": 49694,
+          "phase": 1,
+          "phase_start_ns": 16847750,
+          "sampled_ns": 34514346,
+          "delivered_ns": 35522026,
+          "decision_ns": 35522026,
+          "old_window_start_ns": 24514346,
+          "new_window_start_ns": 24514346,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 17443200,
+          "new_ack_bytes": 17443200,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 24514625,
+          "last_current_window_ack_ns": 32808955,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 1.74432,
+          "shadow_bytes_per_ns": 1.74432
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 2937192.2938159346,
+        "switch_ns": 5923433.224609375,
+        "gain_ns": -2986240.9307934404,
+        "relay_bytes_per_ns": 0.2722770631834347,
+        "source_stay_ns": 2937192.2938159346,
+        "source_switch_ns": 5923433.224609375,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 224080.0,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 2937192.2938159346,
+        "switch_ns": 5923433.224609375,
+        "gain_ns": -2986240.9307934404,
+        "relay_bytes_per_ns": 0.2722770631834347,
+        "source_stay_ns": 2937192.2938159346,
+        "source_switch_ns": 5923433.224609375,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 224080.0,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 2,
+      "timestamp_ns": 44606556,
+      "src": 0,
+      "phase": 2,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 153808,
+        "b_bytes": 245552,
+        "pending_bytes": 27525120,
+        "service_a": {
+          "bytes_per_ns": 0.9710896,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1917136,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            225226,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 48774,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26207856,
+            "own_bytes_per_ns": 0.7346576,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26141200,
+            "own_bytes_per_ns": 0.7413232,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 153808,
+        "b_bytes": 245552,
+        "pending_bytes": 27525120,
+        "service_a": {
+          "bytes_per_ns": 0.9710896,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1917136,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            225226,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 48774,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26207856,
+            "own_bytes_per_ns": 2.084430107978406,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26141200,
+            "own_bytes_per_ns": 2.09876900419316,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 1,
+          "report_id": 54566,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 43591196,
+          "delivered_ns": 44598876,
+          "decision_ns": 44606556,
+          "old_window_start_ns": 33591196,
+          "new_window_start_ns": 40066695,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3524501,
+          "old_ack_bytes": 7346576,
+          "new_ack_bytes": 7346576,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 40071308,
+          "last_current_window_ack_ns": 43590889,
+          "own_remaining_bytes": 26207856,
+          "old_bytes_per_ns": 0.7346576,
+          "shadow_bytes_per_ns": 2.084430107978406
+        },
+        {
+          "slot": 1,
+          "rank": 5,
+          "report_id": 54567,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 43598876,
+          "delivered_ns": 44606556,
+          "decision_ns": 44606556,
+          "old_window_start_ns": 33598876,
+          "new_window_start_ns": 40066695,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3532181,
+          "old_ack_bytes": 7413232,
+          "new_ack_bytes": 7413232,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 40071948,
+          "last_current_window_ack_ns": 43598778,
+          "own_remaining_bytes": 26141200,
+          "old_bytes_per_ns": 0.7413232,
+          "shadow_bytes_per_ns": 2.09876900419316
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 35673565.48138888,
+        "switch_ns": 42882692.08558469,
+        "gain_ns": -7209126.604195811,
+        "relay_bytes_per_ns": 0.2909788390327937,
+        "source_stay_ns": 24014794.592928536,
+        "source_switch_ns": 23301907.82690429,
+        "helper_stay_ns": 35673565.48138888,
+        "helper_switch_ns": 42882692.08558469,
+        "relay_assigned_bytes": 5296239.649134643,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "benefit_below_margin",
+        "stay_ns": 24014794.592928536,
+        "switch_ns": 23301907.82690429,
+        "gain_ns": 712886.7660242468,
+        "relay_bytes_per_ns": 0.2909788390327937,
+        "source_stay_ns": 24014794.592928536,
+        "source_switch_ns": 23301907.82690429,
+        "helper_stay_ns": 12573151.721272059,
+        "helper_switch_ns": 15114009.113833532,
+        "relay_assigned_bytes": 5296239.649134643,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": true
+    },
+    {
+      "index": 3,
+      "timestamp_ns": 44630398,
+      "src": 15,
+      "phase": 2,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 177232,
+        "b_bytes": 175280,
+        "pending_bytes": 27262976,
+        "service_a": {
+          "bytes_per_ns": 0.8612832,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2259456,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            249068,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 11270,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26254704,
+            "own_bytes_per_ns": 0.7299728,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26094352,
+            "own_bytes_per_ns": 0.746008,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 177232,
+        "b_bytes": 175280,
+        "pending_bytes": 27262976,
+        "service_a": {
+          "bytes_per_ns": 0.8612832,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2259456,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            249068,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 11270,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26254704,
+            "own_bytes_per_ns": 2.0572216383816335,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26094352,
+            "own_bytes_per_ns": 2.097871695430541,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 12,
+          "report_id": 54583,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 43615038,
+          "delivered_ns": 44622718,
+          "decision_ns": 44630398,
+          "old_window_start_ns": 33615038,
+          "new_window_start_ns": 40066695,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3548343,
+          "old_ack_bytes": 7299728,
+          "new_ack_bytes": 7299728,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 40073726,
+          "last_current_window_ack_ns": 43614946,
+          "own_remaining_bytes": 26254704,
+          "old_bytes_per_ns": 0.7299728,
+          "shadow_bytes_per_ns": 2.0572216383816335
+        },
+        {
+          "slot": 1,
+          "rank": 2,
+          "report_id": 54584,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 43622718,
+          "delivered_ns": 44630398,
+          "decision_ns": 44630398,
+          "old_window_start_ns": 33622718,
+          "new_window_start_ns": 40066695,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3556023,
+          "old_ack_bytes": 7460080,
+          "new_ack_bytes": 7460080,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 40071308,
+          "last_current_window_ack_ns": 43622227,
+          "own_remaining_bytes": 26094352,
+          "old_bytes_per_ns": 0.746008,
+          "shadow_bytes_per_ns": 2.097871695430541
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 35966688.073857,
+        "switch_ns": 43411288.54200727,
+        "gain_ns": -7444600.4681502655,
+        "relay_bytes_per_ns": 0.2631249297380635,
+        "source_stay_ns": 25399886.390058834,
+        "source_switch_ns": 25753587.38145948,
+        "helper_stay_ns": 35966688.073857,
+        "helper_switch_ns": 43411288.54200727,
+        "relay_assigned_bytes": 5434355.848616958,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 25399886.390058834,
+        "switch_ns": 25753587.38145948,
+        "gain_ns": -353700.9914006442,
+        "relay_bytes_per_ns": 0.2631249297380635,
+        "source_stay_ns": 25399886.390058834,
+        "source_switch_ns": 25753587.38145948,
+        "helper_stay_ns": 12762214.586005395,
+        "helper_switch_ns": 15403814.181901166,
+        "relay_assigned_bytes": 5434355.848616958,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 4,
+      "timestamp_ns": 53960343,
+      "src": 0,
+      "phase": 2,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 82560,
+        "b_bytes": 184064,
+        "pending_bytes": 16384000,
+        "service_a": {
+          "bytes_per_ns": 1.061,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1444032,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            179013,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 49685,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6321312,
+            "own_bytes_per_ns": 2.1172176,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6238496,
+            "own_bytes_per_ns": 2.117984,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 82560,
+        "b_bytes": 184064,
+        "pending_bytes": 16384000,
+        "service_a": {
+          "bytes_per_ns": 1.061,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1444032,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            179013,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 49685,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6321312,
+            "own_bytes_per_ns": 2.1172176,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6238496,
+            "own_bytes_per_ns": 2.117984,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 1,
+          "report_id": 68534,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 52944983,
+          "delivered_ns": 53952663,
+          "decision_ns": 53960343,
+          "old_window_start_ns": 42944983,
+          "new_window_start_ns": 42944983,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21172176,
+          "new_ack_bytes": 21172176,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 42945630,
+          "last_current_window_ack_ns": 52944790,
+          "own_remaining_bytes": 6321312,
+          "old_bytes_per_ns": 2.1172176,
+          "shadow_bytes_per_ns": 2.1172176
+        },
+        {
+          "slot": 1,
+          "rank": 5,
+          "report_id": 68535,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 52952663,
+          "delivered_ns": 53960343,
+          "decision_ns": 53960343,
+          "old_window_start_ns": 42952663,
+          "new_window_start_ns": 42952663,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21179840,
+          "new_ack_bytes": 21179840,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 42953054,
+          "last_current_window_ack_ns": 52952340,
+          "own_remaining_bytes": 6238496,
+          "old_bytes_per_ns": 2.117984,
+          "shadow_bytes_per_ns": 2.117984
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "benefit_below_margin",
+        "stay_ns": 13813323.210026322,
+        "switch_ns": 12975914.10407611,
+        "gain_ns": 837409.1059502121,
+        "relay_bytes_per_ns": 0.366096317027255,
+        "source_stay_ns": 13813323.210026322,
+        "source_switch_ns": 12975914.10407611,
+        "helper_stay_ns": 2985669.493773337,
+        "helper_switch_ns": 4347446.920701607,
+        "relay_assigned_bytes": 2883179.135575248,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "benefit_below_margin",
+        "stay_ns": 13813323.210026322,
+        "switch_ns": 12975914.10407611,
+        "gain_ns": 837409.1059502121,
+        "relay_bytes_per_ns": 0.366096317027255,
+        "source_stay_ns": 13813323.210026322,
+        "source_switch_ns": 12975914.10407611,
+        "helper_stay_ns": 2985669.493773337,
+        "helper_switch_ns": 4347446.920701607,
+        "relay_assigned_bytes": 2883179.135575248,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 5,
+      "timestamp_ns": 54030475,
+      "src": 15,
+      "phase": 2,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 106960,
+        "b_bytes": 217248,
+        "pending_bytes": 15007744,
+        "service_a": {
+          "bytes_per_ns": 1.0622832,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2483824,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            199145,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 797793,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6337072,
+            "own_bytes_per_ns": 2.1104544,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6089136,
+            "own_bytes_per_ns": 2.1190464,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 106960,
+        "b_bytes": 217248,
+        "pending_bytes": 15007744,
+        "service_a": {
+          "bytes_per_ns": 1.0622832,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2483824,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            199145,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 797793,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6337072,
+            "own_bytes_per_ns": 2.1104544,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6089136,
+            "own_bytes_per_ns": 2.1190464,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 12,
+          "report_id": 68578,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 53015115,
+          "delivered_ns": 54022795,
+          "decision_ns": 54030475,
+          "old_window_start_ns": 43015115,
+          "new_window_start_ns": 43015115,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21104544,
+          "new_ack_bytes": 21104544,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 43015643,
+          "last_current_window_ack_ns": 53014790,
+          "own_remaining_bytes": 6337072,
+          "old_bytes_per_ns": 2.1104544,
+          "shadow_bytes_per_ns": 2.1104544
+        },
+        {
+          "slot": 1,
+          "rank": 2,
+          "report_id": 68579,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 53022795,
+          "delivered_ns": 54030475,
+          "decision_ns": 54030475,
+          "old_window_start_ns": 43022795,
+          "new_window_start_ns": 43022795,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21190464,
+          "new_ack_bytes": 21190464,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 43023027,
+          "last_current_window_ack_ns": 53022624,
+          "own_remaining_bytes": 6089136,
+          "old_bytes_per_ns": 2.1190464,
+          "shadow_bytes_per_ns": 2.1190464
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 11697836.5801315,
+        "switch_ns": 12225678.131063422,
+        "gain_ns": -527841.5509319231,
+        "relay_bytes_per_ns": 0.32908684626779483,
+        "source_stay_ns": 11697836.5801315,
+        "source_switch_ns": 12225678.131063422,
+        "helper_stay_ns": 3002705.009878441,
+        "helper_switch_ns": 4113754.607900521,
+        "relay_assigned_bytes": 2344819.5127639286,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 11697836.5801315,
+        "switch_ns": 12225678.131063422,
+        "gain_ns": -527841.5509319231,
+        "relay_bytes_per_ns": 0.32908684626779483,
+        "source_stay_ns": 11697836.5801315,
+        "source_switch_ns": 12225678.131063422,
+        "helper_stay_ns": 3002705.009878441,
+        "helper_switch_ns": 4113754.607900521,
+        "relay_assigned_bytes": 2344819.5127639286,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 6,
+      "timestamp_ns": 63140790,
+      "src": 0,
+      "phase": 2,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 223104,
+        "b_bytes": 262144,
+        "pending_bytes": 5308416,
+        "service_a": {
+          "bytes_per_ns": 1.0487024,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.131072,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            59460,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 92051,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.811728,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8034032,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 223104,
+        "b_bytes": 262144,
+        "pending_bytes": 5308416,
+        "service_a": {
+          "bytes_per_ns": 1.0487024,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.131072,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            59460,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 92051,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.811728,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8034032,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 1,
+          "report_id": 75212,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 62125430,
+          "delivered_ns": 63133110,
+          "decision_ns": 63140790,
+          "old_window_start_ns": 52125430,
+          "new_window_start_ns": 52125430,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 8117280,
+          "new_ack_bytes": 8117280,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 52125522,
+          "last_current_window_ack_ns": 55950276,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.811728,
+          "shadow_bytes_per_ns": 0.811728
+        },
+        {
+          "slot": 1,
+          "rank": 5,
+          "report_id": 75213,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 62133110,
+          "delivered_ns": 63140790,
+          "decision_ns": 63140790,
+          "old_window_start_ns": 52133110,
+          "new_window_start_ns": 52133110,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 8034032,
+          "new_ack_bytes": 8034032,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 52133145,
+          "last_current_window_ack_ns": 55984790,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.8034032,
+          "shadow_bytes_per_ns": 0.8034032
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 4910823.628653071,
+        "switch_ns": 5338288.0,
+        "gain_ns": -427464.3713469291,
+        "relay_bytes_per_ns": 1.1021863437605113,
+        "source_stay_ns": 4910823.628653071,
+        "source_switch_ns": 5338288.0,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 262144.0,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 4910823.628653071,
+        "switch_ns": 5338288.0,
+        "gain_ns": -427464.3713469291,
+        "relay_bytes_per_ns": 1.1021863437605113,
+        "source_stay_ns": 4910823.628653071,
+        "source_switch_ns": 5338288.0,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 262144.0,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 7,
+      "timestamp_ns": 63192834,
+      "src": 15,
+      "phase": 2,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 168448,
+        "b_bytes": 222128,
+        "pending_bytes": 3014656,
+        "service_a": {
+          "bytes_per_ns": 1.0534704,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2476704,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            61504,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 630517,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8135824,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.791008,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 168448,
+        "b_bytes": 222128,
+        "pending_bytes": 3014656,
+        "service_a": {
+          "bytes_per_ns": 1.0534704,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2476704,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            61504,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 630517,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8135824,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.791008,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 12,
+          "report_id": 75214,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 62177474,
+          "delivered_ns": 63185154,
+          "decision_ns": 63192834,
+          "old_window_start_ns": 52177474,
+          "new_window_start_ns": 52177474,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 8135824,
+          "new_ack_bytes": 8135824,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 52177788,
+          "last_current_window_ack_ns": 56037380,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.8135824,
+          "shadow_bytes_per_ns": 0.8135824
+        },
+        {
+          "slot": 1,
+          "rank": 2,
+          "report_id": 75215,
+          "phase": 2,
+          "phase_start_ns": 40066695,
+          "sampled_ns": 62185154,
+          "delivered_ns": 63192834,
+          "decision_ns": 63192834,
+          "old_window_start_ns": 52185154,
+          "new_window_start_ns": 52185154,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 7910080,
+          "new_ack_bytes": 7910080,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 52185389,
+          "last_current_window_ack_ns": 55948855,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.791008,
+          "shadow_bytes_per_ns": 0.791008
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 2617112.6137924506,
+        "switch_ns": 5308909.921875,
+        "gain_ns": -2691797.3080825494,
+        "relay_bytes_per_ns": 1.065556711758585,
+        "source_stay_ns": 2617112.6137924506,
+        "source_switch_ns": 5308909.921875,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 222128.0,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 2617112.6137924506,
+        "switch_ns": 5308909.921875,
+        "gain_ns": -2691797.3080825494,
+        "relay_bytes_per_ns": 1.065556711758585,
+        "source_stay_ns": 2617112.6137924506,
+        "source_switch_ns": 5308909.921875,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 222128.0,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 8,
+      "timestamp_ns": 72481389,
+      "src": 0,
+      "phase": 3,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 157712,
+        "b_bytes": 15216,
+        "pending_bytes": 27787264,
+        "service_a": {
+          "bytes_per_ns": 1.0435008,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.177504,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            250059,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 56341,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26221520,
+            "own_bytes_per_ns": 0.7332912,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26160720,
+            "own_bytes_per_ns": 0.7393712,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 157712,
+        "b_bytes": 15216,
+        "pending_bytes": 27787264,
+        "service_a": {
+          "bytes_per_ns": 1.0435008,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.177504,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            250059,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 56341,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26221520,
+            "own_bytes_per_ns": 2.0808844645482045,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26160720,
+            "own_bytes_per_ns": 2.0935751864583394,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 1,
+          "report_id": 80096,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 71466029,
+          "delivered_ns": 72473709,
+          "decision_ns": 72481389,
+          "old_window_start_ns": 61466029,
+          "new_window_start_ns": 67942089,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3523940,
+          "old_ack_bytes": 7332912,
+          "new_ack_bytes": 7332912,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 67946702,
+          "last_current_window_ack_ns": 71465741,
+          "own_remaining_bytes": 26221520,
+          "old_bytes_per_ns": 0.7332912,
+          "shadow_bytes_per_ns": 2.0808844645482045
+        },
+        {
+          "slot": 1,
+          "rank": 5,
+          "report_id": 80097,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 71473709,
+          "delivered_ns": 72481389,
+          "decision_ns": 72481389,
+          "old_window_start_ns": 61473709,
+          "new_window_start_ns": 67942089,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3531620,
+          "old_ack_bytes": 7393712,
+          "new_ack_bytes": 7393712,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 67947342,
+          "last_current_window_ack_ns": 71473291,
+          "own_remaining_bytes": 26160720,
+          "old_bytes_per_ns": 0.7393712,
+          "shadow_bytes_per_ns": 2.0935751864583394
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 35758672.68010307,
+        "switch_ns": 41955823.530752994,
+        "gain_ns": -6197150.850649923,
+        "relay_bytes_per_ns": 0.26208214861292733,
+        "source_stay_ns": 22899330.12548354,
+        "source_switch_ns": 22439729.625646573,
+        "helper_stay_ns": 35758672.68010307,
+        "helper_switch_ns": 41955823.530752994,
+        "relay_assigned_bytes": 4544316.183854103,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "benefit_below_margin",
+        "stay_ns": 22899330.12548354,
+        "switch_ns": 22439729.625646573,
+        "gain_ns": 459600.4998369664,
+        "relay_bytes_per_ns": 0.26208214861292733,
+        "source_stay_ns": 22899330.12548354,
+        "source_switch_ns": 22439729.625646573,
+        "helper_stay_ns": 12601141.700432243,
+        "helper_switch_ns": 14784980.477296172,
+        "relay_assigned_bytes": 4544316.183854103,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": true
+    },
+    {
+      "index": 9,
+      "timestamp_ns": 72524542,
+      "src": 15,
+      "phase": 3,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 163568,
+        "b_bytes": 232864,
+        "pending_bytes": 27197440,
+        "service_a": {
+          "bytes_per_ns": 0.8082688,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2137312,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            243212,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 373370,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26210784,
+            "own_bytes_per_ns": 0.7343648,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26049456,
+            "own_bytes_per_ns": 0.7504976,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 163568,
+        "b_bytes": 232864,
+        "pending_bytes": 27197440,
+        "service_a": {
+          "bytes_per_ns": 0.8082688,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2137312,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            243212,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 373370,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 26210784,
+            "own_bytes_per_ns": 2.0587206445136137,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 26049456,
+            "own_bytes_per_ns": 2.099427292306393,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 12,
+          "report_id": 80107,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 71509182,
+          "delivered_ns": 72516862,
+          "decision_ns": 72524542,
+          "old_window_start_ns": 61509182,
+          "new_window_start_ns": 67942089,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3567093,
+          "old_ack_bytes": 7343648,
+          "new_ack_bytes": 7343648,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 67949120,
+          "last_current_window_ack_ns": 71508535,
+          "own_remaining_bytes": 26210784,
+          "old_bytes_per_ns": 0.7343648,
+          "shadow_bytes_per_ns": 2.0587206445136137
+        },
+        {
+          "slot": 1,
+          "rank": 2,
+          "report_id": 80108,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 71516862,
+          "delivered_ns": 72524542,
+          "decision_ns": 72524542,
+          "old_window_start_ns": 61516862,
+          "new_window_start_ns": 67942089,
+          "old_window_ns": 10000000,
+          "new_window_ns": 3574773,
+          "old_ack_bytes": 7504976,
+          "new_ack_bytes": 7504976,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 67946702,
+          "last_current_window_ack_ns": 71516507,
+          "own_remaining_bytes": 26049456,
+          "old_bytes_per_ns": 0.7504976,
+          "shadow_bytes_per_ns": 2.099427292306393
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 35691776.076413244,
+        "switch_ns": 43682963.21084389,
+        "gain_ns": -7991187.134430647,
+        "relay_bytes_per_ns": 0.2694603884676743,
+        "source_stay_ns": 26999874.755381603,
+        "source_switch_ns": 26878960.88313846,
+        "helper_stay_ns": 35691776.076413244,
+        "helper_switch_ns": 43682963.21084389,
+        "relay_assigned_bytes": 5868446.541738737,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "benefit_below_margin",
+        "stay_ns": 26999874.755381603,
+        "switch_ns": 26878960.88313846,
+        "gain_ns": 120913.87224314362,
+        "relay_bytes_per_ns": 0.2694603884676743,
+        "source_stay_ns": 26999874.755381603,
+        "source_switch_ns": 26878960.88313846,
+        "helper_stay_ns": 12731588.459974118,
+        "helper_switch_ns": 15582119.22886588,
+        "relay_assigned_bytes": 5868446.541738737,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": true
+    },
+    {
+      "index": 10,
+      "timestamp_ns": 81873546,
+      "src": 0,
+      "phase": 3,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 31808,
+        "b_bytes": 262144,
+        "pending_bytes": 16646144,
+        "service_a": {
+          "bytes_per_ns": 1.062352,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.127656,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            192216,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 824861,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6234016,
+            "own_bytes_per_ns": 2.1187104,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6200576,
+            "own_bytes_per_ns": 2.1150416,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 31808,
+        "b_bytes": 262144,
+        "pending_bytes": 16646144,
+        "service_a": {
+          "bytes_per_ns": 1.062352,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.127656,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            192216,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 824861,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6234016,
+            "own_bytes_per_ns": 2.1187104,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6200576,
+            "own_bytes_per_ns": 2.1150416,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 1,
+          "report_id": 94079,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 80858186,
+          "delivered_ns": 81865866,
+          "decision_ns": 81873546,
+          "old_window_start_ns": 70858186,
+          "new_window_start_ns": 70858186,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21187104,
+          "new_ack_bytes": 21187104,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 70858882,
+          "last_current_window_ack_ns": 80857578,
+          "own_remaining_bytes": 6234016,
+          "old_bytes_per_ns": 2.1187104,
+          "shadow_bytes_per_ns": 2.1187104
+        },
+        {
+          "slot": 1,
+          "rank": 5,
+          "report_id": 94080,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 80865866,
+          "delivered_ns": 81873546,
+          "decision_ns": 81873546,
+          "old_window_start_ns": 70865866,
+          "new_window_start_ns": 70865866,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21150416,
+          "new_ack_bytes": 21150416,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 70866230,
+          "last_current_window_ack_ns": 80865342,
+          "own_remaining_bytes": 6200576,
+          "old_bytes_per_ns": 2.1150416,
+          "shadow_bytes_per_ns": 2.1150416
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "benefit_below_margin",
+        "stay_ns": 14235279.090560736,
+        "switch_ns": 13310816.685421675,
+        "gain_ns": 924462.4051390607,
+        "relay_bytes_per_ns": 0.3409497648478795,
+        "source_stay_ns": 14235279.090560736,
+        "source_switch_ns": 13310816.685421675,
+        "helper_stay_ns": 2942363.4301318387,
+        "helper_switch_ns": 4263602.6483888095,
+        "relay_assigned_bytes": 2799323.2726089135,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "benefit_below_margin",
+        "stay_ns": 14235279.090560736,
+        "switch_ns": 13310816.685421675,
+        "gain_ns": 924462.4051390607,
+        "relay_bytes_per_ns": 0.3409497648478795,
+        "source_stay_ns": 14235279.090560736,
+        "source_switch_ns": 13310816.685421675,
+        "helper_stay_ns": 2942363.4301318387,
+        "helper_switch_ns": 4263602.6483888095,
+        "relay_assigned_bytes": 2799323.2726089135,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 11,
+      "timestamp_ns": 81922757,
+      "src": 15,
+      "phase": 3,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 54256,
+        "b_bytes": 258240,
+        "pending_bytes": 15007744,
+        "service_a": {
+          "bytes_per_ns": 1.0598288,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2476016,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            241427,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 642613,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6207120,
+            "own_bytes_per_ns": 2.1183744,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6037408,
+            "own_bytes_per_ns": 2.1200192,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 54256,
+        "b_bytes": 258240,
+        "pending_bytes": 15007744,
+        "service_a": {
+          "bytes_per_ns": 1.0598288,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2476016,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            241427,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 642613,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 6207120,
+            "own_bytes_per_ns": 2.1183744,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 6037408,
+            "own_bytes_per_ns": 2.1200192,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 12,
+          "report_id": 94204,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 80907397,
+          "delivered_ns": 81915077,
+          "decision_ns": 81922757,
+          "old_window_start_ns": 70907397,
+          "new_window_start_ns": 70907397,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21183744,
+          "new_ack_bytes": 21183744,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 70908091,
+          "last_current_window_ack_ns": 80907363,
+          "own_remaining_bytes": 6207120,
+          "old_bytes_per_ns": 2.1183744,
+          "shadow_bytes_per_ns": 2.1183744
+        },
+        {
+          "slot": 1,
+          "rank": 2,
+          "report_id": 94205,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 80915077,
+          "delivered_ns": 81922757,
+          "decision_ns": 81922757,
+          "old_window_start_ns": 70915077,
+          "new_window_start_ns": 70915077,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 21200192,
+          "new_ack_bytes": 21200192,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 70915625,
+          "last_current_window_ack_ns": 80914694,
+          "own_remaining_bytes": 6037408,
+          "old_bytes_per_ns": 2.1200192,
+          "shadow_bytes_per_ns": 2.1200192
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 11717824.520525146,
+        "switch_ns": 12547887.670806274,
+        "gain_ns": -830063.1502811275,
+        "relay_bytes_per_ns": 0.2714526544255613,
+        "source_stay_ns": 11717824.520525146,
+        "source_switch_ns": 12547887.670806274,
+        "helper_stay_ns": 2930133.5967806256,
+        "helper_switch_ns": 3884463.137070856,
+        "relay_assigned_bytes": 2021627.2673145924,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 11717824.520525146,
+        "switch_ns": 12547887.670806274,
+        "gain_ns": -830063.1502811275,
+        "relay_bytes_per_ns": 0.2714526544255613,
+        "source_stay_ns": 11717824.520525146,
+        "source_switch_ns": 12547887.670806274,
+        "helper_stay_ns": 2930133.5967806256,
+        "helper_switch_ns": 3884463.137070856,
+        "relay_assigned_bytes": 2021627.2673145924,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 12,
+      "timestamp_ns": 91040790,
+      "src": 0,
+      "phase": 3,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 16192,
+        "b_bytes": 19120,
+        "pending_bytes": 6029312,
+        "service_a": {
+          "bytes_per_ns": 1.04396,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1323408,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            59460,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 67186,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8054672,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8005728,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 16192,
+        "b_bytes": 19120,
+        "pending_bytes": 6029312,
+        "service_a": {
+          "bytes_per_ns": 1.04396,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.1323408,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            59460,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 67186,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8054672,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8005728,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 1,
+          "report_id": 100724,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 90025430,
+          "delivered_ns": 91033110,
+          "decision_ns": 91040790,
+          "old_window_start_ns": 80025430,
+          "new_window_start_ns": 80025430,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 8054672,
+          "new_ack_bytes": 8054672,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 80025910,
+          "last_current_window_ack_ns": 83876235,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.8054672,
+          "shadow_bytes_per_ns": 0.8054672
+        },
+        {
+          "slot": 1,
+          "rank": 5,
+          "report_id": 100725,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 90033110,
+          "delivered_ns": 91040790,
+          "decision_ns": 91040790,
+          "old_window_start_ns": 80033110,
+          "new_window_start_ns": 80033110,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 8005728,
+          "new_ack_bytes": 8005728,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 80033575,
+          "last_current_window_ack_ns": 83867466,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.8005728,
+          "shadow_bytes_per_ns": 0.8005728
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 5155674.466939068,
+        "switch_ns": 5445233.577214381,
+        "gain_ns": -289559.1102753123,
+        "relay_bytes_per_ns": 1.1021863437605113,
+        "source_stay_ns": 5155674.466939068,
+        "source_switch_ns": 5445233.577214381,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 380017.9547312753,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 5155674.466939068,
+        "switch_ns": 5445233.577214381,
+        "gain_ns": -289559.1102753123,
+        "relay_bytes_per_ns": 1.1021863437605113,
+        "source_stay_ns": 5155674.466939068,
+        "source_switch_ns": 5445233.577214381,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 380017.9547312753,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    },
+    {
+      "index": 13,
+      "timestamp_ns": 91092834,
+      "src": 15,
+      "phase": 3,
+      "stage": "probe_complete",
+      "original_input": {
+        "a_bytes": 238720,
+        "b_bytes": 198704,
+        "pending_bytes": 2883584,
+        "service_a": {
+          "bytes_per_ns": 1.0564272,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2477536,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            61504,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 720403,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8008656,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.7841616,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "shadow_input": {
+        "a_bytes": 238720,
+        "b_bytes": 198704,
+        "pending_bytes": 2883584,
+        "service_a": {
+          "bytes_per_ns": 1.0564272,
+          "age_ns": 0,
+          "known": 1
+        },
+        "service_b": {
+          "bytes_per_ns": 0.2477536,
+          "age_ns": 0,
+          "known": 1
+        },
+        "relay": {
+          "sample_bytes": 65536,
+          "leg_ns": [
+            304,
+            61504,
+            304
+          ],
+          "final_ack_ns": 1007680,
+          "parallel_chunks": 4,
+          "age_ns": 3030720,
+          "known": 1
+        },
+        "setup_ns": 4092160,
+        "helper_ready": 1,
+        "b_no_progress_ns": 720403,
+        "tail_debounce_ns": 2000000,
+        "source_window": 32,
+        "pipelined": 1,
+        "helpers": [
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.8008656,
+            "age_ns": 1015360,
+            "known": 1
+          },
+          {
+            "own_remaining_bytes": 0,
+            "own_bytes_per_ns": 0.7841616,
+            "age_ns": 1007680,
+            "known": 1
+          }
+        ]
+      },
+      "helper_windows": [
+        {
+          "slot": 0,
+          "rank": 12,
+          "report_id": 100738,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 90077474,
+          "delivered_ns": 91085154,
+          "decision_ns": 91092834,
+          "old_window_start_ns": 80077474,
+          "new_window_start_ns": 80077474,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 8008656,
+          "new_ack_bytes": 8008656,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 80077751,
+          "last_current_window_ack_ns": 83903673,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.8008656,
+          "shadow_bytes_per_ns": 0.8008656
+        },
+        {
+          "slot": 1,
+          "rank": 2,
+          "report_id": 100739,
+          "phase": 3,
+          "phase_start_ns": 67942089,
+          "sampled_ns": 90085154,
+          "delivered_ns": 91092834,
+          "decision_ns": 91092834,
+          "old_window_start_ns": 80085154,
+          "new_window_start_ns": 80085154,
+          "old_window_ns": 10000000,
+          "new_window_ns": 10000000,
+          "old_ack_bytes": 7841616,
+          "new_ack_bytes": 7841616,
+          "discarded_ack_bytes": 0,
+          "first_current_window_ack_ns": 80085677,
+          "last_current_window_ack_ns": 83886327,
+          "own_remaining_bytes": 0,
+          "old_bytes_per_ns": 0.7841616,
+          "shadow_bytes_per_ns": 0.7841616
+        }
+      ],
+      "original_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 2546432.212466247,
+        "switch_ns": 5286927.046875,
+        "gain_ns": -2740494.834408753,
+        "relay_bytes_per_ns": 1.065556711758585,
+        "source_stay_ns": 2546432.212466247,
+        "source_switch_ns": 5286927.046875,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 198704.0,
+        "tail_forecast_ns": 0.0
+      },
+      "shadow_prediction": {
+        "should_switch": false,
+        "probe_required": false,
+        "reason": "stay_no_slower",
+        "stay_ns": 2546432.212466247,
+        "switch_ns": 5286927.046875,
+        "gain_ns": -2740494.834408753,
+        "relay_bytes_per_ns": 1.065556711758585,
+        "source_stay_ns": 2546432.212466247,
+        "source_switch_ns": 5286927.046875,
+        "helper_stay_ns": 0.0,
+        "helper_switch_ns": 0.0,
+        "relay_assigned_bytes": 198704.0,
+        "tail_forecast_ns": 0.0
+      },
+      "decision_flipped": false,
+      "reason_changed": false
+    }
+  ],
+  "summary": {
+    "decisions": 14,
+    "helper_reports_checked": 28,
+    "original_switches": 0,
+    "shadow_switches": 0,
+    "decision_flips": 0,
+    "reason_changes": 3,
+    "windows_shortened": 8,
+    "windows_with_discarded_ack_bytes": 0
+  }
+}

@@ -1,0 +1,3 @@
+timestamp_ns,path_id,signal,alarm_origin
+31065907,13,canary_service,SERVICE-R
+31073587,721,canary_service,SERVICE-R

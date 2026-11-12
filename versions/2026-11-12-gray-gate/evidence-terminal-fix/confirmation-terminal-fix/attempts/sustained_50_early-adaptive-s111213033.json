@@ -1,0 +1,40 @@
+{
+  "name": "sustained_50_early-adaptive-s111213033",
+  "valid": true,
+  "status": "completed",
+  "exit_code": 0,
+  "archive_sha256": "b36fac37a8d84404f67c13784653780194a80f797bf703b37b4de83ca93abd31",
+  "score": {
+    "classification": "miss",
+    "valid": true,
+    "affected_path_ids": [
+      13,
+      721
+    ],
+    "observed_affected_path_ids": [
+      13
+    ],
+    "delays_ms": {
+      "13": 8.726741,
+      "721": null
+    },
+    "all_paths_delay_ms": null,
+    "first_incident_delay_ms": 8.726741,
+    "observed_all_paths_delay_ms": null,
+    "all_paths_timely_success": false,
+    "first_incident_timely_success": true,
+    "pre_fault_alarms": [],
+    "unaffected_alarms": [],
+    "healthy_false_alarm": false,
+    "alarm_events": 1,
+    "healthy_exposure_ms": 0,
+    "monitor_end_ns": 250000000,
+    "monitoring_complete": true,
+    "detector_evidence": {
+      "file": "service_alarms.csv",
+      "sha256": "5e0099dab8a395acd40ff3ac60259e1ee4d84547abee0a7d8536e36a075727fb"
+    },
+    "policy_decision_counts": {},
+    "policy_evidence_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

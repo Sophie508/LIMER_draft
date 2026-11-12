@@ -1,0 +1,14 @@
+{
+  "registered": 30,
+  "attempted": 10,
+  "valid": 10,
+  "completed": 10,
+  "unfinished": 0,
+  "invalid": 0,
+  "unrun": 20,
+  "verified_archives": 10,
+  "compact_files_verified": 326,
+  "source_matches_registration": true,
+  "summaries_regenerated": true,
+  "scope": "Local compact verification; raw archive hashes were rechecked on otakotak during export."
+}

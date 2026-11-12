@@ -1,0 +1,7 @@
+{
+  "name": "blackhole-candidate_gate-s111213001",
+  "valid": false,
+  "status": "runner_error",
+  "exit_code": 1,
+  "error": "Runner or independent audit returned nonzero"
+}

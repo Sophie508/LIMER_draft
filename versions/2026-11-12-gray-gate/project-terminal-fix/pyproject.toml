@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "limer-delivery"
+version = "1.0.0"
+description = "Dual-plane adaptive splitting and M13-driven GPU relay recovery simulator"
+requires-python = ">=3.8"
+
+[project.scripts]
+limer = "limerlab.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "python"}
+
+[tool.setuptools.packages.find]
+where = ["python"]
+include = ["limerlab*"]

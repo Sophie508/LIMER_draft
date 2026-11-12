@@ -1,0 +1,32 @@
+{
+  "name": "healthy-legacy_gate-s111213033",
+  "valid": true,
+  "status": "completed",
+  "exit_code": 0,
+  "archive_sha256": "836db922aff6cd8c153fd29274514a148a547860e58ff8fc511648e504f9c7c9",
+  "score": {
+    "classification": "healthy_clear",
+    "valid": true,
+    "affected_path_ids": [],
+    "observed_affected_path_ids": [],
+    "delays_ms": {},
+    "all_paths_delay_ms": null,
+    "first_incident_delay_ms": null,
+    "observed_all_paths_delay_ms": null,
+    "all_paths_timely_success": false,
+    "first_incident_timely_success": false,
+    "pre_fault_alarms": [],
+    "unaffected_alarms": [],
+    "healthy_false_alarm": false,
+    "alarm_events": 0,
+    "healthy_exposure_ms": 250.0,
+    "monitor_end_ns": 250000000,
+    "monitoring_complete": true,
+    "detector_evidence": {
+      "file": "service_alarms.csv",
+      "sha256": "bdd8aa10364f4fb12966c02f95b02c9a4071a062930ff1ec76adbd4704081cf0"
+    },
+    "policy_decision_counts": {},
+    "policy_evidence_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

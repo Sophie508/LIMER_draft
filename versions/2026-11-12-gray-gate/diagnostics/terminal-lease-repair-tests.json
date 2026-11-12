@@ -1,0 +1,58 @@
+{
+  "status": "targeted_callbacks_passed; native_campaign_not_run_by_this_agent",
+  "repair_source": "versions/2026-11-12-gray-gate/project-terminal-fix",
+  "invalid_original_retained": true,
+  "original_attempt": "confirmation-v2/sustained_50_early-candidate_gate-s111213033",
+  "changed_files_sha256": {
+    "src/simulator/recovery/proxy.h": "26039d48123924a5a4f6b38426cebb0ca4258f771d85323b546ad796d4243bbb",
+    "src/simulator/runtime/completion.h": "061a0abb2ef6ae6e39677c5f3332b052341033adfd664c89fa48f725c1257cd3",
+    "tests/test_helper_lease_v2.py": "faf7f11ab520e1b20b2bbd6f2f846fd939c34904114bba236a34787bab5fdcba",
+    "tests/test_relay_pipeline.py": "8f0ec0004c362338e7f02e16c7ca2f1b1f4147e8ed00e92f9b9148fdc48ad185",
+    "tests/test_terminal_lease_cleanup.py": "b0e8845898b8a94b2f9e235123565f2eab08e5c27b8260942afabc5927e9897f"
+  },
+  "targeted_tests": [
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_terminal_lease_cleanup.py' -v",
+      "tests": 7,
+      "exit_code": 0,
+      "seconds": 2.633
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_helper_lease_v2.py' -v",
+      "tests": 1,
+      "exit_code": 0,
+      "seconds": 2.091
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_relay_pipeline.py' -v",
+      "tests": 2,
+      "exit_code": 0,
+      "seconds": 0.782
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_probe_timeout_v2.py' -v",
+      "tests": 1,
+      "exit_code": 0,
+      "seconds": 0.919
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_phase_lifecycle.py' -v",
+      "tests": 1,
+      "exit_code": 0,
+      "seconds": 0.736
+    }
+  ],
+  "total_tests": 12,
+  "frozen_callbacks_negative_control": {
+    "source": "versions/2026-11-12-gray-gate/project",
+    "all_four_failed_as_expected": [
+      "exact post-job release",
+      "live physical probe delayed release",
+      "missing terminal release",
+      "paid pending lending"
+    ],
+    "native_original_source_modified": false
+  },
+  "scope": "Terminal admission cleanup only. No detector, gate, rate, threshold, physical capacity or audit changes.",
+  "pending": "Root full-suite, native build and separately registered repair validation."
+}

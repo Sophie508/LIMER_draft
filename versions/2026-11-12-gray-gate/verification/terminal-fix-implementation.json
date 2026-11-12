@@ -1,0 +1,25 @@
+{
+  "changed_files": [
+    "src/simulator/recovery/proxy.h",
+    "src/simulator/runtime/completion.h",
+    "tests/test_helper_lease_v2.py",
+    "tests/test_relay_pipeline.py",
+    "tests/test_terminal_lease_cleanup.py"
+  ],
+  "tests": 216,
+  "seconds": 14.869,
+  "result": "OK",
+  "source_hashes": {
+    "src/simulator/recovery/proxy.h": "26039d48123924a5a4f6b38426cebb0ca4258f771d85323b546ad796d4243bbb",
+    "src/simulator/runtime/completion.h": "061a0abb2ef6ae6e39677c5f3332b052341033adfd664c89fa48f725c1257cd3",
+    "tests/test_helper_lease_v2.py": "faf7f11ab520e1b20b2bbd6f2f846fd939c34904114bba236a34787bab5fdcba",
+    "tests/test_relay_pipeline.py": "8f0ec0004c362338e7f02e16c7ca2f1b1f4147e8ed00e92f9b9148fdc48ad185",
+    "tests/test_terminal_lease_cleanup.py": "b0e8845898b8a94b2f9e235123565f2eab08e5c27b8260942afabc5927e9897f"
+  },
+  "auditor_and_policy_unchanged": true,
+  "native_regression": "10 selected attempts valid and completed; 20 registrations intentionally unrun",
+  "native_binary_sha256": "8fa663d4182044696b2bc1facc908a0ce4afc9de4bfca5d8aa4b70ce231e1741",
+  "native_build_seconds": 298.076788042672,
+  "completion_policy_alarm_and_precompletion_control_unchanged": true,
+  "detection_limit": "All four sustained-50%-capacity arms miss affected path 721; execution validity is not detection acceptance"
+}

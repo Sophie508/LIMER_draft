@@ -1,0 +1,10 @@
+{
+  "rows": 50,
+  "byte_identical_regeneration": true,
+  "files": {
+    "RESULTS.md": "3705d1972d1224ac29d6c4b9225edc916972732e1685e9e1f8c8b9743ce51d4a",
+    "report.json": "9120de86965bb5561cd8336e97cdc9c3b1956f812a68ef9f43da71ad4cd0050a",
+    "trials.csv": "faf06de73fe5b8cc724c9b99e4011c64392e03eeb45f654f0b9581ff1eef970d"
+  },
+  "generator_sha256": "e63a6e4183184dbaa2210555317bf6e477ebc3c70be876136f4bc4aaa030759c"
+}

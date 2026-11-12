@@ -1,0 +1,13 @@
+{
+  "checked_utc": "2026-11-12T08:09:16.662678+00:00",
+  "quota": "Disk quotas for user suliu (uid 1005): \n     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace\n/dev/mapper/snowman--scratch--vg-scratch 183360872* 169869312 188743680   2days 3004881  5400000 6000000        \n/dev/mapper/ubuntu--vg-snowman--home 144321336* 141557760 157286400    none  483146  4500000 5000000        \n/dev/mapper/snowman--research--vg-research 831394712  849346560 943718400         6243419  27000000 30000000        \n",
+  "soft_quota_headroom_bytes": 18382692352,
+  "measured_raw_bytes": 545432878,
+  "largest_v2_archive_bytes": 95705422,
+  "measured_build_bytes": 780402688,
+  "repair_attempts": 10,
+  "allowed_workers": 2,
+  "required_bytes": 15303197812,
+  "decision": true,
+  "scope": "Two raw runs plus 10 GiB reserve, twice 10 maximum archives and twice measured new-build size; retained failures are already in quota use."
+}

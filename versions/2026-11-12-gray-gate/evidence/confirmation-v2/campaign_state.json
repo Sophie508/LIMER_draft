@@ -1,0 +1,19 @@
+{
+  "status": "complete_with_retained_errors",
+  "attempted": 30,
+  "expected": 30,
+  "registered_cases_remaining": 0,
+  "selected_conditions": [
+    "blackhole",
+    "healthy",
+    "healthy_local_1gbps",
+    "no_healthy_helper",
+    "slow_helper_25",
+    "sustained_25_early",
+    "sustained_25_late",
+    "sustained_50_early",
+    "transient_25_20ms",
+    "weak_loss"
+  ],
+  "updated_utc": "2026-11-12T08:08:43.593727+00:00"
+}

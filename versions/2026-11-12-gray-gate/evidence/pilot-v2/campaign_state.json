@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "attempted": 20,
+  "expected": 20,
+  "registered_cases_remaining": 0,
+  "selected_conditions": [
+    "blackhole",
+    "healthy",
+    "sustained_25_early",
+    "sustained_25_late",
+    "transient_25_20ms",
+    "weak_loss"
+  ],
+  "updated_utc": "2026-11-12T07:39:53.057312+00:00"
+}

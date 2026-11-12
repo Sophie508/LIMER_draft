@@ -1,0 +1,149 @@
+{
+  "registered": 30,
+  "attempted": 10,
+  "valid": 10,
+  "completed": 10,
+  "unrun": 20,
+  "original_failure_retained": true,
+  "native_changed_files": [
+    "src/simulator/recovery/proxy.h",
+    "src/simulator/runtime/completion.h"
+  ],
+  "tooling_changed_files": [
+    "src/simulator/recovery/proxy.h",
+    "src/simulator/runtime/completion.h",
+    "tests/test_helper_lease_v2.py",
+    "tests/test_relay_pipeline.py",
+    "tests/test_terminal_lease_cleanup.py"
+  ],
+  "comparisons": [
+    {
+      "name": "healthy-adaptive-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 64965513,
+      "detection_class": "healthy_clear",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "healthy-direct-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 64965513,
+      "detection_class": "healthy_clear",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "healthy-legacy_gate-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 64965513,
+      "detection_class": "healthy_clear",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "healthy-candidate_gate-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 64965513,
+      "detection_class": "healthy_clear",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "blackhole-direct-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 85230882,
+      "detection_class": "timely",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "blackhole-candidate_gate-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 85300279,
+      "detection_class": "timely",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": [
+        "77018",
+        "77019"
+      ]
+    },
+    {
+      "name": "sustained_50_early-adaptive-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 85493738,
+      "detection_class": "miss",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "sustained_50_early-direct-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 79712694,
+      "detection_class": "miss",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "sustained_50_early-legacy_gate-s111213033",
+      "original_valid": true,
+      "repaired_valid": true,
+      "job_done_ns": 85247467,
+      "detection_class": "miss",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": []
+    },
+    {
+      "name": "sustained_50_early-candidate_gate-s111213033",
+      "original_valid": false,
+      "repaired_valid": true,
+      "job_done_ns": 85251871,
+      "detection_class": "miss",
+      "same_completion_timestamp": true,
+      "same_policy_stream": true,
+      "same_alarm_stream": true,
+      "same_precompletion_control": true,
+      "final_phase_leases_all_released": [
+        "76193",
+        "90596",
+        "100500"
+      ]
+    }
+  ],
+  "scope": "Targeted terminal cleanup regression; not full performance qualification or independent detection evidence."
+}

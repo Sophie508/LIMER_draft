@@ -1,0 +1,19 @@
+{
+  "checked_utc": "2026-11-12T07:39:59.653898+00:00",
+  "pilot_valid": 20,
+  "pilot_completed": 20,
+  "research_quota_used_kib": 825645000,
+  "research_quota_soft_kib": 849346560,
+  "research_quota_hard_kib": 943718400,
+  "soft_headroom_bytes": 24270397440,
+  "measured_raw_bytes": 545432878,
+  "pilot_archive_count": 20,
+  "pilot_largest_archive_bytes": 95705422,
+  "pilot_total_archive_bytes": 1763540281,
+  "projected_additional_30_archive_budget_bytes": 5742325320,
+  "required_bytes": 17570609316,
+  "decision": true,
+  "allowed_workers": 2,
+  "quota_stdout": "Disk quotas for user suliu (uid 1005): \n     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace\n/dev/mapper/snowman--scratch--vg-scratch 183359976* 169869312 188743680   2days 3004801  5400000 6000000        \n/dev/mapper/ubuntu--vg-snowman--home 144321336* 141557760 157286400    none  483146  4500000 5000000        \n/dev/mapper/snowman--research--vg-research 825645000  849346560 943718400         6239820  27000000 30000000        \n",
+  "scope": "Fixed confirmation-v2; source, cases and seeds unchanged. Includes two raw working sets, 10 GiB reserve and 2x maximum pilot archive for each additional case."
+}

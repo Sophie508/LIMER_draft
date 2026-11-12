@@ -1,0 +1,11 @@
+{
+  "allowed_workers": 2,
+  "raw_bytes_per_measured_case": 545432878,
+  "archive_bytes_per_measured_case": 95085122,
+  "soft_quota_headroom_bytes": 26044276736,
+  "required_two_raw_plus_10gib": 11828283996,
+  "projected_with_50_archives": 16582540096,
+  "decision": true,
+  "basis": "Same native binary; revision v2 changes only Python audit and tests. Recheck quota during campaign; retain failures.",
+  "quota": "Disk quotas for user suliu (uid 1005): \n     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace\n/dev/mapper/snowman--scratch--vg-scratch 183359504* 169869312 188743680   2days 3004727  5400000 6000000        \n/dev/mapper/ubuntu--vg-snowman--home 144321336* 141557760 157286400    none  483146  4500000 5000000        \n/dev/mapper/snowman--research--vg-research 823912696  849346560 943718400         6238992  27000000 30000000        \n"
+}

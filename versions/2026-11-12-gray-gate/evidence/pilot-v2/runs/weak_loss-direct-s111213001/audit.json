@@ -1,0 +1,36 @@
+{
+  "errors": [],
+  "logical_chunks": 32768,
+  "completed_chunks": 32768,
+  "unique_ack_bytes": 2147483648,
+  "relay_chunks": 571,
+  "relay_leg_transfers": 1713,
+  "max_logical_source_credit": 28,
+  "max_physical_nic_credit": 4,
+  "max_helper_buffers": 4,
+  "dual_plane_verified": true,
+  "helper_phase_idle_verified": false,
+  "helper_shared_capacity_verified": true,
+  "pipelined_release_verified": true,
+  "helper_snapshot_causality_verified": false,
+  "helper_lease_release_verified": false,
+  "final_target_completion_verified": true,
+  "physical_wire_totals": {
+    "network_wire_bytes": 2601687504,
+    "probe_wire_bytes": 284684984,
+    "retransmission_wire_bytes": 1534132,
+    "local_wire_bytes": 79743000,
+    "relay_wire_bytes": 118341828
+  },
+  "m13_causality_verified": false,
+  "active_detector_causality_verified": true,
+  "active_detector": "service",
+  "retired_B_no_new_work_verified": true,
+  "fresh_proxy_chunks": 556,
+  "fresh_proxy_phases": 2,
+  "affected_sources_with_replacement": [
+    0,
+    15
+  ],
+  "pass": true
+}

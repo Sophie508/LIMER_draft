@@ -1,0 +1,43 @@
+{
+  "name": "transient_25_20ms-candidate_gate-s111213001",
+  "valid": true,
+  "status": "completed",
+  "exit_code": 0,
+  "archive_sha256": "2cbc804e50b4e9e8368f2423ecffde31e5ef773cd34fbac6eb5e0f118d8804c1",
+  "score": {
+    "classification": "timely",
+    "valid": true,
+    "affected_path_ids": [
+      13,
+      721
+    ],
+    "observed_affected_path_ids": [
+      13,
+      721
+    ],
+    "delays_ms": {
+      "13": 7.065907,
+      "721": 7.073587
+    },
+    "all_paths_delay_ms": 7.073587,
+    "first_incident_delay_ms": 7.065907,
+    "observed_all_paths_delay_ms": 7.073587,
+    "all_paths_timely_success": true,
+    "first_incident_timely_success": true,
+    "pre_fault_alarms": [],
+    "unaffected_alarms": [],
+    "healthy_false_alarm": false,
+    "alarm_events": 2,
+    "healthy_exposure_ms": 0,
+    "monitor_end_ns": 250000000,
+    "monitoring_complete": true,
+    "detector_evidence": {
+      "file": "service_alarms.csv",
+      "sha256": "f7868337d0395c696096e5ad28f97718a7fd6ca2f62492d509159ce9c2cee618"
+    },
+    "policy_decision_counts": {
+      "stay:stay_no_slower": 10
+    },
+    "policy_evidence_sha256": "0bd35aa5532abc518b821c7fc1f882f4b0906548b381a6c1712b47c036ff014b"
+  }
+}

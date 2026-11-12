@@ -1,0 +1,13 @@
+{
+  "schema": "limer-reference-v1",
+  "archive": "closed-loop-20261027.zip",
+  "sha256": "8fcd7b669fa3d28fc023e7fa3bfbb02fc12c332701412bc5d640cf7fb676acf6",
+  "bytes": 195871647,
+  "root": "reference-20261027",
+  "runs": 53,
+  "primary": 40,
+  "boundary": 6,
+  "qualification": 7,
+  "evidence_index_sha256": "cbc3c96080ff433312d081da3e8c3169a661866b49ef7122a8090082d797c6ca",
+  "original_binary_sha256": "baadeb2c092ff55d6a055be683448847c24461c9a118321509afa426276a55de"
+}

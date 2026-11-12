@@ -1,0 +1,53 @@
+{
+  "schema": "limer-run-v1",
+  "method": "G11",
+  "scene": {
+    "family": "blackhole",
+    "rounds": 1,
+    "chunks_per_phase": 512,
+    "horizon_ns": 250000000,
+    "fault_ns": 24000000,
+    "node": 0,
+    "seed": 111213033,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "benefit_v2",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "relay_completion": "pipelined",
+    "helper_mode": "shared",
+    "slowdown_fraction": 0.25
+  },
+  "command": [
+    "/work/build-terminal-fix/backend/build/scratch/ns3.36.1-LimerSimulator-debug",
+    "/work/results/confirmation-terminal-fix/runs/blackhole-candidate_gate-s111213033/inputs/topology.txt",
+    "/work/results/confirmation-terminal-fix/runs/blackhole-candidate_gate-s111213033/inputs/config.txt",
+    "/work/results/confirmation-terminal-fix/runs/blackhole-candidate_gate-s111213033",
+    "G11",
+    "1",
+    "250000000",
+    "/work/results/confirmation-terminal-fix/runs/blackhole-candidate_gate-s111213033/truth/injection.txt",
+    "512",
+    "service",
+    "benefit_v2",
+    "2000000",
+    "65536",
+    "phase",
+    "4",
+    "pipelined",
+    "shared"
+  ],
+  "binary_sha256": "8fa663d4182044696b2bc1facc908a0ce4afc9de4bfca5d8aa4b70ce231e1741",
+  "build_sha256": "cf0d9adab6d84dadfabfdeecc1f0dfcb2668977d237a5c69f9ab0c4e39641ea7",
+  "input_hashes": {
+    "truth/injection.txt": "664334829ccccad32f1c72ac237c7b5d923ef453b8afdbf5b16a231600a4e87e",
+    "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/config.txt": "4ed143ec77a2f95190c45b07fb063001b06fd828a49e6d1cae92a7f89c2df947",
+    "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+    "inputs/input_manifest.json": "c9db9e83b06a0728663d8fc21a3ec8d7401f8f0b2f311ac7555747a2f51722fc"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "run": "sustained_25_early-candidate_gate-s111213001",
+  "archive_sha256": "941bb4bcb7fc86ce18c017ec9d5c1d754929d655af27a0c7064bdd5c47d0cad2",
+  "logical_archive_member": "logical_events.csv",
+  "logical_member_sha256": "bda6478961cccd8eaf03838d804fd824ca7b29f916bbe1211b94f8678939e70d",
+  "compact_source_sha256": {
+    "policy_decisions.jsonl": "aa214804dbfef24317476214dd2b9f95a24f40baea3fb798a1560d715064df15",
+    "helper_reports.jsonl": "a1a54366882eb6feeca75641b8c516c1a7459f6340702693317100cc955bdf06",
+    "phase_events.csv": "43c598a5ada26c7746651891fc87bc8714c4900eba81613db5755c6758858bcf"
+  },
+  "policy_sha256": "aa214804dbfef24317476214dd2b9f95a24f40baea3fb798a1560d715064df15",
+  "frozen_policy_source_sha256": "44176b99aaff915230cd8252e774a30a032781a18d52b6d22c78ffcb8facec43",
+  "summary": {
+    "decisions": 14,
+    "helper_reports_checked": 28,
+    "original_switches": 0,
+    "shadow_switches": 0,
+    "decision_flips": 0,
+    "reason_changes": 3,
+    "windows_shortened": 8,
+    "windows_with_discarded_ack_bytes": 0
+  },
+  "reference_comparison": {
+    "pass_": true,
+    "reference_sha256": "5d08a4004ccc0bd676367b18baf82d8c148decb06095b76a06be7d868f080259",
+    "note": "All decision inputs, rebuilt windows, predictions, thresholds and summary match exactly"
+  },
+  "analysis_script_sha256": "6bd5b3bc16759f8a751433a6d4672da140774946ca46eeccc3c2c6a3983cab4d",
+  "reproduced_output_sha256": "961fd098bfa6f70f26694d4bbc582ab06dca6288e903f6a759e522041ee68def",
+  "native_executed": false,
+  "original_inputs_modified": false
+}

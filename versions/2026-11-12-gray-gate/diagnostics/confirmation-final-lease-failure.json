@@ -1,0 +1,927 @@
+{
+  "run": "/home/suliu/data/LIMER_GRAY_GATE_2026-11-12/results/confirmation-v2/runs/sustained_50_early-candidate_gate-s111213033",
+  "attempt": {
+    "name": "sustained_50_early-candidate_gate-s111213033",
+    "valid": false,
+    "status": "runner_error",
+    "exit_code": 1,
+    "error": "Runner or independent audit returned nonzero"
+  },
+  "audit": {
+    "errors": [
+      "rejected helper lease leaked after delivered release"
+    ],
+    "logical_chunks": 32768,
+    "completed_chunks": 32768,
+    "unique_ack_bytes": 2147483648,
+    "relay_chunks": 0,
+    "relay_leg_transfers": 0,
+    "max_logical_source_credit": 8,
+    "max_physical_nic_credit": 4,
+    "max_helper_buffers": 1,
+    "dual_plane_verified": true,
+    "helper_phase_idle_verified": false,
+    "helper_shared_capacity_verified": true,
+    "pipelined_release_verified": true,
+    "helper_snapshot_causality_verified": true,
+    "helper_lease_release_verified": true,
+    "final_target_completion_verified": true,
+    "physical_wire_totals": {
+      "network_wire_bytes": 2600139600,
+      "probe_wire_bytes": 284300784,
+      "local_wire_bytes": 989856
+    },
+    "m13_causality_verified": false,
+    "active_detector_causality_verified": true,
+    "active_detector": "service",
+    "retired_B_no_new_work_verified": true,
+    "fresh_proxy_chunks": 0,
+    "fresh_proxy_phases": 0,
+    "affected_sources_with_replacement": [],
+    "pass": false
+  },
+  "run_status": {
+    "relay_completion": "pipelined",
+    "helper_mode": "shared",
+    "source_window": 32,
+    "detector_mode": "service",
+    "policy_mode": "benefit_v2",
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "monitor_end_ns": 250000000,
+    "status": "completed",
+    "method": "G11",
+    "job_done_ns": 85251871,
+    "horizon_ns": 250000000,
+    "world_size": 16,
+    "physical_planes": 2,
+    "phases_done": 4,
+    "phases_expected": 4,
+    "chunks_per_phase": 512,
+    "proxy_chunks": 0,
+    "new_proxy_chunks": 0,
+    "rescued_chunks": 0,
+    "health_probe_routes": 7,
+    "network_wire_bytes": 2600139600,
+    "local_wire_bytes": 989856,
+    "probe_wire_bytes": 284300784,
+    "relay_wire_bytes": 0,
+    "retransmission_wire_bytes": 0,
+    "control_wire_bytes": 6144,
+    "stale_acks": 0,
+    "extra_rto": false,
+    "scope": "phase-scoped B-prime replacement v3"
+  },
+  "original_file_sha256": {
+    "audit.json": "f100f4e135cab9606bc2c335345a6fd4c578490d43790392abfc6d310e818448",
+    "run_status.json": "a74db2e9bf1697647866c67880db02e5ac4202ead9d93c427438f56222ad1ca5",
+    "run_manifest.json": "717ac35c57650f38a8fdf31faf32e2f833eb71071fcc05bf3961e80a143d8d39",
+    "runner_error.json": "109dd490fb1cfc6232264662ff9a479a491646ad965857feae927a07bf80af8d",
+    "control_events.csv": "f68280f24332c0271dd9e2ccbd47c24ef72d2b2d5c2a185a9a8121273eb36728",
+    "phase_events.csv": "f32095168f2911fc328eb3be6d183af598ddad64d6df40e6f45e96e7a3f73e05",
+    "peer_events.csv": "2c65e48a52e291a5ff957bfe52ff320ff1b8cd56f120818929717d9813134c93",
+    "leg_events.csv": "ef65da2498d13061f261e9a0783579456753893ee8dfa2d928c5a0aea37cd03d",
+    "logical_events.csv": "6f43bfdbc1b7da0c4950944dfe86aeaceeffc9a585a4b1b00fb82719ea30e115",
+    "policy_decisions.jsonl": "a3a301d08aac030331302832658a96ce2fd7081ceed57d2001bd4e6f7a7fefa0",
+    "helper_reports.jsonl": "548042b118960e6227eede945a22d6d1b0c967c927c977eb4c8ebe4410a179be",
+    "service_events.csv": "7c0ea28c7e3d8836730a4ff3864e58716c9f812a4f42a35171a9f510046d3c65"
+  },
+  "attempt_sha256": "a3631af0208fdcf7dea0e1b8f19991d9eb83a02ac6731520ab00f75b5f210ca9",
+  "frozen_source_sha256": {
+    "src/simulator/runtime/completion.h": "f37ff3d87e1302714eda03a2b729580d9e0fbb40f6b3917d39174868546fc48a",
+    "src/simulator/recovery/proxy.h": "af3e6af8c86135bb584a5cf0557f576e046e1f2ac36f2ce3ff215be7d51d056c",
+    "src/simulator/scheduling/dispatcher.h": "cf5f57e0c43560184efee3542a982b908dce1813bbdadf85384d1ccb452c9d68",
+    "src/simulator/main.cc": "a82278c5d075c22c23d80c269afd8e0c66a41773e9b77d11334f20d91bc9639f",
+    "python/limerlab/audit.py": "12474aad5f8adcd03cda3151cfa14a4aee946b610b695420b22c7ed6eeedc6be"
+  },
+  "native_binary_sha256": "289d08e36084cff75d5a931a18aee8a6203609458ccddbaa36525235ddeacef4",
+  "lease_timeline": [
+    {
+      "phase": 1,
+      "source": 0,
+      "lease_id": 49726,
+      "activated_ns": 33765360,
+      "release_requests": [
+        {
+          "sent_ns": "36890790",
+          "arrival_ns": "37898470",
+          "event": "RELEASE_TX",
+          "rank": "1",
+          "phase": "1",
+          "version": "49726",
+          "wire_bytes": "96"
+        },
+        {
+          "sent_ns": "36890790",
+          "arrival_ns": "37906150",
+          "event": "RELEASE_RX",
+          "rank": "5",
+          "phase": "1",
+          "version": "49726",
+          "wire_bytes": "96"
+        }
+      ],
+      "release_arrival_ns": 37906150,
+      "explicit_released_ns": [],
+      "next_phase_reset_ns": 37379192,
+      "relay_routes_in_flight_at_release_arrival": [],
+      "existing_audit_release_predicate_passes": true
+    },
+    {
+      "phase": 2,
+      "source": 0,
+      "lease_id": 50809,
+      "activated_ns": 38415360,
+      "release_requests": [
+        {
+          "sent_ns": "41862104",
+          "arrival_ns": "42869784",
+          "event": "RELEASE_TX",
+          "rank": "1",
+          "phase": "2",
+          "version": "50809",
+          "wire_bytes": "96"
+        },
+        {
+          "sent_ns": "41862104",
+          "arrival_ns": "42877464",
+          "event": "RELEASE_RX",
+          "rank": "5",
+          "phase": "2",
+          "version": "50809",
+          "wire_bytes": "96"
+        }
+      ],
+      "release_arrival_ns": 42877464,
+      "explicit_released_ns": [
+        42877464
+      ],
+      "next_phase_reset_ns": 61328834,
+      "relay_routes_in_flight_at_release_arrival": [],
+      "existing_audit_release_predicate_passes": true
+    },
+    {
+      "phase": 2,
+      "source": 0,
+      "lease_id": 65200,
+      "activated_ns": 47915360,
+      "release_requests": [
+        {
+          "sent_ns": "51199782",
+          "arrival_ns": "52207462",
+          "event": "RELEASE_TX",
+          "rank": "1",
+          "phase": "2",
+          "version": "65200",
+          "wire_bytes": "96"
+        },
+        {
+          "sent_ns": "51199782",
+          "arrival_ns": "52215142",
+          "event": "RELEASE_RX",
+          "rank": "5",
+          "phase": "2",
+          "version": "65200",
+          "wire_bytes": "96"
+        }
+      ],
+      "release_arrival_ns": 52215142,
+      "explicit_released_ns": [
+        52215142
+      ],
+      "next_phase_reset_ns": 61328834,
+      "relay_routes_in_flight_at_release_arrival": [],
+      "existing_audit_release_predicate_passes": true
+    },
+    {
+      "phase": 2,
+      "source": 0,
+      "lease_id": 75113,
+      "activated_ns": 57215360,
+      "release_requests": [
+        {
+          "sent_ns": "60340790",
+          "arrival_ns": "61348470",
+          "event": "RELEASE_TX",
+          "rank": "1",
+          "phase": "2",
+          "version": "75113",
+          "wire_bytes": "96"
+        },
+        {
+          "sent_ns": "60340790",
+          "arrival_ns": "61356150",
+          "event": "RELEASE_RX",
+          "rank": "5",
+          "phase": "2",
+          "version": "75113",
+          "wire_bytes": "96"
+        }
+      ],
+      "release_arrival_ns": 61356150,
+      "explicit_released_ns": [],
+      "next_phase_reset_ns": 61328834,
+      "relay_routes_in_flight_at_release_arrival": [],
+      "existing_audit_release_predicate_passes": true
+    },
+    {
+      "phase": 3,
+      "source": 0,
+      "lease_id": 76193,
+      "activated_ns": 62365360,
+      "release_requests": [
+        {
+          "sent_ns": "65814869",
+          "arrival_ns": "66822549",
+          "event": "RELEASE_TX",
+          "rank": "1",
+          "phase": "3",
+          "version": "76193",
+          "wire_bytes": "96"
+        },
+        {
+          "sent_ns": "65814869",
+          "arrival_ns": "66830229",
+          "event": "RELEASE_RX",
+          "rank": "5",
+          "phase": "3",
+          "version": "76193",
+          "wire_bytes": "96"
+        }
+      ],
+      "release_arrival_ns": 66830229,
+      "explicit_released_ns": [
+        66830229
+      ],
+      "next_phase_reset_ns": null,
+      "relay_routes_in_flight_at_release_arrival": [],
+      "existing_audit_release_predicate_passes": true
+    },
+    {
+      "phase": 3,
+      "source": 0,
+      "lease_id": 90596,
+      "activated_ns": 71865360,
+      "release_requests": [
+        {
+          "sent_ns": "75211878",
+          "arrival_ns": "76219558",
+          "event": "RELEASE_TX",
+          "rank": "1",
+          "phase": "3",
+          "version": "90596",
+          "wire_bytes": "96"
+        },
+        {
+          "sent_ns": "75211878",
+          "arrival_ns": "76227238",
+          "event": "RELEASE_RX",
+          "rank": "5",
+          "phase": "3",
+          "version": "90596",
+          "wire_bytes": "96"
+        }
+      ],
+      "release_arrival_ns": 76227238,
+      "explicit_released_ns": [
+        76227238
+      ],
+      "next_phase_reset_ns": null,
+      "relay_routes_in_flight_at_release_arrival": [],
+      "existing_audit_release_predicate_passes": true
+    },
+    {
+      "phase": 3,
+      "source": 0,
+      "lease_id": 100500,
+      "activated_ns": 81265360,
+      "release_requests": [
+        {
+          "sent_ns": "84390790",
+          "arrival_ns": "85398470",
+          "event": "RELEASE_TX",
+          "rank": "1",
+          "phase": "3",
+          "version": "100500",
+          "wire_bytes": "96"
+        },
+        {
+          "sent_ns": "84390790",
+          "arrival_ns": "85406150",
+          "event": "RELEASE_RX",
+          "rank": "5",
+          "phase": "3",
+          "version": "100500",
+          "wire_bytes": "96"
+        }
+      ],
+      "release_arrival_ns": 85406150,
+      "explicit_released_ns": [],
+      "next_phase_reset_ns": null,
+      "relay_routes_in_flight_at_release_arrival": [],
+      "existing_audit_release_predicate_passes": false
+    }
+  ],
+  "probe_resource_events": [
+    {
+      "timestamp_ns": "33800000",
+      "event": "RESERVE",
+      "route": "49924",
+      "chunk": "0",
+      "phase": "1",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "34867750",
+      "event": "RELEASE",
+      "route": "49924",
+      "chunk": "0",
+      "phase": "1",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "38600000",
+      "event": "RESERVE",
+      "route": "52572",
+      "chunk": "0",
+      "phase": "2",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "39839064",
+      "event": "RELEASE",
+      "route": "52572",
+      "chunk": "0",
+      "phase": "2",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "47950000",
+      "event": "RESERVE",
+      "route": "66772",
+      "chunk": "0",
+      "phase": "2",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "49176742",
+      "event": "RELEASE",
+      "route": "66772",
+      "chunk": "0",
+      "phase": "2",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "57250000",
+      "event": "RESERVE",
+      "route": "75320",
+      "chunk": "0",
+      "phase": "2",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "58317750",
+      "event": "RELEASE",
+      "route": "75320",
+      "chunk": "0",
+      "phase": "2",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "62550000",
+      "event": "RESERVE",
+      "route": "77956",
+      "chunk": "0",
+      "phase": "3",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "63791829",
+      "event": "RELEASE",
+      "route": "77956",
+      "chunk": "0",
+      "phase": "3",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "72000000",
+      "event": "RESERVE",
+      "route": "92207",
+      "chunk": "0",
+      "phase": "3",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "73188838",
+      "event": "RELEASE",
+      "route": "92207",
+      "chunk": "0",
+      "phase": "3",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "81300000",
+      "event": "RESERVE",
+      "route": "100713",
+      "chunk": "0",
+      "phase": "3",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "82367750",
+      "event": "RELEASE",
+      "route": "100713",
+      "chunk": "0",
+      "phase": "3",
+      "src": "0",
+      "dst": "4",
+      "helper_src": "1",
+      "helper_dst": "5",
+      "rail": "1",
+      "relay": "1",
+      "probe": "1",
+      "length": "65536"
+    }
+  ],
+  "last_probe_leg_events": [
+    {
+      "timestamp_ns": "81300000",
+      "event": "LEG_START",
+      "route": "100713",
+      "tag": "100714",
+      "index": "0",
+      "src": "0",
+      "dst": "1",
+      "nic": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "81300304",
+      "event": "LEG_DONE",
+      "route": "100713",
+      "tag": "100714",
+      "index": "0",
+      "src": "0",
+      "dst": "1",
+      "nic": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "81300305",
+      "event": "LEG_START",
+      "route": "100713",
+      "tag": "100715",
+      "index": "1",
+      "src": "1",
+      "dst": "5",
+      "nic": "3",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "81359765",
+      "event": "LEG_DONE",
+      "route": "100713",
+      "tag": "100715",
+      "index": "1",
+      "src": "1",
+      "dst": "5",
+      "nic": "3",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "81359766",
+      "event": "LEG_START",
+      "route": "100713",
+      "tag": "100716",
+      "index": "2",
+      "src": "5",
+      "dst": "4",
+      "nic": "1",
+      "length": "65536"
+    },
+    {
+      "timestamp_ns": "81360070",
+      "event": "LEG_DONE",
+      "route": "100713",
+      "tag": "100716",
+      "index": "2",
+      "src": "5",
+      "dst": "4",
+      "nic": "1",
+      "length": "65536"
+    }
+  ],
+  "last_gate_decision": {
+    "policy_version": 2,
+    "timestamp_ns": 84390790,
+    "src": 0,
+    "phase": 3,
+    "stage": "probe_complete",
+    "input": {
+      "a_bytes": 171376,
+      "b_bytes": 54256,
+      "pending_bytes": 917504,
+      "service_a": {
+        "bytes_per_ns": 1.0610144,
+        "age_ns": 0,
+        "known": 1
+      },
+      "service_b": {
+        "bytes_per_ns": 0.3671536,
+        "age_ns": 0,
+        "known": 1
+      },
+      "relay": {
+        "sample_bytes": 65536,
+        "leg_ns": [
+          304,
+          59460,
+          304
+        ],
+        "final_ack_ns": 1007680,
+        "parallel_chunks": 4,
+        "age_ns": 3030720,
+        "known": 1
+      },
+      "setup_ns": 4092160,
+      "helper_ready": 1,
+      "b_no_progress_ns": 6579,
+      "tail_debounce_ns": 2000000,
+      "source_window": 32,
+      "pipelined": 1,
+      "helpers": [
+        {
+          "own_remaining_bytes": 0,
+          "own_bytes_per_ns": 0.8167888,
+          "age_ns": 1015360,
+          "known": 1
+        },
+        {
+          "own_remaining_bytes": 0,
+          "own_bytes_per_ns": 0.8008512,
+          "age_ns": 1007680,
+          "known": 1
+        }
+      ]
+    },
+    "helper_reports": [
+      {
+        "report_id": 100849,
+        "rank": 1,
+        "phase": 3,
+        "version": 100712,
+        "lease_id": 100500,
+        "sampled_ns": 83375430,
+        "delivered_ns": 84383110
+      },
+      {
+        "report_id": 100850,
+        "rank": 5,
+        "phase": 3,
+        "version": 100712,
+        "lease_id": 100500,
+        "sampled_ns": 83383110,
+        "delivered_ns": 84390790
+      }
+    ],
+    "should_switch": 0,
+    "reason": "stay_no_slower",
+    "stay_ns": 800421.2389578817,
+    "switch_ns": 5159908,
+    "gain_ns": -4359486.761042118,
+    "source_stay_ns": 800421.2389578817,
+    "source_switch_ns": 5159908,
+    "helper_stay_ns": 0,
+    "helper_switch_ns": 0,
+    "relay_assigned_bytes": 54256,
+    "tail_forecast_ns": 0,
+    "relay_bytes_per_ns": 1.1021863437605113
+  },
+  "phase3_last_done_per_source": [
+    {
+      "timestamp_ns": "85251871",
+      "event": "DONE",
+      "chunk_id": "101110",
+      "phase": "3",
+      "src": "0",
+      "dst": "4",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "101111"
+    },
+    {
+      "timestamp_ns": "77287592",
+      "event": "DONE",
+      "chunk_id": "99989",
+      "phase": "3",
+      "src": "1",
+      "dst": "5",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99990"
+    },
+    {
+      "timestamp_ns": "77224527",
+      "event": "DONE",
+      "chunk_id": "99907",
+      "phase": "3",
+      "src": "2",
+      "dst": "6",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99908"
+    },
+    {
+      "timestamp_ns": "77224527",
+      "event": "DONE",
+      "chunk_id": "99898",
+      "phase": "3",
+      "src": "3",
+      "dst": "7",
+      "offset": "33423360",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99899"
+    },
+    {
+      "timestamp_ns": "77160265",
+      "event": "DONE",
+      "chunk_id": "99784",
+      "phase": "3",
+      "src": "4",
+      "dst": "8",
+      "offset": "33357824",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "99785"
+    },
+    {
+      "timestamp_ns": "77223599",
+      "event": "DONE",
+      "chunk_id": "99823",
+      "phase": "3",
+      "src": "5",
+      "dst": "9",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99824"
+    },
+    {
+      "timestamp_ns": "77223286",
+      "event": "DONE",
+      "chunk_id": "99826",
+      "phase": "3",
+      "src": "6",
+      "dst": "10",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99827"
+    },
+    {
+      "timestamp_ns": "77223286",
+      "event": "DONE",
+      "chunk_id": "99820",
+      "phase": "3",
+      "src": "7",
+      "dst": "11",
+      "offset": "33423360",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99821"
+    },
+    {
+      "timestamp_ns": "77206893",
+      "event": "DONE",
+      "chunk_id": "99871",
+      "phase": "3",
+      "src": "8",
+      "dst": "12",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "99872"
+    },
+    {
+      "timestamp_ns": "77209030",
+      "event": "DONE",
+      "chunk_id": "99856",
+      "phase": "3",
+      "src": "9",
+      "dst": "13",
+      "offset": "33423360",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99857"
+    },
+    {
+      "timestamp_ns": "77190204",
+      "event": "DONE",
+      "chunk_id": "99793",
+      "phase": "3",
+      "src": "10",
+      "dst": "14",
+      "offset": "33423360",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "99794"
+    },
+    {
+      "timestamp_ns": "77209030",
+      "event": "DONE",
+      "chunk_id": "99850",
+      "phase": "3",
+      "src": "11",
+      "dst": "15",
+      "offset": "33357824",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "0",
+      "route": "99851"
+    },
+    {
+      "timestamp_ns": "77238618",
+      "event": "DONE",
+      "chunk_id": "100004",
+      "phase": "3",
+      "src": "12",
+      "dst": "1",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "100005"
+    },
+    {
+      "timestamp_ns": "77294715",
+      "event": "DONE",
+      "chunk_id": "99998",
+      "phase": "3",
+      "src": "13",
+      "dst": "2",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "99999"
+    },
+    {
+      "timestamp_ns": "77302416",
+      "event": "DONE",
+      "chunk_id": "100013",
+      "phase": "3",
+      "src": "14",
+      "dst": "3",
+      "offset": "33488896",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "100014"
+    },
+    {
+      "timestamp_ns": "82530942",
+      "event": "DONE",
+      "chunk_id": "100822",
+      "phase": "3",
+      "src": "15",
+      "dst": "0",
+      "offset": "33226752",
+      "length": "65536",
+      "acked": "65536",
+      "epoch": "0",
+      "lane": "1",
+      "route": "100823"
+    }
+  ],
+  "terminal_phase_inference": {
+    "last_workload_phase": 3,
+    "global_phase_after_last_done": 4,
+    "basis": "FinalAck increments phase and returns at phase==phases; StartPhase is not called",
+    "release_callback_due_ns": 85406150,
+    "release_after_job_done_ns": 154279,
+    "guard_inference": "ReleaseLendingDone returns because p=3 != phase=4; no terminal reset"
+  },
+  "native_executed": false,
+  "original_inputs_modified": false
+}

@@ -1,0 +1,42 @@
+{
+  "name": "sustained_50_early-candidate_gate-s111213033",
+  "valid": true,
+  "status": "completed",
+  "exit_code": 0,
+  "archive_sha256": "ad3931859f009ff08f196774325c7f883698b8ae50f151ff31cf3d96751041af",
+  "score": {
+    "classification": "miss",
+    "valid": true,
+    "affected_path_ids": [
+      13,
+      721
+    ],
+    "observed_affected_path_ids": [
+      13
+    ],
+    "delays_ms": {
+      "13": 8.726741,
+      "721": null
+    },
+    "all_paths_delay_ms": null,
+    "first_incident_delay_ms": 8.726741,
+    "observed_all_paths_delay_ms": null,
+    "all_paths_timely_success": false,
+    "first_incident_timely_success": true,
+    "pre_fault_alarms": [],
+    "unaffected_alarms": [],
+    "healthy_false_alarm": false,
+    "alarm_events": 1,
+    "healthy_exposure_ms": 0,
+    "monitor_end_ns": 250000000,
+    "monitoring_complete": true,
+    "detector_evidence": {
+      "file": "service_alarms.csv",
+      "sha256": "5e0099dab8a395acd40ff3ac60259e1ee4d84547abee0a7d8536e36a075727fb"
+    },
+    "policy_decision_counts": {
+      "stay:stay_no_slower": 7
+    },
+    "policy_evidence_sha256": "a3a301d08aac030331302832658a96ce2fd7081ceed57d2001bd4e6f7a7fefa0"
+  }
+}

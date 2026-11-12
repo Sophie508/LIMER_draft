@@ -1,0 +1,42 @@
+{
+  "name": "sustained_50_early-legacy_gate-s111213033",
+  "valid": true,
+  "status": "completed",
+  "exit_code": 0,
+  "archive_sha256": "21b977ea7456900518d5f0ac03a064510764dba601a3bfdbf2f86dd41736bde9",
+  "score": {
+    "classification": "miss",
+    "valid": true,
+    "affected_path_ids": [
+      13,
+      721
+    ],
+    "observed_affected_path_ids": [
+      13
+    ],
+    "delays_ms": {
+      "13": 8.726741,
+      "721": null
+    },
+    "all_paths_delay_ms": null,
+    "first_incident_delay_ms": 8.726741,
+    "observed_all_paths_delay_ms": null,
+    "all_paths_timely_success": false,
+    "first_incident_timely_success": true,
+    "pre_fault_alarms": [],
+    "unaffected_alarms": [],
+    "healthy_false_alarm": false,
+    "alarm_events": 1,
+    "healthy_exposure_ms": 0,
+    "monitor_end_ns": 250000000,
+    "monitoring_complete": true,
+    "detector_evidence": {
+      "file": "service_alarms.csv",
+      "sha256": "5e0099dab8a395acd40ff3ac60259e1ee4d84547abee0a7d8536e36a075727fb"
+    },
+    "policy_decision_counts": {
+      "stay:stay_no_slower": 9
+    },
+    "policy_evidence_sha256": "ca6aef45668f20bf37e7f7883900c5dcf811e60b6d0d2e8346ddf6afe6d6c18f"
+  }
+}

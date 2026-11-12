@@ -1,0 +1,41 @@
+{
+  "name": "blackhole-direct-s111213001",
+  "valid": true,
+  "status": "completed",
+  "exit_code": 0,
+  "archive_sha256": "da841730f2b994023ad0b105b233a3ecf748d9140ec23edc776c5defc2bf53db",
+  "score": {
+    "classification": "timely",
+    "valid": true,
+    "affected_path_ids": [
+      13,
+      721
+    ],
+    "observed_affected_path_ids": [
+      13,
+      721
+    ],
+    "delays_ms": {
+      "13": 8.00768,
+      "721": 8.01536
+    },
+    "all_paths_delay_ms": 8.01536,
+    "first_incident_delay_ms": 8.00768,
+    "observed_all_paths_delay_ms": 8.01536,
+    "all_paths_timely_success": true,
+    "first_incident_timely_success": true,
+    "pre_fault_alarms": [],
+    "unaffected_alarms": [],
+    "healthy_false_alarm": false,
+    "alarm_events": 2,
+    "healthy_exposure_ms": 0,
+    "monitor_end_ns": 250000000,
+    "monitoring_complete": true,
+    "detector_evidence": {
+      "file": "service_alarms.csv",
+      "sha256": "22a8fa73bd4a5f0d04576c79fb04b1b70d36d2dc74f93283e6d9b4e51c3e0663"
+    },
+    "policy_decision_counts": {},
+    "policy_evidence_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,311 @@
+{
+  "name": "slow_helper_25-candidate_gate-s111213033",
+  "method": "G11",
+  "family": "quarter",
+  "scene": {
+    "family": "quarter",
+    "rounds": 1,
+    "chunks_per_phase": 512,
+    "horizon_ns": 250000000,
+    "fault_ns": 24000000,
+    "node": 0,
+    "seed": 111213033,
+    "local_gbps": 1,
+    "detector": "service",
+    "policy": "benefit_v2",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "relay_completion": "pipelined",
+    "helper_mode": "shared",
+    "slowdown_fraction": 0.25
+  },
+  "status": {
+    "relay_completion": "pipelined",
+    "helper_mode": "shared",
+    "source_window": 32,
+    "detector_mode": "service",
+    "policy_mode": "benefit_v2",
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "monitor_end_ns": 250000000,
+    "status": "completed",
+    "method": "G11",
+    "job_done_ns": 96443573,
+    "horizon_ns": 250000000,
+    "world_size": 16,
+    "physical_planes": 2,
+    "phases_done": 4,
+    "phases_expected": 4,
+    "chunks_per_phase": 512,
+    "proxy_chunks": 0,
+    "new_proxy_chunks": 0,
+    "rescued_chunks": 0,
+    "health_probe_routes": 14,
+    "network_wire_bytes": 2600634528,
+    "local_wire_bytes": 1979712,
+    "probe_wire_bytes": 285785568,
+    "relay_wire_bytes": 0,
+    "retransmission_wire_bytes": 0,
+    "control_wire_bytes": 12288,
+    "stale_acks": 0,
+    "extra_rto": false,
+    "scope": "phase-scoped B-prime replacement v3"
+  },
+  "audit": {
+    "errors": [],
+    "logical_chunks": 32768,
+    "completed_chunks": 32768,
+    "unique_ack_bytes": 2147483648,
+    "relay_chunks": 0,
+    "relay_leg_transfers": 0,
+    "max_logical_source_credit": 8,
+    "max_physical_nic_credit": 4,
+    "max_helper_buffers": 1,
+    "dual_plane_verified": true,
+    "helper_phase_idle_verified": false,
+    "helper_shared_capacity_verified": true,
+    "pipelined_release_verified": true,
+    "helper_snapshot_causality_verified": true,
+    "helper_lease_release_verified": true,
+    "final_target_completion_verified": true,
+    "physical_wire_totals": {
+      "network_wire_bytes": 2600634528,
+      "probe_wire_bytes": 285785568,
+      "local_wire_bytes": 1979712
+    },
+    "m13_causality_verified": false,
+    "active_detector_causality_verified": true,
+    "active_detector": "service",
+    "retired_B_no_new_work_verified": true,
+    "fresh_proxy_chunks": 0,
+    "fresh_proxy_phases": 0,
+    "affected_sources_with_replacement": [],
+    "pass": true
+  },
+  "observation_audit": {
+    "errors": [],
+    "reports_reconstructed": 4000,
+    "alarms": [
+      [
+        13,
+        31065907,
+        "canary_service"
+      ],
+      [
+        721,
+        31073587,
+        "canary_service"
+      ]
+    ],
+    "source": "canary-service-v4; physical payload gaps/QP/retransmissions/business ACK stalls and charged reports",
+    "truth_accessed": false,
+    "completed_canaries": 4000,
+    "spacing_summaries_reconstructed": 736,
+    "source_packets_checked": 2503080,
+    "accepted_packets_checked": 2503080,
+    "canary_payload_bytes": 262144000,
+    "pass": true,
+    "policy_replay": {
+      "pass": true,
+      "errors": [],
+      "decisions_checked": 12,
+      "initial_activations_checked": 0,
+      "truth_accessed": false,
+      "same_timestamp_order": "matching causal prefix; logs have no cross-file sequence",
+      "checks": [
+        "pure policy",
+        "logical remaining bytes",
+        "direct ACK service",
+        "physical candidate probes",
+        "charged delivered health reports",
+        "control FIFO/current cost estimate",
+        "initial commit authorization",
+        "chunk-local no-progress age",
+        "paid helper reports and causal workload audit",
+        "physical and logical pipeline windows"
+      ]
+    }
+  },
+  "performance": {
+    "task_completed": true,
+    "communication_ms": 95.443573,
+    "restricted_communication_ms": 95.443573,
+    "alarms_ns": {
+      "0": 31065907,
+      "15": 31073587
+    },
+    "first_activations_ns": {},
+    "detector_delays_ms": {
+      "0": 7.065907,
+      "15": 7.073587
+    },
+    "alarm_to_activation_ms": {},
+    "new_Bprime_launches": 0,
+    "new_Bprime_completions": 0,
+    "new_Bprime_phases": 0,
+    "post_replacement_complete_phases": 0,
+    "post_replacement_mean_phase_ms": null,
+    "unique_payload_bytes": 2147483648,
+    "recovery_observed": false,
+    "sustained_new_proxy_observed": false,
+    "replacement_lifetime": "phase",
+    "phase_route_lifecycles": [
+      {
+        "phase": 0,
+        "src": 0,
+        "reset_to_AB_ns": 1000000,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 1000000
+      },
+      {
+        "phase": 0,
+        "src": 15,
+        "reset_to_AB_ns": 1000000,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 16777216,
+        "B_new_bytes": 16777216,
+        "first_B_allocation_ns": 1000000
+      },
+      {
+        "phase": 1,
+        "src": 0,
+        "reset_to_AB_ns": 16847750,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 23527424,
+        "B_new_bytes": 10027008,
+        "first_B_allocation_ns": 16847750
+      },
+      {
+        "phase": 1,
+        "src": 15,
+        "reset_to_AB_ns": 16847750,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 22347776,
+        "B_new_bytes": 11206656,
+        "first_B_allocation_ns": 16847750
+      },
+      {
+        "phase": 2,
+        "src": 0,
+        "reset_to_AB_ns": 40066695,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 29294592,
+        "B_new_bytes": 4259840,
+        "first_B_allocation_ns": 40066695
+      },
+      {
+        "phase": 2,
+        "src": 15,
+        "reset_to_AB_ns": 40066695,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 27000832,
+        "B_new_bytes": 6553600,
+        "first_B_allocation_ns": 40066695
+      },
+      {
+        "phase": 3,
+        "src": 0,
+        "reset_to_AB_ns": 67942089,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 29360128,
+        "B_new_bytes": 4194304,
+        "first_B_allocation_ns": 67942089
+      },
+      {
+        "phase": 3,
+        "src": 15,
+        "reset_to_AB_ns": 67942089,
+        "activation_ns": null,
+        "unallocated_bytes_at_activation": null,
+        "A_new_bytes": 27000832,
+        "B_new_bytes": 6553600,
+        "first_B_allocation_ns": 67942089
+      }
+    ],
+    "fresh_Bprime_payload_bytes": 0,
+    "phase_binding_resets": 64,
+    "scored_affected_sources": [
+      0,
+      15
+    ],
+    "affected_source_new_allocations_by_region": {
+      "before_fault": {
+        "A_new_bytes": 48758784,
+        "B_new_bytes": 48758784
+      },
+      "before_diagnosis": {
+        "A_new_bytes": 14942208,
+        "B_new_bytes": 2883584
+      },
+      "preparing": {
+        "B_new_bytes": 24707072,
+        "A_new_bytes": 128385024
+      }
+    },
+    "healthy_alarm_observed": false,
+    "healthy_proxy_observed": false,
+    "alarms_before_injected_fault": {},
+    "fresh_proxy_costs": {
+      "completed_routes": 0
+    }
+  },
+  "archive": {
+    "archive": "/work/results/confirmation-v2/archives/slow_helper_25-candidate_gate-s111213033.tar.gz",
+    "sha256": "1c683b186a53db81536df2b6fcf6225c2943cbfae887d1f7047b0469f90b6f2c",
+    "bytes": 92692008,
+    "files": {
+      "audit.json": "01eb2b20c98b882ed773ee34ecf1c3dc95e13f958f37caca23622621f4cbc952",
+      "performance.json": "f21bb5c4250813e99807e8c4e3aba5dbc1d9bd94d8cbcb2057392cd098756a82",
+      "run_manifest.json": "4a03cb441e617ed4c8a878652b3964f88ace530670a2714e86bf28e1db0a29b1",
+      "m13_alarms.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "m13_baseline.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "peer_events.csv": "9cd5d37b7bd52870c87690396aaf85a10650e295238da02a3227d2a696fe3ea9",
+      "run_status.json": "d27f3a0d07ee91aceeb9f0b9f0d26c10e4ee7c3dee1dee23fd41fecde2be3f7f",
+      "packet_events.csv": "dcc60760cf7ad0970a337f9ff99a2732b0ee7920199c675a680437ea99cfe6f6",
+      "control_events.csv": "0deaa6cadec48a2a1e13f7d9c8b42e0fefd8cf87c5b443c78a366be1d00e4d96",
+      "detector_events.csv": "c231b21ff1cc1c93cefb0a47a6b7e0feb5d3791b78a169f08253215323535e2d",
+      "wire_events.csv": "e7569f7a2c831981e50083c7707f58cd6f4f07bf02f4e2844090dced9717afab",
+      "leg_events.csv": "3d57c15e5a56a164488eed1b6692b2afa20652fd951908ae3ea1f2204ad7feb1",
+      "simulator.log": "70f0642dcde6be72957a8c6b3a4cc2262891d6ebab5b24ae1071088ec219e402",
+      "send.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "service_alarms.csv": "f7868337d0395c696096e5ad28f97718a7fd6ca2f62492d509159ce9c2cee618",
+      "metrics.log": "e9be8191468e87ff73a19fb11330e9abcc6d3ad79580ad6ea8272ac173c0e285",
+      "policy_decisions.jsonl": "938706b91e1514be9755d2cbf0b5c7a63fb0566c06705d7b37204a82ea7fcba2",
+      "audit.log": "9d53fa973c793235e8b64b180e664a944f2d794ddea53524ec8a216abf2b0e94",
+      "throughput_10ms.json": "7cc45034bfc463d6311bb4854df259f757a8c5c7eb86b9a7a166761d2fbdbfba",
+      "fault_events.csv": "5435c780acb3eff95152a14c49d1722e42e3ce87bac866708ef935b26eecf507",
+      "helper_reports.jsonl": "e3c1c0fe088e69f97e3d73115d2303113bfd485cd08f0a119829cdc12813f371",
+      "phase_events.csv": "43c598a5ada26c7746651891fc87bc8714c4900eba81613db5755c6758858bcf",
+      "service_events.csv": "7f95366e8733e74ab913f173a05eda7728a8fca3462f328bafaa4fc878f08af2",
+      "logical_events.csv": "df980142f05d7083b1da35c72c042794857ce480c5a195f4a45b451df496ca09",
+      "phase_metrics.csv": "c63c6152d49183bb8df6dc628b99adb2e96a5c7d08763e79b337d93893916b49",
+      "replay.log": "17d65f1e2519a69322fec1f6b8b460a9f2e5a3f648b6108c417d23c797510575",
+      "service_decisions.jsonl": "c4bd2656c8bd7106bd19203c2157a1cfb705c25767df193c598259b5232f161f",
+      "observations.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observation_audit.json": "8dcfa66d991c109e8ba4bba1cd485d44b68f8e94e72b0594b4e3c8706a287e91",
+      "truth/injection.txt": "23995944fbfa4df15ef0068fcba46dd12edc903d81b044a5b401ec946e1cc8b4",
+      "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "inputs/fct_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "inputs/config.txt": "2736482902e1ebfaec6e2cd579055b57c8b81cf3730a62f0d028753d2f58cbee",
+      "inputs/trace_output_file.txt": "58f6fcfbf3c7dbe016afcdce07291ba276865ccdc4261a6c70f988f2f706634e",
+      "inputs/topology.txt": "59751da5f84870056cd7197ec75f4a8b59719bdc3be2dd12145942075c221748",
+      "inputs/input_manifest.json": "5ee886db428f93c83cc97feaab6ca0109e3bda1a052cd897df6990979a21e607",
+      "inputs/pfc_output_file.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "all_content_hashes_verified": true
+  },
+  "wall_seconds": 137.51487275771797
+}

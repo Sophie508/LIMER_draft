@@ -1,0 +1,156 @@
+{
+  "task_completed": true,
+  "communication_ms": 77.17169,
+  "restricted_communication_ms": 77.17169,
+  "alarms_ns": {
+    "0": 47576864,
+    "15": 51057078
+  },
+  "first_activations_ns": {
+    "0": 53919722,
+    "15": 63197198
+  },
+  "detector_delays_ms": {
+    "0": 7.576864,
+    "15": 11.057078
+  },
+  "alarm_to_activation_ms": {
+    "0": 6.342858,
+    "15": 12.14012
+  },
+  "new_Bprime_launches": 369,
+  "new_Bprime_completions": 369,
+  "new_Bprime_phases": 2,
+  "post_replacement_complete_phases": 0,
+  "post_replacement_mean_phase_ms": null,
+  "unique_payload_bytes": 2147483648,
+  "recovery_observed": true,
+  "sustained_new_proxy_observed": true,
+  "replacement_lifetime": "phase",
+  "phase_route_lifecycles": [
+    {
+      "phase": 0,
+      "src": 0,
+      "reset_to_AB_ns": 1000000,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 1000000
+    },
+    {
+      "phase": 0,
+      "src": 15,
+      "reset_to_AB_ns": 1000000,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 1000000
+    },
+    {
+      "phase": 1,
+      "src": 0,
+      "reset_to_AB_ns": 16847750,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 16847750
+    },
+    {
+      "phase": 1,
+      "src": 15,
+      "reset_to_AB_ns": 16847750,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 16777216,
+      "B_new_bytes": 16777216,
+      "first_B_allocation_ns": 16847750
+    },
+    {
+      "phase": 2,
+      "src": 0,
+      "reset_to_AB_ns": 32933379,
+      "activation_ns": 53919722,
+      "unallocated_bytes_at_activation": 2031616,
+      "A_new_bytes": 23658496,
+      "B_new_bytes": 9437184,
+      "first_B_allocation_ns": 32933379,
+      "Bprime_new_bytes": 458752,
+      "fresh_Bprime_done": 7,
+      "fresh_Bprime_payload_bytes": 458752
+    },
+    {
+      "phase": 2,
+      "src": 15,
+      "reset_to_AB_ns": 32933379,
+      "activation_ns": null,
+      "unallocated_bytes_at_activation": null,
+      "A_new_bytes": 22413312,
+      "B_new_bytes": 11141120,
+      "first_B_allocation_ns": 32933379
+    },
+    {
+      "phase": 3,
+      "src": 0,
+      "reset_to_AB_ns": 56538187,
+      "activation_ns": 63166478,
+      "unallocated_bytes_at_activation": 25165824,
+      "A_new_bytes": 20250624,
+      "B_new_bytes": 1310720,
+      "first_B_allocation_ns": 56538187,
+      "Bprime_new_bytes": 11993088,
+      "fresh_Bprime_done": 183,
+      "fresh_Bprime_payload_bytes": 11993088
+    },
+    {
+      "phase": 3,
+      "src": 15,
+      "reset_to_AB_ns": 56538187,
+      "activation_ns": 63197198,
+      "unallocated_bytes_at_activation": 24576000,
+      "A_new_bytes": 19922944,
+      "B_new_bytes": 1900544,
+      "first_B_allocation_ns": 56538187,
+      "Bprime_new_bytes": 11730944,
+      "fresh_Bprime_done": 179,
+      "fresh_Bprime_payload_bytes": 11730944
+    }
+  ],
+  "fresh_Bprime_payload_bytes": 24182784,
+  "phase_binding_resets": 64,
+  "scored_affected_sources": [
+    0,
+    15
+  ],
+  "affected_source_new_allocations_by_region": {
+    "before_fault": {
+      "A_new_bytes": 82051072,
+      "B_new_bytes": 82051072
+    },
+    "before_diagnosis": {
+      "B_new_bytes": 4063232,
+      "A_new_bytes": 19857408
+    },
+    "preparing": {
+      "A_new_bytes": 23855104,
+      "B_new_bytes": 4784128
+    },
+    "after_replacement": {
+      "A_new_bytes": 27590656,
+      "Bprime_new_bytes": 24182784
+    }
+  },
+  "healthy_alarm_observed": false,
+  "healthy_proxy_observed": false,
+  "alarms_before_injected_fault": {},
+  "fresh_proxy_costs": {
+    "completed_routes": 369,
+    "source_local_leg_ms": 0.00031053929539295394,
+    "network_leg_ms": 0.23912425203252033,
+    "destination_local_leg_ms": 0.0003049620596205962,
+    "final_notification_ms": 1.0082815907859077,
+    "route_to_logical_done_ms": 1.2480233441734416
+  }
+}

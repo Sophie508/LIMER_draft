@@ -1,0 +1,53 @@
+{
+  "schema": "limer-run-v1",
+  "method": "G11",
+  "scene": {
+    "family": "healthy",
+    "rounds": 1,
+    "chunks_per_phase": 512,
+    "horizon_ns": 250000000,
+    "fault_ns": 24000000,
+    "node": 0,
+    "seed": 111213001,
+    "local_gbps": 2400,
+    "detector": "service",
+    "policy": "benefit_v2",
+    "fault_duration_ns": 0,
+    "canary_period_ns": 2000000,
+    "canary_bytes": 65536,
+    "replacement_lifetime": "phase",
+    "phases_per_round": 4,
+    "relay_completion": "pipelined",
+    "helper_mode": "shared",
+    "slowdown_fraction": 0.25
+  },
+  "command": [
+    "/work/build-v1/backend/build/scratch/ns3.36.1-LimerSimulator-debug",
+    "/work/results/pilot-v2/runs/healthy-candidate_gate-s111213001/inputs/topology.txt",
+    "/work/results/pilot-v2/runs/healthy-candidate_gate-s111213001/inputs/config.txt",
+    "/work/results/pilot-v2/runs/healthy-candidate_gate-s111213001",
+    "G11",
+    "1",
+    "250000000",
+    "/work/results/pilot-v2/runs/healthy-candidate_gate-s111213001/truth/injection.txt",
+    "512",
+    "service",
+    "benefit_v2",
+    "2000000",
+    "65536",
+    "phase",
+    "4",
+    "pipelined",
+    "shared"
+  ],
+  "binary_sha256": "289d08e36084cff75d5a931a18aee8a6203609458ccddbaa36525235ddeacef4",
+  "build_sha256": "846ca35dc8fcee6983547a8a7084fee3fb744b96093335de4984830d1f6e6e04",
+  "input_hashes": {
+    "truth/injection.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inputs/trace.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/flow.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "inputs/config.txt": "7905cef343efa4a57f717980317349ba553c559574bc31edfc9657ca25b5707a",
+    "inputs/topology.txt": "169bc777ab9f172b5f3ce665b8f939768adb029d75d8fb176727d95005c52602",
+    "inputs/input_manifest.json": "5f4e5056da01ef5868d563fba0e7d2d12bb8d293b6382d9d7c3fb85212256b24"
+  }
+}
